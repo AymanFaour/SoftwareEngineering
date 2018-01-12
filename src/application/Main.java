@@ -49,7 +49,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 /*		String parent = System.getProperty("user.dir");
 */		
-		CpsController.initialize("10.0.0.6", "8080");
+		MainController.initialize("10.0.0.6", "8080");
 		launch(args);
 	}
 	
