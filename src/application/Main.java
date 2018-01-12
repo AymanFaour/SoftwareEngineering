@@ -33,6 +33,7 @@ public class Main extends Application {
 
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		//Ali Safadi Succeeded to install everything !
 		try {
 			mainLayout = loader.load();
 		} catch (IOException e) {
