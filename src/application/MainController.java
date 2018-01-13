@@ -101,7 +101,21 @@ public class MainController {
     
     @FXML
     void continueasAGuest(ActionEvent event) {
-    	System.out.println("HELLOOOOO FROM Guest");
+    	
+    	Scene currentScene = signiInButton.getScene();
+    	Parent mainLayout = null;
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("GuestView.fxml"));
+		try {
+			mainLayout = loader.load();
+		} catch (IOException | NullPointerException e) {
+			
+			e.printStackTrace();
+		}
+		Scene scene = new Scene(mainLayout);
+    	
+    	Stage stage = (Stage) currentScene.getWindow();
+		stage.setScene(scene);
     }
     
     @FXML
