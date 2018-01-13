@@ -262,7 +262,7 @@
                                     </TextField>
                                  </children>
                               </HBox>
-                              <Button fx:id="fulSubFullSubscriptionButton" mnemonicParsing="false" styleClass="go-button" stylesheets="@application.css" text="Buy Full Subscription" />
+                              <Button fx:id="fulSubFullSubscriptionButton" mnemonicParsing="false" onAction="#buyfulSubFullSubscription" styleClass="go-button" stylesheets="@application.css" text="Buy Full Subscription" />
                            </children>
                            <padding>
                               <Insets left="20.0" top="10.0" />

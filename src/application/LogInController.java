@@ -272,15 +272,6 @@ public class LogInController {
     
     @FXML
     void reserveParking(ActionEvent event) {
-
-    }
-
-    @FXML
-    void buyRegularRoutineSubscription(ActionEvent event) {
-
-    }
-    
-    void reserveParking(){
     	String _carNumber = parkResCarNumberTF.getText();
     	String _arriveHour = parkResArrivingHourTF.getText();
     	String _leaveHour = parkResLeavingHourTF.getText();
@@ -315,8 +306,68 @@ public class LogInController {
     		
     	}
     
-    	
     }
+
+    @FXML
+    void buyRegularRoutineSubscription(ActionEvent event) {
+    	String _carNumber = regRouSubCarNumberTF.getText();
+    	String _lotName = regRouSubRoutinelyParkingLotTF.getText();
+    	String _leaveHour = regRouSubRoutinelyLeavingHourTF.getText();
+    	
+    	if(_carNumber.equals("") || _leaveHour.equals("") || _lotName.equals("")){
+    		
+    		//informationAlert.setTitle("Reservation warrning");
+    		//informationAlert.setHeaderText(null);
+    		//informationAlert.setContentText("Please fill all the above field to complete the reservation");
+    		//informationAlert.showAndWait();
+    		
+    	}else{
+    		
+    		try {
+    			JSONObject toSend = new JSONObject();
+    			toSend.put("carNumber", _carNumber);
+    			toSend.put("leaveHour", _leaveHour);
+    			toSend.put("lotName", _lotName);
+    			
+    			//CpsController.client.request("reserveParking",toSend.toString());
+    			
+    		} catch (JSONException | NullPointerException e1) {
+    			
+    			e1.printStackTrace();
+    		}
+    		
+    	}
+    }
+    
+    @FXML
+    void buyfulSubFullSubscription(ActionEvent event) {
+
+    	String _carNumber = fulSubCarNumberTF.getText();
+    	
+    	if(_carNumber.equals("")){
+    		
+    		//informationAlert.setTitle("Reservation warrning");
+    		//informationAlert.setHeaderText(null);
+    		//informationAlert.setContentText("Please fill all the above field to complete the reservation");
+    		//informationAlert.showAndWait();
+    		
+    	}else{
+    		
+    		try {
+    			JSONObject toSend = new JSONObject();
+    			toSend.put("carNumber", _carNumber);
+    			
+    			//CpsController.client.request("reserveParking",toSend.toString());
+    			
+    		} catch (JSONException | NullPointerException e1) {
+    			
+    			e1.printStackTrace();
+    		}
+    		
+    	}
+    
+    }
+    
     
 
     @FXML
@@ -341,6 +392,8 @@ public class LogInController {
 		stage.setScene(scene);
     	
     }
+    
+
     
     
     JSONObject request(JSONObject json, String servletName){
