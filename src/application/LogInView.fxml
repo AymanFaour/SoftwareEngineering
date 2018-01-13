@@ -217,8 +217,8 @@
                                  </children></HBox>
                               <HBox layoutX="30.0" layoutY="20.0" prefHeight="50.0" prefWidth="600.0">
                                  <children>
-                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Routinely Parking Lot:" />
-                                    <TextField fx:id="regRouSubRoutinelyParkingLotTF" styleClass="text-field-first" stylesheets="@application.css">
+                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Routinely Leaving Hour:" />
+                                    <TextField fx:id="regRouSubRoutinelyLeavingHourTF" styleClass="text-field-first" stylesheets="@application.css">
                                        <HBox.margin>
                                           <Insets left="5.0" />
                                        </HBox.margin>
@@ -227,12 +227,8 @@
                               </HBox>
                               <HBox layoutX="30.0" layoutY="77.0" prefHeight="50.0" prefWidth="600.0">
                                  <children>
-                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Routinely Leaving Hour:" />
-                                    <TextField fx:id="regRouSubRoutinelyLeavingHourTF" styleClass="text-field-first" stylesheets="@application.css">
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </TextField>
+                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Routinely Parking Lot:" />
+                                    <ComboBox fx:id="regRouComboBox" prefWidth="150.0" promptText="select parking name" stylesheets="@application.css" />
                                  </children>
                               </HBox>
                               <Button fx:id="regRouSubRegularRoutineSubscriptionButton" mnemonicParsing="false" onAction="#buyRegularRoutineSubscription" styleClass="go-button" stylesheets="@application.css" text="Buy Regular Subscription" />

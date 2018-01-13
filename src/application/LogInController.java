@@ -81,9 +81,6 @@ public class LogInController {
     @FXML // fx:id="fullSubscriptionBorderPane"
     private BorderPane fullSubscriptionBorderPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkResParkingLotNameTF"
-    private TextField parkResParkingLotNameTF; // Value injected by FXMLLoader
-
     @FXML // fx:id="regularRoutinelySubscriptionButton"
     private Button regularRoutinelySubscriptionButton; // Value injected by FXMLLoader
 
@@ -120,6 +117,10 @@ public class LogInController {
     @FXML // fx:id="parkResComboBox"
     private ComboBox<String> parkResComboBox; // Value injected by FXMLLoader
     private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
+    
+    @FXML // fx:id="regRouComboBox"
+    private ComboBox<String> regRouComboBox; // Value injected by FXMLLoader
+
     
     public void setWelcome(String s){
     	welcomeBanner.setText(s);
@@ -188,6 +189,21 @@ public class LogInController {
     	viewReservationButton.getStyleClass().add("loginView-buttons");
     	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
     	complaintButton.getStyleClass().add("loginView-buttons");
+    	
+
+    	ArrayList<String> parkingLotNames = new ArrayList<String>();
+    	parkingLotNames.add("Tarshiha Parking Lot");
+    	parkingLotNames.add("Majdal Shams Parking Lot");
+    	parkingLotNames.add("Khedira Parking Lot");
+    	parkingLotNames.add("TLV Parking Lot");
+    	parkingLotNames.add("Naharya Parking Lot");
+    	parkingLotNames.add("Haifa Parking Lot");
+    	
+    	myComboBoxData.clear();
+    	for(int i = 0; i < parkingLotNames.size(); i++){
+    		myComboBoxData.add(parkingLotNames.get(i));
+    	}
+    	regRouComboBox.setItems(myComboBoxData);
     	
     }
 
@@ -294,7 +310,8 @@ public class LogInController {
     	String _leaveHour = parkResLeavingHourTF.getText();
     	String _arriveDate = parkResArrivingDateTF.getText();
     	String _leaveDate = parkResLeavingDateTF.getText();
-    	String _lotName = parkResParkingLotNameTF.getText();
+    	String _lotName = parkResComboBox.getValue();
+    	
     	
     	if(_carNumber.equals("") || _arriveHour.equals("") || _leaveHour.equals("") ||
     			_arriveDate.equals("") || _leaveDate.equals("") ||  _lotName.equals("")){
@@ -327,9 +344,13 @@ public class LogInController {
 
     @FXML
     void buyRegularRoutineSubscription(ActionEvent event) {
+    	System.out.println("Hello");
     	String _carNumber = regRouSubCarNumberTF.getText();
-    	String _lotName = regRouSubRoutinelyParkingLotTF.getText();
+    	String _lotName = regRouComboBox.getValue();
+    	//String _lotName = "eeloo";
     	String _leaveHour = regRouSubRoutinelyLeavingHourTF.getText();
+    	
+    	System.out.println(_lotName);
     	
     	if(_carNumber.equals("") || _leaveHour.equals("") || _lotName.equals("")){
     		
