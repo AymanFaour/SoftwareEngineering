@@ -25,6 +25,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.User;
+import sun.misc.Signal;
 
 //package com.client;
 
@@ -153,10 +154,7 @@ public class MainController {
         			confirmAlert.setContentText("Registeration success, thanks for choosing us!!");
         			confirmAlert.showAndWait();
         		}else{
-        			informationAlert.setTitle("Sign in Error");
-        	    	informationAlert.setHeaderText(null);
-        	    	informationAlert.setContentText("Username or Email must be unique");
-        	    	informationAlert.showAndWait();
+        			registerationFailed();
         		}
     			
     		} catch (JSONException | NullPointerException e1) {
@@ -175,10 +173,7 @@ public class MainController {
     	informationAlert.showAndWait();
     }
     
-    void registerationSucceded(){
-    	
-//    	System.out.println("registeration succeseded");
-    	
+    void registerationSucceded(){	
     }
     
     @FXML
@@ -225,10 +220,7 @@ public class MainController {
         			
         			SignInCallBack();
         		}else{
-        			informationAlert.setTitle("Sign in Error");
-        	    	informationAlert.setHeaderText(null);
-        	    	informationAlert.setContentText("Username or Password uncorrect");
-        	    	informationAlert.showAndWait();
+        			SignInFailed();
         		}
         		        		        	
     	}
