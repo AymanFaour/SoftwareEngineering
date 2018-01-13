@@ -53,7 +53,7 @@ public class Main extends Application{
 */		
 		
 		
-		MainController.initialize("10.0.0.6", "8080");
+		MainController.initialize("10.0.0.5", "8080");
 		launch(args);
 	}
 	

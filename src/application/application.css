@@ -63,6 +63,25 @@
     -fx-text-fill: #ededed;
 }
 
+.activate-button {
+	-fx-focus-color: #ffffff;
+    -fx-background-color:
+        linear-gradient(#268644, #206d37),
+        radial-gradient(center 50% -40%, radius 200%, #2fa152 45%, #268142 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #ffffff;
+}
+
+.activate-button:hover {
+    -fx-background-color:
+        linear-gradient(#87fac5, #6cf9ae),
+        radial-gradient(center 50% -40%, radius 200%, #35c869 45%, #30ae5c 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #ededed;
+}
+
 
 .sign-out-button {
 	-fx-focus-color: #ffffff;
@@ -75,6 +94,46 @@
 }
 
 .sign-out-button:hover {
+    -fx-background-color:
+        linear-gradient(#fa8787, #f96c6c),
+        radial-gradient(center 50% -40%, radius 200%, #c83535 45%, #ae3030 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #ededed;
+}
+
+
+.deactivate-button {
+	-fx-focus-color: #ffffff;
+    -fx-background-color:
+        linear-gradient(#862626, #6d2020),
+        radial-gradient(center 50% -40%, radius 200%, #a12f2f 45%, #812626 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #ffffff;
+}
+
+.deactivate-button:hover {
+    -fx-background-color:
+        linear-gradient(#fa8787, #f96c6c),
+        radial-gradient(center 50% -40%, radius 200%, #c83535 45%, #ae3030 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #ededed;
+}
+
+
+.cancel-button {
+	-fx-focus-color: #ffffff;
+    -fx-background-color:
+        linear-gradient(#862626, #6d2020),
+        radial-gradient(center 50% -40%, radius 200%, #a12f2f 45%, #812626 50%);
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #ffffff;
+}
+
+.cancel-button:hover {
     -fx-background-color:
         linear-gradient(#fa8787, #f96c6c),
         radial-gradient(center 50% -40%, radius 200%, #c83535 45%, #ae3030 50%);
@@ -153,6 +212,7 @@
 	-fx-border-style: solid inside;
     -fx-border-width: 0 0 2 0;
     -fx-border-color: #d0e6f8;
+    -fx-pref-height: 30;
 }
 
 .combo-box .list-cell 

@@ -19,10 +19,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +40,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -171,6 +170,10 @@ public class LogInController {
 
     @FXML
     private ComboBox<String> regRouSubRoutineMinuteComboBox;
+    
+    @FXML // fx:id="reservationsList"
+    private VBox reservationsList; // Value injected by FXMLLoader
+
 
     
     public void setWelcome(String s){
@@ -387,9 +390,104 @@ public class LogInController {
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
     	
+    	
+    	JSONArray ja = new JSONArray();
+    	try {
+    		
+    		int length = reservationsList.getChildren().size();
+    		reservationsList.getChildren().remove(0, length);
+    		
+    		ja.put(new JSONObject().put("ID", "12").put("arriving hour", "18:00").put("leaving hour", "20:00")
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "in queue"));
+    		
+    		ja.put(new JSONObject().put("ID", "20").put("arriving hour", "18:00").put("leaving hour", "20:00")
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking"));
+    		
+    		ja.put(new JSONObject().put("ID", "70").put("arriving hour", "18:00").put("leaving hour", "20:00")
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking"));
+    		
+    		for(int i = 0; i < ja.length(); i++){
+
+        	    Label resId = new Label(((JSONObject) ja.get(i)).getString("ID"));
+        	    resId.setStyle("-fx-pref-width: 40;");
+        		Label arrivingDate = new Label(((JSONObject) ja.get(i)).getString("arriving date"));
+        		arrivingDate.setStyle("-fx-pref-width: 80;");
+        		Label leavingDate = new Label(((JSONObject) ja.get(i)).getString("leaving date"));
+        		leavingDate.setStyle("-fx-pref-width: 80;");
+        		Label arrivingHour = new Label(((JSONObject) ja.get(i)).getString("arriving hour"));
+        		arrivingHour.setStyle("-fx-pref-width: 80;");
+        		Label leavingHour = new Label(((JSONObject) ja.get(i)).getString("leaving hour"));
+        		leavingHour.setStyle("-fx-pref-width: 80;");
+        		Label status = new Label(((JSONObject) ja.get(i)).getString("status"));
+        		status.setStyle("-fx-pref-width: 60;");
+    		
+				HBox hb = new HBox();
+				hb.getChildren().add(resId);
+				hb.getChildren().add(arrivingDate);
+				hb.getChildren().add(leavingDate);
+				hb.getChildren().add(arrivingHour);
+				hb.getChildren().add(leavingHour);
+				hb.getChildren().add(status);
+				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+				reservationsList.getChildren().add(hb);
+				
+				if(status.getText() == "in queue"){
+					Button activateButton = new Button("Enter");
+					activateButton.setId("activateButton" + resId.getText());
+					String css = getClass().getResource("application.css").toExternalForm();
+					activateButton.getStylesheets().clear();
+					activateButton.getStylesheets().add(css);
+					activateButton.setOnAction(e -> activateParking(e));
+					activateButton.getStyleClass().add("activate-button");
+					hb.getChildren().add(activateButton);
+					
+					HBox sep = new HBox();
+					sep.setStyle("-fx-pref-width:5px;");
+					hb.getChildren().add(sep);
+					
+					Button cancelReservation = new Button("Cancel");
+					cancelReservation.setId("cancelReservation" + resId.getText());
+					cancelReservation.getStylesheets().clear();
+					cancelReservation.getStylesheets().add(css);
+					cancelReservation.setOnAction(e -> activateParking(e));
+					cancelReservation.getStyleClass().add("cancel-button");
+					hb.getChildren().add(cancelReservation);
+				}
+				
+				if(status.getText() == "parking"){
+					Button deActivateButton = new Button("Exit");
+					deActivateButton.setId("deactivateButton" + resId.getText());
+					String css = getClass().getResource("application.css").toExternalForm();
+					deActivateButton.getStylesheets().clear();
+					deActivateButton.getStylesheets().add(css);
+					deActivateButton.setOnAction(e -> deActivateParking(e));
+					deActivateButton.getStyleClass().add("deactivate-button");
+					hb.getChildren().add(deActivateButton);
+				}
+				
+    		}
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 
-    @FXML
+    private void deActivateParking(ActionEvent e) {
+		// TODO Auto-generated method stub
+    	Button b = (Button) e.getSource();
+		System.out.println("Okay " + b.getId().substring(16));
+	}
+
+	private void activateParking(ActionEvent e) {
+		// TODO Auto-generated method stub
+    	Button b = (Button) e.getSource();
+		System.out.println("Okay " + b.getId().substring(14));
+	}
+
+	@FXML
     void loadComplaint(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
     	regularRoutineSubscriptionBorderPane.setVisible(false);
