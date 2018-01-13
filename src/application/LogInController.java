@@ -469,20 +469,17 @@ public class LogInController {
     		}
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
     }
 
     private void deActivateParking(ActionEvent e) {
-		// TODO Auto-generated method stub
     	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(16));
 	}
 
 	private void activateParking(ActionEvent e) {
-		// TODO Auto-generated method stub
     	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(14));
 	}
@@ -672,7 +669,6 @@ public class LogInController {
             				System.out.println("New balance is: " + MainController._currentUser.getBalance());
             			}
             		} catch (JSONException e) {
-            			// TODO Auto-generated catch block
             			e.printStackTrace();
             		}
             	}	
@@ -684,38 +680,71 @@ public class LogInController {
 
     @FXML
     void buyRegularRoutineSubscription(ActionEvent event) {
-    	System.out.println("Hello");
     	String _carNumber = regRouSubCarNumberTF.getText();
     	String _lotName = regRouComboBox.getValue();
-    	//String _lotName = "eeloo";
+    	String _routLeaveHour = regRouSubRoutineHourComboBox.getValue();
+    	String _routLeaveMinute = regRouSubRoutineMinuteComboBox.getValue();
+	
+      	Calendar leaveCal = Calendar.getInstance();
+//      	System.out.println(leaveCal.toString() + "@@@@@@@@@@@@@@@@@@@");
     	
-    	System.out.println(_lotName);
+    	if(_routLeaveHour == null){
+    		_routLeaveHour = "00";
+    	}
     	
-    	if(_carNumber.equals("") || _lotName.equals("")){
-    		
-    		//informationAlert.setTitle("Reservation warrning");
-    		//informationAlert.setHeaderText(null);
-    		//informationAlert.setContentText("Please fill all the above field to complete the reservation");
-    		//informationAlert.showAndWait();
+    	if(_routLeaveMinute == null){
+    		_routLeaveMinute = "00";
+    	}
+    	
+    	if(_carNumber.equals("") || (_lotName==null)){
+    		informationAlert.setTitle("Reservation warrning");
+    		informationAlert.setHeaderText(null);
+    		informationAlert.setContentText("Please fill all the above field to complete the reservation");
+    		informationAlert.showAndWait();
     		
     	}else{
     		
-    		try {
-    			JSONObject toSend = new JSONObject();
-    			toSend.put("carNumber", _carNumber);
-    			//toSend.put("leaveHour", _leaveHour);
-    			toSend.put("lotName", _lotName);
+    		long _start = leaveCal.getTime().getTime();
+    		leaveCal.add(Calendar.MONTH,1);    		
+//            long _end = leaveCal.getTime().getTime();
+       	    long _end = leaveCal.getTime().getTime();
+            int routLeaveHourInt = Integer.parseInt(_routLeaveHour);
+            int routLeaveMinuteInt = Integer.parseInt(_routLeaveMinute);
+            
+            String _name = MainController._currentUser.getUsername();
+    		
+    		JSONObject json = new JSONObject();
+            try {
+            	
+            	//TODO: Complete server connection and so on 
+    			json.put("carNumber", _carNumber);
+    			json.put("lotName", _lotName);
+    			json.put("username", _name);
+    			json.put("leaveHour", routLeaveHourInt);
+    			json.put("leaveMinute", routLeaveMinuteInt);
+    			json.put("start", _start);
+    			json.put("end", _end);
+    			json.put("cmd", "RegularRoutineSubscription");
     			
-    			//CpsController.client.request("reserveParking",toSend.toString());
+    			// send to reservation servlet
+//    			JSONObject ret = request(json, "RegularRoutineSubscription");
+//	
+//    			System.out.println(ret.getBoolean("result"));
+//    			if(ret.getBoolean("result")){
+//    				System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+//    				MainController._currentUser.setBalance(MainController._currentUser.getBalance() - cost);
+//    				updateBalance((-1)*cost);
+//    				System.out.println("New balance is: " + MainController._currentUser.getBalance());
     			
-    		} catch (JSONException | NullPointerException e1) {
-    			
-    			e1.printStackTrace();
+    		} catch (JSONException e) {
+    			e.printStackTrace();
     		}
     		
     	}
     }
     
+    
+    //TODO: update this ****
     @FXML
     void buyfulSubFullSubscription(ActionEvent event) {
 
@@ -796,7 +825,6 @@ public class LogInController {
 			
     		
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -823,7 +851,6 @@ public class LogInController {
 			}
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
