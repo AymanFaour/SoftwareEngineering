@@ -7,7 +7,7 @@ public class User {
 	private String _firstName;
 	private String _lastName;
 	private String _type;
-	private int _balance;
+	private long _balance;
 	private String _company;
 	
 	public User(String username, String email, String password, String firstName, 
@@ -58,11 +58,11 @@ public class User {
 	public void setType(String type) {
 		this._type = type;
 	}
-	public int getBalance() {
+	public long getBalance() {
 		return _balance;
 	}
-	public void setBalance(int balance) {
-		this._balance = balance;
+	public void setBalance(long l) {
+		this._balance = l;
 	}
 	public String getCompnay() {
 		return _company;

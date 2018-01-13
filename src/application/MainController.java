@@ -10,9 +10,6 @@ import java.io.InputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.gson.JsonObject;
-
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,7 +22,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.User;
-import sun.misc.Signal;
 
 //package com.client;
 

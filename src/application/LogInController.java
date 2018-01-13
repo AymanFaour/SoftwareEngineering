@@ -11,23 +11,32 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
+import java.util.Calendar;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LogInController {
+	
+	Alert informationAlert = new Alert(AlertType.INFORMATION);
+	Alert errorAlert = new Alert(AlertType.ERROR);
+	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
 
 	@FXML // fx:id="welcomeBanner"
     private Label welcomeBanner; // Value injected by FXMLLoader
@@ -273,6 +282,104 @@ public class LogInController {
     @FXML
     void reserveParking(ActionEvent event) {
 
+    	String _carNumber = parkResCarNumberTF.getText();
+    	
+    	String _arriveHour = parkResArrivingHourTF.getText();
+    	String _leaveHour = parkResLeavingHourTF.getText();
+    	String _arriveDate = parkResArrivingDateTF.getText();
+    	String _leaveDate = parkResLeavingDateTF.getText();
+    	
+    	String _lotName = parkResParkingLotNameTF.getText();
+    	
+    	
+    	
+    	// get a calendar using the default time zone and locale.
+        Calendar _arriveCalendar = Calendar.getInstance();
+        _arriveCalendar.set(Calendar.YEAR, 2018);
+        _arriveCalendar.set(Calendar.MONTH, Calendar.JANUARY);
+        _arriveCalendar.set(Calendar.DATE, 13);
+        _arriveCalendar.set(Calendar.HOUR_OF_DAY, 19);
+        _arriveCalendar.set(Calendar.MINUTE, 00);
+        _arriveCalendar.set(Calendar.SECOND, 0);
+        _arriveCalendar.set(Calendar.MILLISECOND, 0);
+        
+        Calendar _leaveCalendar = Calendar.getInstance();
+        _leaveCalendar.set(Calendar.YEAR, 2018);
+        _leaveCalendar.set(Calendar.MONTH, Calendar.JANUARY);
+        _leaveCalendar.set(Calendar.DATE, 14);
+        _leaveCalendar.set(Calendar.HOUR_OF_DAY, 20);
+        _leaveCalendar.set(Calendar.MINUTE, 30);
+        _leaveCalendar.set(Calendar.SECOND, 0);
+        _leaveCalendar.set(Calendar.MILLISECOND, 0);
+        
+        
+        if(_carNumber.equals("") || _lotName.equals("")){
+        	
+        	informationAlert.setTitle("Reservation warrning");
+    		informationAlert.setHeaderText(null);
+    		informationAlert.setContentText("Please fill all the car number, arriving date and parking lot fields to complete the reservation");
+    		informationAlert.showAndWait();
+        	
+        }else{
+        	
+        	long deff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(_leaveCalendar.getTimeInMillis() - _arriveCalendar.getTimeInMillis()));
+            long cost = Math.round(deff/60.0) * 4;
+            long _start = _arriveCalendar.getTime().getTime();
+            long _end = _leaveCalendar.getTime().getTime();
+            
+            
+//            System.out.println(_arriveCalendar.getTime().getTime());
+//            System.out.println(_leaveCalendar.getTime().toString());
+//            System.out.println(deff);
+//            System.out.println( Math.round((deff / 60.0)));
+//            
+            String _name = MainController._currentUser.getUsername();
+                    
+            confirmAlert.setTitle("Confirmation Dialog");
+            confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
+            
+            
+            
+            Optional<ButtonType> result = confirmAlert.showAndWait();
+            if(result.get() == ButtonType.OK){
+            	
+            	if(MainController._currentUser.getBalance() < cost){
+            		
+            		informationAlert.setTitle("Reservation warrning");
+            		informationAlert.setHeaderText(null);
+            		informationAlert.setContentText("Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+            		informationAlert.showAndWait();
+            		
+            	}else{
+            		JSONObject json = new JSONObject();  
+                    try {
+                    	
+            			json.put("carNumber", _carNumber);
+            			json.put("lotName", _lotName);
+            			json.put("username", _name);
+            			json.put("start", _start);
+            			json.put("end", _end);
+            			json.put("cmd", "reserveAhead");
+            			
+            			// send to reservation servlet
+            			JSONObject ret = request(json, "ReservationController");
+            			
+            			System.out.println(ret.getBoolean("result"));
+            			if(ret.getBoolean("result")){
+            				System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+            				MainController._currentUser.setBalance(MainController._currentUser.getBalance() - cost);
+            				updateBalance((-1)*cost);
+            				System.out.println("New balance is: " + MainController._currentUser.getBalance());
+            			}
+            		} catch (JSONException e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+            		}
+            	}	
+            }
+        }
+        
+                   
     }
 
     @FXML
@@ -280,7 +387,7 @@ public class LogInController {
 
     }
     
-    void reserveParking(){
+    /*void reserveParking(){
     	String _carNumber = parkResCarNumberTF.getText();
     	String _arriveHour = parkResArrivingHourTF.getText();
     	String _leaveHour = parkResLeavingHourTF.getText();
@@ -288,13 +395,16 @@ public class LogInController {
     	String _leaveDate = parkResLeavingDateTF.getText();
     	String _lotName = parkResParkingLotNameTF.getText();
     	
+    	
+    	
+    	
     	if(_carNumber.equals("") || _arriveHour.equals("") || _leaveHour.equals("") ||
     			_arriveDate.equals("") || _leaveDate.equals("") ||  _lotName.equals("")){
     		
-    		//informationAlert.setTitle("Reservation warrning");
-    		//informationAlert.setHeaderText(null);
-    		//informationAlert.setContentText("Please fill all the above field to complete the reservation");
-    		//informationAlert.showAndWait();
+    		informationAlert.setTitle("Reservation warrning");
+    		informationAlert.setHeaderText(null);
+    		informationAlert.setContentText("Please fill all the above field to complete the reservation");
+    		informationAlert.showAndWait();
     		
     	}else{
     		
@@ -316,12 +426,16 @@ public class LogInController {
     	}
     
     	
-    }
+    }*/
     
 
     @FXML
     void signOut(ActionEvent event) {
-    	// TODO: desturct the _currentUser and to change the view
+    	
+//    	getReserves();
+    	
+    	
+//    	System.out.println(getReserves());
     	MainController._currentUser = null;
     	
     	
@@ -339,6 +453,60 @@ public class LogInController {
 		Scene scene = new Scene(mainLayout);
 		Stage stage = (Stage) currentScene.getWindow();
 		stage.setScene(scene);
+		
+    	
+    }
+    
+    /*
+     *  function that get as parameter a change of the balance, change the balance of the current user in the DB
+     */
+    void updateBalance(long cost){
+    	
+    	JSONObject json = new JSONObject(), ret = new JSONObject();
+    	
+    	try {
+    		
+    		json.put("username", MainController._currentUser.getUsername());
+    		json.put("change", cost);
+    		json.put("cmd", "balance");
+    		ret = request(json, "UpdateUserInfo");
+    		
+    		if(ret.getBoolean("result")){
+//				System.out.println(ret.toString());
+			}
+			
+    		
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    /*
+     *  function that return a JSONArray for all the reserves of a specific user name 
+     */
+    JSONArray getReserves(){
+    	
+    	JSONObject json = new JSONObject();
+    	JSONObject ret = new JSONObject();
+    	try {
+    		
+			json.put("username", MainController._currentUser.getUsername());
+			ret = request(json, "UserServices");
+			System.out.println(ret);
+			if(ret.getBoolean("result")){
+				JSONArray reservs = ret.getJSONArray("resArr");
+				System.out.println(reservs.toString());
+				return reservs;
+			}
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return null;
     	
     }
     
@@ -390,4 +558,6 @@ public class LogInController {
 		
 
     }
+    
+    
 }
