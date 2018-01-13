@@ -535,6 +535,7 @@ public class LogInController {
             			if(ret.getBoolean("result")){
             				System.out.println("Old balance is: " + MainController._currentUser.getBalance());
             				MainController._currentUser.setBalance(MainController._currentUser.getBalance() - cost);
+            				updateBalance((-1)*cost);
             				System.out.println("New balance is: " + MainController._currentUser.getBalance());
             			}
             		} catch (JSONException e) {
@@ -545,7 +546,7 @@ public class LogInController {
             }
     	}
     		
-            				updateBalance((-1)*cost);
+            				
     }
 
     @FXML
