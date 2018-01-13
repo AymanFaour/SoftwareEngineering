@@ -461,6 +461,27 @@ public class LogInController {
     	LocalDate leaveLocalDate = parkResLeavingDateDP.getValue();
     	Calendar arriveCal = Calendar.getInstance();
     	Calendar leaveCal = Calendar.getInstance();
+    	Boolean flag = false;
+    	
+    	
+    	if(_leaveHour == null){
+    		_leaveHour = "00";
+    		flag = true;
+    	}
+    	if(_leaveMinute == null){
+    		_leaveMinute = "00";
+    	}
+    	
+    	if(_arriveHour == null || _arriveMinute == null){
+    		
+    		informationAlert.setTitle("Reservation warrning");
+    		informationAlert.setHeaderText(null);
+    		informationAlert.setContentText("Please fill arriving hour and minuts fields to complete the reservation");
+    		informationAlert.showAndWait();
+    		return;
+    		
+    	}
+    	
     	
     	if(arriveLocalDate != null){
 	    	Instant instant = Instant.from(arriveLocalDate.atStartOfDay(ZoneId.systemDefault()));
@@ -471,19 +492,32 @@ public class LogInController {
 	    	System.out.println(arriveCal.getTimeInMillis());
     	}
     	else{
-    		System.out.println("NULL arriveLocalDate");
+    		informationAlert.setTitle("Reservation warrning");
+    		informationAlert.setHeaderText(null);
+    		informationAlert.setContentText("Please fill all the car number, arriving date and parking lot fields to complete the reservation");
+    		informationAlert.showAndWait();
+    		return;
     	}
     	
     	if(leaveLocalDate != null){
 	    	Instant instant2 = Instant.from(leaveLocalDate.atStartOfDay(ZoneId.systemDefault()));
+	    	if(_leaveHour.equals("00") && _leaveMinute.equals("00") && flag){
+	    		instant2 = Instant.from(leaveLocalDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1));
+	    	}
 	    	Date date2 = Date.from(instant2);
 	    	leaveCal = toCalendar(date2);
 	    	leaveCal.set(Calendar.HOUR, Integer.parseInt(_leaveHour));
 	    	leaveCal.set(Calendar.MINUTE, Integer.parseInt(_leaveMinute));
-	    	System.out.println(leaveCal.getTimeInMillis());
+	    	System.out.println(leaveCal.toString());
     	}
     	else{
-    		System.out.println("NULL arriveLocalDate");
+    		Instant instant2 = Instant.from(arriveLocalDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1));
+	    	Date date2 = Date.from(instant2);
+	    	leaveCal = toCalendar(date2);
+	    	leaveCal.set(Calendar.HOUR, Integer.parseInt(_leaveHour));
+	    	leaveCal.set(Calendar.MINUTE, Integer.parseInt(_leaveMinute));
+	    	System.out.println(leaveCal.getTime().toString());
+    		
     	}
     	
     	if(_carNumber.equals("") ||_lotName.equals("")){
@@ -492,6 +526,7 @@ public class LogInController {
     		informationAlert.setHeaderText(null);
     		informationAlert.setContentText("Please fill all the car number, arriving date and parking lot fields to complete the reservation");
     		informationAlert.showAndWait();
+    		return;
     		
     	}else{
     		long deff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(leaveCal.getTimeInMillis() - arriveCal.getTimeInMillis()));
@@ -645,7 +680,7 @@ public class LogInController {
     /*
      *  function that get as parameter a change of the balance, change the balance of the current user in the DB
      */
-    void updateBalance(long cost){
+    Boolean updateBalance(long cost){
     	
     	JSONObject json = new JSONObject(), ret = new JSONObject();
     	
@@ -657,14 +692,17 @@ public class LogInController {
     		ret = request(json, "UpdateUserInfo");
     		
     		if(ret.getBoolean("result")){
-//				System.out.println(ret.toString());
+				return true;
 			}
+    		
 			
     		
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
+    	return false;
     	
     }
     
@@ -697,6 +735,35 @@ public class LogInController {
     
     @FXML
     void makeDeposit(ActionEvent event){
+  
+    	int _creditID = 0;
+    	int _change = 0;
+    	try{
+    		_creditID = Integer.parseInt(CreditCardIDTF.getText());
+    		_change = Integer.parseInt(AmountTF.getText());
+    	}catch(NumberFormatException e){
+    		
+    		informationAlert.setTitle("Reservation warrning");
+    		informationAlert.setHeaderText(null);
+    		informationAlert.setContentText("Dear friend, Please make sure to fill both the fields with numeric values");
+    		informationAlert.showAndWait();
+    	
+    	}
+    	
+    	System.out.println(_creditID + "  " + _change);
+    	
+    	Boolean ret = updateBalance(_change);
+    	
+    	if(ret){
+
+        	informationAlert.setTitle("Depositing Succeeded");
+    		informationAlert.setHeaderText(null);
+    		informationAlert.setContentText("Your Balance was updated Successfully.");
+    		informationAlert.showAndWait();
+        	
+    	}else{
+    		
+    	}
     	
     }
     
