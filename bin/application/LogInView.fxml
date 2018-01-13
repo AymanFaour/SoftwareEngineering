@@ -54,7 +54,7 @@
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="MyAccountButton" mnemonicParsing="false" onAction="#loadMyAccount" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Account" />
+            <Button fx:id="MyAccountButton" mnemonicParsing="false" onAction="#loadMyAccount" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Budget" />
          </children>
       </VBox>
    </left>
@@ -128,7 +128,7 @@
                         </VBox>
                      </left>
                   </BorderPane>
-                  <BorderPane fx:id="parkingReservationBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+                  <BorderPane fx:id="parkingReservationBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
@@ -281,7 +281,7 @@
                         </VBox>
                      </left>
                   </BorderPane>
-                  <BorderPane fx:id="MyAccountBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+                  <BorderPane fx:id="MyAccountBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
                      <left>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
