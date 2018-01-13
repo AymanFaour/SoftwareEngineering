@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 
-public class Main extends Application {
+public class Main extends Application{
 	private Parent mainLayout;
 	private Stage primaryStage;
 
@@ -17,7 +17,7 @@ public class Main extends Application {
 		
 	}
 	
-	@Override
+	
 	public void start(Stage primaryStage) {
 		try {
 			this.primaryStage = primaryStage;

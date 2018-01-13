@@ -10,6 +10,9 @@ import java.io.InputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.JsonObject;
+
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.User;
 
 //package com.client;
 
@@ -37,6 +41,7 @@ public class MainController {
 	static String result;
 	static String PORT;
 	static String IP;
+	static User _currentUser;
 	Alert informationAlert = new Alert(AlertType.INFORMATION);
 	Alert errorAlert = new Alert(AlertType.ERROR);
 	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
@@ -101,8 +106,8 @@ public class MainController {
     
     @FXML
     void registeration(ActionEvent event) {
-    	System.out.println("HELLOOOOO FROM Registeration");
-    	System.out.println("We have new client, you are welcome");
+//    	System.out.println("HELLOOOOO FROM Registeration");
+//    	System.out.println("We have new client, you are welcome");
     	
     	String _firstname = firstNameTextField.getText();
     	String _lastname = lastNameTextField.getText();
@@ -140,7 +145,7 @@ public class MainController {
     	    	}
     	    	
     	    	JSONObject ret = request(toSend, "Signup");
-        		System.out.println(ret.toString());
+//        		System.out.println(ret.toString());
         		
         		if(ret.getBoolean("result")){
         			confirmAlert.setTitle("Sign up successeded");
@@ -172,7 +177,7 @@ public class MainController {
     
     void registerationSucceded(){
     	
-    	System.out.println("registeration succeseded");
+//    	System.out.println("registeration succeseded");
     	
     }
     
@@ -205,6 +210,19 @@ public class MainController {
         		System.out.println(ret.toString());
         		
         		if(ret.getBoolean("result")){
+        			JSONObject temp = ret.getJSONObject("userInfo");
+        			String _firstname = temp.getString("firstName");
+        			String _lastname = temp.getString("lastName");
+        			String _passwrd = temp.getString("password");
+        			String _type = temp.getString("type");
+        			String _email = temp.getString("email");
+        			String _usernm = temp.getString("username");
+        			int _balance = temp.getInt("balance");
+        			String _company = temp.getString("company");
+        			
+        			
+        			_currentUser = new User(_usernm, _email, _passwrd, _firstname, _lastname, _type, _balance, _company);
+        			
         			SignInCallBack();
         		}else{
         			informationAlert.setTitle("Sign in Error");
@@ -227,6 +245,7 @@ public class MainController {
     void SignInCallBack(){
     	String _username = usernameTextField.getText();
     	Scene currentScene = signiInButton.getScene();
+    	
     	Parent mainLayout = null;
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("LogInView.fxml"));
@@ -315,7 +334,7 @@ public class MainController {
 		    }
 		    
 		    rd.close();
-		    System.out.println(response.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//		    System.out.println(response.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		    ret = new JSONObject(response.toString());
 		    
 		    return ret;

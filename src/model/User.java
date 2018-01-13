@@ -1,56 +1,74 @@
 package model;
 
 public class User {
-	private String username;
-	private String email;
-	private String password;
-	private String firstName;
-	private String lastName;
-	private String type;
-	public User(String username, String email, String password, String firstName, String lastName, String type) {
+	private String _username;
+	private String _email;
+	private String _password;
+	private String _firstName;
+	private String _lastName;
+	private String _type;
+	private int _balance;
+	private String _company;
+	
+	public User(String username, String email, String password, String firstName, 
+			String lastName, String type, int balance, String company) {
 		super();
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.type = type;
+		this._username = username;
+		this._email = email;
+		this._password = password;
+		this._firstName = firstName;
+		this._lastName = lastName;
+		this._type = type;
+		_balance = balance;
+		_company = company;
 	}
 	public String getUsername() {
-		return username;
+		return _username;
 	}
 	public void setUsername(String username) {
-		this.username = username;
+		this._username = username;
 	}
 	public String getEmail() {
-		return email;
+		return _email;
 	}
 	public void setEmail(String email) {
-		this.email = email;
+		this._email = email;
 	}
 	public String getPassword() {
-		return password;
+		return _password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		this._password = password;
 	}
 	public String getFirstName() {
-		return firstName;
+		return _firstName;
 	}
 	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+		this._firstName = firstName;
 	}
 	public String getLastName() {
-		return lastName;
+		return _lastName;
 	}
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		this._lastName = lastName;
 	}
 	public String getType() {
-		return type;
+		return _type;
 	}
 	public void setType(String type) {
-		this.type = type;
+		this._type = type;
+	}
+	public int getBalance() {
+		return _balance;
+	}
+	public void setBalance(int balance) {
+		this._balance = balance;
+	}
+	public String getCompnay() {
+		return _company;
+	}
+	public void setCompany(String type) {
+		this._company = type;
 	}
 	
 	
