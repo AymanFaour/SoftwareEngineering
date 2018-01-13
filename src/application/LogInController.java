@@ -11,7 +11,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +30,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -72,9 +78,6 @@ public class LogInController {
     @FXML // fx:id="textInTopOfLogIn"
     private Text textInTopOfLogIn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkResArrivingDateTF"
-    private TextField parkResArrivingDateTF; // Value injected by FXMLLoader
-
     @FXML // fx:id="businessRoutinelySubscriptionButton"
     private Button businessRoutinelySubscriptionButton; // Value injected by FXMLLoader
 
@@ -96,9 +99,6 @@ public class LogInController {
     @FXML // fx:id="parkResReserveParkingButton"
     private Button parkResReserveParkingButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkResLeavingDateTF"
-    private TextField parkResLeavingDateTF; // Value injected by FXMLLoader
-
     @FXML // fx:id="fullSubscriptionButton"
     private Button fullSubscriptionButton; // Value injected by FXMLLoader
 
@@ -117,9 +117,29 @@ public class LogInController {
     @FXML // fx:id="parkResComboBox"
     private ComboBox<String> parkResComboBox; // Value injected by FXMLLoader
     private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
     
     @FXML // fx:id="regRouComboBox"
     private ComboBox<String> regRouComboBox; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="parkResArrivingDateDP"
+    private DatePicker parkResArrivingDateDP; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="parkResLeavingDateDP"
+    private DatePicker parkResLeavingDateDP; // Value injected by FXMLLoader
+
+    @FXML // fx:id="parkResArrivingMinuteComboBox"
+    private ComboBox<String> parkResArrivingMinuteComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="parkResArrivingHourComboBox"
+    private ComboBox<String> parkResArrivingHourComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="parkResLeavingMinuteComboBox"
+    private ComboBox<String> parkResLeavingMinuteComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="parkResLeavingHourComboBox"
+    private ComboBox<String> parkResLeavingHourComboBox; // Value injected by FXMLLoader
 
     
     public void setWelcome(String s){
@@ -161,11 +181,33 @@ public class LogInController {
     	parkingLotNames.add("Naharya Parking Lot");
     	parkingLotNames.add("Haifa Parking Lot");
     	
+    	myComboBoxHoursData.clear();
+    	for(Integer i = 0; i < 24; i++){
+    		if(i < 10 ){
+    			myComboBoxHoursData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxHoursData.add(i.toString());
+    	}
+    	
+    	myComboBoxMinutesData.clear();
+    	for(Integer i = 0; i < 60; i++){
+    		if(i < 10 ){
+    			myComboBoxMinutesData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxMinutesData.add(i.toString());
+    	}
+    	
     	myComboBoxData.clear();
     	for(int i = 0; i < parkingLotNames.size(); i++){
     		myComboBoxData.add(parkingLotNames.get(i));
     	}
     	parkResComboBox.setItems(myComboBoxData);
+    	parkResArrivingHourComboBox.setItems(myComboBoxHoursData);
+    	parkResArrivingMinuteComboBox.setItems(myComboBoxMinutesData);
+    	parkResLeavingHourComboBox.setItems(myComboBoxHoursData);
+    	parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
     }
 
     @FXML
@@ -204,7 +246,6 @@ public class LogInController {
     		myComboBoxData.add(parkingLotNames.get(i));
     	}
     	regRouComboBox.setItems(myComboBoxData);
-    	
     }
 
     @FXML
@@ -303,18 +344,50 @@ public class LogInController {
     	
     }
     
+    public Calendar toCalendar(Date date){ 
+    	  Calendar cal = Calendar.getInstance();
+    	  cal.setTime(date);
+    	  return cal;
+    	}
+    
     @FXML
     void reserveParking(ActionEvent event) {
     	String _carNumber = parkResCarNumberTF.getText();
-    	String _arriveHour = parkResArrivingHourTF.getText();
-    	String _leaveHour = parkResLeavingHourTF.getText();
-    	String _arriveDate = parkResArrivingDateTF.getText();
-    	String _leaveDate = parkResLeavingDateTF.getText();
+    	String _arriveHour = parkResArrivingHourComboBox.getValue();
+    	String _arriveMinute = parkResArrivingMinuteComboBox.getValue();
+    	String _leaveHour = parkResLeavingHourComboBox.getValue();
+    	String _leaveMinute = parkResLeavingMinuteComboBox.getValue();
     	String _lotName = parkResComboBox.getValue();
     	
+    	LocalDate localDate = parkResArrivingDateDP.getValue();
+    	if(localDate != null){
+	    	Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+	    	Date date = Date.from(instant);
+	    	Calendar arriveCal = toCalendar(date);
+	    	arriveCal.set(Calendar.HOUR, Integer.parseInt(_arriveHour));
+	    	arriveCal.set(Calendar.MINUTE, Integer.parseInt(_arriveMinute));
+	    	System.out.println(arriveCal.getTimeInMillis());
+	    	String _arriveDate = "kheeloo";
+	    	String _leaveDate = "eeloo";
+    	}
+    	else{
+    		System.out.println("NULL LocalDate1");
+    	}
     	
-    	if(_carNumber.equals("") || _arriveHour.equals("") || _leaveHour.equals("") ||
-    			_arriveDate.equals("") || _leaveDate.equals("") ||  _lotName.equals("")){
+    	LocalDate localDate2 = parkResLeavingDateDP.getValue();
+    	if(localDate2 != null){
+	    	Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
+	    	Date date2 = Date.from(instant2);
+	    	Calendar leaveCal = toCalendar(date2);
+	    	leaveCal.set(Calendar.HOUR, Integer.parseInt(_leaveHour));
+	    	leaveCal.set(Calendar.MINUTE, Integer.parseInt(_leaveMinute));
+	    	System.out.println(leaveCal.getTimeInMillis());
+    	}
+    	else{
+    		System.out.println("NULL LocalDate2");
+    	}
+    	
+    	if(_carNumber.equals("") ||_lotName.equals("")){
     		
     		//informationAlert.setTitle("Reservation warrning");
     		//informationAlert.setHeaderText(null);
@@ -326,10 +399,10 @@ public class LogInController {
     		try {
     			JSONObject toSend = new JSONObject();
     			toSend.put("carNumber", _carNumber);
-    			toSend.put("arriveHour", _arriveHour);
-    			toSend.put("leaveHour", _leaveHour);
-    			toSend.put("arriveDate", _arriveDate);
-    			toSend.put("leaveDate", _leaveDate);
+//    			toSend.put("arriveHour", _arriveHour);
+//    			toSend.put("leaveHour", _leaveHour);
+//    			toSend.put("arriveDate", _arriveDate);
+//    			toSend.put("leaveDate", _leaveDate);
     			toSend.put("lotName", _lotName);
     			
     			
