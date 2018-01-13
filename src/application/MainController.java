@@ -10,9 +10,6 @@ import java.io.InputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.gson.JsonObject;
-
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

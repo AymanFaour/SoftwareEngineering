@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import model.ParkingLot;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -50,6 +51,8 @@ public class Main extends Application{
 	public static void main(String[] args) {
 /*		String parent = System.getProperty("user.dir");
 */		
+		
+		
 		MainController.initialize("10.0.0.6", "8080");
 		launch(args);
 	}
