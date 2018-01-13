@@ -11,16 +11,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -68,9 +72,6 @@ public class LogInController {
     @FXML // fx:id="textInTopOfLogIn"
     private Text textInTopOfLogIn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="regRouSubRoutinelyParkingLotTF"
-    private TextField regRouSubRoutinelyParkingLotTF; // Value injected by FXMLLoader
-
     @FXML // fx:id="parkResArrivingDateTF"
     private TextField parkResArrivingDateTF; // Value injected by FXMLLoader
 
@@ -115,8 +116,10 @@ public class LogInController {
     
     @FXML // fx:id="signOutButton"
     private Button signOutButton; // Value injected by FXMLLoader
-
-
+    
+    @FXML // fx:id="parkResComboBox"
+    private ComboBox<String> parkResComboBox; // Value injected by FXMLLoader
+    private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
     
     public void setWelcome(String s){
     	welcomeBanner.setText(s);
@@ -147,7 +150,21 @@ public class LogInController {
     	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	viewReservationButton.getStyleClass().add("loginView-buttons");
     	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
-    	complaintButton.getStyleClass().add("loginView-buttons");  	
+    	complaintButton.getStyleClass().add("loginView-buttons"); 
+
+    	ArrayList<String> parkingLotNames = new ArrayList<String>();
+    	parkingLotNames.add("Tarshiha Parking Lot");
+    	parkingLotNames.add("Majdal Shams Parking Lot");
+    	parkingLotNames.add("Khedira Parking Lot");
+    	parkingLotNames.add("TLV Parking Lot");
+    	parkingLotNames.add("Naharya Parking Lot");
+    	parkingLotNames.add("Haifa Parking Lot");
+    	
+    	myComboBoxData.clear();
+    	for(int i = 0; i < parkingLotNames.size(); i++){
+    		myComboBoxData.add(parkingLotNames.get(i));
+    	}
+    	parkResComboBox.setItems(myComboBoxData);
     }
 
     @FXML
@@ -316,6 +333,11 @@ public class LogInController {
     	}
     
     	
+    }
+    
+    @FXML
+    void parkResComboBoxDropDown(ActionEvent event) {
+    	System.out.println("dropped down");
     }
     
 
