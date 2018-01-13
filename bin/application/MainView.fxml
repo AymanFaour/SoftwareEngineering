@@ -10,17 +10,20 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <top>
-      <StackPane prefHeight="100.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="77.0" prefWidth="793.0" BorderPane.alignment="CENTER">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a304e" height="100.0" stroke="TRANSPARENT" strokeType="INSIDE" width="800.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a304e" height="77.0" stroke="TRANSPARENT" strokeType="INSIDE" width="800.0">
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin></Rectangle>
             <Label styleClass="label-welcome" stylesheets="@application.css" text="CPS Home Page" />
          </children>
       </StackPane>
    </top>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="648.0" prefWidth="787.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
          <left>
-            <VBox prefHeight="200.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="662.0" prefWidth="522.0" BorderPane.alignment="CENTER">
                <children>
                   <Label styleClass="label-header" stylesheets="@application.css" text="Sign In">
                      <VBox.margin>
@@ -62,7 +65,7 @@
                   </HBox>
                   <HBox prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <CheckBox fx:id="systemWorkerCheckBox" mnemonicParsing="false" onAction="#WorkerIDCheckBoxEventHandler" styleClass="check-box-first" stylesheets="@application.css" text="system worker">
+                        <CheckBox fx:id="systemWorkerCheckBox" mnemonicParsing="false" onAction="#WorkerIDCheckBoxEventHandler" prefHeight="27.0" prefWidth="285.0" styleClass="check-box-first" stylesheets="@application.css" text="system worker">
                            <HBox.margin>
                               <Insets top="3.0" />
                            </HBox.margin>
@@ -85,7 +88,7 @@
                         </TextField>
                      </children>
                      <VBox.margin>
-                        <Insets left="60.0" />
+                        <Insets left="60.0" top="20.0" />
                      </VBox.margin>
                   </HBox>
                   <Button fx:id="signiInButton" mnemonicParsing="false" onAction="#signInButton" prefWidth="95.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Sign in">
@@ -96,10 +99,15 @@
                   <Label layoutX="10.0" layoutY="482.0" styleClass="label-header" stylesheets="@application.css" text="Register Its For Free">
                      <VBox.margin>
                         <Insets top="20.0" />
-                     </VBox.margin></Label>
+                     </VBox.margin>
+                  </Label>
                   <HBox prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="firstNameTextField" promptText="first name" styleClass="text-field-first" stylesheets="@application.css" />
+                        <TextField fx:id="firstNameTextField" promptText="first name" styleClass="text-field-first" stylesheets="@application.css">
+                           <HBox.margin>
+                              <Insets bottom="10.0" />
+                           </HBox.margin>
+                        </TextField>
                         <TextField fx:id="lastNameTextField" promptText="last name" styleClass="text-field-first" stylesheets="@application.css">
                            <HBox.margin>
                               <Insets left="20.0" />
@@ -112,7 +120,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="emailTextField" prefWidth="318.0" promptText="e-mail" styleClass="text-field-first" stylesheets="@application.css" />
+                        <TextField fx:id="emailTextField" prefHeight="29.0" prefWidth="318.0" promptText="e-mail" styleClass="text-field-first" stylesheets="@application.css" />
                      </children>
                      <VBox.margin>
                         <Insets left="60.0" />
@@ -139,7 +147,7 @@
                         <CheckBox fx:id="BusinessCheckBox" mnemonicParsing="false" onAction="#BusinessCheckBoxEventHandler" styleClass="check-box-first" stylesheets="@application.css" text="Business" />
                      </children>
                      <VBox.margin>
-                        <Insets left="60.0" />
+                        <Insets left="60.0" top="5.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="124.0" prefHeight="40.0" prefWidth="200.0">
@@ -160,14 +168,23 @@
                   </HBox>
                   <Label layoutX="10.0" layoutY="10.0" styleClass="label-header" stylesheets="@application.css" text="Our Guest Room">
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets left="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="guestButton" alignment="CENTER" mnemonicParsing="false" onAction="#continueasAGuest" prefWidth="150.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Continue as a Guest">
-                     <VBox.margin>
-                        <Insets left="60.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
+                  <HBox prefHeight="94.0" prefWidth="560.0">
+                     <children>
+                        <Button fx:id="guestButton" alignment="CENTER" mnemonicParsing="false" onAction="#continueasAGuest" prefHeight="39.0" prefWidth="202.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Continue as a Guest">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="202.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Track Reservation">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
                <BorderPane.margin>
                   <Insets left="10.0" />
