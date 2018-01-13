@@ -695,6 +695,11 @@ public class LogInController {
     	
     }
     
+    @FXML
+    void makeDeposit(ActionEvent event){
+    	
+    }
+    
     
     JSONObject request(JSONObject json, String servletName){
     	HttpURLConnection connection = null;
