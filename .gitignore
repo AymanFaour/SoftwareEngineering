@@ -2,3 +2,9 @@
 \.classpath
 
 bin/application/MainController\.class
+
+bin/application/LogInController\.class
+
+bin/application/Main\.class
+
+*.class

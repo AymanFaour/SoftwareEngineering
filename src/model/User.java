@@ -61,8 +61,8 @@ public class User {
 	public long getBalance() {
 		return _balance;
 	}
-	public void setBalance(long l) {
-		this._balance = l;
+	public void setBalance(long balance) {
+		this._balance = balance;
 	}
 	public String getCompnay() {
 		return _company;
