@@ -17,6 +17,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,25 +30,29 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LogInController {
+	
+	Alert informationAlert = new Alert(AlertType.INFORMATION);
+	Alert errorAlert = new Alert(AlertType.ERROR);
+	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
 
 	@FXML // fx:id="welcomeBanner"
     private Label welcomeBanner; // Value injected by FXMLLoader
 
     @FXML // fx:id="businessRoutineSubscriptionBorderPane"
     private BorderPane businessRoutineSubscriptionBorderPane; // Value injected by FXMLLoader
-
-    @FXML // fx:id="regRouSubRoutinelyLeavingHourTF"
-    private TextField regRouSubRoutinelyLeavingHourTF; // Value injected by FXMLLoader
 
     @FXML // fx:id="regRouSubRegularRoutineSubscriptionButton"
     private Button regRouSubRegularRoutineSubscriptionButton; // Value injected by FXMLLoader
@@ -156,6 +162,11 @@ public class LogInController {
     @FXML // fx:id="MyAccountDepositButton"
     private Button MyAccountDepositButton; // Value injected by FXMLLoader
 
+    @FXML
+    private ComboBox<String> regRouSubRoutineHourComboBox;
+
+    @FXML
+    private ComboBox<String> regRouSubRoutineMinuteComboBox;
 
     
     public void setWelcome(String s){
@@ -199,6 +210,7 @@ public class LogInController {
     	parkingLotNames.add("TLV Parking Lot");
     	parkingLotNames.add("Naharya Parking Lot");
     	parkingLotNames.add("Haifa Parking Lot");
+    	parkingLotNames.add("Gon");
     	
     	myComboBoxHoursData.clear();
     	for(Integer i = 0; i < 24; i++){
@@ -254,6 +266,28 @@ public class LogInController {
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
     	
+    	myComboBoxHoursData.clear();
+    	for(Integer i = 0; i < 24; i++){
+    		if(i < 10 ){
+    			myComboBoxHoursData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxHoursData.add(i.toString());
+    	}
+    	
+    	myComboBoxMinutesData.clear();
+    	for(Integer i = 0; i < 60; i++){
+    		if(i < 10 ){
+    			myComboBoxMinutesData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxMinutesData.add(i.toString());
+    	}
+    	
+    	
+    	regRouSubRoutineHourComboBox.setItems(myComboBoxHoursData);
+    	regRouSubRoutineMinuteComboBox.setItems(myComboBoxMinutesData);
+    
 
     	ArrayList<String> parkingLotNames = new ArrayList<String>();
     	parkingLotNames.add("Tarshiha Parking Lot");
@@ -419,61 +453,94 @@ public class LogInController {
     	String _leaveHour = parkResLeavingHourComboBox.getValue();
     	String _leaveMinute = parkResLeavingMinuteComboBox.getValue();
     	String _lotName = parkResComboBox.getValue();
+    	LocalDate arriveLocalDate = parkResArrivingDateDP.getValue();
+    	LocalDate leaveLocalDate = parkResLeavingDateDP.getValue();
+    	Calendar arriveCal = Calendar.getInstance();
+    	Calendar leaveCal = Calendar.getInstance();
     	
-    	LocalDate localDate = parkResArrivingDateDP.getValue();
-    	if(localDate != null){
-	    	Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+    	if(arriveLocalDate != null){
+	    	Instant instant = Instant.from(arriveLocalDate.atStartOfDay(ZoneId.systemDefault()));
 	    	Date date = Date.from(instant);
-	    	Calendar arriveCal = toCalendar(date);
+	    	arriveCal = toCalendar(date);
 	    	arriveCal.set(Calendar.HOUR, Integer.parseInt(_arriveHour));
 	    	arriveCal.set(Calendar.MINUTE, Integer.parseInt(_arriveMinute));
 	    	System.out.println(arriveCal.getTimeInMillis());
-	    	String _arriveDate = "kheeloo";
-	    	String _leaveDate = "eeloo";
     	}
     	else{
-    		System.out.println("NULL LocalDate1");
+    		System.out.println("NULL arriveLocalDate");
     	}
     	
-    	LocalDate localDate2 = parkResLeavingDateDP.getValue();
-    	if(localDate2 != null){
-	    	Instant instant2 = Instant.from(localDate2.atStartOfDay(ZoneId.systemDefault()));
+    	if(leaveLocalDate != null){
+	    	Instant instant2 = Instant.from(leaveLocalDate.atStartOfDay(ZoneId.systemDefault()));
 	    	Date date2 = Date.from(instant2);
-	    	Calendar leaveCal = toCalendar(date2);
+	    	leaveCal = toCalendar(date2);
 	    	leaveCal.set(Calendar.HOUR, Integer.parseInt(_leaveHour));
 	    	leaveCal.set(Calendar.MINUTE, Integer.parseInt(_leaveMinute));
 	    	System.out.println(leaveCal.getTimeInMillis());
     	}
     	else{
-    		System.out.println("NULL LocalDate2");
+    		System.out.println("NULL arriveLocalDate");
     	}
     	
     	if(_carNumber.equals("") ||_lotName.equals("")){
     		
-    		//informationAlert.setTitle("Reservation warrning");
-    		//informationAlert.setHeaderText(null);
-    		//informationAlert.setContentText("Please fill all the above field to complete the reservation");
-    		//informationAlert.showAndWait();
+    	 	informationAlert.setTitle("Reservation warrning");
+    		informationAlert.setHeaderText(null);
+    		informationAlert.setContentText("Please fill all the car number, arriving date and parking lot fields to complete the reservation");
+    		informationAlert.showAndWait();
     		
     	}else{
-    		
-    		try {
-    			JSONObject toSend = new JSONObject();
-    			toSend.put("carNumber", _carNumber);
-//    			toSend.put("arriveHour", _arriveHour);
-//    			toSend.put("leaveHour", _leaveHour);
-//    			toSend.put("arriveDate", _arriveDate);
-//    			toSend.put("leaveDate", _leaveDate);
-    			toSend.put("lotName", _lotName);
-    			
-    			
-    		} catch (JSONException | NullPointerException e1) {
-    			
-    			e1.printStackTrace();
-    		}
-    		
+    		long deff = TimeUnit.MILLISECONDS.toMinutes(Math.abs(leaveCal.getTimeInMillis() - arriveCal.getTimeInMillis()));
+            long cost = Math.round(deff/60.0) * 4;
+            long _start = arriveCal.getTime().getTime();
+            long _end = leaveCal.getTime().getTime();
+            
+                        
+            String _name = MainController._currentUser.getUsername();
+                    
+            confirmAlert.setTitle("Confirmation Dialog");
+            confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
+         
+            
+            
+            Optional<ButtonType> result = confirmAlert.showAndWait();
+            if(result.get() == ButtonType.OK){
+            	
+            	if(MainController._currentUser.getBalance() < cost){
+            		
+            		informationAlert.setTitle("Reservation warrning");
+            		informationAlert.setHeaderText(null);
+            		informationAlert.setContentText("Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+            		informationAlert.showAndWait();
+            		
+            	}else{
+            		JSONObject json = new JSONObject();  
+                    try {
+                    	
+            			json.put("carNumber", _carNumber);
+            			json.put("lotName", _lotName);
+            			json.put("username", _name);
+            			json.put("start", _start);
+            			json.put("end", _end);
+            			json.put("cmd", "reserveAhead");
+            			
+            			// send to reservation servlet
+            			JSONObject ret = request(json, "ReservationController");
+            			
+            			System.out.println(ret.getBoolean("result"));
+            			if(ret.getBoolean("result")){
+            				System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+            				MainController._currentUser.setBalance(MainController._currentUser.getBalance() - cost);
+            				System.out.println("New balance is: " + MainController._currentUser.getBalance());
+            			}
+            		} catch (JSONException e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+            		}
+            	}	
+            }
     	}
-    
+    		
     }
 
     @FXML
@@ -482,11 +549,10 @@ public class LogInController {
     	String _carNumber = regRouSubCarNumberTF.getText();
     	String _lotName = regRouComboBox.getValue();
     	//String _lotName = "eeloo";
-    	String _leaveHour = regRouSubRoutinelyLeavingHourTF.getText();
     	
     	System.out.println(_lotName);
     	
-    	if(_carNumber.equals("") || _leaveHour.equals("") || _lotName.equals("")){
+    	if(_carNumber.equals("") || _lotName.equals("")){
     		
     		//informationAlert.setTitle("Reservation warrning");
     		//informationAlert.setHeaderText(null);
@@ -498,7 +564,7 @@ public class LogInController {
     		try {
     			JSONObject toSend = new JSONObject();
     			toSend.put("carNumber", _carNumber);
-    			toSend.put("leaveHour", _leaveHour);
+    			//toSend.put("leaveHour", _leaveHour);
     			toSend.put("lotName", _lotName);
     			
     			//CpsController.client.request("reserveParking",toSend.toString());
