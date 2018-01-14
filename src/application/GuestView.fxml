@@ -32,7 +32,7 @@
                   </Text>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="320.0">
                      <children>
-                        <Button fx:id="signOutButton" mnemonicParsing="false" onAction="#signOut" prefHeight="39.0" prefWidth="208.0" styleClass="sign-out-button" stylesheets="@application.css" text="Back  To Main Page">
+                        <Button fx:id="signOutButton" mnemonicParsing="false" onAction="#signOut" styleClass="sign-out-button" stylesheets="@application.css" text="Back  To Main Page">
                            <HBox.margin>
                               <Insets top="17.0" />
                            </HBox.margin>
@@ -142,7 +142,7 @@
       <StackPane prefHeight="100.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a304e" height="100.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
-            <Label fx:id="welcomeBanner" styleClass="label-welcome" stylesheets="@application.css" text="Label" textFill="#8a4141" />
+            <Label fx:id="welcomeBanner" styleClass="label-welcome" stylesheets="@application.css" text="Guest Room" textFill="#8a4141" />
          </children>
       </StackPane>
    </top>
