@@ -207,8 +207,11 @@ public class LogInController {
     @FXML // fx:id="ComplaintCarNumberTF"
     private TextField ComplaintCarNumberTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="reservationsList"
+    @FXML // fx:id="subscriptionsList"
     private VBox subscriptionsList; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="fullSubscriptionsList"
+    private VBox fullSubscriptionsList; // Value injected by FXMLLoader
     
     
     public void setWelcome(String s){
