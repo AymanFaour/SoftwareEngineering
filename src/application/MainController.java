@@ -10,6 +10,9 @@ import java.io.InputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -98,21 +101,41 @@ public class MainController {
     
     @FXML
     void continueasAGuest(ActionEvent event) {
+
+    	ObservableList<String> setted = FXCollections.observableArrayList();
+    	ObservableList<String> setted2 = FXCollections.observableArrayList();
     	
-    	Scene currentScene = signiInButton.getScene();
-    	Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("GuestView.fxml"));
+    	setted.clear();
+    	for(Integer i = 0; i < 24; i++){
+    		if(i < 10 ){
+    			setted.add("0" + i.toString());
+    		}
+    		else
+    			setted.add(i.toString());
+    	}
+    	
+    	setted2.clear();
+    	for(Integer i = 0; i < 60; i++){
+    		if(i < 10 ){
+    			setted2.add("0" + i.toString());
+    		}
+    		else
+    			setted2.add(i.toString());
+    	}
+    	
+    	
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GuestView.fxml"));
+        Parent root;
 		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
-			
+			root = loader.load();
+	        guestButton.getScene().setRoot(root);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Scene scene = new Scene(mainLayout);
-    	
-    	Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
+        GuestController gu = loader.getController();
+        gu.setMyComboBoxHoursData(setted);
+        gu.setMyComboBoxMinutesData(setted2);
     }
     
     @FXML
