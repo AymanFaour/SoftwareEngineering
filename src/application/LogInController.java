@@ -207,7 +207,10 @@ public class LogInController {
     @FXML // fx:id="ComplaintCarNumberTF"
     private TextField ComplaintCarNumberTF; // Value injected by FXMLLoader
 
-
+    @FXML // fx:id="reservationsList"
+    private VBox subscriptionsList; // Value injected by FXMLLoader
+    
+    
     public void setWelcome(String s){
     	welcomeBanner.setText(s);
     }
@@ -446,8 +449,9 @@ public class LogInController {
     	MyAccountButton.getStyleClass().add("loginView-buttons");
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
     	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    	
+
     	JSONArray ja = new JSONArray();
+    	JSONArray ja2 = new JSONArray();
     	try {
     		
     		int length = reservationsList.getChildren().size();
@@ -526,6 +530,28 @@ public class LogInController {
 					deActivateButton.getStyleClass().add("deactivate-button");
 					hb.getChildren().add(deActivateButton);
 				}
+				
+				/***/
+				
+					ja2.put(new JSONObject().put("ID", "200").put("leaving hour", "20:00")
+						.put("leaving date", "jan 14").put("status", "not used")
+						.put("car id", "2039").put("parking lot name","majdal shams"));
+	    	
+					HBox hb2 = new HBox();
+					hb2.getChildren().add(resId);
+					hb2.getChildren().add(arriving);
+					hb2.getChildren().add(leaving);
+					hb2.getChildren().add(carId);
+					hb2.getChildren().add(parkingLotName);
+					hb2.getChildren().add(status);
+					hb2.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+							+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+					subscriptionsList.getChildren().add(hb2);				
+				
+					
+					
+					
+				/***/
 				
     		}
 			
