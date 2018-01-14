@@ -807,30 +807,52 @@ public class LogInController {
             int routLeaveHourInt = Integer.parseInt(_routLeaveHour);
             int routLeaveMinuteInt = Integer.parseInt(_routLeaveMinute);
             
+            String leaveHour = (routLeaveHourInt) + ":" + (routLeaveMinuteInt);
+            
             String _name = MainController._currentUser.getUsername();
     		
     		JSONObject json = new JSONObject();
             try {
             	
-            	//TODO: Complete server connection and so on 
-    			json.put("carNumber", _carNumber);
-    			json.put("lotName", _lotName);
-    			json.put("username", _name);
-    			json.put("leaveHour", routLeaveHourInt);
-    			json.put("leaveMinute", routLeaveMinuteInt);
-    			json.put("start", _start);
-    			json.put("end", _end);
-    			json.put("cmd", "RegularRoutineSubscription");
-    			
-    			// send to reservation servlet
-//    			JSONObject ret = request(json, "RegularRoutineSubscription");
-//	
-//    			System.out.println(ret.getBoolean("result"));
-//    			if(ret.getBoolean("result")){
-//    				System.out.println("Old balance is: " + MainController._currentUser.getBalance());
-//    				MainController._currentUser.setBalance(MainController._currentUser.getBalance() - cost);
-//    				updateBalance((-1)*cost);
-//    				System.out.println("New balance is: " + MainController._currentUser.getBalance());
+            	confirmAlert.setTitle("Confirmation Dialog");
+                confirmAlert.setContentText("Would you like to reserve this parking for 240$ ?");
+             
+                
+                
+                Optional<ButtonType> result = confirmAlert.showAndWait();
+                if(result.get() == ButtonType.OK){
+                	if(MainController._currentUser.getBalance() < 240){
+                		
+                		informationAlert.setTitle("Reservation warrning");
+                		informationAlert.setHeaderText(null);
+                		informationAlert.setContentText("Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+                		informationAlert.showAndWait();
+                		
+                	}else{
+                		
+                		//TODO: Complete server connection and so on 
+    	    			json.put("carNumber", _carNumber);
+    	    			json.put("lotName", _lotName);
+    	    			json.put("username", _name);
+    	    			json.put("leave", leaveHour);
+    	    			json.put("start", _start);
+    	    			json.put("end", _end);
+    	    			json.put("cmd", "RegularRoutineSubscription");
+    	    			
+    	    			// send to reservation servlet
+    	//    			JSONObject ret = request(json, "RegularRoutineSubscription");
+    	//	
+    	//    			System.out.println(ret.getBoolean("result"));
+    	//    			if(ret.getBoolean("result")){
+    	//    				System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+    	//    				MainController._currentUser.setBalance(MainController._currentUser.getBalance() - cost);
+    	//    				updateBalance((-1)*cost);
+    	//    				System.out.println("New balance is: " + MainController._currentUser.getBalance());
+                	}
+	            	
+                }else{
+                	
+                }
     			
     		} catch (JSONException e) {
     			e.printStackTrace();
