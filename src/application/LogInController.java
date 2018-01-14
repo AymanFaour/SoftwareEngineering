@@ -454,35 +454,40 @@ public class LogInController {
     		reservationsList.getChildren().remove(0, length);
     		
     		ja.put(new JSONObject().put("ID", "12").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "in queue"));
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "in queue")
+					.put("car id", "2039").put("parking lot name","majdal shams"));
     		
     		ja.put(new JSONObject().put("ID", "20").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking"));
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
+					.put("car id", "2039").put("parking lot name","majdal shams"));
     		
     		ja.put(new JSONObject().put("ID", "70").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking"));
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
+					.put("car id", "2039").put("parking lot name","majdal shams"));
     		
     		for(int i = 0; i < ja.length(); i++){
 
         	    Label resId = new Label(((JSONObject) ja.get(i)).getString("ID"));
         	    resId.setStyle("-fx-pref-width: 40;");
-        		Label arrivingDate = new Label(((JSONObject) ja.get(i)).getString("arriving date"));
-        		arrivingDate.setStyle("-fx-pref-width: 80;");
-        		Label leavingDate = new Label(((JSONObject) ja.get(i)).getString("leaving date"));
-        		leavingDate.setStyle("-fx-pref-width: 80;");
-        		Label arrivingHour = new Label(((JSONObject) ja.get(i)).getString("arriving hour"));
-        		arrivingHour.setStyle("-fx-pref-width: 80;");
-        		Label leavingHour = new Label(((JSONObject) ja.get(i)).getString("leaving hour"));
-        		leavingHour.setStyle("-fx-pref-width: 80;");
+        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("arriving date")
+        							+ " " + ((JSONObject) ja.get(i)).getString("arriving hour"));
+        		arriving.setStyle("-fx-pref-width: 80;");
+        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("leaving date")
+        							+ " " + ((JSONObject) ja.get(i)).getString("leaving hour"));
+        		leaving.setStyle("-fx-pref-width: 80;");
+        		Label carId = new Label(((JSONObject) ja.get(i)).getString("car id"));
+        		carId.setStyle("-fx-pref-width: 80;");
+        		Label parkingLotName = new Label(((JSONObject) ja.get(i)).getString("parking lot name"));
+        		parkingLotName.setStyle("-fx-pref-width: 100;");
         		Label status = new Label(((JSONObject) ja.get(i)).getString("status"));
         		status.setStyle("-fx-pref-width: 60;");
     		
 				HBox hb = new HBox();
 				hb.getChildren().add(resId);
-				hb.getChildren().add(arrivingDate);
-				hb.getChildren().add(leavingDate);
-				hb.getChildren().add(arrivingHour);
-				hb.getChildren().add(leavingHour);
+				hb.getChildren().add(arriving);
+				hb.getChildren().add(leaving);
+				hb.getChildren().add(carId);
+				hb.getChildren().add(parkingLotName);
 				hb.getChildren().add(status);
 				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");

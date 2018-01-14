@@ -29,12 +29,12 @@
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="ActualParkingButton" mnemonicParsing="false" onAction="#loadActualParking" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Actual Parking" />
             <Button fx:id="parkingReservationButton" mnemonicParsing="false" onAction="#loadParkingReservation" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Parking Reservation">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </Button>
+            <Button fx:id="ActualParkingButton" mnemonicParsing="false" onAction="#loadActualParking" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Occasional Parking" />
             <Button fx:id="regularRoutinelySubscriptionButton" mnemonicParsing="false" onAction="#loadRegularRoutinelySubscription" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Regular Routinely Subscription">
                <VBox.margin>
                   <Insets />
@@ -125,22 +125,22 @@
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="10.0" layoutY="10.0" prefWidth="80.0" text="Arriving Date">
+                                          <Label layoutX="10.0" layoutY="10.0" prefWidth="80.0" text="Arriving">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="86.0" layoutY="10.0" prefWidth="80.0" text="Leaving Date">
+                                          <Label layoutX="86.0" layoutY="10.0" prefWidth="80.0" text="Leaving">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="162.0" layoutY="10.0" prefWidth="80.0" text="Arriving Hour">
+                                          <Label layoutX="162.0" layoutY="10.0" prefWidth="80.0" text="Car Number">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="195.0" layoutY="12.0" prefWidth="80.0" text="Leaving Hour">
+                                          <Label layoutX="195.0" layoutY="12.0" prefWidth="100.0" text="Parking Lot Name">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
