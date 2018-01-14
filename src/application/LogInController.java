@@ -453,41 +453,61 @@ public class LogInController {
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
     	ActualParkingButton.getStyleClass().add("loginView-buttons");
 
-    	JSONArray ja = new JSONArray();
-    	JSONArray ja2 = new JSONArray();
+    	
+    	
+    	
+    	JSONObject ret = getReserves();
+    	
+    
+		
+		
+    	
     	try {
+    		
+    		JSONArray ja = ret.getJSONArray("resArr");
+    		JSONArray ja2 = ret.getJSONArray("routSubArr");
+    		
+//    		System.out.println(ja);
+    		
     		
     		int length = reservationsList.getChildren().size();
     		reservationsList.getChildren().remove(0, length);
     		
-    		ja.put(new JSONObject().put("ID", "12").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "in queue")
-					.put("car id", "2000").put("parking lot name","majdal shams"));
-    		
-    		ja.put(new JSONObject().put("ID", "20").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
-					.put("car id", "2001").put("parking lot name","majdal shams"));
-    		
-    		ja.put(new JSONObject().put("ID", "70").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
-					.put("car id", "20002").put("parking lot name","majdal shams"));
+//    		ja.put(new JSONObject().put("ID", "12").put("arriving hour", "18:00").put("leaving hour", "20:00")
+//					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "in queue")
+//					.put("car id", "2000").put("parking lot name","majdal shams"));
+//    		
+//    		ja.put(new JSONObject().put("ID", "20").put("arriving hour", "18:00").put("leaving hour", "20:00")
+//					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
+//					.put("car id", "2001").put("parking lot name","majdal shams"));
+//    		
+//    		ja.put(new JSONObject().put("ID", "70").put("arriving hour", "18:00").put("leaving hour", "20:00")
+//					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
+//					.put("car id", "20002").put("parking lot name","majdal shams"));
+//    		
+//    		
     		
     		for(int i = 0; i < ja.length(); i++){
 
-        	    Label resId = new Label(((JSONObject) ja.get(i)).getString("ID"));
+        	    Label resId = new Label(Integer.toString(((JSONObject) ja.get(i)).getInt("reserveID")));
         	    resId.setStyle("-fx-pref-width: 40;");
-        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("arriving date")
-        							+ " " + ((JSONObject) ja.get(i)).getString("arriving hour"));
+        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("start"));
         		arriving.setStyle("-fx-pref-width: 80;");
-        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("leaving date")
-        							+ " " + ((JSONObject) ja.get(i)).getString("leaving hour"));
+        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("end"));
         		leaving.setStyle("-fx-pref-width: 80;");
-        		Label carId = new Label(((JSONObject) ja.get(i)).getString("car id"));
+        		Label carId = new Label(((JSONObject) ja.get(i)).getString("carNumber"));
         		carId.setStyle("-fx-pref-width: 80;");
-        		Label parkingLotName = new Label(((JSONObject) ja.get(i)).getString("parking lot name"));
+        		Label parkingLotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
         		parkingLotName.setStyle("-fx-pref-width: 100;");
-        		Label status = new Label(((JSONObject) ja.get(i)).getString("status"));
-        		status.setStyle("-fx-pref-width: 60;");
+        		Label status = null;
+        		if(((JSONObject) ja.get(i)).getBoolean("activated") == false){
+        			status = new Label("in queue");
+        			status.setStyle("-fx-pref-width: 60;");
+        		}else{
+        			status = new Label("parking");
+        			status.setStyle("-fx-pref-width: 60;");
+        		}
+   
     		
 				HBox hb = new HBox();
 				hb.getChildren().add(resId);
@@ -539,111 +559,75 @@ public class LogInController {
 				/***/
 				
     		}
+    		
+			for(int i = 0; i < ja2.length(); i++){
+				
+
+				HBox hb = new HBox();
+				
+        	    Label subId = new Label(Integer.toString(((JSONObject) ja2.get(i)).getInt("routineSubID")));
+        	    subId.setStyle("-fx-pref-width: 40;");
+        		Label leaving = new Label(((JSONObject) ja2.get(i)).getString("end"));
+        		leaving.setStyle("-fx-pref-width: 80;");
+        		Label leavingHour = new Label(((JSONObject) ja2.get(i)).getString("leaveHour"));
+        		leaving.setStyle("-fx-pref-width: 80;");
+        		Label carId = new Label(((JSONObject) ja2.get(i)).getString("carNumber"));
+        		carId.setStyle("-fx-pref-width: 80;");
+        		Label parkingLotName = new Label(((JSONObject) ja2.get(i)).getString("lotName"));
+        		parkingLotName.setStyle("-fx-pref-width: 100;");
+        		
+        		
+        		
+        		Label status = null;
+        		if(((JSONObject) ja2.get(i)).getInt("used") == 0){
+        			status = new Label("not used");
+        			status.setStyle("-fx-pref-width: 60;");
+        		}else if(((JSONObject) ja2.get(i)).getInt("used") == 1){
+        			status = new Label("parking");
+        			status.setStyle("-fx-pref-width: 60;");
+        		}else{
+        			status = new Label("used");
+        			status.setStyle("-fx-pref-width: 60;");
+        		}
+    		
+
+		        hb.getChildren().add(subId);
+				hb.getChildren().add(leaving);
+				hb.getChildren().add(carId);
+				hb.getChildren().add(parkingLotName);
+				hb.getChildren().add(status);
+				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+				subscriptionsList.getChildren().add(hb);
+				
+				if(status.getText().equals("not used")){
+					Button activateButton = new Button("Enter");
+					activateButton.setId("subActivateButton" + subId.getText());
+					String css = getClass().getResource("application.css").toExternalForm();
+					activateButton.getStylesheets().clear();
+					activateButton.getStylesheets().add(css);
+					activateButton.setOnAction(e -> activateParkingSub(e, subId.getText(),
+							parkingLotName.getText()));
+					activateButton.getStyleClass().add("activate-button");
+					hb.getChildren().add(activateButton);	
+				}
+				
+				if(status.getText().equals("parking")){
+					Button deActivateButton = new Button("Exit");
+					deActivateButton.setId("subDeactivateButton" + subId.getText());
+					String css = getClass().getResource("application.css").toExternalForm();
+					deActivateButton.getStylesheets().clear();
+					deActivateButton.getStylesheets().add(css);
+					deActivateButton.setOnAction(e -> deActivateParkingSub(e, subId.getText()));
+					deActivateButton.getStyleClass().add("deactivate-button");
+					hb.getChildren().add(deActivateButton);
+				}
+			}
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-    	
-		/***/
-		
-		try {
-				ja2.put(new JSONObject().put("ID", "200").put("leaving hour", "22:00")
-					.put("status", "not used")
-					.put("car id", "2039").put("parking lot name","majdal shams"));
-
-				ja2.put(new JSONObject().put("ID", "202").put("leaving hour", "21:00")
-				.put("status", "parking")
-				.put("car id", "2060").put("parking lot name","majdal shams"));
-
-				ja2.put(new JSONObject().put("ID", "209").put("leaving hour", "19:00")
-				.put("status", "used")
-				.put("car id", "2080").put("parking lot name","majdal shams"));
-
-				ja2.put(new JSONObject().put("ID", "202").put("leaving hour", "21:00")
-					.put("status", "parking")
-					.put("car id", "2090").put("parking lot name","majdal shams"));
-
-				ja2.put(new JSONObject().put("ID", "209").put("leaving hour", "19:00")
-					.put("status", "used")
-					.put("car id", "3000").put("parking lot name","majdal shams"));
-				
-				ja2.put(new JSONObject().put("ID", "202").put("leaving hour", "21:00")
-						.put("status", "parking")
-						.put("car id", "5000").put("parking lot name","majdal shams"));
-
-				ja2.put(new JSONObject().put("ID", "209").put("leaving hour", "19:00")
-						.put("status", "used")
-						.put("car id", "3200").put("parking lot name","majdal shams"));
-
-
-			/**		
-			        hb.getChildren().add(resId);
-					hb.getChildren().add(arriving);
-					hb.getChildren().add(leaving);
-					hb.getChildren().add(carId);
-					hb.getChildren().add(parkingLotName);
-					hb.getChildren().add(status);
-					hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
-							+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
-					subscriptionsList.getChildren().add(hb);				
-			**/
-					for(int i = 0; i < ja2.length(); i++){
-					
-
-						HBox hb = new HBox();
-						
-		        	    Label subId = new Label(((JSONObject) ja2.get(i)).getString("ID"));
-		        	    subId.setStyle("-fx-pref-width: 40;");
-		        		Label leaving = new Label(((JSONObject) ja2.get(i)).getString("leaving hour"));
-		        		leaving.setStyle("-fx-pref-width: 80;");
-		        		Label carId = new Label(((JSONObject) ja2.get(i)).getString("car id"));
-		        		carId.setStyle("-fx-pref-width: 80;");
-		        		Label parkingLotName = new Label(((JSONObject) ja2.get(i)).getString("parking lot name"));
-		        		parkingLotName.setStyle("-fx-pref-width: 100;");
-		        		Label status = new Label(((JSONObject) ja2.get(i)).getString("status"));
-		        		status.setStyle("-fx-pref-width: 60;");
-		    		
-
-				        hb.getChildren().add(subId);
-						hb.getChildren().add(leaving);
-						hb.getChildren().add(carId);
-						hb.getChildren().add(parkingLotName);
-						hb.getChildren().add(status);
-						hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
-								+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
-						subscriptionsList.getChildren().add(hb);
-						
-						if(((JSONObject) ja2.get(i)).getString("status") == "not used"){
-							Button activateButton = new Button("Enter");
-							activateButton.setId("subActivateButton" + subId.getText());
-							String css = getClass().getResource("application.css").toExternalForm();
-							activateButton.getStylesheets().clear();
-							activateButton.getStylesheets().add(css);
-							activateButton.setOnAction(e -> activateParkingSub(e, subId.getText(),
-									parkingLotName.getText()));
-							activateButton.getStyleClass().add("activate-button");
-							hb.getChildren().add(activateButton);	
-						}
-						
-						if(((JSONObject) ja2.get(i)).getString("status") == "parking"){
-							Button deActivateButton = new Button("Exit");
-							deActivateButton.setId("subDeactivateButton" + subId.getText());
-							String css = getClass().getResource("application.css").toExternalForm();
-							deActivateButton.getStylesheets().clear();
-							deActivateButton.getStylesheets().add(css);
-							deActivateButton.setOnAction(e -> deActivateParkingSub(e, subId.getText()));
-							deActivateButton.getStyleClass().add("deactivate-button");
-							hb.getChildren().add(deActivateButton);
-						}
-					}
-		
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-    	
+    
     }
 
     private void deActivateParkingSub(ActionEvent e, String subId) {
@@ -908,7 +892,7 @@ public class LogInController {
 						json.put("start", _start);
 						json.put("end", _end);
 						json.put("type", "r");
-						json.put("activated", 1);
+						json.put("activated", 0);
 						json.put("cmd", "reserveAhead");
 
 						// send to reservation servlet
@@ -1066,25 +1050,25 @@ public class LogInController {
 	@FXML
 	void signOut(ActionEvent event) {
 
-		// getReserves();
+		 getReserves();
 
 		// System.out.println(getReserves());
-		MainController._currentUser = null;
-
-		Scene currentScene = signOutButton.getScene();
-		Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
-		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
-
-			e.printStackTrace();
-		}
-
-		Scene scene = new Scene(mainLayout);
-		Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
+//		MainController._currentUser = null;
+//
+//		Scene currentScene = signOutButton.getScene();
+//		Parent mainLayout = null;
+//		FXMLLoader loader = new FXMLLoader();
+//		loader.setLocation(Main.class.getResource("MainView.fxml"));
+//		try {
+//			mainLayout = loader.load();
+//		} catch (IOException | NullPointerException e) {
+//
+//			e.printStackTrace();
+//		}
+//
+//		Scene scene = new Scene(mainLayout);
+//		Stage stage = (Stage) currentScene.getWindow();
+//		stage.setScene(scene);
 
 	}
 
@@ -1119,7 +1103,7 @@ public class LogInController {
 	 * function that return a JSONArray for all the reserves of a specific user
 	 * name
 	 */
-	JSONArray getReserves() {
+	JSONObject getReserves() {
 
 		JSONObject json = new JSONObject();
 		JSONObject ret = new JSONObject();
@@ -1131,7 +1115,7 @@ public class LogInController {
 			if (ret.getBoolean("result")) {
 				JSONArray reservs = ret.getJSONArray("resArr");
 				System.out.println(reservs.toString());
-				return reservs;
+				return ret;
 			}
 
 		} catch (JSONException e) {
