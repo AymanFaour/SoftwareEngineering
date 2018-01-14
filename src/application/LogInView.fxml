@@ -381,7 +381,7 @@
                                     <DatePicker fx:id="ActualParkingLeavingDateDP" />
                                  </children>
                               </HBox>
-                              <Button fx:id="GuestReserveParkingButton" mnemonicParsing="false" onAction="#reserveActualParking" styleClass="go-button" stylesheets="@application.css" text="Reserve" />
+                              <Button fx:id="GuestReserveParkingButton" mnemonicParsing="false" onAction="#reserveActualParking" styleClass="go-button" stylesheets="@application.css" text="Reserve And Park" />
                            </children>
                            <padding>
                               <Insets left="20.0" top="10.0" />

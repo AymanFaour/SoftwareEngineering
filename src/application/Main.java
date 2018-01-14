@@ -1,10 +1,17 @@
 package application;
 	
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+
+import org.json.JSONObject;
+
+import com.google.gson.stream.JsonReader;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import model.ParkingLot;
 //import model.ParkingLot;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +20,7 @@ import javafx.scene.Scene;
 public class Main extends Application{
 	private Parent mainLayout;
 	private Stage primaryStage;
+	public static ParkingLot _currentParkingLot;
 
 	public static void setprimary(Stage prim){
 		
@@ -49,9 +57,37 @@ public class Main extends Application{
 	}
 
 	public static void main(String[] args) {
-/*		String parent = System.getProperty("user.dir");
-*/		
-		
+
+	    String parent = System.getProperty("user.dir");
+        try {
+
+        	FileReader fr = null;
+        	BufferedReader br = null;
+        	
+        	fr = new FileReader(parent+"/config.txt");
+        	br = new BufferedReader(fr);
+        	
+        	StringBuffer sb = new StringBuffer();
+        	String st = null;
+
+
+        	while( (st = br.readLine()) != null){
+        		sb.append(st);
+        	}
+        	
+        	fr.close();
+        	br.close();
+        	
+        	JSONObject config = new JSONObject(sb.toString());
+
+        	
+//        	System.out.println(config + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        	
+        	_currentParkingLot = new ParkingLot(config.getString("lotName"));
+        	
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 		
 		MainController.initialize("192.168.1.36", "8080");
 		launch(args);
