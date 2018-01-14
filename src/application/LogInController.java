@@ -37,6 +37,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
@@ -174,8 +175,39 @@ public class LogInController {
     @FXML // fx:id="reservationsList"
     private VBox reservationsList; // Value injected by FXMLLoader
 
+   
+    @FXML // fx:id="ActualParkingLeavingMinuteComboBox"
+    private ComboBox<String> ActualParkingLeavingMinuteComboBox; // Value injected by FXMLLoader
+   
+    @FXML // fx:id="ActualParkingLeavingDateDP"
+    private DatePicker ActualParkingLeavingDateDP; // Value injected by FXMLLoader
+  
+    @FXML // fx:id="ActualParkingLeavingHourComboBox"
+    private ComboBox<String> ActualParkingLeavingHourComboBox; // Value injected by FXMLLoader
+   
+    @FXML // fx:id="ActualParkingNumberTF"
+    private TextField ActualParkingNumberTF; // Value injected by FXMLLoader
 
+  
+    @FXML // fx:id="ActualParkingButton"
+    private Button ActualParkingButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ActualParkingBorderPane"
+    private BorderPane ActualParkingBorderPane; // Value injected by FXMLLoader
     
+    @FXML // fx:id="ComplaintReservationIdTF"
+    private TextField ComplaintReservationIdTF; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ComplaintTA"
+    private TextArea ComplaintTA; // Value injected by FXMLLoader
+
+    @FXML // fx:id="ComplaintSendButton"
+    private Button ComplaintSendButton; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="ComplaintCarNumberTF"
+    private TextField ComplaintCarNumberTF; // Value injected by FXMLLoader
+
+
     public void setWelcome(String s){
     	welcomeBanner.setText(s);
     }
@@ -194,7 +226,10 @@ public class LogInController {
     	complaintBorderPane.setVisible(false);
     	viewProfileBorderPane.setVisible(false);
     	MyAccountBorderPane.setVisible(false);
-    	
+    	ActualParkingBorderPane.setVisible(false);
+
+
+    
     	parkingReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	parkingReservationButton.getStyleClass().add("pressedButton");
     	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -209,7 +244,9 @@ public class LogInController {
     	complaintButton.getStyleClass().add("loginView-buttons");
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
-
+    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+    	ActualParkingButton.getStyleClass().add("loginView-buttons");
+    	
     	ArrayList<String> parkingLotNames = new ArrayList<String>();
     	parkingLotNames.add("Ben Gurion");
     	parkingLotNames.add("Carmel");
@@ -256,7 +293,10 @@ public class LogInController {
     	complaintBorderPane.setVisible(false);
     	viewProfileBorderPane.setVisible(false);
     	MyAccountBorderPane.setVisible(false);
+    	ActualParkingBorderPane.setVisible(false);
 
+
+    	
     	regularRoutinelySubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	regularRoutinelySubscriptionButton.getStyleClass().add("pressedButton");
     	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -271,6 +311,8 @@ public class LogInController {
     	complaintButton.getStyleClass().add("loginView-buttons");
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
+    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+    	ActualParkingButton.getStyleClass().add("loginView-buttons");
     	
     	myComboBoxHoursData.clear();
     	for(Integer i = 0; i < 24; i++){
@@ -319,7 +361,10 @@ public class LogInController {
     	complaintBorderPane.setVisible(false);
     	viewProfileBorderPane.setVisible(false);
     	MyAccountBorderPane.setVisible(false);
+    	ActualParkingBorderPane.setVisible(false);
 
+
+    	
     	businessRoutinelySubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	businessRoutinelySubscriptionButton.getStyleClass().add("pressedButton");
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -334,6 +379,8 @@ public class LogInController {
     	complaintButton.getStyleClass().add("loginView-buttons");
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
+    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+    	ActualParkingButton.getStyleClass().add("loginView-buttons");
     	
     }
 
@@ -346,7 +393,10 @@ public class LogInController {
     	complaintBorderPane.setVisible(false);
     	viewProfileBorderPane.setVisible(false);
     	MyAccountBorderPane.setVisible(false);
+    	ActualParkingBorderPane.setVisible(false);
 
+
+    	
     	fullSubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	fullSubscriptionButton.getStyleClass().add("pressedButton");
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -361,7 +411,9 @@ public class LogInController {
     	complaintButton.getStyleClass().add("loginView-buttons");
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	
+    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+    	ActualParkingButton.getStyleClass().add("loginView-buttons");
+    
     }
 
     @FXML
@@ -373,7 +425,10 @@ public class LogInController {
     	complaintBorderPane.setVisible(false);
     	viewProfileBorderPane.setVisible(true);
     	MyAccountBorderPane.setVisible(false);
+    	ActualParkingBorderPane.setVisible(false);
 
+
+    	
     	viewReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	viewReservationButton.getStyleClass().add("pressedButton");
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -388,7 +443,8 @@ public class LogInController {
     	complaintButton.getStyleClass().add("loginView-buttons");
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	
+    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+    	ActualParkingButton.getStyleClass().add("loginView-buttons");
     	
     	JSONArray ja = new JSONArray();
     	try {
@@ -397,35 +453,40 @@ public class LogInController {
     		reservationsList.getChildren().remove(0, length);
     		
     		ja.put(new JSONObject().put("ID", "12").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "in queue"));
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "in queue")
+					.put("car id", "2039").put("parking lot name","majdal shams"));
     		
     		ja.put(new JSONObject().put("ID", "20").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking"));
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
+					.put("car id", "2039").put("parking lot name","majdal shams"));
     		
     		ja.put(new JSONObject().put("ID", "70").put("arriving hour", "18:00").put("leaving hour", "20:00")
-					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking"));
+					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
+					.put("car id", "2039").put("parking lot name","majdal shams"));
     		
     		for(int i = 0; i < ja.length(); i++){
 
         	    Label resId = new Label(((JSONObject) ja.get(i)).getString("ID"));
         	    resId.setStyle("-fx-pref-width: 40;");
-        		Label arrivingDate = new Label(((JSONObject) ja.get(i)).getString("arriving date"));
-        		arrivingDate.setStyle("-fx-pref-width: 80;");
-        		Label leavingDate = new Label(((JSONObject) ja.get(i)).getString("leaving date"));
-        		leavingDate.setStyle("-fx-pref-width: 80;");
-        		Label arrivingHour = new Label(((JSONObject) ja.get(i)).getString("arriving hour"));
-        		arrivingHour.setStyle("-fx-pref-width: 80;");
-        		Label leavingHour = new Label(((JSONObject) ja.get(i)).getString("leaving hour"));
-        		leavingHour.setStyle("-fx-pref-width: 80;");
+        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("arriving date")
+        							+ " " + ((JSONObject) ja.get(i)).getString("arriving hour"));
+        		arriving.setStyle("-fx-pref-width: 80;");
+        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("leaving date")
+        							+ " " + ((JSONObject) ja.get(i)).getString("leaving hour"));
+        		leaving.setStyle("-fx-pref-width: 80;");
+        		Label carId = new Label(((JSONObject) ja.get(i)).getString("car id"));
+        		carId.setStyle("-fx-pref-width: 80;");
+        		Label parkingLotName = new Label(((JSONObject) ja.get(i)).getString("parking lot name"));
+        		parkingLotName.setStyle("-fx-pref-width: 100;");
         		Label status = new Label(((JSONObject) ja.get(i)).getString("status"));
         		status.setStyle("-fx-pref-width: 60;");
     		
 				HBox hb = new HBox();
 				hb.getChildren().add(resId);
-				hb.getChildren().add(arrivingDate);
-				hb.getChildren().add(leavingDate);
-				hb.getChildren().add(arrivingHour);
-				hb.getChildren().add(leavingHour);
+				hb.getChildren().add(arriving);
+				hb.getChildren().add(leaving);
+				hb.getChildren().add(carId);
+				hb.getChildren().add(parkingLotName);
 				hb.getChildren().add(status);
 				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
@@ -437,7 +498,7 @@ public class LogInController {
 					String css = getClass().getResource("application.css").toExternalForm();
 					activateButton.getStylesheets().clear();
 					activateButton.getStylesheets().add(css);
-					activateButton.setOnAction(e -> activateParking(e));
+					activateButton.setOnAction(e -> activateParking(e, "400"));
 					activateButton.getStyleClass().add("activate-button");
 					hb.getChildren().add(activateButton);
 					
@@ -449,7 +510,7 @@ public class LogInController {
 					cancelReservation.setId("cancelReservation" + resId.getText());
 					cancelReservation.getStylesheets().clear();
 					cancelReservation.getStylesheets().add(css);
-					cancelReservation.setOnAction(e -> activateParking(e));
+					cancelReservation.setOnAction(e -> cancel(e));
 					cancelReservation.getStyleClass().add("cancel-button");
 					hb.getChildren().add(cancelReservation);
 				}
@@ -477,10 +538,16 @@ public class LogInController {
     	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(16));
 	}
+    
+    private void cancel(ActionEvent e) {
+    	Button b = (Button) e.getSource();
+		System.out.println("Okay " + b.getId().substring(15));
+	}
 
-	private void activateParking(ActionEvent e) {
+	private void activateParking(ActionEvent e, String string) {
     	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(14));
+		System.out.println(string);
 	}
 
 	@FXML
@@ -492,6 +559,8 @@ public class LogInController {
     	complaintBorderPane.setVisible(true);
     	viewProfileBorderPane.setVisible(false);
     	MyAccountBorderPane.setVisible(false);
+    	ActualParkingBorderPane.setVisible(false);
+
 
     	complaintButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	complaintButton.getStyleClass().add("pressedButton");
@@ -507,6 +576,8 @@ public class LogInController {
     	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
+    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+    	ActualParkingButton.getStyleClass().add("loginView-buttons");
     }
     
     @FXML
@@ -518,7 +589,10 @@ public class LogInController {
     	complaintBorderPane.setVisible(false);
     	viewProfileBorderPane.setVisible(false);
     	MyAccountBorderPane.setVisible(true);
+    	ActualParkingBorderPane.setVisible(false);
 
+
+    	
     	MyAccountButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	MyAccountButton.getStyleClass().add("pressedButton");
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -533,6 +607,62 @@ public class LogInController {
     	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
     	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
     	complaintButton.getStyleClass().add("loginView-buttons");
+    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+    	ActualParkingButton.getStyleClass().add("loginView-buttons");
+    
+    }
+    @FXML
+    void loadActualParking(ActionEvent event) { /** THIS IS THE OCCASIONAL PARKING 2ere be osama **/
+    	businessRoutineSubscriptionBorderPane.setVisible(false);
+    	regularRoutineSubscriptionBorderPane.setVisible(false);
+    	parkingReservationBorderPane.setVisible(false);
+    	fullSubscriptionBorderPane.setVisible(false);
+    	complaintBorderPane.setVisible(false);
+    	viewProfileBorderPane.setVisible(false);
+    	MyAccountBorderPane.setVisible(false);
+    	ActualParkingBorderPane.setVisible(true);
+    	
+    	
+    	ActualParkingButton.getStyleClass().removeAll("loginView-buttons", "focus");
+    	ActualParkingButton.getStyleClass().add("pressedButton");
+    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+    	parkingReservationButton.getStyleClass().add("loginView-buttons");
+    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+    	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+    	viewReservationButton.getStyleClass().add("loginView-buttons");
+    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+    	complaintButton.getStyleClass().add("loginView-buttons");
+    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+    	MyAccountButton.getStyleClass().add("loginView-buttons");
+    	
+    	myComboBoxHoursData.clear();
+    	for(Integer i = 0; i < 24; i++){
+    		if(i < 10 ){
+    			myComboBoxHoursData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxHoursData.add(i.toString());
+    	}
+    	
+    	myComboBoxMinutesData.clear();
+    	for(Integer i = 0; i < 60; i++){
+    		if(i < 10 ){
+    			myComboBoxMinutesData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxMinutesData.add(i.toString());
+    	}
+    	
+       
+    	ActualParkingLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
+        ActualParkingLeavingHourComboBox.setItems(myComboBoxHoursData);
+       
+    	
     	
     }
 
@@ -932,6 +1062,14 @@ public class LogInController {
     		
     	}
     	
+    }
+    @FXML
+    void reserveActualParking(ActionEvent event) {
+
+    }
+    @FXML
+    void makeSend(ActionEvent event) {
+
     }
     
     
