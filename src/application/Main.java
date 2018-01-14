@@ -5,7 +5,7 @@ import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import model.ParkingLot;
+//import model.ParkingLot;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -26,7 +26,7 @@ public class Main extends Application{
 			showMainView();
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	
 	private void showMainView() {
@@ -34,7 +34,7 @@ public class Main extends Application{
 
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("LogInView.fxml"));
-		//Ali Safadi Succeeded to install everything !
+		
 		try {
 			mainLayout = loader.load();
 		} catch (IOException e) {
@@ -53,7 +53,7 @@ public class Main extends Application{
 */		
 		
 		
-		MainController.initialize("10.0.0.5", "8080");
+		MainController.initialize("10.0.0.6", "8080");
 		launch(args);
 	}
 	
