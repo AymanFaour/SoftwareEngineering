@@ -499,7 +499,7 @@ public class LogInController {
 					String css = getClass().getResource("application.css").toExternalForm();
 					activateButton.getStylesheets().clear();
 					activateButton.getStylesheets().add(css);
-					activateButton.setOnAction(e -> activateParking(e));
+					activateButton.setOnAction(e -> activateParking(e, "400"));
 					activateButton.getStyleClass().add("activate-button");
 					hb.getChildren().add(activateButton);
 					
@@ -511,7 +511,7 @@ public class LogInController {
 					cancelReservation.setId("cancelReservation" + resId.getText());
 					cancelReservation.getStylesheets().clear();
 					cancelReservation.getStylesheets().add(css);
-					cancelReservation.setOnAction(e -> activateParking(e));
+					cancelReservation.setOnAction(e -> cancel(e));
 					cancelReservation.getStyleClass().add("cancel-button");
 					hb.getChildren().add(cancelReservation);
 				}
@@ -539,10 +539,16 @@ public class LogInController {
     	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(16));
 	}
+    
+    private void cancel(ActionEvent e) {
+    	Button b = (Button) e.getSource();
+		System.out.println("Okay " + b.getId().substring(15));
+	}
 
-	private void activateParking(ActionEvent e) {
+	private void activateParking(ActionEvent e, String string) {
     	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(14));
+		System.out.println(string);
 	}
 
 	@FXML
