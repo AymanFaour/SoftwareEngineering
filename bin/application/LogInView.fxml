@@ -389,13 +389,23 @@
                         </VBox>
                      </center>
                   </BorderPane>
-                  <BorderPane fx:id="complaintBorderPane" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+                  <BorderPane fx:id="complaintBorderPane" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
-                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Reservation Id" />
+                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Car Number:" />
+                                    <TextField fx:id="ComplaintCarNumberTF" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Reservation Id:" />
                                     <TextField fx:id="ComplaintReservationIdTF" styleClass="text-field-first" stylesheets="@application.css">
                                        <HBox.margin>
                                           <Insets left="5.0" />

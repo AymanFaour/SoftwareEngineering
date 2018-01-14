@@ -203,6 +203,10 @@ public class LogInController {
 
     @FXML // fx:id="ComplaintSendButton"
     private Button ComplaintSendButton; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="ComplaintCarNumberTF"
+    private TextField ComplaintCarNumberTF; // Value injected by FXMLLoader
+
 
     public void setWelcome(String s){
     	welcomeBanner.setText(s);
