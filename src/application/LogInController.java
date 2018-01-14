@@ -177,13 +177,13 @@ public class LogInController {
 
    
     @FXML // fx:id="ActualParkingLeavingMinuteComboBox"
-    private ComboBox<?> ActualParkingLeavingMinuteComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> ActualParkingLeavingMinuteComboBox; // Value injected by FXMLLoader
    
     @FXML // fx:id="ActualParkingLeavingDateDP"
     private DatePicker ActualParkingLeavingDateDP; // Value injected by FXMLLoader
   
     @FXML // fx:id="ActualParkingLeavingHourComboBox"
-    private ComboBox<?> ActualParkingLeavingHourComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> ActualParkingLeavingHourComboBox; // Value injected by FXMLLoader
    
     @FXML // fx:id="ActualParkingNumberTF"
     private TextField ActualParkingNumberTF; // Value injected by FXMLLoader
@@ -607,7 +607,7 @@ public class LogInController {
     
     }
     @FXML
-    void loadActualParking(ActionEvent event) {
+    void loadActualParking(ActionEvent event) { /** THIS IS THE OCCASIONAL PARKING 2ere be osama **/
     	businessRoutineSubscriptionBorderPane.setVisible(false);
     	regularRoutineSubscriptionBorderPane.setVisible(false);
     	parkingReservationBorderPane.setVisible(false);
@@ -635,7 +635,30 @@ public class LogInController {
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
     	
-
+    	myComboBoxHoursData.clear();
+    	for(Integer i = 0; i < 24; i++){
+    		if(i < 10 ){
+    			myComboBoxHoursData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxHoursData.add(i.toString());
+    	}
+    	
+    	myComboBoxMinutesData.clear();
+    	for(Integer i = 0; i < 60; i++){
+    		if(i < 10 ){
+    			myComboBoxMinutesData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxMinutesData.add(i.toString());
+    	}
+    	
+       
+    	ActualParkingLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
+        ActualParkingLeavingHourComboBox.setItems(myComboBoxHoursData);
+       
+    	
+    	
     }
 
     
