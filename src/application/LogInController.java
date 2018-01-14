@@ -211,13 +211,12 @@ public class LogInController {
     	MyAccountButton.getStyleClass().add("loginView-buttons");
 
     	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Tarshiha Parking Lot");
-    	parkingLotNames.add("Majdal Shams Parking Lot");
-    	parkingLotNames.add("Khedira Parking Lot");
-    	parkingLotNames.add("TLV Parking Lot");
-    	parkingLotNames.add("Naharya Parking Lot");
-    	parkingLotNames.add("Haifa Parking Lot");
-    	parkingLotNames.add("Gon");
+    	parkingLotNames.add("Ben Gurion");
+    	parkingLotNames.add("Carmel");
+    	parkingLotNames.add("Hadar");
+    	parkingLotNames.add("Hanita");
+    	parkingLotNames.add("Horev");
+    	parkingLotNames.add("Neve Shaanan");
     	
     	myComboBoxHoursData.clear();
     	for(Integer i = 0; i < 24; i++){
@@ -297,12 +296,12 @@ public class LogInController {
     
 
     	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Tarshiha Parking Lot");
-    	parkingLotNames.add("Majdal Shams Parking Lot");
-    	parkingLotNames.add("Khedira Parking Lot");
-    	parkingLotNames.add("TLV Parking Lot");
-    	parkingLotNames.add("Naharya Parking Lot");
-    	parkingLotNames.add("Haifa Parking Lot");
+    	parkingLotNames.add("Ben Gurion");
+    	parkingLotNames.add("Carmel");
+    	parkingLotNames.add("Hadar");
+    	parkingLotNames.add("Hanita");
+    	parkingLotNames.add("Horev");
+    	parkingLotNames.add("Neve Shaanan");
     	
     	myComboBoxData.clear();
     	for(int i = 0; i < parkingLotNames.size(); i++){
@@ -689,11 +688,11 @@ public class LogInController {
 //      	System.out.println(leaveCal.toString() + "@@@@@@@@@@@@@@@@@@@");
     	
     	if(_routLeaveHour == null){
-    		_routLeaveHour = "00";
+    		_routLeaveHour = "23";
     	}
     	
     	if(_routLeaveMinute == null){
-    		_routLeaveMinute = "00";
+    		_routLeaveMinute = "59";
     	}
     	
     	if(_carNumber.equals("") || (_lotName==null)){
@@ -708,35 +707,78 @@ public class LogInController {
     		leaveCal.add(Calendar.MONTH,1);    		
 //            long _end = leaveCal.getTime().getTime();
        	    long _end = leaveCal.getTime().getTime();
+       	    
+       	    
             int routLeaveHourInt = Integer.parseInt(_routLeaveHour);
             int routLeaveMinuteInt = Integer.parseInt(_routLeaveMinute);
+            
+            String leaveHour = "";
+            if(routLeaveMinuteInt < 10){
+            	leaveHour = (routLeaveHourInt) + ":0" + (routLeaveMinuteInt);
+            }else{
+            	leaveHour = (routLeaveHourInt) + ":" + (routLeaveMinuteInt);
+            }
+            
+            
+            if(routLeaveHourInt < 10){
+            	leaveHour = "0" + leaveHour;
+            }
+            
             
             String _name = MainController._currentUser.getUsername();
     		
     		JSONObject json = new JSONObject();
             try {
             	
-            	//TODO: Complete server connection and so on 
-    			json.put("carNumber", _carNumber);
-    			json.put("lotName", _lotName);
-    			json.put("username", _name);
-    			json.put("leaveHour", routLeaveHourInt);
-    			json.put("leaveMinute", routLeaveMinuteInt);
-    			json.put("start", _start);
-    			json.put("end", _end);
-    			json.put("cmd", "RegularRoutineSubscription");
+            	confirmAlert.setTitle("Confirmation Dialog");
+                confirmAlert.setContentText("Would you like to reserve this parking for 240$ ?");
+             
+                
+                
+                Optional<ButtonType> result = confirmAlert.showAndWait();
+                if(result.get() == ButtonType.OK){
+                	if(MainController._currentUser.getBalance() < 240){
+                		
+                		informationAlert.setTitle("Reservation warrning");
+                		informationAlert.setHeaderText(null);
+                		informationAlert.setContentText("Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+                		informationAlert.showAndWait();
+                		
+                	}else{
+                		
+                		//TODO: Complete server connection and so on 
+    	    			json.put("carNumber", _carNumber);
+    	    			json.put("lotName", _lotName);
+    	    			json.put("username", _name);
+    	    			json.put("leave", leaveHour);
+    	    			json.put("start", _start);
+    	    			json.put("end", _end);
+    	    			json.put("cmd", "RegularRoutineSubscription");
+    	    			
+    	    			
+    	    			JSONObject ret = request(json, "SubscriptionController");
+    		
+    	    			System.out.println(ret.getBoolean("result"));
+    	    			if(ret.getBoolean("result")){
+    	    				System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+    	    				MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
+    	    				updateBalance((-1)*240);
+    	    				System.out.println("New balance is: " + MainController._currentUser.getBalance());
+    	    				
+    	    				informationAlert.setTitle("Depositing Succeeded");
+    	    	    		informationAlert.setHeaderText(null);
+    	    	    		informationAlert.setContentText("Purchasing routine subscription finished Successfully.");
+    	    	    		informationAlert.showAndWait();
+    	    				
+    	    			}else{
+                	
+    	    			}
     			
-    			// send to reservation servlet
-//    			JSONObject ret = request(json, "RegularRoutineSubscription");
-//	
-//    			System.out.println(ret.getBoolean("result"));
-//    			if(ret.getBoolean("result")){
-//    				System.out.println("Old balance is: " + MainController._currentUser.getBalance());
-//    				MainController._currentUser.setBalance(MainController._currentUser.getBalance() - cost);
-//    				updateBalance((-1)*cost);
-//    				System.out.println("New balance is: " + MainController._currentUser.getBalance());
-    			
-    		} catch (JSONException e) {
+                	}
+                }else{
+                	
+                }
+            }catch (JSONException e) {
     			e.printStackTrace();
     		}
     		

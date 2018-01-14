@@ -33,7 +33,7 @@ public class Main extends Application{
 		// TODO Auto-generated method stub
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("LogInView.fxml"));
+		loader.setLocation(Main.class.getResource("MainView.fxml"));
 		//Ali Safadi Succeeded to install everything !
 		try {
 			mainLayout = loader.load();
@@ -53,7 +53,7 @@ public class Main extends Application{
 */		
 		
 		
-		MainController.initialize("10.0.0.5", "8080");
+		MainController.initialize("192.168.1.36", "8080");
 		launch(args);
 	}
 	
