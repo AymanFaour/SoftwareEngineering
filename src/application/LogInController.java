@@ -180,11 +180,32 @@ public class LogInController {
 	@FXML
 	private ComboBox<String> regRouSubRoutineHourComboBox;
 
-	@FXML
-	private ComboBox<String> regRouSubRoutineMinuteComboBox;
-
-	@FXML // fx:id="reservationsList"
-	private VBox reservationsList; // Value injected by FXMLLoader
+    @FXML // fx:id="subscriptionsList"
+    private VBox subscriptionsList; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="fullSubscriptionsList"
+    private VBox fullSubscriptionsList; // Value injected by FXMLLoader
+    
+    
+    public void setWelcome(String s){
+    	welcomeBanner.setText(s);
+    }
+    
+    public void setTopOfLogInView(String name, String balance){
+    	textInTopOfLogIn.setText(name);
+    	balanceOnTopOfLogIn.setText(balance);
+    }
+    
+    @FXML
+    void loadParkingReservation(ActionEvent event) {
+    	businessRoutineSubscriptionBorderPane.setVisible(false);
+    	regularRoutineSubscriptionBorderPane.setVisible(false);
+    	parkingReservationBorderPane.setVisible(true);
+    	fullSubscriptionBorderPane.setVisible(false);
+    	complaintBorderPane.setVisible(false);
+    	viewProfileBorderPane.setVisible(false);
+    	MyAccountBorderPane.setVisible(false);
+    	ActualParkingBorderPane.setVisible(false);
 
 	@FXML // fx:id="ActualParkingLeavingMinuteComboBox"
 	private ComboBox<String> ActualParkingLeavingMinuteComboBox; // Value
@@ -258,6 +279,32 @@ public class LogInController {
 		ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
 		ActualParkingButton.getStyleClass().add("loginView-buttons");
 
+    	
+    	viewReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
+    	viewReservationButton.getStyleClass().add("pressedButton");
+    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+    	parkingReservationButton.getStyleClass().add("loginView-buttons");
+    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+    	complaintButton.getStyleClass().add("loginView-buttons");
+    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+    	MyAccountButton.getStyleClass().add("loginView-buttons");
+    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+    	ActualParkingButton.getStyleClass().add("loginView-buttons");
+
+    	JSONArray ja = new JSONArray();
+    	JSONArray ja2 = new JSONArray();
+    	try {
+    		
+    		int length = reservationsList.getChildren().size();
+    		reservationsList.getChildren().remove(0, length);
+    		
+    		ja.put(new JSONObject().put("ID", "12").put("arriving hour", "18:00").put("leaving hour", "20:00")
 		ArrayList<String> parkingLotNames = new ArrayList<String>();
 		parkingLotNames.add("Ben Gurion");
 		parkingLotNames.add("Carmel");
@@ -454,12 +501,21 @@ public class LogInController {
 					.put("car id", "2039").put("parking lot name", "majdal shams"));
 
 			ja.put(new JSONObject().put("ID", "20").put("arriving hour", "18:00").put("leaving hour", "20:00")
+					.put("car id", "2000").put("parking lot name","majdal shams"));
+    		
+    		ja.put(new JSONObject().put("ID", "20").put("arriving hour", "18:00").put("leaving hour", "20:00")
 					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
 					.put("car id", "2039").put("parking lot name", "majdal shams"));
 
 			ja.put(new JSONObject().put("ID", "70").put("arriving hour", "18:00").put("leaving hour", "20:00")
+					.put("car id", "2001").put("parking lot name","majdal shams"));
+    		
+    		ja.put(new JSONObject().put("ID", "70").put("arriving hour", "18:00").put("leaving hour", "20:00")
 					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
 					.put("car id", "2039").put("parking lot name", "majdal shams"));
+					.put("car id", "20002").put("parking lot name","majdal shams"));
+    		
+    		for(int i = 0; i < ja.length(); i++){
 
 			for (int i = 0; i < ja.length(); i++) {
 
@@ -528,11 +584,121 @@ public class LogInController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+    	
+		/***/
+		
+		try {
+				ja2.put(new JSONObject().put("ID", "200").put("leaving hour", "22:00")
+					.put("status", "not used")
+					.put("car id", "2039").put("parking lot name","majdal shams"));
 
+				ja2.put(new JSONObject().put("ID", "202").put("leaving hour", "21:00")
+				.put("status", "parking")
+				.put("car id", "2060").put("parking lot name","majdal shams"));
+
+				ja2.put(new JSONObject().put("ID", "209").put("leaving hour", "19:00")
+				.put("status", "used")
+				.put("car id", "2080").put("parking lot name","majdal shams"));
+
+				ja2.put(new JSONObject().put("ID", "202").put("leaving hour", "21:00")
+					.put("status", "parking")
+					.put("car id", "2090").put("parking lot name","majdal shams"));
+
+				ja2.put(new JSONObject().put("ID", "209").put("leaving hour", "19:00")
+					.put("status", "used")
+					.put("car id", "3000").put("parking lot name","majdal shams"));
+				
+				ja2.put(new JSONObject().put("ID", "202").put("leaving hour", "21:00")
+						.put("status", "parking")
+						.put("car id", "5000").put("parking lot name","majdal shams"));
+
+				ja2.put(new JSONObject().put("ID", "209").put("leaving hour", "19:00")
+						.put("status", "used")
+						.put("car id", "3200").put("parking lot name","majdal shams"));
+
+
+			/**		
+			        hb.getChildren().add(resId);
+					hb.getChildren().add(arriving);
+					hb.getChildren().add(leaving);
+					hb.getChildren().add(carId);
+					hb.getChildren().add(parkingLotName);
+					hb.getChildren().add(status);
+					hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+							+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+					subscriptionsList.getChildren().add(hb);				
+			**/
+					for(int i = 0; i < ja2.length(); i++){
+					
+
+						HBox hb = new HBox();
+						
+		        	    Label subId = new Label(((JSONObject) ja2.get(i)).getString("ID"));
+		        	    subId.setStyle("-fx-pref-width: 40;");
+		        		Label leaving = new Label(((JSONObject) ja2.get(i)).getString("leaving hour"));
+		        		leaving.setStyle("-fx-pref-width: 80;");
+		        		Label carId = new Label(((JSONObject) ja2.get(i)).getString("car id"));
+		        		carId.setStyle("-fx-pref-width: 80;");
+		        		Label parkingLotName = new Label(((JSONObject) ja2.get(i)).getString("parking lot name"));
+		        		parkingLotName.setStyle("-fx-pref-width: 100;");
+		        		Label status = new Label(((JSONObject) ja2.get(i)).getString("status"));
+		        		status.setStyle("-fx-pref-width: 60;");
+		    		
+
+				        hb.getChildren().add(subId);
+						hb.getChildren().add(leaving);
+						hb.getChildren().add(carId);
+						hb.getChildren().add(parkingLotName);
+						hb.getChildren().add(status);
+						hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+								+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+						subscriptionsList.getChildren().add(hb);
+						
+						if(((JSONObject) ja2.get(i)).getString("status") == "not used"){
+							Button activateButton = new Button("Enter");
+							activateButton.setId("subActivateButton" + subId.getText());
+							String css = getClass().getResource("application.css").toExternalForm();
+							activateButton.getStylesheets().clear();
+							activateButton.getStylesheets().add(css);
+							activateButton.setOnAction(e -> activateParkingSub(e, subId.getText(),
+									parkingLotName.getText()));
+							activateButton.getStyleClass().add("activate-button");
+							hb.getChildren().add(activateButton);	
+						}
+						
+						if(((JSONObject) ja2.get(i)).getString("status") == "parking"){
+							Button deActivateButton = new Button("Exit");
+							deActivateButton.setId("subDeactivateButton" + subId.getText());
+							String css = getClass().getResource("application.css").toExternalForm();
+							deActivateButton.getStylesheets().clear();
+							deActivateButton.getStylesheets().add(css);
+							deActivateButton.setOnAction(e -> deActivateParkingSub(e, subId.getText()));
+							deActivateButton.getStyleClass().add("deactivate-button");
+							hb.getChildren().add(deActivateButton);
+						}
+					}
+		
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+    	
+    }
+
+    private void deActivateParkingSub(ActionEvent e, String subId) {
+		// TODO Auto-generated method stub
+		System.out.println("this is the subId " + subId);
+	}
+
+	private void activateParkingSub(ActionEvent e, String subId, String lotName) {
+		// TODO Auto-generated method stub
+		System.out.println(subId + " " + lotName);
 	}
 
 	private void deActivateParking(ActionEvent e) {
-		Button b = (Button) e.getSource();
+    	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(16));
 	}
 
