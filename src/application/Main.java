@@ -33,7 +33,7 @@ public class Main extends Application{
 		// TODO Auto-generated method stub
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("LogInView.fxml"));
+		loader.setLocation(Main.class.getResource("MainView.fxml"));
 		
 		try {
 			mainLayout = loader.load();
