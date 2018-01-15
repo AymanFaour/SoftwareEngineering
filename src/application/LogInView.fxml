@@ -588,7 +588,7 @@
                               </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
-                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Reservation Id:" />
+                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Order Id:" />
                                     <TextField fx:id="ComplaintReservationIdTF" styleClass="text-field-first" stylesheets="@application.css">
                                        <HBox.margin>
                                           <Insets left="5.0" />
@@ -598,6 +598,12 @@
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Parking Lot:" />
+                                    <ComboBox fx:id="complaintComboBox" prefWidth="150.0" promptText="select parking name" stylesheets="@application.css" />
+                                 </children>
                               </HBox>
                               <HBox prefHeight="18.0" prefWidth="580.0">
                                  <children>
