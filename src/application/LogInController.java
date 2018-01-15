@@ -6,7 +6,6 @@ package application;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -28,9 +27,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -564,9 +560,9 @@ public class LogInController {
 
         	    Label resId = new Label(Integer.toString(((JSONObject) ja.get(i)).getInt("reserveID")));
         	    resId.setStyle("-fx-pref-width: 40;");
-        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("start"));
-        		arriving.setStyle("-fx-pref-width: 80;");
-        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("end"));
+        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("start").substring(0, 16));
+        		arriving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
+        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("end").substring(0, 16));
         		leaving.setStyle("-fx-pref-width: 80;");
         		Label carId = new Label(((JSONObject) ja.get(i)).getString("carNumber"));
         		carId.setStyle("-fx-pref-width: 80;");
@@ -584,9 +580,9 @@ public class LogInController {
     		
 				HBox hb = new HBox();
 				hb.getChildren().add(resId);
+				hb.getChildren().add(carId);
 				hb.getChildren().add(arriving);
 				hb.getChildren().add(leaving);
-				hb.getChildren().add(carId);
 				hb.getChildren().add(parkingLotName);
 				hb.getChildren().add(status);
 				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
@@ -656,7 +652,7 @@ public class LogInController {
         		Label carId = new Label(((JSONObject) ja2.get(i)).getString("carNumber"));
         		carId.setStyle("-fx-pref-width: 80;");
         		Label parkingLotName = new Label(((JSONObject) ja2.get(i)).getString("lotName"));
-        		parkingLotName.setStyle("-fx-pref-width: 100;");
+        		parkingLotName.setStyle("-fx-pref-width: 80;");
         		
         		
         		
@@ -732,10 +728,10 @@ public class LogInController {
         		Label status = null;
         		if(((JSONObject) ja3.get(i)).getBoolean("isParking")){
         			status = new Label("parking");
-        			status.setStyle("-fx-pref-width: 60;");
+        			status.setStyle("-fx-pref-width: 80;");
         		}else{
         			status = new Label("not parking");
-        			status.setStyle("-fx-pref-width: 60;");
+        			status.setStyle("-fx-pref-width: 80;");
         		}
     		
 
