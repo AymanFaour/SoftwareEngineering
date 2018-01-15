@@ -461,7 +461,9 @@ public class LogInController {
     @FXML
     void buyBusinessSubscription(ActionEvent event) {
     	for(int i=0; i < businessAccountWorkersCounter; i++){
-    		System.out.println('1');
+    		
+//    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
+    		System.out.println(listOfAddedWorkersBusinessAcocuntVBOX.getChildren());
     	}
     }
 
@@ -1021,7 +1023,7 @@ public class LogInController {
 
 		}
 
-		if (_carNumber.equals("") || _lotName.equals("")) {
+		if (_carNumber.equals("") || _lotName == null) {
 
 			informationAlert.setTitle("Reservation warrning");
 			informationAlert.setHeaderText(null);
