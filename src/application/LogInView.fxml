@@ -372,7 +372,7 @@
                         </VBox>
                      </left>
                   </BorderPane>
-                  <BorderPane fx:id="businessRoutineSubscriptionBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+                  <BorderPane fx:id="businessRoutineSubscriptionBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
