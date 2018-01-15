@@ -80,6 +80,12 @@ public class GuestController {
     
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
     
+    @FXML // fx:id="GuestCarNumberExit"
+    private TextField GuestCarNumberExit; // Value injected by FXMLLoader
+
+    @FXML // fx:id="GuestExitButton"
+    private Button GuestExitButton; // Value injected by FXMLLoader
+
 
     @FXML
     void signOut(ActionEvent event) {
@@ -211,6 +217,11 @@ public class GuestController {
 		}
 
 	
+    }
+
+    @FXML
+    void GuestExit(ActionEvent event) {
+
     }
     
     
