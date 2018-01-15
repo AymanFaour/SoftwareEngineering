@@ -213,8 +213,30 @@ public class LogInController {
     @FXML // fx:id="fullSubscriptionsList"
     private VBox fullSubscriptionsList; // Value injected by FXMLLoader
     
+    @FXML // fx:id="addWrokerToBusinessAccountButton"
+    private Button addWrokerToBusinessAccountButton; // Value injected by FXMLLoader
     
-    public void setWelcome(String s){
+    @FXML // fx:id="listOfAddedWorkersBusinessAcocuntVBOX"
+    private VBox listOfAddedWorkersBusinessAcocuntVBOX; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="remWrokerFromBusinessAccountButton"
+    private Button remWrokerFromBusinessAccountButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="buyBusinessSubscriptionButton"
+    private Button buyBusinessSubscriptionButton; // Value injected by FXMLLoader
+
+    
+    private int businessAccountWorkersCounter = 0;
+    
+    public int getBusinessAccountWorkersCounter() {
+		return businessAccountWorkersCounter;
+	}
+
+	public void setBusinessAccountWorkersCounter(int businessAccountWorkersCounter) {
+		this.businessAccountWorkersCounter = businessAccountWorkersCounter;
+	}
+
+	public void setWelcome(String s){
     	welcomeBanner.setText(s);
     }
     
@@ -389,7 +411,58 @@ public class LogInController {
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
     	ActualParkingButton.getStyleClass().add("loginView-buttons");
     	
+    	this.setBusinessAccountWorkersCounter(0);
+    	int length = this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
+    	System.out.println(length);
+    	for (int i = length - 2; i > 0 ; i--){
+    		this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(i);
+    	}
     }
+    
+
+    @FXML
+    void addWorkerToBusinessAcocunt(ActionEvent event) {
+		HBox hb = new HBox();
+		hb.setStyle("-fx-pref-height: 30; -fx-padding: 5 0 0 10;");
+		reservationsList.getChildren().add(hb);
+		
+		this.setBusinessAccountWorkersCounter(this.getBusinessAccountWorkersCounter() + 1);
+		
+		TextField tf = new TextField();
+		String css = getClass().getResource("application.css").toExternalForm();
+		tf.getStylesheets().clear();
+		tf.getStylesheets().add(css);
+		
+		tf.getStyleClass().add("text-field-first");
+		tf.setPromptText("Car Number");
+		hb.getChildren().add(tf);
+		
+		tf.setId("businessWorkerTF" + Integer.toString(getBusinessAccountWorkersCounter()));
+		
+		int lenOfWorkersList = listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
+		listOfAddedWorkersBusinessAcocuntVBOX.getChildren().add(lenOfWorkersList - 1, hb);
+		
+		System.out.println("this is the counter from add:" + this.getBusinessAccountWorkersCounter());
+    }
+    
+
+    @FXML
+    void remWorkerFromBusinessAcocunt(ActionEvent event) {
+    	
+		int lenOfWorkersList = listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
+		if(lenOfWorkersList > 2){
+			listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(lenOfWorkersList - 2);
+			this.setBusinessAccountWorkersCounter(this.getBusinessAccountWorkersCounter()-1);
+		}
+		System.out.println("this is the counter from remove:" + this.getBusinessAccountWorkersCounter());
+    }
+    
+
+    @FXML
+    void buyBusinessSubscription(ActionEvent event) {
+
+    }
+
 
     @FXML
     void loadFullSubscription(ActionEvent event) {
