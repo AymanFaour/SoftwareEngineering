@@ -6,7 +6,6 @@ package application;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -28,9 +27,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -128,6 +124,7 @@ public class LogInController {
     private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
     
     @FXML // fx:id="regRouComboBox"
     private ComboBox<String> regRouComboBox; // Value injected by FXMLLoader
@@ -212,6 +209,9 @@ public class LogInController {
     @FXML // fx:id="fullSubscriptionsList"
     private VBox fullSubscriptionsList; // Value injected by FXMLLoader
     
+    @FXML // fx:id="complaintComboBox"
+    private ComboBox<String> complaintComboBox; // Value injected by FXMLLoader
+
     @FXML // fx:id="addWrokerToBusinessAccountButton"
     private Button addWrokerToBusinessAccountButton; // Value injected by FXMLLoader
     
@@ -564,9 +564,9 @@ public class LogInController {
 
         	    Label resId = new Label(Integer.toString(((JSONObject) ja.get(i)).getInt("reserveID")));
         	    resId.setStyle("-fx-pref-width: 40;");
-        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("start"));
-        		arriving.setStyle("-fx-pref-width: 80;");
-        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("end"));
+        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("start").substring(0, 16));
+        		arriving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
+        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("end").substring(0, 16));
         		leaving.setStyle("-fx-pref-width: 80;");
         		Label carId = new Label(((JSONObject) ja.get(i)).getString("carNumber"));
         		carId.setStyle("-fx-pref-width: 80;");
@@ -584,9 +584,9 @@ public class LogInController {
     		
 				HBox hb = new HBox();
 				hb.getChildren().add(resId);
+				hb.getChildren().add(carId);
 				hb.getChildren().add(arriving);
 				hb.getChildren().add(leaving);
-				hb.getChildren().add(carId);
 				hb.getChildren().add(parkingLotName);
 				hb.getChildren().add(status);
 				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
@@ -656,7 +656,7 @@ public class LogInController {
         		Label carId = new Label(((JSONObject) ja2.get(i)).getString("carNumber"));
         		carId.setStyle("-fx-pref-width: 80;");
         		Label parkingLotName = new Label(((JSONObject) ja2.get(i)).getString("lotName"));
-        		parkingLotName.setStyle("-fx-pref-width: 100;");
+        		parkingLotName.setStyle("-fx-pref-width: 80;");
         		
         		
         		
@@ -732,10 +732,10 @@ public class LogInController {
         		Label status = null;
         		if(((JSONObject) ja3.get(i)).getBoolean("isParking")){
         			status = new Label("parking");
-        			status.setStyle("-fx-pref-width: 60;");
+        			status.setStyle("-fx-pref-width: 80;");
         		}else{
         			status = new Label("not parking");
-        			status.setStyle("-fx-pref-width: 60;");
+        			status.setStyle("-fx-pref-width: 80;");
         		}
     		
 
@@ -839,6 +839,19 @@ public class LogInController {
     	MyAccountButton.getStyleClass().add("loginView-buttons");
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
     	ActualParkingButton.getStyleClass().add("loginView-buttons");
+    	ArrayList<String> parkingLotNames = new ArrayList<String>();
+    	parkingLotNames.add("Ben Gurion");
+    	parkingLotNames.add("Carmel");
+    	parkingLotNames.add("Hadar");
+    	parkingLotNames.add("Horev");
+    	parkingLotNames.add("Hanita");
+    	parkingLotNames.add("Neve Shaanan");
+    	
+    	myComboBoxComplaintParkingData.clear();     
+    	for(int i = 0; i < parkingLotNames.size(); i++){
+    		myComboBoxComplaintParkingData.add(parkingLotNames.get(i));
+    	}
+    	complaintComboBox.setItems(myComboBoxComplaintParkingData);
     }
     
     @FXML
@@ -1176,21 +1189,18 @@ public class LogInController {
 	void buyfulSubFullSubscription(ActionEvent event) {
 		
 		String _carNumber = fulSubCarNumberTF.getText();
-
 		Calendar leaveCal = Calendar.getInstance();
-		// System.out.println(leaveCal.toString() + "@@@@@@@@@@@@@@@@@@@");
 
 		if (_carNumber.equals("")) {
-			informationAlert.setTitle("Reservation warrning");
+			informationAlert.setTitle("Full Subscription warrning");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please fill all the above field to complete the reservation");
+			informationAlert.setContentText("Please fill all the above field to complete the Subscription");
 			informationAlert.showAndWait();
 
 		} else {
 
 			long _start = leaveCal.getTime().getTime();
 			leaveCal.add(Calendar.MONTH, 1);
-			// long _end = leaveCal.getTime().getTime();
 			long _end = leaveCal.getTime().getTime();
 
 			String _name = MainController._currentUser.getUsername();
@@ -1199,22 +1209,16 @@ public class LogInController {
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				
-				//TODO: update the cost of full subscription
-				
-				confirmAlert.setContentText("Would you like to reserve this parking for ???$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for 288$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					
-					//TODO: update the cost of full subscription
-					
-					if (MainController._currentUser.getBalance() < 240) {
+					if (MainController._currentUser.getBalance() < 288) {
 
-						informationAlert.setTitle("Reservation warrning");
+						informationAlert.setTitle("Full Subscription warrning");
 						informationAlert.setHeaderText(null);
-						informationAlert.setContentText(
-								"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+						informationAlert.setContentText("Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
 						informationAlert.showAndWait();
 
 					} else {
@@ -1226,16 +1230,13 @@ public class LogInController {
 						json.put("end", _end);
 						json.put("cmd", "FullSubscription");
 
-						JSONObject ret = request(json, "FullSubscription");
+						JSONObject ret = request(json, "SubscriptionController");
 
 						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
 							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
-							
-							//TODO: update the cost of full subscription
-							
-							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
-							updateBalance((-1) * 240);
+							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 288);
+							updateBalance((-1) * 288);
 							System.out.println("New balance is: " + MainController._currentUser.getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
@@ -1481,38 +1482,44 @@ public class LogInController {
 
 	}
 
-	@FXML
+	@FXML // make complaint but AL OS decided to name it makeSend for mysterious reasons
 	void makeSend(ActionEvent event) {
 
 		String _carNumber = ComplaintCarNumberTF.getText();
-		String _reservationId=ComplaintReservationIdTF.getText();
+		String _lotName = complaintComboBox.getValue();
+		String _orderId = ComplaintReservationIdTF.getText();
 		String _complaint = ComplaintTA.getText();
+		Calendar _cal = Calendar.getInstance();
+		
 
-		if (_carNumber.equals("") || _reservationId.equals("") || _complaint.equals("")) {
-			informationAlert.setTitle("Reservation warrning");
+		if (_carNumber.equals("") || (_lotName == null) || _orderId.equals("") || _complaint.equals("")) {
+			informationAlert.setTitle("complaint warrning");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please fill all the above field to complete the reservation");
+			informationAlert.setContentText("Please fill all the above field to complete your complaint");
 			informationAlert.showAndWait();
 
 		} else {
 			
 			String _name = MainController._currentUser.getUsername();
-
+			int _orderIdInt=Integer.parseInt(_orderId);
 			JSONObject json = new JSONObject();
 			try {
+				long _date = _cal.getTime().getTime();
 		
 				json.put("carNumber", _carNumber);
+				json.put("lotName", _lotName);
 				json.put("username", _name);
-				json.put("reservationId", _reservationId);
-				json.put("complaint", _complaint);
-				json.put("cmd", "complaint");
+				json.put("orderID", _orderIdInt);
+				json.put("content", _complaint);
+				json.put("date", _date);
+				json.put("cmd", "makeComplaint");
 
-				JSONObject ret = request(json, "Complaint");
+				JSONObject ret = request(json, "CustomerService");
 
 				System.out.println(ret.getBoolean("result"));
 				if (ret.getBoolean("result")) {
 					confirmAlert.setTitle("Confirmation Dialog");
-					confirmAlert.setContentText("Dear "+_name+", your complaint is in process, we'll try to response ASAP. thanx");
+					confirmAlert.setContentText("Dear "+_name+", your complaint is in process, we'll update you ASAP.");
 					confirmAlert.showAndWait();
 				}
 				else{
