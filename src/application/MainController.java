@@ -292,11 +292,14 @@ public class MainController {
 		}
 		LogInController logInController = loader.getController();
 		logInController.setWelcome("Welcome to CPS");
-		logInController.setTopOfLogInView(_username, "2000");
+		logInController.setTopOfLogInView(_username, Long.toString(_currentUser.getBalance()));
+		
 		Scene scene = new Scene(mainLayout);
     	
     	Stage stage = (Stage) currentScene.getWindow();
 		stage.setScene(scene);
+		
+		
 		
     }
 

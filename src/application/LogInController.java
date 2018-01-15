@@ -211,8 +211,31 @@ public class LogInController {
     
     @FXML // fx:id="fullSubscriptionsList"
     private VBox fullSubscriptionsList; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="addWrokerToBusinessAccountButton"
+    private Button addWrokerToBusinessAccountButton; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="listOfAddedWorkersBusinessAcocuntVBOX"
+    private VBox listOfAddedWorkersBusinessAcocuntVBOX; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="remWrokerFromBusinessAccountButton"
+    private Button remWrokerFromBusinessAccountButton; // Value injected by FXMLLoader
 
-    public void setWelcome(String s){
+    @FXML // fx:id="buyBusinessSubscriptionButton"
+    private Button buyBusinessSubscriptionButton; // Value injected by FXMLLoader
+
+    
+    private int businessAccountWorkersCounter = 0;
+    
+    public int getBusinessAccountWorkersCounter() {
+		return businessAccountWorkersCounter;
+	}
+
+	public void setBusinessAccountWorkersCounter(int businessAccountWorkersCounter) {
+		this.businessAccountWorkersCounter = businessAccountWorkersCounter;
+	}
+
+	public void setWelcome(String s){
     	welcomeBanner.setText(s);
     }
     
@@ -387,7 +410,58 @@ public class LogInController {
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
     	ActualParkingButton.getStyleClass().add("loginView-buttons");
     	
+    	this.setBusinessAccountWorkersCounter(0);
+    	int length = this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
+    	System.out.println(length);
+    	for (int i = length - 2; i > 0 ; i--){
+    		this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(i);
+    	}
     }
+    
+
+    @FXML
+    void addWorkerToBusinessAcocunt(ActionEvent event) {
+		HBox hb = new HBox();
+		hb.setStyle("-fx-pref-height: 30; -fx-padding: 5 0 0 10;");
+		reservationsList.getChildren().add(hb);
+		
+		this.setBusinessAccountWorkersCounter(this.getBusinessAccountWorkersCounter() + 1);
+		
+		TextField tf = new TextField();
+		String css = getClass().getResource("application.css").toExternalForm();
+		tf.getStylesheets().clear();
+		tf.getStylesheets().add(css);
+		
+		tf.getStyleClass().add("text-field-first");
+		tf.setPromptText("Car Number");
+		hb.getChildren().add(tf);
+		
+		tf.setId("businessWorkerTF" + Integer.toString(getBusinessAccountWorkersCounter()));
+		
+		int lenOfWorkersList = listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
+		listOfAddedWorkersBusinessAcocuntVBOX.getChildren().add(lenOfWorkersList - 1, hb);
+		
+		System.out.println("this is the counter from add:" + this.getBusinessAccountWorkersCounter());
+    }
+    
+
+    @FXML
+    void remWorkerFromBusinessAcocunt(ActionEvent event) {
+    	
+		int lenOfWorkersList = listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
+		if(lenOfWorkersList > 2){
+			listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(lenOfWorkersList - 2);
+			this.setBusinessAccountWorkersCounter(this.getBusinessAccountWorkersCounter()-1);
+		}
+		System.out.println("this is the counter from remove:" + this.getBusinessAccountWorkersCounter());
+    }
+    
+
+    @FXML
+    void buyBusinessSubscription(ActionEvent event) {
+
+    }
+
 
     @FXML
     void loadFullSubscription(ActionEvent event) {
@@ -464,6 +538,7 @@ public class LogInController {
     		
     		JSONArray ja = ret.getJSONArray("resArr");
     		JSONArray ja2 = ret.getJSONArray("routSubArr");
+    		JSONArray ja3 = ret.getJSONArray("fullSubArr");
     		
 //    		System.out.println(ja);
     		
@@ -558,17 +633,26 @@ public class LogInController {
 				
     		}
     		
+    		
+    		int length2 = subscriptionsList.getChildren().size();
+    		subscriptionsList.getChildren().remove(0, length2);
+    		
+//    		System.out.println(ja2);
+    		
 			for(int i = 0; i < ja2.length(); i++){
 				
+//				System.out.println("int the for with i = "  + Integer.toString(i) + "@@@@@@@@@@@@@@@@@");
 
 				HBox hb = new HBox();
 				
         	    Label subId = new Label(Integer.toString(((JSONObject) ja2.get(i)).getInt("routineSubID")));
         	    subId.setStyle("-fx-pref-width: 40;");
-        		Label leaving = new Label(((JSONObject) ja2.get(i)).getString("end"));
+        		Label leaving = new Label(((JSONObject) ja2.get(i)).getString("end").substring(0,11));
         		leaving.setStyle("-fx-pref-width: 80;");
+        		Label starting = new Label(((JSONObject) ja2.get(i)).getString("start").substring(0,11));
+        		starting.setStyle("-fx-pref-width: 80;");
         		Label leavingHour = new Label(((JSONObject) ja2.get(i)).getString("leaveHour"));
-        		leaving.setStyle("-fx-pref-width: 80;");
+        		leavingHour.setStyle("-fx-pref-width: 80;");
         		Label carId = new Label(((JSONObject) ja2.get(i)).getString("carNumber"));
         		carId.setStyle("-fx-pref-width: 80;");
         		Label parkingLotName = new Label(((JSONObject) ja2.get(i)).getString("lotName"));
@@ -590,9 +674,12 @@ public class LogInController {
     		
 
 		        hb.getChildren().add(subId);
-				hb.getChildren().add(leaving);
-				hb.getChildren().add(carId);
+		        hb.getChildren().add(carId);
 				hb.getChildren().add(parkingLotName);
+				hb.getChildren().add(starting);
+				hb.getChildren().add(leaving);
+				hb.getChildren().add(leavingHour);
+				
 				hb.getChildren().add(status);
 				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
@@ -622,13 +709,83 @@ public class LogInController {
 				}
 			}
 			
+			
+    		int length3 = fullSubscriptionsList.getChildren().size();
+    		fullSubscriptionsList.getChildren().remove(0, length3);
+    		
+			for(int i = 0; i < ja3.length(); i++){
+				
+				
+				HBox hb = new HBox();
+				
+        	    Label subId = new Label(Integer.toString(((JSONObject) ja3.get(i)).getInt("fullSubID")));
+        	    subId.setStyle("-fx-pref-width: 40;");
+        		Label leaving = new Label(((JSONObject) ja3.get(i)).getString("end").substring(0,11));
+        		leaving.setStyle("-fx-pref-width: 80;");
+        		Label starting = new Label(((JSONObject) ja3.get(i)).getString("start").substring(0,11));
+        		starting.setStyle("-fx-pref-width: 80;");
+        		Label carId = new Label(((JSONObject) ja3.get(i)).getString("carNumber"));
+        		carId.setStyle("-fx-pref-width: 80;");
+        		
+        		
+        		
+        		Label status = null;
+        		if(((JSONObject) ja3.get(i)).getBoolean("isParking")){
+        			status = new Label("parking");
+        			status.setStyle("-fx-pref-width: 60;");
+        		}else{
+        			status = new Label("not parking");
+        			status.setStyle("-fx-pref-width: 60;");
+        		}
+    		
+
+		        hb.getChildren().add(subId);
+				hb.getChildren().add(carId);
+				hb.getChildren().add(starting);
+		        hb.getChildren().add(leaving);
+				hb.getChildren().add(status);
+				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+				fullSubscriptionsList.getChildren().add(hb);
+				
+				if(status.getText().equals("not parking")){
+					Button activateButton = new Button("Enter");
+					activateButton.setId("fullSubActivateButton" + subId.getText());
+					String css = getClass().getResource("application.css").toExternalForm();
+					activateButton.getStylesheets().clear();
+					activateButton.getStylesheets().add(css);
+					activateButton.setOnAction(e -> activateParkingFullSub(e, subId.getText()));
+					activateButton.getStyleClass().add("activate-button");
+					hb.getChildren().add(activateButton);	
+				}
+				
+				if(status.getText().equals("parking")){
+					Button deActivateButton = new Button("Exit");
+					deActivateButton.setId("fullSubDeactivateButton" + subId.getText());
+					String css = getClass().getResource("application.css").toExternalForm();
+					deActivateButton.getStylesheets().clear();
+					deActivateButton.getStylesheets().add(css);
+					deActivateButton.setOnAction(e -> deActivateParkingFullSub(e, subId.getText()));
+					deActivateButton.getStyleClass().add("deactivate-button");
+					hb.getChildren().add(deActivateButton);
+				}
+			}
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
     
     }
 
-    private void deActivateParkingSub(ActionEvent e, String subId) {
+    private void deActivateParkingFullSub(ActionEvent e, String text) {
+    	System.out.println("In the deActivateFullSub function");
+	}
+
+	private void activateParkingFullSub(ActionEvent e, String text) {
+		System.out.println("In the activateFullSub function");
+	}
+
+	private void deActivateParkingSub(ActionEvent e, String subId) {
 		// TODO Auto-generated method stub
 		System.out.println("this is the subId " + subId);
 	}
@@ -1138,6 +1295,7 @@ public class LogInController {
 			ret = request(json, "UpdateUserInfo");
 
 			if (ret.getBoolean("result")) {
+				balanceOnTopOfLogIn.setText(Long.toString(MainController._currentUser.getBalance() + cost));
 				return true;
 			}
 
