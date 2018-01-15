@@ -41,12 +41,12 @@ public class Main extends Application{
 		// TODO Auto-generated method stub
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		loader.setLocation(Main.class.getResource("MainView.fxml"));  
 		
 		try {
 			mainLayout = loader.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block 
 			e.printStackTrace();
 		} 
 		Scene scene = new Scene(mainLayout);
@@ -54,7 +54,7 @@ public class Main extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-	}
+	} 
 
 	public static void main(String[] args) {
 

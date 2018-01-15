@@ -5,6 +5,8 @@
 package application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -22,7 +24,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.User;
 
@@ -98,6 +104,10 @@ public class MainController {
 
     @FXML
     private Label workedIdLabel;
+    @FXML // fx:id="TrackReservationButton"
+    private Button TrackReservationButton; // Value injected by FXMLLoader
+
+    public static int TrakCheck=0;
     
     @FXML
     void continueasAGuest(ActionEvent event) {
@@ -139,7 +149,7 @@ public class MainController {
     }
     
     @FXML
-    void registeration(ActionEvent event) {
+    void registeration(ActionEvent event) { 
 //    	System.out.println("HELLOOOOO FROM Registeration");
 //    	System.out.println("We have new client, you are welcome");
     	
@@ -282,11 +292,14 @@ public class MainController {
 		}
 		LogInController logInController = loader.getController();
 		logInController.setWelcome("Welcome to CPS");
-		logInController.setTopOfLogInView(_username, "2000");
+		logInController.setTopOfLogInView(_username, Long.toString(_currentUser.getBalance()));
+		
 		Scene scene = new Scene(mainLayout);
     	
     	Stage stage = (Stage) currentScene.getWindow();
 		stage.setScene(scene);
+		
+		
 		
     }
 
@@ -312,8 +325,72 @@ public class MainController {
     		businessNameTf.setVisible(false);
     	}
     }
+    @FXML
+    void TrakReservation(ActionEvent event) throws IOException 
+    {
+    	   
+    	 	TrakCheck=0;
+    		Stage popupwindow=new Stage();
+    		      
+    		popupwindow.initModality(Modality.APPLICATION_MODAL);
+    		popupwindow.setTitle("Track Reservation");
+   
+    		Label reservationLabel= new Label("Reservation Id:");
+    		reservationLabel.setStyle("-fx-pref-width: 80px");
 
+    		Label carNumberLabel = new Label  ("Car Number:");
+    		carNumberLabel.setStyle("-fx-pref-width: 80px");
+    		TextField reservationTF= new TextField();     
+    		TextField carNumberTF= new TextField();    
+    		    
+    		
+    		Button trackbutton= new Button("Track");    
+    		     
+    		
+    		
+    		
+    		     
 
+    		HBox layout= new HBox(10);
+    		HBox layout2= new HBox(10);
+    		VBox vB=new VBox();
+    		
+    		
+    		vB.setPadding(new Insets(10, 10, 10, 10));   
+    		
+    		layout.getChildren().addAll(reservationLabel,reservationTF);
+    		layout2.getChildren().addAll(carNumberLabel,carNumberTF);
+    		  
+    		vB.getChildren().addAll(layout,layout2,trackbutton);
+    		//layout.setAlignment(Pos.CENTER);
+    		
+    		trackbutton.setOnAction(e -> {
+				try {
+					trackbutton(vB);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			});
+    		
+    		Scene scene1= new Scene(vB, 300, 250);
+    		      
+    		popupwindow.setScene(scene1);
+    		      
+    		popupwindow.showAndWait();
+    }
+    
+    
+    void trackbutton(VBox vb) throws IOException 
+    {
+    	if(TrakCheck==0) {
+    		TextArea  trakTA=new TextArea();
+    		vb.getChildren().add(trakTA);
+    		TrakCheck=1;
+    		trakTA.setEditable(false);
+    	}
+    }
+    	 
     @FXML
     void WorkerIDCheckBoxEventHandler(ActionEvent event) {
     	CheckBox cb = (CheckBox) event.getSource();
