@@ -64,13 +64,13 @@ public class GuestController {
     	MainController._currentUser = null;
     	
     	
-    	Scene currentScene = signOutButton.getScene();
+    	Scene currentScene = signOutButton.getScene(); 
     	Parent mainLayout = null;
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("MainView.fxml"));
 		try {
 			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
+		} catch (IOException | NullPointerException e) { 
 			
 			e.printStackTrace();
 		}
@@ -79,7 +79,7 @@ public class GuestController {
 		Stage stage = (Stage) currentScene.getWindow();
 		stage.setScene(scene);
     	
-    }
+    } 
 
 
     @FXML 

@@ -178,7 +178,7 @@
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" styleClass="loginView-buttons" stylesheets="@application.css" text="Track Reservation">
+                        <Button fx:id="TrackReservationButton" mnemonicParsing="false" onAction="#TrakReservation" styleClass="loginView-buttons" stylesheets="@application.css" text="Track Reservation">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>

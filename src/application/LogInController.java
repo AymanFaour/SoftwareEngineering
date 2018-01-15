@@ -44,7 +44,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class LogInController {
 	
@@ -212,8 +211,7 @@ public class LogInController {
     
     @FXML // fx:id="fullSubscriptionsList"
     private VBox fullSubscriptionsList; // Value injected by FXMLLoader
-    
-    
+
     public void setWelcome(String s){
     	welcomeBanner.setText(s);
     }
@@ -232,8 +230,8 @@ public class LogInController {
     	complaintBorderPane.setVisible(false);
     	viewProfileBorderPane.setVisible(false);
     	MyAccountBorderPane.setVisible(false);
-    	ActualParkingBorderPane.setVisible(false);
-
+    	ActualParkingBorderPane.setVisible(false); 
+ 
 
     
     	parkingReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
@@ -1212,6 +1210,8 @@ public class LogInController {
 		}
 
 	}
+	
+
 
 	@FXML
 	void reserveActualParking(ActionEvent event) {
