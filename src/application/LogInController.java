@@ -1100,14 +1100,15 @@ public class LogInController {
 		}
 	}
 
-	// TODO: update this ****
 	@FXML
 	void buyfulSubFullSubscription(ActionEvent event) {
-
+		
 		String _carNumber = fulSubCarNumberTF.getText();
 
-		if (_carNumber.equals("")) {
+		Calendar leaveCal = Calendar.getInstance();
+		// System.out.println(leaveCal.toString() + "@@@@@@@@@@@@@@@@@@@");
 
+		if (_carNumber.equals("")) {
 			informationAlert.setTitle("Reservation warrning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please fill all the above field to complete the reservation");
@@ -1115,19 +1116,70 @@ public class LogInController {
 
 		} else {
 
+			long _start = leaveCal.getTime().getTime();
+			leaveCal.add(Calendar.MONTH, 1);
+			// long _end = leaveCal.getTime().getTime();
+			long _end = leaveCal.getTime().getTime();
+
+			String _name = MainController._currentUser.getUsername();
+
+			JSONObject json = new JSONObject();
 			try {
-				JSONObject toSend = new JSONObject();
-				toSend.put("carNumber", _carNumber);
 
-				// CpsController.client.request("reserveParking",toSend.toString());
+				confirmAlert.setTitle("Confirmation Dialog");
+				
+				//TODO: update the cost of full subscription
+				
+				confirmAlert.setContentText("Would you like to reserve this parking for ???$ ?");
 
-			} catch (JSONException | NullPointerException e1) {
+				Optional<ButtonType> result = confirmAlert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					
+					//TODO: update the cost of full subscription
+					
+					if (MainController._currentUser.getBalance() < 240) {
 
-				e1.printStackTrace();
+						informationAlert.setTitle("Reservation warrning");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText(
+								"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+						informationAlert.showAndWait();
+
+					} else {
+
+						
+						json.put("carNumber", _carNumber);
+						json.put("username", _name);
+						json.put("start", _start);
+						json.put("end", _end);
+						json.put("cmd", "FullSubscription");
+
+						JSONObject ret = request(json, "FullSubscription");
+
+						System.out.println(ret.getBoolean("result"));
+						if (ret.getBoolean("result")) {
+							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+							
+							//TODO: update the cost of full subscription
+							
+							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
+							updateBalance((-1) * 240);
+							System.out.println("New balance is: " + MainController._currentUser.getBalance());
+
+							informationAlert.setTitle("Depositing Succeeded");
+							informationAlert.setHeaderText(null);
+							informationAlert.setContentText("Purchasing full subscription finished Successfully.");
+							informationAlert.showAndWait();
+
+						} 
+
+					}
+				} 
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
 
 		}
-
 	}
 
 	@FXML
@@ -1357,6 +1409,51 @@ public class LogInController {
 
 	@FXML
 	void makeSend(ActionEvent event) {
+
+		String _carNumber = ComplaintCarNumberTF.getText();
+		String _reservationId=ComplaintReservationIdTF.getText();
+		String _complaint = ComplaintTA.getText();
+
+		if (_carNumber.equals("") || _reservationId.equals("") || _complaint.equals("")) {
+			informationAlert.setTitle("Reservation warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please fill all the above field to complete the reservation");
+			informationAlert.showAndWait();
+
+		} else {
+			
+			String _name = MainController._currentUser.getUsername();
+
+			JSONObject json = new JSONObject();
+			try {
+		
+				json.put("carNumber", _carNumber);
+				json.put("username", _name);
+				json.put("reservationId", _reservationId);
+				json.put("complaint", _complaint);
+				json.put("cmd", "complaint");
+
+				JSONObject ret = request(json, "Complaint");
+
+				System.out.println(ret.getBoolean("result"));
+				if (ret.getBoolean("result")) {
+					confirmAlert.setTitle("Confirmation Dialog");
+					confirmAlert.setContentText("Dear "+_name+", your complaint is in process, we'll try to response ASAP. thanx");
+					confirmAlert.showAndWait();
+				}
+				else{
+					informationAlert.setTitle("Complaint Error");
+			    	informationAlert.setHeaderText(null);
+			    	informationAlert.setContentText("Failed to send complaint, try again later");
+			    	informationAlert.showAndWait();
+				} 
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+	
+		
 
 	}
 
