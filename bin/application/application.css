@@ -123,6 +123,7 @@
 }
 
 
+
 .cancel-button {
 	-fx-focus-color: #ffffff;
     -fx-background-color:
@@ -213,6 +214,13 @@
     -fx-border-width: 0 0 2 0;
     -fx-border-color: #d0e6f8;
     -fx-pref-height: 30;
+}
+
+.hbox-second{
+	-fx-border-style: solid inside;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #d0e6f8;
+    -fx-pref-height: 50;
 }
 
 .combo-box .list-cell 
