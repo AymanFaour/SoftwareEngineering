@@ -224,6 +224,12 @@ public class LogInController {
     @FXML // fx:id="buyBusinessSubscriptionButton"
     private Button buyBusinessSubscriptionButton; // Value injected by FXMLLoader
 
+    @FXML // fx:id="activationBusinessCarTF"
+    private TextField activationBusinessCarTF; // Value injected by FXMLLoader
+
+    @FXML // fx:id="activationBusinessCodeTF"
+    private TextField activationBusinessCodeTF; // Value injected by FXMLLoader
+
     
     private int businessAccountWorkersCounter = 0;
     
@@ -378,6 +384,12 @@ public class LogInController {
     		myComboBoxData.add(parkingLotNames.get(i));
     	}
     	regRouComboBox.setItems(myComboBoxData);
+    }
+    
+
+    @FXML
+    void activateBusinessSubscriptionByCodeAndCar(ActionEvent event) {
+
     }
 
     @FXML
