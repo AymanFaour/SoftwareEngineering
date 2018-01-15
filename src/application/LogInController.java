@@ -40,6 +40,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import jdk.nashorn.internal.ir.LexicalContextNode;
 
 public class LogInController {
 	
@@ -459,7 +460,9 @@ public class LogInController {
 
     @FXML
     void buyBusinessSubscription(ActionEvent event) {
-
+    	for(int i=0; i < businessAccountWorkersCounter; i++){
+    		System.out.println('1');
+    	}
     }
 
 
@@ -1069,7 +1072,7 @@ public class LogInController {
 //						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
 							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
-							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - cost);
+							
 							updateBalance((-1) * cost);
 							System.out.println("New balance is: " + MainController._currentUser.getBalance());
 						}
@@ -1161,7 +1164,7 @@ public class LogInController {
 						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
 							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
-							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
+//							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
 							updateBalance((-1) * 240);
 							System.out.println("New balance is: " + MainController._currentUser.getBalance());
 
@@ -1235,7 +1238,7 @@ public class LogInController {
 						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
 							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
-							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 288);
+//							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 288);
 							updateBalance((-1) * 288);
 							System.out.println("New balance is: " + MainController._currentUser.getBalance());
 
@@ -1296,7 +1299,8 @@ public class LogInController {
 			ret = request(json, "UpdateUserInfo");
 
 			if (ret.getBoolean("result")) {
-				balanceOnTopOfLogIn.setText(Long.toString(MainController._currentUser.getBalance() + cost));
+				MainController._currentUser.setBalance(MainController._currentUser.getBalance() + cost);
+				balanceOnTopOfLogIn.setText(Long.toString(MainController._currentUser.getBalance()));
 				return true;
 			}
 
