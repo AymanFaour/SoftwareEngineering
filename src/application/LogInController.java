@@ -40,7 +40,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.nashorn.internal.ir.LexicalContextNode;
 
 public class LogInController {
 	
@@ -460,11 +459,48 @@ public class LogInController {
 
     @FXML
     void buyBusinessSubscription(ActionEvent event) {
-    	for(int i=0; i < businessAccountWorkersCounter; i++){
-    		
-//    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
-    		System.out.println(listOfAddedWorkersBusinessAcocuntVBOX.getChildren());
-    	}
+    	
+    	JSONObject json = new JSONObject();
+		
+		Calendar leaveCal = Calendar.getInstance();
+		
+		long _start = leaveCal.getTime().getTime();
+		leaveCal.add(Calendar.MONTH, 1);
+		long _end = leaveCal.getTime().getTime();
+    	try {
+			json.put("username", MainController._currentUser.getUsername());
+			json.put("company", MainController._currentUser.getCompnay());
+			json.put("lotName", Main._currentParkingLot.get_name());
+			String carsNumber = "";
+			for(int i=0; i < businessAccountWorkersCounter+1; i++){
+	    		
+//	    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
+//	    		System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
+	    		
+	    		TextField temp = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
+//	    		System.out.println(temp.getText());
+	    		carsNumber += temp.getText() + ";";
+	    	}
+			json.put("cars", carsNumber);
+			json.put("start", _start);
+			json.put("end", _end);
+			
+
+			json.put("cmd", "BusinessSubscription");
+			
+			JSONObject ret = new JSONObject();
+			ret = request(json, "SubscriptionController");
+			 
+			if(ret.getBoolean("result")){
+				System.out.println(ret);
+			}
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 
 
