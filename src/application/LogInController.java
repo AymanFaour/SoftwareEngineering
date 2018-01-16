@@ -244,7 +244,9 @@ public class LogInController {
     @FXML // fx:id="buRouSubRoutineMinuteComboBox"
     private ComboBox<String> busRouSubRoutineMinuteComboBox; // Value injected by FXMLLoader
 
-    
+    @FXML // fx:id="logInButtonListVbox"
+    private VBox logInButtonListVbox; // Value injected by FXMLLoader
+
     
     private int businessAccountWorkersCounter = 0;
     
@@ -265,6 +267,17 @@ public class LogInController {
     	balanceOnTopOfLogIn.setText(balance);
     }
     
+    public void setBusinessButton(Button b){
+    	int counter = 0;
+    	for (int i = 0; i < logInButtonListVbox.getChildren().size(); i++){
+    		if(((Button) logInButtonListVbox.getChildren().get(i)).getText() == "Test"){
+    			counter++;
+    		}
+    	}
+    	if (counter != logInButtonListVbox.getChildren().size())
+    		logInButtonListVbox.getChildren().add(4, b);
+    }
+    
     @FXML
     void loadParkingReservation(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -277,11 +290,13 @@ public class LogInController {
     	ActualParkingBorderPane.setVisible(false); 
  
 
-    
     	parkingReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	parkingReservationButton.getStyleClass().add("pressedButton");
-    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	if(MainController._currentUser.getType().equals("b")){
+    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
+    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
+    		businessBut.getStyleClass().add("loginView-buttons");
+    	}
     	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
     	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
     	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -348,8 +363,11 @@ public class LogInController {
     	
     	regularRoutinelySubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	regularRoutinelySubscriptionButton.getStyleClass().add("pressedButton");
-    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	if(MainController._currentUser.getType().equals("b")){
+    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
+    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
+    		businessBut.getStyleClass().add("loginView-buttons");
+    	}
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	parkingReservationButton.getStyleClass().add("loginView-buttons");
     	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -413,10 +431,11 @@ public class LogInController {
     	MyAccountBorderPane.setVisible(false);
     	ActualParkingBorderPane.setVisible(false);
 
-
-    	
-    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	businessRoutinelySubscriptionButton.getStyleClass().add("pressedButton");
+    	if(MainController._currentUser.getType().equals("b")){
+    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
+    		businessBut.getStyleClass().removeAll("loginView-buttons", "focus");
+    		businessBut.getStyleClass().add("pressedButton");
+    	}
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	parkingReservationButton.getStyleClass().add("loginView-buttons");
     	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -526,16 +545,18 @@ public class LogInController {
     	MyAccountBorderPane.setVisible(false);
     	ActualParkingBorderPane.setVisible(false);
 
-
-    	
+    
     	fullSubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	fullSubscriptionButton.getStyleClass().add("pressedButton");
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	parkingReservationButton.getStyleClass().add("loginView-buttons");
     	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
     	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	if(MainController._currentUser.getType().equals("b")){
+    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
+    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
+    		businessBut.getStyleClass().add("loginView-buttons");
+    	}
     	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	viewReservationButton.getStyleClass().add("loginView-buttons");
     	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -558,7 +579,6 @@ public class LogInController {
     	MyAccountBorderPane.setVisible(false);
     	ActualParkingBorderPane.setVisible(false);
 
-
     	
     	viewReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	viewReservationButton.getStyleClass().add("pressedButton");
@@ -568,8 +588,11 @@ public class LogInController {
     	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
     	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
     	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	if(MainController._currentUser.getType().equals("b")){
+    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
+    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
+    		businessBut.getStyleClass().add("loginView-buttons");
+    	}
     	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
     	complaintButton.getStyleClass().add("loginView-buttons");
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -874,7 +897,7 @@ public class LogInController {
     	MyAccountBorderPane.setVisible(false);
     	ActualParkingBorderPane.setVisible(false);
 
-
+    
     	complaintButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	complaintButton.getStyleClass().add("pressedButton");
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -885,8 +908,11 @@ public class LogInController {
     	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
     	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	if(MainController._currentUser.getType().equals("b")){
+    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
+    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
+    		businessBut.getStyleClass().add("loginView-buttons");
+    	}
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
     	MyAccountButton.getStyleClass().add("loginView-buttons");
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -918,7 +944,6 @@ public class LogInController {
     	ActualParkingBorderPane.setVisible(false);
 
 
-    	
     	MyAccountButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	MyAccountButton.getStyleClass().add("pressedButton");
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -929,8 +954,11 @@ public class LogInController {
     	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
     	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	if(MainController._currentUser.getType().equals("b")){
+    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
+    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
+    		businessBut.getStyleClass().add("loginView-buttons");
+    	}
     	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
     	complaintButton.getStyleClass().add("loginView-buttons");
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -959,8 +987,11 @@ public class LogInController {
     	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
     	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	businessRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	businessRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+    	if(MainController._currentUser.getType().equals("b")){
+    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
+    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
+    		businessBut.getStyleClass().add("loginView-buttons");
+    	}
     	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
     	complaintButton.getStyleClass().add("loginView-buttons");
     	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -1311,7 +1342,7 @@ public class LogInController {
 			if ((_lotName == null)) {
 				informationAlert.setTitle("Reservation warrning");
 				informationAlert.setHeaderText(null);
-				informationAlert.setContentText("Please fill all the above field to complete the reservation");
+				informationAlert.setContentText("Please fill the parking lot field to complete the reservation");
 				informationAlert.showAndWait();
 				return;
 
@@ -1343,45 +1374,83 @@ public class LogInController {
 				json.put("username", MainController._currentUser.getUsername());
 				json.put("company", MainController._currentUser.getCompnay());
 				json.put("lotName", Main._currentParkingLot.get_name());
-				String carsNumber = "";
+				
+				boolean flag1 = true;
+				boolean flag2 = true;
+				
 				for(int i=0; i < businessAccountWorkersCounter+1; i++){
 		    		
 //		    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
 //		    		System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
 		    		
-		    		TextField temp = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
+		    		TextField checkInput = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
 //		    		System.out.println(temp.getText());
-		    		carsNumber += temp.getText() + ";";
+		    		if(checkInput.getText().equals("")){
+		    			flag1 = false;
+		    		}
 		    	}
-				json.put("cars", carsNumber);
-				json.put("start", _start);
-				json.put("end", _end);
-				json.put("leaveHour", leaveHour);
-				json.put("lotName", _lotName);
-				json.put("cmd", "BusinessSubscription");
 				
-				JSONObject ret = new JSONObject();
-				ret = request(json, "SubscriptionController");
-				
-				if(ret.getBoolean("result")){
-					System.out.println(ret);
-					
-					informationAlert.setTitle("Business Subscription Succeeded");
+				if(flag1){
+					if( ((businessAccountWorkersCounter+1)*270) > MainController._currentUser.getBalance() ){
+						flag2 = false;
+					}
+				}
+				else{
+					informationAlert.setTitle("Business Subscription Warrning");
 					informationAlert.setHeaderText(null);
-					informationAlert.setContentText("Business Subscription for" + Integer.toString(businessAccountWorkersCounter) + "employees finished Successfully."
-							+ "\nPlease share this Activation key: " + ret.getString("code") + " to your employees");
-					
+					informationAlert.setContentText("Please fill all car number fields to complete the purchase");
 					informationAlert.showAndWait();
-					
-					updateBalance((-1) * 270 * businessAccountWorkersCounter);
-					
+					return;
 				}
 				
+				if(flag2){
+					String carsNumber = "";
+					for(int i=0; i < businessAccountWorkersCounter+1; i++){
+			    		
+	//		    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
+	//		    		System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
+			    		
+			    		TextField temp = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
+	//		    		System.out.println(temp.getText());
+			    		carsNumber += temp.getText() + ";";
+			    	}
+					json.put("cars", carsNumber);
+					json.put("start", _start);
+					json.put("end", _end);
+					json.put("leaveHour", leaveHour);
+					json.put("lotName", _lotName);
+					json.put("cmd", "BusinessSubscription");
+					
+					JSONObject ret = new JSONObject();
+					ret = request(json, "SubscriptionController");
+					
+					if(ret.getBoolean("result")){
+						System.out.println(ret);
+						
+						informationAlert.setTitle("Business Subscription Succeeded");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Business Subscription for" + Integer.toString(businessAccountWorkersCounter) + "employees finished Successfully."
+								+ "\nPlease share this Activation key: " + ret.getString("code") + " to your employees");
+						
+						informationAlert.showAndWait();
+						
+						updateBalance((-1) * 270 * (businessAccountWorkersCounter+1));
+						
+					}
+					
 				
+	    		}else{
+	    			informationAlert.setTitle("Business Subscription Warrning");
+	    			informationAlert.setHeaderText(null);
+	    			informationAlert.setContentText("Insufficient Funds");
+	    			informationAlert.showAndWait();
+	    			return;
+	    		}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 	    	
 	    }
 	

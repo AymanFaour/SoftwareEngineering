@@ -19,7 +19,7 @@
       </StackPane>
    </top>
    <left>
-      <VBox prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #2d6ea3;" BorderPane.alignment="CENTER">
+      <VBox fx:id="logInButtonListVbox" prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: #2d6ea3;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
@@ -36,11 +36,6 @@
             </Button>
             <Button fx:id="ActualParkingButton" mnemonicParsing="false" onAction="#loadActualParking" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Occasional Parking" />
             <Button fx:id="regularRoutinelySubscriptionButton" mnemonicParsing="false" onAction="#loadRegularRoutinelySubscription" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Regular Routinely Subscription">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="businessRoutinelySubscriptionButton" mnemonicParsing="false" onAction="#loadBusinessRoutinelySubscription" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Business Routinely Subscription">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
