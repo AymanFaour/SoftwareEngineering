@@ -83,7 +83,7 @@ public class Main extends Application{
         	
 //        	System.out.println(config + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         	
-        	_currentParkingLot = new ParkingLot(config.getString("lotName"));
+        	_currentParkingLot = new ParkingLot(config.getString("lotName"), 3, 3, config.getInt("width"));
         	
         } catch (Exception e) {
             e.printStackTrace();
