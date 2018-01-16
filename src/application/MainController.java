@@ -294,6 +294,20 @@ public class MainController {
 		logInController.setWelcome("Welcome to CPS");
 		logInController.setTopOfLogInView(_username, Long.toString(_currentUser.getBalance()));
 		
+		if(_currentUser.getType().equals("b")){
+			Button businessButton = new Button("Business Routinely Subscription");
+			logInController.setBusinessButton(businessButton);
+			String css = getClass().getResource("application.css").toExternalForm();
+			businessButton.getStylesheets().clear();
+			businessButton.getStylesheets().add(css);
+			businessButton.getStyleClass().add("loginView-buttons");
+			businessButton.setStyle("-fx-pref-width:200px; -fx-pref-height:40px;");
+			businessButton.setId("businessRoutinelySubscriptionButton");
+			businessButton.setOnAction(e-> {
+				logInController.loadBusinessRoutinelySubscription(null);
+			});
+		}
+		
 		Scene scene = new Scene(mainLayout);
     	
     	Stage stage = (Stage) currentScene.getWindow();
