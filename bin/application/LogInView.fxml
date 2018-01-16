@@ -348,7 +348,7 @@
                         </VBox>
                      </center>
                   </BorderPane>
-                  <BorderPane fx:id="regularRoutineSubscriptionBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+                  <BorderPane fx:id="regularRoutineSubscriptionBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
                      <left>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
@@ -410,32 +410,32 @@
                         </VBox>
                      </left>
                   </BorderPane>
-                  <BorderPane fx:id="businessRoutineSubscriptionBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+                  <BorderPane fx:id="businessRoutineSubscriptionBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                      <center>
-                        <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                        <VBox prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
                            <children>
                               <StackPane prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: #7499b5;">
                                  <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <HBox prefHeight="20.0" prefWidth="200.0">
                                        <children>
                                           <Label prefWidth="60.0" text="Sub ID">
                                              <font>
-                                                <Font size="12.0" />
+                                                <Font name="Arial Bold" size="12.0" />
                                              </font>
                                           </Label>
                                           <Label layoutX="10.0" layoutY="10.0" prefWidth="80.0" text="Start Date">
                                              <font>
-                                                <Font size="12.0" />
+                                                <Font name="Arial Bold" size="12.0" />
                                              </font>
                                           </Label>
                                           <Label layoutX="50.0" layoutY="10.0" prefWidth="80.0" text="End Date">
                                              <font>
-                                                <Font size="12.0" />
+                                                <Font name="Arial Bold" size="12.0" />
                                              </font>
                                           </Label>
                                           <Label layoutX="160.0" layoutY="12.0" prefWidth="80.0" text="#Workers">
                                              <font>
-                                                <Font size="12.0" />
+                                                <Font name="Arial Bold" size="12.0" />
                                              </font>
                                           </Label>
                                        </children>
@@ -445,12 +445,50 @@
                                     </HBox>
                                  </children>
                               </StackPane>
-                              <ScrollPane prefHeight="180.0" prefWidth="600.0" style="-fx-background-color: #dddddd;" />
-                              <ScrollPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #dddddd;">
+                              <ScrollPane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #dddddd;" />
+                              <HBox prefHeight="30.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="cost per worker: 270₪">
+                                       <HBox.margin>
+                                          <Insets left="10.0" top="5.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="30.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="parkingLotBusinessWorkerTF" prefHeight="60.0" promptText="Parking Lot Name" styleClass="text-field-first" stylesheets="@application.css" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="10.0" top="5.0" />
+                                 </padding>
+                              </HBox>
+                              <HBox layoutX="10.0" layoutY="453.0" prefHeight="30.0" prefWidth="200.0">
+                                 <children>
+                                    <TextField fx:id="leavingHourBusinessWorkerTF" prefHeight="60.0" promptText="Leaving Hour" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets left="10.0" top="5.0" />
+                                 </padding>
+                              </HBox>
+                              <ScrollPane prefHeight="320.0" prefWidth="600.0" style="-fx-background-color: #dddddd;">
                                  <content>
-                                    <VBox fx:id="listOfAddedWorkersBusinessAcocuntVBOX" prefHeight="357.0" prefWidth="597.0" style="-fx-background-color: #ffffff;">
+                                    <VBox fx:id="listOfAddedWorkersBusinessAcocuntVBOX" prefHeight="312.0" prefWidth="585.0" style="-fx-background-color: #ffffff;">
                                        <children>
-                                          <HBox prefHeight="30.0" prefWidth="200.0" stylesheets="@application.css">
+                                          <HBox prefHeight="30.0" prefWidth="210.0" stylesheets="@application.css">
                                              <children>
                                                 <TextField fx:id="businessWorkerTF0" promptText="Car Number" styleClass="text-field-first" stylesheets="@application.css" />
                                              </children>
@@ -490,6 +528,9 @@
                                        </children>
                                     </VBox>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
                               </ScrollPane>
                            </children>
                         </VBox>

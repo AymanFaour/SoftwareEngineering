@@ -41,7 +41,7 @@ public class Main extends Application{
 		// TODO Auto-generated method stub
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		loader.setLocation(Main.class.getResource("LogInView.fxml"));
 		
 		try {
 			mainLayout = loader.load();
@@ -89,7 +89,7 @@ public class Main extends Application{
             e.printStackTrace();
         }
 		
-		MainController.initialize("192.168.1.36", "8080");
+		MainController.initialize("192.168.1.17", "8080");
 		launch(args);
 	}
 	
