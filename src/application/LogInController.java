@@ -6,6 +6,7 @@ package application;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -27,6 +28,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -40,6 +44,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class LogInController {
 	
@@ -398,11 +403,6 @@ public class LogInController {
     
 
     @FXML
-    void activateBusinessSubscriptionByCodeAndCar(ActionEvent event) {
-
-    }
-
-    @FXML
     void loadBusinessRoutinelySubscription(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(true);
     	regularRoutineSubscriptionBorderPane.setVisible(false);
@@ -515,17 +515,6 @@ public class LogInController {
 		System.out.println("this is the counter from remove:" + this.getBusinessAccountWorkersCounter());
     }
     
-
-    @FXML
-    void buyBusinessSubscription(ActionEvent event) {
-    	for(int i=0; i < businessAccountWorkersCounter; i++){
-    		
-//    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
-    		System.out.println(listOfAddedWorkersBusinessAcocuntVBOX.getChildren());
-    	}
-    }
-
-
     @FXML
     void loadFullSubscription(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -1145,6 +1134,55 @@ public class LogInController {
 
 	}
 
+	
+	@FXML
+    void activateBusinessSubscriptionByCodeAndCar(ActionEvent event) {
+    	
+    	String _activationCode = activationBusinessCodeTF.getText();
+    	String _carNumber = activationBusinessCarTF.getText();
+    	String _username = MainController._currentUser.getUsername();
+    	
+    	if(_activationCode.equals("") || _carNumber.equals("")){
+    		informationAlert.setTitle("Reservation warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please fill all the above field to complete the reservation");
+			informationAlert.showAndWait();
+    	}else{
+    	
+	    	JSONObject json = new JSONObject();
+	    	JSONObject ret = new JSONObject();
+	    	try {
+				json.put("carNumber", _carNumber);
+				json.put("code",_activationCode);
+				json.put("username", _username);
+				
+				json.put("cmd", "ActivateBusinessSubscription");
+				
+				ret = request(json, "SubscriptionController");
+				System.out.println(ret);
+				if(ret.getBoolean("result")){
+					informationAlert.setTitle("Purchasing routine subscription Succeeded");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Purchasing routine subscription finished Successfully.");
+					informationAlert.showAndWait();
+				}else{
+					if(ret != null){
+						informationAlert.setTitle("Reservation warrning");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText(ret.getString("info"));
+						informationAlert.showAndWait();
+					}
+				}
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    }
+	
+	
 	@FXML
 	void buyRegularRoutineSubscription(ActionEvent event) {
 		String _carNumber = regRouSubCarNumberTF.getText();
@@ -1248,6 +1286,105 @@ public class LogInController {
 		}
 	}
 
+	 @FXML
+	    void buyBusinessSubscription(ActionEvent event) {
+	    	
+			String _lotName = busRouLotNameComboBox.getValue();
+//	    	String _lotName = "Carmel";
+			String _routLeaveHour = busRouSubRoutineHourComboBox.getValue();
+			String _routLeaveMinute = busRouSubRoutineMinuteComboBox.getValue();
+
+//	    	String _routLeaveHour = "07";
+//	    	String _routLeaveMinute = "44";
+	    	
+	    	Calendar leaveCal = Calendar.getInstance();
+			// System.out.println(leaveCal.toString() + "@@@@@@@@@@@@@@@@@@@");
+
+			if (_routLeaveHour == null) {
+				_routLeaveHour = "23";
+			}
+
+			if (_routLeaveMinute == null) {
+				_routLeaveMinute = "59";
+			}
+
+			if ((_lotName == null)) {
+				informationAlert.setTitle("Reservation warrning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Please fill all the above field to complete the reservation");
+				informationAlert.showAndWait();
+				return;
+
+			}
+			
+			int routLeaveHourInt = Integer.parseInt(_routLeaveHour);
+			int routLeaveMinuteInt = Integer.parseInt(_routLeaveMinute);
+
+			String leaveHour = "";
+			if (routLeaveMinuteInt < 10) {
+				leaveHour = (routLeaveHourInt) + ":0" + (routLeaveMinuteInt);
+			} else {
+				leaveHour = (routLeaveHourInt) + ":" + (routLeaveMinuteInt);
+			}
+
+			if (routLeaveHourInt < 10) {
+				leaveHour = "0" + leaveHour;
+			}
+
+	    	
+	    	
+	    	JSONObject json = new JSONObject();
+			
+			
+			long _start = leaveCal.getTime().getTime();
+			leaveCal.add(Calendar.MONTH, 1);
+			long _end = leaveCal.getTime().getTime();
+	    	try {
+				json.put("username", MainController._currentUser.getUsername());
+				json.put("company", MainController._currentUser.getCompnay());
+				json.put("lotName", Main._currentParkingLot.get_name());
+				String carsNumber = "";
+				for(int i=0; i < businessAccountWorkersCounter+1; i++){
+		    		
+//		    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
+//		    		System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
+		    		
+		    		TextField temp = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
+//		    		System.out.println(temp.getText());
+		    		carsNumber += temp.getText() + ";";
+		    	}
+				json.put("cars", carsNumber);
+				json.put("start", _start);
+				json.put("end", _end);
+				json.put("leaveHour", leaveHour);
+				json.put("lotName", _lotName);
+				json.put("cmd", "BusinessSubscription");
+				
+				JSONObject ret = new JSONObject();
+				ret = request(json, "SubscriptionController");
+				
+				if(ret.getBoolean("result")){
+					System.out.println(ret);
+					
+					informationAlert.setTitle("Business Subscription Succeeded");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Business Subscription for" + Integer.toString(businessAccountWorkersCounter) + "employees finished Successfully."
+							+ "\nPlease share this Activation key: " + ret.getString("code") + " to your employees");
+					
+					informationAlert.showAndWait();
+					
+					updateBalance((-1) * 270 * businessAccountWorkersCounter);
+					
+				}
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+	    }
+	
 	@FXML
 	void buyfulSubFullSubscription(ActionEvent event) {
 		
@@ -1321,25 +1458,25 @@ public class LogInController {
 	@FXML
 	void signOut(ActionEvent event) {
 
-		 getReserves();
+//		 getReserves();
 
 		// System.out.println(getReserves());
-//		MainController._currentUser = null;
-//
-//		Scene currentScene = signOutButton.getScene();
-//		Parent mainLayout = null;
-//		FXMLLoader loader = new FXMLLoader();
-//		loader.setLocation(Main.class.getResource("MainView.fxml"));
-//		try {
-//			mainLayout = loader.load();
-//		} catch (IOException | NullPointerException e) {
-//
-//			e.printStackTrace();
-//		}
-//
-//		Scene scene = new Scene(mainLayout);
-//		Stage stage = (Stage) currentScene.getWindow();
-//		stage.setScene(scene);
+		MainController._currentUser = null;
+
+		Scene currentScene = signOutButton.getScene();
+		Parent mainLayout = null;
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		try {
+			mainLayout = loader.load();
+		} catch (IOException | NullPointerException e) {
+
+			e.printStackTrace();
+		}
+
+		Scene scene = new Scene(mainLayout);
+		Stage stage = (Stage) currentScene.getWindow();
+		stage.setScene(scene);
 
 	}
 
