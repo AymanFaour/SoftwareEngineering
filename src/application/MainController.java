@@ -323,8 +323,6 @@ public class MainController {
     	informationAlert.setHeaderText(null);
     	informationAlert.setContentText("Username or Password uncorrect");
     	informationAlert.showAndWait();
-
-    	
     }
     
     @FXML
