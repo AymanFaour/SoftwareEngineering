@@ -89,7 +89,7 @@ public class Main extends Application{
             e.printStackTrace();
         }
 		
-		MainController.initialize("192.168.1.36", "8080");
+		MainController.initialize("192.168.1.17", "8080");
 		launch(args);
 	}
 	

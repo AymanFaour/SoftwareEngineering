@@ -230,6 +230,16 @@ public class LogInController {
     @FXML // fx:id="activationBusinessCodeTF"
     private TextField activationBusinessCodeTF; // Value injected by FXMLLoader
 
+    @FXML // fx:id="busRouLotNameComboBox"
+    private ComboBox<String> busRouLotNameComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="busRouSubRoutineHourComboBox"
+    private ComboBox<String> busRouSubRoutineHourComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="buRouSubRoutineMinuteComboBox"
+    private ComboBox<String> busRouSubRoutineMinuteComboBox; // Value injected by FXMLLoader
+
+    
     
     private int businessAccountWorkersCounter = 0;
     
@@ -428,6 +438,43 @@ public class LogInController {
     	for (int i = length - 2; i > 0 ; i--){
     		this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(i);
     	}
+    	
+    	myComboBoxHoursData.clear();
+    	for(Integer i = 0; i < 24; i++){
+    		if(i < 10 ){
+    			myComboBoxHoursData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxHoursData.add(i.toString());
+    	}
+    	
+    	myComboBoxMinutesData.clear();
+    	for(Integer i = 0; i < 60; i++){
+    		if(i < 10 ){
+    			myComboBoxMinutesData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxMinutesData.add(i.toString());
+    	}
+    	
+    	ArrayList<String> parkingLotNames = new ArrayList<String>();
+    	parkingLotNames.add("Ben Gurion");
+    	parkingLotNames.add("Carmel");
+    	parkingLotNames.add("Hadar");
+    	parkingLotNames.add("Horev");
+    	parkingLotNames.add("Hanita");
+    	parkingLotNames.add("Neve Shaanan");
+    	
+    	myComboBoxComplaintParkingData.clear();     
+    	for(int i = 0; i < parkingLotNames.size(); i++){
+    		myComboBoxComplaintParkingData.add(parkingLotNames.get(i));
+    	}
+    	
+    	busRouLotNameComboBox.setItems(myComboBoxComplaintParkingData);
+    	busRouSubRoutineHourComboBox.setItems(myComboBoxHoursData);
+    	busRouSubRoutineMinuteComboBox.setItems(myComboBoxMinutesData);
+    	
+    	
     }
     
 
