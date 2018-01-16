@@ -468,54 +468,6 @@ public class LogInController {
 		System.out.println("this is the counter from remove:" + this.getBusinessAccountWorkersCounter());
     }
     
-
-    @FXML
-    void buyBusinessSubscription(ActionEvent event) {
-    	
-    	JSONObject json = new JSONObject();
-		
-		Calendar leaveCal = Calendar.getInstance();
-		
-		long _start = leaveCal.getTime().getTime();
-		leaveCal.add(Calendar.MONTH, 1);
-		long _end = leaveCal.getTime().getTime();
-    	try {
-			json.put("username", MainController._currentUser.getUsername());
-			json.put("company", MainController._currentUser.getCompnay());
-			json.put("lotName", Main._currentParkingLot.get_name());
-			String carsNumber = "";
-			for(int i=0; i < businessAccountWorkersCounter+1; i++){
-	    		
-//	    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
-//	    		System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
-	    		
-	    		TextField temp = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
-//	    		System.out.println(temp.getText());
-	    		carsNumber += temp.getText() + ";";
-	    	}
-			json.put("cars", carsNumber);
-			json.put("start", _start);
-			json.put("end", _end);
-			
-
-			json.put("cmd", "BusinessSubscription");
-			
-			JSONObject ret = new JSONObject();
-			ret = request(json, "SubscriptionController");
-			 
-			if(ret.getBoolean("result")){
-				System.out.println(ret);
-			}
-			
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    }
-
-
     @FXML
     void loadFullSubscription(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -1238,6 +1190,104 @@ public class LogInController {
 		}
 	}
 
+	 @FXML
+	    void buyBusinessSubscription(ActionEvent event) {
+	    	
+//			String _lotName = regRouComboBox.getValue();
+	    	String _lotName = "Carmel";
+//			String _routLeaveHour = regRouSubRoutineHourComboBox.getValue();
+//			String _routLeaveMinute = regRouSubRoutineMinuteComboBox.getValue();
+
+	    	String _routLeaveHour = "07";
+	    	String _routLeaveMinute = "44";
+	    	
+	    	Calendar leaveCal = Calendar.getInstance();
+			// System.out.println(leaveCal.toString() + "@@@@@@@@@@@@@@@@@@@");
+
+			if (_routLeaveHour == null) {
+				_routLeaveHour = "23";
+			}
+
+			if (_routLeaveMinute == null) {
+				_routLeaveMinute = "59";
+			}
+
+			if ((_lotName == null)) {
+				informationAlert.setTitle("Reservation warrning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Please fill all the above field to complete the reservation");
+				informationAlert.showAndWait();
+
+			}
+			
+			int routLeaveHourInt = Integer.parseInt(_routLeaveHour);
+			int routLeaveMinuteInt = Integer.parseInt(_routLeaveMinute);
+
+			String leaveHour = "";
+			if (routLeaveMinuteInt < 10) {
+				leaveHour = (routLeaveHourInt) + ":0" + (routLeaveMinuteInt);
+			} else {
+				leaveHour = (routLeaveHourInt) + ":" + (routLeaveMinuteInt);
+			}
+
+			if (routLeaveHourInt < 10) {
+				leaveHour = "0" + leaveHour;
+			}
+
+	    	
+	    	
+	    	JSONObject json = new JSONObject();
+			
+			
+			long _start = leaveCal.getTime().getTime();
+			leaveCal.add(Calendar.MONTH, 1);
+			long _end = leaveCal.getTime().getTime();
+	    	try {
+				json.put("username", MainController._currentUser.getUsername());
+				json.put("company", MainController._currentUser.getCompnay());
+				json.put("lotName", Main._currentParkingLot.get_name());
+				String carsNumber = "";
+				for(int i=0; i < businessAccountWorkersCounter+1; i++){
+		    		
+//		    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
+//		    		System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
+		    		
+		    		TextField temp = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
+//		    		System.out.println(temp.getText());
+		    		carsNumber += temp.getText() + ";";
+		    	}
+				json.put("cars", carsNumber);
+				json.put("start", _start);
+				json.put("end", _end);
+				json.put("leaveHour", leaveHour);
+				json.put("lotName", _lotName);
+				json.put("cmd", "BusinessSubscription");
+				
+				JSONObject ret = new JSONObject();
+				ret = request(json, "SubscriptionController");
+				 
+				if(ret.getBoolean("result")){
+					System.out.println(ret);
+					
+					informationAlert.setTitle("Business Subscription Succeeded");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Business Subscription for" + Integer.toString(businessAccountWorkersCounter) + "employees finished Successfully."
+							+ "\nPlease share this Activation key: " + ret.getString("code") + " to your employees");
+					
+					informationAlert.showAndWait();
+					
+					updateBalance((-1) * 270 * businessAccountWorkersCounter);
+					
+				}
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+	    }
+	
 	@FXML
 	void buyfulSubFullSubscription(ActionEvent event) {
 		
