@@ -1,5 +1,6 @@
 {
 "host":"localhost",
 "port":"5555",
-"lotName":"Carmel"
+"lotName":"Carmel",
+"width":"8"
 }
