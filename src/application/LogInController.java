@@ -1207,7 +1207,6 @@ public class LogInController {
 				
 				
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
@@ -1447,7 +1446,6 @@ public class LogInController {
 	    			return;
 	    		}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
