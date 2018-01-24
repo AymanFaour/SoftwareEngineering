@@ -23,6 +23,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import model.SharedData;
 
+
+
+
 public class ParkingLotDirectorController {
 	
 	Alert informationAlert = new Alert(AlertType.INFORMATION);
@@ -138,6 +141,8 @@ public class ParkingLotDirectorController {
 			}
 		}
     }
+    
+  
 
     @FXML
     void occasionalChange(ActionEvent event) {

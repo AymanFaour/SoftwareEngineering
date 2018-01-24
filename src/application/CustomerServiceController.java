@@ -44,15 +44,17 @@ public class CustomerServiceController {
 	
 	
 
+
+    @FXML // fx:id="ParkingReservationCustomerServiceBorderPane"
+    private BorderPane ParkingReservationCustomerServiceBorderPane; // Value injected by FXMLLoader
+
     @FXML // fx:id="welcomeBanner"
     private Label welcomeBanner; // Value injected by FXMLLoader
 
     @FXML // fx:id="HandlingComplaintsCustomerServiceBorderPane"
     private BorderPane HandlingComplaintsCustomerServiceBorderPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="ParkingReservationCustomerServiceBorderPane"
-    private BorderPane ParkingReservationCustomerServiceBorderPane; // Value injected by FXMLLoader
-
+   
     @FXML // fx:id="CusSerparkResLeavingMinuteComboBox"
     private ComboBox<String> CusSerparkResLeavingMinuteComboBox; // Value injected by FXMLLoader
 
