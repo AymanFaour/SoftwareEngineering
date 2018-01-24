@@ -6,18 +6,30 @@ package application;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import model.SharedData;
 
 public class ParkingLotDirectorController {
+	
+	Alert informationAlert = new Alert(AlertType.INFORMATION);
+	Alert errorAlert = new Alert(AlertType.ERROR);
+	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
+	
+	
 
     @FXML // fx:id="fullSubscriptionHoursChangeButton"
     private Button fullSubscriptionHoursChangeButton; // Value injected by FXMLLoader
@@ -89,31 +101,219 @@ public class ParkingLotDirectorController {
 
     @FXML
     void sendReportToAdministrator(ActionEvent event) {
+    	
+    	String report = ParLotDirecReportComboBox.getValue();
+    	
+    	if (report == null) {
 
+			informationAlert.setTitle("Report warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please choose report type to complete the report");
+			informationAlert.showAndWait();
+			return;
+
+		} else {
+			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			
+			JSONObject json = new JSONObject();
+			try {
+				//TODO: synchronize with server
+	
+				json.put("report", report);
+				json.put("lotName", lotName);
+				json.put("cmd", "report");
+	
+				// send to reservation servlet
+	//			JSONObject ret = request(json, "CustomerServiceReservationController");
+	//
+	////			System.out.println(ret.getBoolean("result"));
+	//			if (ret.getBoolean("result")) {
+	//				System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+	//				
+	////				updateBalance((-1) * cost);
+	////				System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+	//			}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
     }
 
     @FXML
     void occasionalChange(ActionEvent event) {
+    	String cost =occasionalReservationPriceTF.getText();
+    	
+    	if (cost.equals("")) {
 
+			informationAlert.setTitle("change warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please enter the desired new cost");
+			informationAlert.showAndWait();
+			return;
+
+		} else {
+			double doubleCost=Double.parseDouble(cost);
+			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			JSONObject json = new JSONObject();
+			try {
+				
+				//TODO: synchronize with server
+	
+				json.put("cost", doubleCost);
+				json.put("lotName", lotName);
+				json.put("cmd", "report");
+	
+				// send to reservation servlet
+	//			JSONObject ret = request(json, "CustomerServiceReservationController");
+	//
+	////			System.out.println(ret.getBoolean("result"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
     }
 
     @FXML
     void regularChange(ActionEvent event) {
 
+    	String cost = regularReservationPriceTF.getText();
+    	
+    	if (cost.equals("")) {
+
+			informationAlert.setTitle("change warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please enter the desired new cost");
+			informationAlert.showAndWait();
+			return;
+			
+		} else {
+			double doubleCost=Double.parseDouble(cost);
+			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			JSONObject json = new JSONObject();
+			try {
+				
+				//TODO: synchronize with server
+	
+				json.put("cost", doubleCost);
+				json.put("lotName", lotName);
+				json.put("cmd", "report");
+	
+				// send to reservation servlet
+	//			JSONObject ret = request(json, "CustomerServiceReservationController");
+	//
+	////			System.out.println(ret.getBoolean("result"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
     }
 
     @FXML
     void routinelySubscriptionChange(ActionEvent event) {
+    	String hours = routinelySubscriptionHoursTF.getText();
+    	
+    	if (hours.equals("")) {
 
+			informationAlert.setTitle("change warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please enter the desired new number of hours");
+			informationAlert.showAndWait();
+			return;
+			
+		} else {
+			int intHours=Integer.parseInt(hours);
+			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			JSONObject json = new JSONObject();
+			try {
+				
+				//TODO: synchronize with server
+	
+				json.put("cost", intHours);
+				json.put("lotName", lotName);
+				json.put("cmd", "report");
+	
+				// send to reservation servlet
+	//			JSONObject ret = request(json, "CustomerServiceReservationController");
+	//
+	////			System.out.println(ret.getBoolean("result"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
     }
 
     @FXML
     void businessSubscriptionHoursChange(ActionEvent event) {
 
+    	String hours = businessSubscriptionHoursTF.getText();
+    	
+    	if (hours.equals("")) {
+
+			informationAlert.setTitle("change warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please enter the desired new number of hours");
+			informationAlert.showAndWait();
+			return;
+			
+		} else {
+			int intHours=Integer.parseInt(hours);
+			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			JSONObject json = new JSONObject();
+			try {
+				
+				//TODO: synchronize with server
+	
+				json.put("cost", intHours);
+				json.put("lotName", lotName);
+				json.put("cmd", "report");
+	
+				// send to reservation servlet
+	//			JSONObject ret = request(json, "CustomerServiceReservationController");
+	//
+	////			System.out.println(ret.getBoolean("result"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+    
+
     }
 
     @FXML
     void fullSubscriptionHoursChange(ActionEvent event) {
+
+
+    	String hours = fullSubscriptionHoursTF.getText();
+    	
+    	if (hours.equals("")) {
+
+			informationAlert.setTitle("change warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please enter the desired new number of hours");
+			informationAlert.showAndWait();
+			return;
+			
+		} else {
+			int intHours=Integer.parseInt(hours);
+			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			JSONObject json = new JSONObject();
+			try {
+				
+				//TODO: synchronize with server
+	
+				json.put("cost", intHours);
+				json.put("lotName", lotName);
+				json.put("cmd", "report");
+	
+				// send to reservation servlet
+	//			JSONObject ret = request(json, "CustomerServiceReservationController");
+	//
+	////			System.out.println(ret.getBoolean("result"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 
     }
 
