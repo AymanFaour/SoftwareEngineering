@@ -17,7 +17,6 @@ import org.json.JSONObject;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import model.ParkingLot;
 //import model.ParkingLot;
 import javafx.scene.Parent;

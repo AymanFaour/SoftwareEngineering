@@ -1041,8 +1041,9 @@ public class LogInController {
 			json.put("rid", id);
 			json.put("cmd", "cancelReserve");
 			ret = request(json, "ReservationController");
+			System.out.println(ret);
 			if(ret.getBoolean("result")){
-				System.out.println(ret);
+				
 				loadViewReservation(null);
 				double refund = 0;
 				refund = ret.getDouble("refund");
@@ -1167,6 +1168,7 @@ public class LogInController {
 						json.put("username", _name);
 						json.put("start", _start);
 						json.put("end", _end);
+						json.put("cost", cost);
 						json.put("type", "r");
 						json.put("activated", 0);
 						json.put("cmd", "reserveAhead");
