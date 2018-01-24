@@ -686,7 +686,7 @@ public class LogInController {
 					cancelReservation.setId("cancelReservation" + resId.getText());
 					cancelReservation.getStylesheets().clear();
 					cancelReservation.getStylesheets().add(css);
-					cancelReservation.setOnAction(e -> cancel(e));
+					cancelReservation.setOnAction(e -> cancel(e, resId.getText()));
 					cancelReservation.getStyleClass().add("cancel-button");
 					hb.getChildren().add(cancelReservation);
 				}
@@ -875,11 +875,6 @@ public class LogInController {
 		System.out.println("Okay " + b.getId().substring(16));
 	}
     
-    private void cancel(ActionEvent e) {
-    	Button b = (Button) e.getSource();
-		System.out.println("Okay " + b.getId().substring(15));
-	}
-
 	private void activateParking(ActionEvent e, String string) {
     	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(14));
@@ -1032,6 +1027,36 @@ public class LogInController {
 	}
 
 	
+	private void cancel(ActionEvent e, String id) {
+    
+//		Button b = (Button) e.getSource();
+//		System.out.println("Okay " + b.getId());
+//		System.out.println("Okay " + id);
+		
+		JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		
+		try {
+			
+			json.put("rid", id);
+			json.put("cmd", "cancelReserve");
+			ret = request(json, "ReservationController");
+			if(ret.getBoolean("result")){
+				System.out.println(ret);
+				loadViewReservation(null);
+				double refund = 0;
+				refund = ret.getDouble("refund");
+				updateBalance(refund);
+			}
+			
+			
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+	}
+	
 	
 	@FXML
 	void reserveParking(ActionEvent event) {
@@ -1113,7 +1138,7 @@ public class LogInController {
 		} else {
 			long deff = TimeUnit.MILLISECONDS
 					.toMinutes(Math.abs(leaveCal.getTimeInMillis() - arriveCal.getTimeInMillis()));
-			long cost = Math.round(deff / 60.0) * 4;
+			double cost = Math.round(deff / 60.0) * Main._reservationCost;
 			long _start = arriveCal.getTime().getTime();
 			long _end = leaveCal.getTime().getTime();
 
@@ -1264,11 +1289,11 @@ public class LogInController {
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for 240$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(Main._routineCost) + "$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
-					if (MainController._currentUser.getBalance() < 240) {
+					if (MainController._currentUser.getBalance() < Main._routineCost) {
 
 						informationAlert.setTitle("Reservation warrning");
 						informationAlert.setHeaderText(null);
@@ -1293,7 +1318,7 @@ public class LogInController {
 						if (ret.getBoolean("result")) {
 							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
 //							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
-							updateBalance((-1) * 240);
+							updateBalance((-1) * Main._routineCost);
 							System.out.println("New balance is: " + MainController._currentUser.getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
@@ -1390,7 +1415,7 @@ public class LogInController {
 		    	}
 				
 				if(flag1){
-					if( ((businessAccountWorkersCounter+1)*270) > MainController._currentUser.getBalance() ){
+					if( ((businessAccountWorkersCounter+1) * Main._businessCost) > MainController._currentUser.getBalance() ){
 						flag2 = false;
 					}
 				}
@@ -1433,7 +1458,7 @@ public class LogInController {
 						
 						informationAlert.showAndWait();
 						
-						updateBalance((-1) * 270 * (businessAccountWorkersCounter+1));
+						updateBalance((-1) * Main._businessCost * (businessAccountWorkersCounter+1));
 						
 					}
 					
@@ -1476,12 +1501,12 @@ public class LogInController {
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for 288$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(Main._fullCost) + "$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					
-					if (MainController._currentUser.getBalance() < 288) {
+					if (MainController._currentUser.getBalance() < Main._fullCost) {
 
 						informationAlert.setTitle("Full Subscription warrning");
 						informationAlert.setHeaderText(null);
@@ -1503,7 +1528,7 @@ public class LogInController {
 						if (ret.getBoolean("result")) {
 							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
 //							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 288);
-							updateBalance((-1) * 288);
+							updateBalance((-1) * Main._fullCost);
 							System.out.println("New balance is: " + MainController._currentUser.getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
@@ -1551,7 +1576,7 @@ public class LogInController {
 	 * function that get as parameter a change of the balance, change the
 	 * balance of the current user in the DB
 	 */
-	Boolean updateBalance(long cost) {
+	Boolean updateBalance(double cost) {
 
 		JSONObject json = new JSONObject(), ret = new JSONObject();
 
@@ -1564,7 +1589,7 @@ public class LogInController {
 
 			if (ret.getBoolean("result")) {
 				MainController._currentUser.setBalance(MainController._currentUser.getBalance() + cost);
-				balanceOnTopOfLogIn.setText(Long.toString(MainController._currentUser.getBalance()));
+				balanceOnTopOfLogIn.setText(Double.toString(MainController._currentUser.getBalance()));
 				return true;
 			}
 
