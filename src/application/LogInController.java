@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -675,7 +677,8 @@ public class LogInController {
 					String css = getClass().getResource("application.css").toExternalForm();
 					activateButton.getStylesheets().clear();
 					activateButton.getStylesheets().add(css);
-					activateButton.setOnAction(e -> activateParking(e, "400"));
+					activateButton.setOnAction(e -> activateParking(e, resId.getText(), carId.getText(), arriving.getText(), leaving.getText(), parkingLotName.getText()));
+					
 					activateButton.getStyleClass().add("activate-button");
 					hb.getChildren().add(activateButton);
 					
@@ -876,11 +879,6 @@ public class LogInController {
 		System.out.println("Okay " + b.getId().substring(16));
 	}
     
-	private void activateParking(ActionEvent e, String string) {
-    	Button b = (Button) e.getSource();
-		System.out.println("Okay " + b.getId().substring(14));
-		System.out.println(string);
-	}
 
 	@FXML
     void loadComplaint(ActionEvent event) {
@@ -1059,6 +1057,46 @@ public class LogInController {
 	
 	}
 	
+	
+	private void activateParking(ActionEvent e, String resId, String carId, String arriving, String leaving, String parkingLotName) {
+    	
+		System.out.println(resId);
+		System.out.println(carId);
+		System.out.println(arriving);
+		System.out.println(leaving);
+		System.out.println(parkingLotName);
+		
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	    try {
+			
+	    	Calendar arrivingCal = Calendar.getInstance();
+			arrivingCal.setTime(sdf.parse(arriving));
+			System.out.println(arrivingCal.getTime().getTime());
+			System.out.println(arrivingCal.getTime());
+			
+			Calendar leavingCal = Calendar.getInstance();
+			leavingCal.setTime(sdf.parse(leaving));
+			System.out.println(leavingCal.getTime());
+			
+			if(parkingLotName.equals(SharedData.getInstance().getCurrentParkingLot().get_name())){
+				
+				
+				
+			}else{
+				
+				informationAlert.setTitle("Wrong Parking lot");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("The parking lot in the reservation dosn't correspond to the current parking lot. \n inorder to use this reservation please go to the parking lot \n writtin in the reservation.");
+				informationAlert.showAndWait();			
+			}
+		
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    
+		
+	}
 	
 	@FXML
 	void reserveParking(ActionEvent event) {

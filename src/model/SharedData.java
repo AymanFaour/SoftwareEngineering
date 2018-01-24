@@ -4,7 +4,7 @@ package model;
 public class SharedData {
 		private User currentUser;
 		private SystemUser currentSystemUser;
-		private  ParkingLot currentParkingLot;
+		private ParkingLot currentParkingLot;
 		private double reservationCost;
 		private double occasionalCost;
 		private double routineCost;
