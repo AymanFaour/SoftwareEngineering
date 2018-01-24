@@ -1139,7 +1139,7 @@ public class LogInController {
 		} else {
 			long deff = TimeUnit.MILLISECONDS
 					.toMinutes(Math.abs(leaveCal.getTimeInMillis() - arriveCal.getTimeInMillis()));
-			double cost = Math.round(deff / 60.0) * Main._reservationCost;
+			double cost = Math.round(deff / 60.0) * SharedData.getInstance().getReservationCost();
 			long _start = arriveCal.getTime().getTime();
 			long _end = leaveCal.getTime().getTime();
 
@@ -1290,11 +1290,13 @@ public class LogInController {
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(Main._routineCost) + "$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(
+						SharedData.getInstance().getRoutineCost()) + "$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
-					if (MainController._currentUser.getBalance() < Main._routineCost) {
+					if (SharedData.getInstance().getCurrentUser().getBalance() < 
+							SharedData.getInstance().getRoutineCost()) {
 
 						informationAlert.setTitle("Reservation warrning");
 						informationAlert.setHeaderText(null);
@@ -1319,8 +1321,8 @@ public class LogInController {
 						if (ret.getBoolean("result")) {
 							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 //							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
-							updateBalance((-1) * Main._routineCost);
-							System.out.println("New balance is: " + MainController._currentUser.getBalance());
+							updateBalance((-1) * SharedData.getInstance().getRoutineCost());
+							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
 							informationAlert.setHeaderText(null);
@@ -1398,7 +1400,7 @@ public class LogInController {
 	    	try {
 				json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
 				json.put("company", SharedData.getInstance().getCurrentUser().getCompnay());
-				json.put("lotName", Main._currentParkingLot.get_name());
+				json.put("lotName", SharedData.getInstance().getCurrentParkingLot().get_name());
 				
 				boolean flag1 = true;
 				boolean flag2 = true;
@@ -1416,7 +1418,7 @@ public class LogInController {
 		    	}
 				
 				if(flag1){
-					if( ((businessAccountWorkersCounter+1) * Main._businessCost) > MainController._currentUser.getBalance() ){
+					if( ((businessAccountWorkersCounter+1) * SharedData.getInstance().getBusinessCost()) > SharedData.getInstance().getCurrentUser().getBalance() ){
 						flag2 = false;
 					}
 				}
@@ -1459,7 +1461,7 @@ public class LogInController {
 						
 						informationAlert.showAndWait();
 						
-						updateBalance((-1) * Main._businessCost * (businessAccountWorkersCounter+1));
+						updateBalance((-1) * SharedData.getInstance().getBusinessCost() * (businessAccountWorkersCounter+1));
 						
 					}
 					
@@ -1502,12 +1504,12 @@ public class LogInController {
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(Main._fullCost) + "$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(SharedData.getInstance().getFullCost()) + "$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					
-					if (MainController._currentUser.getBalance() < Main._fullCost) {
+					if (SharedData.getInstance().getCurrentUser().getBalance() < SharedData.getInstance().getFullCost()) {
 
 						informationAlert.setTitle("Full Subscription warrning");
 						informationAlert.setHeaderText(null);
@@ -1527,10 +1529,10 @@ public class LogInController {
 
 						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
-							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 //							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 288);
-							updateBalance((-1) * Main._fullCost);
-							System.out.println("New balance is: " + MainController._currentUser.getBalance());
+							updateBalance((-1) * SharedData.getInstance().getFullCost());
+							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
 							informationAlert.setHeaderText(null);
@@ -1589,8 +1591,10 @@ public class LogInController {
 			ret = request(json, "UpdateUserInfo");
 
 			if (ret.getBoolean("result")) {
-				MainController._currentUser.setBalance(MainController._currentUser.getBalance() + cost);
-				balanceOnTopOfLogIn.setText(Double.toString(MainController._currentUser.getBalance()));
+				SharedData.getInstance().getCurrentUser().setBalance
+				(SharedData.getInstance().getCurrentUser().getBalance() + cost);
+				balanceOnTopOfLogIn.setText(Double.toString(SharedData.
+						getInstance().getCurrentUser().getBalance()));
 				return true;
 			}
 
@@ -1670,7 +1674,7 @@ public class LogInController {
 	void reserveActualParking(ActionEvent event) {
 
 		String _carNumber = ActualParkingNumberTF.getText();
-		String _lotName = Main._currentParkingLot.get_name();
+		String _lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 		String _ocLeaveHour = ActualParkingLeavingHourComboBox.getValue();
 		String _ocLeaveMinute = ActualParkingLeavingMinuteComboBox.getValue();
 		LocalDate leaveLocalDate = ActualParkingLeavingDateDP.getValue();

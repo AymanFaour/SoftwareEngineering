@@ -4,18 +4,98 @@ package model;
 public class SharedData {
 		private User currentUser;
 		private SystemUser currentSystemUser;
+		private  ParkingLot currentParkingLot;
+		private double reservationCost;
+		private double occasionalCost;
+		private double routineCost;
+		private double businessCost;
+		private double fullCost;
+		private String IP;
+		private String PORT;
 		private static SharedData instance = null;
 	   	private SharedData() {
 	   		currentUser = null;
 	   		currentSystemUser = null;
+	   		currentParkingLot = null;
+	   		reservationCost = -1;
+	   		occasionalCost = -1;
+	   		routineCost = -1;
+	   		businessCost = -1;
+	   		fullCost = -1;
+	   		IP = null;
+	   		PORT = null;
 	   	}
-
-	   	public static SharedData getInstance() {
+	   	
+		public static SharedData getInstance() {
 	   		if(instance == null) {
 	   			instance = new SharedData();
 	   		}
 	   		return instance;
 	   	}
+
+	   	public ParkingLot getCurrentParkingLot() {
+			return currentParkingLot;
+		}
+
+		public void setCurrentParkingLot(ParkingLot currentParkingLot) {
+			this.currentParkingLot = currentParkingLot;
+		}
+
+		public double getReservationCost() {
+			return reservationCost;
+		}
+
+		public void setReservationCost(double reservationCost) {
+			this.reservationCost = reservationCost;
+		}
+
+		public double getOccasionalCost() {
+			return occasionalCost;
+		}
+
+		public void setOccasionalCost(double occasionalCost) {
+			this.occasionalCost = occasionalCost;
+		}
+
+		public double getRoutineCost() {
+			return routineCost;
+		}
+
+		public void setRoutineCost(double routineCost) {
+			this.routineCost = routineCost;
+		}
+
+		public double getBusinessCost() {
+			return businessCost;
+		}
+
+		public void setBusinessCost(double businessCost) {
+			this.businessCost = businessCost;
+		}
+
+		public double getFullCost() {
+			return fullCost;
+		}
+
+		public void setFullCost(double fullCost) {
+			this.fullCost = fullCost;
+		}
+
+		public String getIP() {
+			return IP;
+		}
+
+		public void setIP(String iP) {
+			IP = iP;
+		}
+
+		public String getPORT() {
+			return PORT;
+		}
+
+		public void setPORT(String pORT) {
+			PORT = pORT;
+		}
 
 		public User getCurrentUser() {
 			return currentUser;

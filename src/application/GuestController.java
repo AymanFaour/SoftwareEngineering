@@ -115,7 +115,7 @@ public class GuestController {
     void reserveParking(ActionEvent event) {
 
 		String _carNumber = GuestCarNumberTF.getText();
-		String _lotName = Main._currentParkingLot.get_name();
+		String _lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 		String _ocLeaveHour = GuestLeavingHourComboBox.getValue();
 		String _ocLeaveMinute = GuestLeavingMinuteComboBox.getValue();
 		LocalDate leaveLocalDate = GuestLeavingDateDP.getValue();
