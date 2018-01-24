@@ -649,10 +649,10 @@ public class LogInController {
         		parkingLotName.setStyle("-fx-pref-width: 100;");
         		Label status = null;
         		if(((JSONObject) ja.get(i)).getBoolean("activated") == false){
-        			status = new Label("in queue");
+        			status = new Label("In Queue");
         			status.setStyle("-fx-pref-width: 60;");
         		}else{
-        			status = new Label("parking");
+        			status = new Label("Parking");
         			status.setStyle("-fx-pref-width: 60;");
         		}
    
@@ -668,7 +668,7 @@ public class LogInController {
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
 				reservationsList.getChildren().add(hb);
 				
-				if(status.getText() == "in queue"){
+				if(status.getText() == "In Queue"){
 					Button activateButton = new Button("Enter");
 					activateButton.setId("activateButton" + resId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
@@ -691,7 +691,7 @@ public class LogInController {
 					hb.getChildren().add(cancelReservation);
 				}
 				
-				if(status.getText() == "parking"){
+				if(status.getText() == "Parking"){
 					Button deActivateButton = new Button("Exit");
 					deActivateButton.setId("deactivateButton" + resId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
@@ -737,16 +737,16 @@ public class LogInController {
         		
         		Label status = null;
         		if(((JSONObject) ja2.get(i)).getInt("used") == 0){
-        			status = new Label("not used");
+        			status = new Label("Not Used");
         			status.setStyle("-fx-pref-width: 60;");
         		}else if(((JSONObject) ja2.get(i)).getInt("used") == 1){
-        			status = new Label("parking");
+        			status = new Label("Parking");
         			status.setStyle("-fx-pref-width: 60;");
         		}else{
-        			status = new Label("used");
+        			status = new Label("Used");
         			status.setStyle("-fx-pref-width: 60;");
         		}
-    		
+
 
 		        hb.getChildren().add(subId);
 		        hb.getChildren().add(carId);
@@ -760,7 +760,7 @@ public class LogInController {
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
 				subscriptionsList.getChildren().add(hb);
 				
-				if(status.getText().equals("not used")){
+				if(status.getText().equals("Not Used")){
 					Button activateButton = new Button("Enter");
 					activateButton.setId("subActivateButton" + subId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
@@ -772,7 +772,7 @@ public class LogInController {
 					hb.getChildren().add(activateButton);	
 				}
 				
-				if(status.getText().equals("parking")){
+				if(status.getText().equals("Parking")){
 					Button deActivateButton = new Button("Exit");
 					deActivateButton.setId("subDeactivateButton" + subId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
@@ -806,10 +806,10 @@ public class LogInController {
         		
         		Label status = null;
         		if(((JSONObject) ja3.get(i)).getBoolean("isParking")){
-        			status = new Label("parking");
+        			status = new Label("Parking");
         			status.setStyle("-fx-pref-width: 80;");
         		}else{
-        			status = new Label("not parking");
+        			status = new Label("Not Parking");
         			status.setStyle("-fx-pref-width: 80;");
         		}
     		
@@ -823,7 +823,7 @@ public class LogInController {
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
 				fullSubscriptionsList.getChildren().add(hb);
 				
-				if(status.getText().equals("not parking")){
+				if(status.getText().equals("Not Parking")){
 					Button activateButton = new Button("Enter");
 					activateButton.setId("fullSubActivateButton" + subId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
@@ -834,7 +834,7 @@ public class LogInController {
 					hb.getChildren().add(activateButton);	
 				}
 				
-				if(status.getText().equals("parking")){
+				if(status.getText().equals("Parking")){
 					Button deActivateButton = new Button("Exit");
 					deActivateButton.setId("fullSubDeactivateButton" + subId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
