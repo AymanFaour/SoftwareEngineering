@@ -31,6 +31,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.SharedData;
+import model.SystemUser;
 import model.User;
 
 //package com.client;
@@ -240,7 +241,7 @@ public class MainController {
     	}else{
 	    		if(systemWorkerCheckBox.isSelected() == false)
 	    		{
-	        		JSONObject json = new JSONObject().put("username", _username).put("password", _password);
+	        		JSONObject json = new JSONObject().put("username", _username).put("password", _password).put("cmd", "Regular");
 	        		JSONObject ret = request(json, "Login");
 	        		System.out.println(ret.toString());
 	        		
@@ -264,7 +265,53 @@ public class MainController {
 	        			SignInFailed();
 	        		}
 	    		}else{
-	    			
+	    	    	String _workerID = workerIdTextField.getText();
+	    	    	System.out.println("print the worker ID" + _workerID);
+	    			if(_workerID.equals("")){
+	    	    		System.out.println("missing fields");
+	    	    		
+	    	    		informationAlert.setTitle("Sign in warrning");
+	    	    		informationAlert.setHeaderText(null);
+	    	    		informationAlert.setContentText("Please fill the worker Id field");
+	    	    		informationAlert.showAndWait();
+	    			}
+	    	    	else{
+	    	    		try{
+	    	    			Integer _workerIDint = Integer.parseInt(_workerID);
+			        		JSONObject json = new JSONObject().put("username", _username)
+					        .put("password", _password).put("workerID", _workerIDint).put("cmd", "System");
+					        JSONObject ret = request(json, "Login");
+					        System.out.println(ret.toString());	
+					        if(ret.getBoolean("result")){
+			        			JSONObject temp = ret.getJSONObject("userInfo");
+			        			String _firstname = temp.getString("firstName");
+			        			String _lastname = temp.getString("lastName");
+			        			String _passwrd = temp.getString("password");
+			        			String _rank = temp.getString("rank");
+			        			String _email = temp.getString("email");
+			        			String _usernm = temp.getString("username");
+			        			int _workerIDtemp = temp.getInt("workerID");
+			        			String _affiliation = temp.getString("affiliation");
+			        			
+			        			System.out.println(temp);
+			        			
+			        			SharedData.getInstance().setCurrentSystemUser(
+			        					new SystemUser(_usernm, _email, _workerIDtemp, _affiliation,_passwrd
+			        							,_firstname, _lastname,_rank));
+			        			
+			        			SignInCallBack();
+			        		}else{
+			        			SignInFailed();
+			        		}
+	    	    		}catch( NumberFormatException e){
+		    	    		informationAlert.setTitle("Sign in warrning");
+		    	    		informationAlert.setHeaderText(null);
+		    	    		informationAlert.setContentText("Worker ID field isn't supposed to contain letters");
+		    	    		informationAlert.showAndWait();
+	    	    		}
+
+		        		
+	    	    	}
 	    		}
     	}
     	
@@ -278,43 +325,114 @@ public class MainController {
     }
      
     void SignInCallBack(){
-    	String _username = usernameTextField.getText();
-    	Scene currentScene = signiInButton.getScene();
-    	
-    	Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("LogInView.fxml"));
-		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
+		if(systemWorkerCheckBox.isSelected() == false)
+		{
+	    	String _username = usernameTextField.getText();
+	    	Scene currentScene = signiInButton.getScene();
+	    	
+	    	Parent mainLayout = null;
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("LogInView.fxml"));
+			try {
+				mainLayout = loader.load();
+			} catch (IOException | NullPointerException e) {
+				
+				e.printStackTrace();
+			}
+			LogInController logInController = loader.getController();
+			logInController.setWelcome("Welcome to CPS");
+			logInController.setTopOfLogInView(_username, Double.toString(SharedData.getInstance().getCurrentUser().getBalance()));
 			
-			e.printStackTrace();
-		}
-		LogInController logInController = loader.getController();
-		logInController.setWelcome("Welcome to CPS");
-		logInController.setTopOfLogInView(_username, Double.toString(SharedData.getInstance().getCurrentUser().getBalance()));
-		
-		if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-			Button businessButton = new Button("Business Routinely Subscription");
-			logInController.setBusinessButton(businessButton);
-			String css = getClass().getResource("application.css").toExternalForm();
-			businessButton.getStylesheets().clear();
-			businessButton.getStylesheets().add(css);
-			businessButton.getStyleClass().add("loginView-buttons");
-			businessButton.setStyle("-fx-pref-width:200px; -fx-pref-height:40px;");
-			businessButton.setId("businessRoutinelySubscriptionButton");
-			businessButton.setOnAction(e-> {
-				logInController.loadBusinessRoutinelySubscription(null);
-			});
-		}
-		
-		Scene scene = new Scene(mainLayout);
-    	
-    	Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
-		
-		
-		
+			if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
+				Button businessButton = new Button("Business Routinely Subscription");
+				logInController.setBusinessButton(businessButton);
+				String css = getClass().getResource("application.css").toExternalForm();
+				businessButton.getStylesheets().clear();
+				businessButton.getStylesheets().add(css);
+				businessButton.getStyleClass().add("loginView-buttons");
+				businessButton.setStyle("-fx-pref-width:200px; -fx-pref-height:40px;");
+				businessButton.setId("businessRoutinelySubscriptionButton");
+				businessButton.setOnAction(e-> {
+					logInController.loadBusinessRoutinelySubscription(null);
+				});
+			}
+			
+			Scene scene = new Scene(mainLayout);
+	    	
+	    	Stage stage = (Stage) currentScene.getWindow();
+			stage.setScene(scene);
+		}else{
+			String workerRank = SharedData.getInstance().getCurrentSystemUser().get_rank();
+			if(workerRank.equals("D")){
+		    	String _fullname = SharedData.getInstance().getCurrentSystemUser().get_firstName()
+		    			+ " " + SharedData.getInstance().getCurrentSystemUser().get_lastName();
+		    	Scene currentScene = signiInButton.getScene();
+		    	
+		    	Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("ParkingWorkerView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+					
+					e.printStackTrace();
+				}
+				ParkingWorkerController parkingWorkerController = loader.getController();
+				parkingWorkerController.setWelcome("Welcome to Workers System");
+				parkingWorkerController.setTopOfParkingWorker(_fullname);
+				Scene scene = new Scene(mainLayout);
+		    	
+		    	Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+			}else if(workerRank.equals("C")){
+				String _fullname = SharedData.getInstance().getCurrentSystemUser().get_firstName()
+		    			+ " " + SharedData.getInstance().getCurrentSystemUser().get_lastName();
+		    	Scene currentScene = signiInButton.getScene();
+		    	
+		    	Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("CustomerServiceView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+					
+					e.printStackTrace();
+				}
+				CustomerServiceController customerServiceController = loader.getController();
+				customerServiceController.setWelcome("Welcome to Workers System");
+				customerServiceController.setTopOfParkingWorker(_fullname);
+				Scene scene = new Scene(mainLayout);
+		    	
+		    	Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+			}else if(workerRank.equals("B")){
+				String _fullname = SharedData.getInstance().getCurrentSystemUser().get_firstName()
+		    			+ " " + SharedData.getInstance().getCurrentSystemUser().get_lastName();
+		    	Scene currentScene = signiInButton.getScene();
+		    	
+		    	Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("ParkingLotDirectorView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+					
+					e.printStackTrace();
+				}
+				ParkingLotDirectorController parkingLotDirectorController = loader.getController();
+				parkingLotDirectorController.setWelcome("Welcome to Workers System");
+				parkingLotDirectorController.setTopOfParkingWorker(_fullname);
+				Scene scene = new Scene(mainLayout);
+		    	
+		    	Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+
+			}
+			else{
+				
+			}
+
+		}		
     }
 
     void SignInFailed(){

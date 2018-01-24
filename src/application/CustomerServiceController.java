@@ -115,5 +115,19 @@ public class CustomerServiceController {
 
     }
 
+
+
+	public void setWelcome(String welcome) {
+		// TODO Auto-generated method stub
+		welcomeBanner.setText(welcome);
+	}
+
+
+
+	public void setTopOfParkingWorker(String _fullname) {
+		// TODO Auto-generated method stub
+		textInTopOfLogIn.setText(_fullname);
+	}
+
    
 }

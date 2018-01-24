@@ -4,12 +4,16 @@
 
 package application;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -17,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import model.SharedData;
 
 public class ParkingWorkerController {
 
@@ -46,9 +52,6 @@ public class ParkingWorkerController {
 
     @FXML // fx:id="parkingReservationButton"
     private Button parkingReservationButton; // Value injected by FXMLLoader
-
-    @FXML // fx:id="balanceOnTopOfLogIn"
-    private Text balanceOnTopOfLogIn; // Value injected by FXMLLoader
 
     @FXML // fx:id="DisaParkSpotUntilMinuteComboBox"
     private ComboBox<String> DisaParkSpotUntilMinuteComboBox; // Value injected by FXMLLoader
@@ -124,6 +127,22 @@ public class ParkingWorkerController {
     
     @FXML
     void signOut(ActionEvent event) {
+		SharedData.getInstance().setCurrentSystemUser(null);
+
+		Scene currentScene = signOutButton.getScene();
+		Parent mainLayout = null;
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		try {
+			mainLayout = loader.load();
+		} catch (IOException | NullPointerException e) {
+
+			e.printStackTrace();
+		}
+
+		Scene scene = new Scene(mainLayout);
+		Stage stage = (Stage) currentScene.getWindow();
+		stage.setScene(scene);
 
     }
     @FXML
@@ -262,6 +281,14 @@ public class ParkingWorkerController {
     	alternativeParkButton.getStyleClass().add("loginView-buttons");
 
     }
+	public void setWelcome(String welcome) {
+		// TODO Auto-generated method stub
+		welcomeBanner.setText(welcome);
+	}
+	public void setTopOfParkingWorker(String _username) {
+		// TODO Auto-generated method stub
+		textInTopOfLogIn.setText(_username);
+	}
 
  
 
