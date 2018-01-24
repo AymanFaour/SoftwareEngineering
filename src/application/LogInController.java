@@ -1084,7 +1084,7 @@ public class LogInController {
 
 		if (_arriveHour == null || _arriveMinute == null) {
 
-			informationAlert.setTitle("Reservation warrning");
+			informationAlert.setTitle("Reservation Warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please fill arriving hour and minuts fields to complete the reservation");
 			informationAlert.showAndWait();
@@ -1100,7 +1100,7 @@ public class LogInController {
 			arriveCal.set(Calendar.MINUTE, Integer.parseInt(_arriveMinute));
 //			System.out.println(arriveCal.getTimeInMillis());
 		} else {
-			informationAlert.setTitle("Reservation warrning");
+			informationAlert.setTitle("Reservation Warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText(
 					"Please fill all the car number, arriving date and parking lot fields to complete the reservation");
@@ -1130,7 +1130,7 @@ public class LogInController {
 
 		if (_carNumber.equals("") || _lotName == null) {
 
-			informationAlert.setTitle("Reservation warrning");
+			informationAlert.setTitle("Reservation Warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText(
 					"Please fill all the car number, arriving date and parking lot fields to complete the reservation");
@@ -1143,49 +1143,57 @@ public class LogInController {
 			double cost = Math.round(deff / 60.0) * SharedData.getInstance().getReservationCost();
 			long _start = arriveCal.getTime().getTime();
 			long _end = leaveCal.getTime().getTime();
-
-			String _name = SharedData.getInstance().getCurrentUser().getUsername();
-
-			confirmAlert.setTitle("Confirmation Dialog");
-			confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
-
-			Optional<ButtonType> result = confirmAlert.showAndWait();
-			if (result.get() == ButtonType.OK) {
-
-				if (SharedData.getInstance().getCurrentUser().getBalance() < cost) {
-
-					informationAlert.setTitle("Reservation warrning");
-					informationAlert.setHeaderText(null);
-					informationAlert.setContentText(
-							"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
-					informationAlert.showAndWait();
-
-				} else {
-					JSONObject json = new JSONObject();
-					try {
-
-						json.put("carNumber", _carNumber);
-						json.put("lotName", _lotName);
-						json.put("username", _name);
-						json.put("start", _start);
-						json.put("end", _end);
-						json.put("cost", cost);
-						json.put("type", "r");
-						json.put("activated", 0);
-						json.put("cmd", "reserveAhead");
-
-						// send to reservation servlet
-						JSONObject ret = request(json, "ReservationController");
-
-//						System.out.println(ret.getBoolean("result"));
-						if (ret.getBoolean("result")) {
-							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-							
-							updateBalance((-1) * cost);
-							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+			long _now = Calendar.getInstance().getTime().getTime();
+			System.out.println(_now + " and the start is" + _start + " and the end is " + _end);
+			if(_now > _start || _now > _end || _start >= _end){
+				informationAlert.setTitle("Reservation Warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("please adjust dates");
+				informationAlert.showAndWait();
+			}else{
+				String _name = SharedData.getInstance().getCurrentUser().getUsername();
+	
+				confirmAlert.setTitle("Confirmation Dialog");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
+	
+				Optional<ButtonType> result = confirmAlert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+	
+					if (SharedData.getInstance().getCurrentUser().getBalance() < cost) {
+	
+						informationAlert.setTitle("Reservation warrning");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText(
+								"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+						informationAlert.showAndWait();
+	
+					} else {
+						JSONObject json = new JSONObject();
+						try {
+	
+							json.put("carNumber", _carNumber);
+							json.put("lotName", _lotName);
+							json.put("username", _name);
+							json.put("start", _start);
+							json.put("end", _end);
+							json.put("cost", cost);
+							json.put("type", "r");
+							json.put("activated", 0);
+							json.put("cmd", "reserveAhead");
+	
+							// send to reservation servlet
+							JSONObject ret = request(json, "ReservationController");
+	
+	//						System.out.println(ret.getBoolean("result"));
+							if (ret.getBoolean("result")) {
+								System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+								
+								updateBalance((-1) * cost);
+								System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
 						}
-					} catch (JSONException e) {
-						e.printStackTrace();
 					}
 				}
 			}
@@ -1332,7 +1340,7 @@ public class LogInController {
 							informationAlert.showAndWait();
 
 						} else {
-
+							
 						}
 
 					}
@@ -1499,7 +1507,7 @@ public class LogInController {
 			long _start = leaveCal.getTime().getTime();
 			leaveCal.add(Calendar.MONTH, 1);
 			long _end = leaveCal.getTime().getTime();
-
+					
 			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 
 			JSONObject json = new JSONObject();
@@ -1735,49 +1743,56 @@ public class LogInController {
 
 			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 
-			JSONObject json = new JSONObject();
-			try {
-				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
-
-				Optional<ButtonType> result = confirmAlert.showAndWait();
-				if (result.get() == ButtonType.OK) {
-
-						json.put("carNumber", _carNumber);
-						json.put("lotName", _lotName);
-						json.put("username", _name);
-						json.put("leave", leaveHour);
-						json.put("start", _start);
-						json.put("end", _end);
-						json.put("type", "o");
-						json.put("activated", 1);
-						json.put("cmd", "reserveAhead");
-
-						JSONObject ret = request(json, "ReservationController");
-
-						System.out.println(ret.getBoolean("result"));
-						if (ret.getBoolean("result")) {
-							
-							
-							informationAlert.setTitle("Parking succeeded");
-							informationAlert.setHeaderText(null);
-							informationAlert.setContentText("Please pay attention that the payment is after exiting the car.");
-							informationAlert.showAndWait();
-							
-							// TODO: consider the payment issues in the exit
-							// TODO: call the occasional enterPark function
-							
-							loadViewReservation(null);
-							
-					}
-				} else {
-
-				}
-
-			} catch (JSONException e) {
-				e.printStackTrace();
+			if(_start > _end){
+				informationAlert.setTitle("Reservation Warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("please adjust dates");
+				informationAlert.showAndWait();
 			}
-
+			else{
+				JSONObject json = new JSONObject();
+				try {
+					confirmAlert.setTitle("Confirmation Dialog");
+					confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
+	
+					Optional<ButtonType> result = confirmAlert.showAndWait();
+					if (result.get() == ButtonType.OK) {
+	
+							json.put("carNumber", _carNumber);
+							json.put("lotName", _lotName);
+							json.put("username", _name);
+							json.put("leave", leaveHour);
+							json.put("start", _start);
+							json.put("end", _end);
+							json.put("type", "o");
+							json.put("activated", 1);
+							json.put("cmd", "reserveAhead");
+	
+							JSONObject ret = request(json, "ReservationController");
+	
+							System.out.println(ret.getBoolean("result"));
+							if (ret.getBoolean("result")) {
+								
+								
+								informationAlert.setTitle("Parking succeeded");
+								informationAlert.setHeaderText(null);
+								informationAlert.setContentText("Please pay attention that the payment is after exiting the car.");
+								informationAlert.showAndWait();
+								
+								// TODO: consider the payment issues in the exit
+								// TODO: call the occasional enterPark function
+								
+								loadViewReservation(null);
+								
+						}
+					} else {
+	
+					}
+	
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 	}
