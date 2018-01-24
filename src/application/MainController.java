@@ -297,7 +297,7 @@ public class MainController {
 		}
 		LogInController logInController = loader.getController();
 		logInController.setWelcome("Welcome to CPS");
-		logInController.setTopOfLogInView(_username, Long.toString(SharedData.getInstance().getCurrentUser().getBalance()));
+		logInController.setTopOfLogInView(_username, Double.toString(_currentUser.getBalance()));
 		
 		if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
 			Button businessButton = new Button("Business Routinely Subscription");
