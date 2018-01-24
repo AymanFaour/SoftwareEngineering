@@ -6,6 +6,7 @@ package application;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -23,6 +24,9 @@ import org.json.JSONObject;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -33,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.SharedData;
 
 public class CustomerServiceController {
@@ -102,6 +107,22 @@ public class CustomerServiceController {
 
     @FXML
     void signOut(ActionEvent event) {
+		SharedData.getInstance().setCurrentSystemUser(null);
+
+		Scene currentScene = signOutButton.getScene();
+		Parent mainLayout = null;
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		try {
+			mainLayout = loader.load();
+		} catch (IOException | NullPointerException e) {
+
+			e.printStackTrace();
+		}
+
+		Scene scene = new Scene(mainLayout);
+		Stage stage = (Stage) currentScene.getWindow();
+		stage.setScene(scene);
 
     }
 
