@@ -642,7 +642,7 @@ public class LogInController {
         		Label arriving = new Label(((JSONObject) ja.get(i)).getString("start").substring(0, 16));
         		arriving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
         		Label leaving = new Label(((JSONObject) ja.get(i)).getString("end").substring(0, 16));
-        		leaving.setStyle("-fx-pref-width: 80;");
+        		leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
         		Label carId = new Label(((JSONObject) ja.get(i)).getString("carNumber"));
         		carId.setStyle("-fx-pref-width: 80;");
         		Label parkingLotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
@@ -723,9 +723,9 @@ public class LogInController {
         	    Label subId = new Label(Integer.toString(((JSONObject) ja2.get(i)).getInt("routineSubID")));
         	    subId.setStyle("-fx-pref-width: 40;");
         		Label leaving = new Label(((JSONObject) ja2.get(i)).getString("end").substring(0,11));
-        		leaving.setStyle("-fx-pref-width: 80;");
+        		leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
         		Label starting = new Label(((JSONObject) ja2.get(i)).getString("start").substring(0,11));
-        		starting.setStyle("-fx-pref-width: 80;");
+        		starting.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
         		Label leavingHour = new Label(((JSONObject) ja2.get(i)).getString("leaveHour"));
         		leavingHour.setStyle("-fx-pref-width: 80;");
         		Label carId = new Label(((JSONObject) ja2.get(i)).getString("carNumber"));
@@ -796,9 +796,9 @@ public class LogInController {
         	    Label subId = new Label(Integer.toString(((JSONObject) ja3.get(i)).getInt("fullSubID")));
         	    subId.setStyle("-fx-pref-width: 40;");
         		Label leaving = new Label(((JSONObject) ja3.get(i)).getString("end").substring(0,11));
-        		leaving.setStyle("-fx-pref-width: 80;");
+        		leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
         		Label starting = new Label(((JSONObject) ja3.get(i)).getString("start").substring(0,11));
-        		starting.setStyle("-fx-pref-width: 80;");
+        		starting.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
         		Label carId = new Label(((JSONObject) ja3.get(i)).getString("carNumber"));
         		carId.setStyle("-fx-pref-width: 80;");
         		
