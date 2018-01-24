@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
-public class ParkingWrokerController {
+public class ParkingWorkerController {
 
     @FXML // fx:id="welcomeBanner"
     private Label welcomeBanner; // Value injected by FXMLLoader
