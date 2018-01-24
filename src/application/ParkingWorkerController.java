@@ -116,7 +116,7 @@ public class ParkingWorkerController {
 
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
-    private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
+    //private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
     
     
     @FXML
