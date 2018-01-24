@@ -44,11 +44,6 @@ import java.net.URL;
 
 public class MainController {
 	
-	
-	static String result;
-	static String PORT;
-	static String IP;
-	
 	Alert informationAlert = new Alert(AlertType.INFORMATION);
 	Alert errorAlert = new Alert(AlertType.ERROR);
 	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
@@ -57,8 +52,8 @@ public class MainController {
 	static void initialize(String h, String p){
 		System.out.println("in the initializeer");
 		//client = new Client(h, p);
-		IP = h;
-		PORT = p;
+		SharedData.getInstance().setIP(h);
+		SharedData.getInstance().setPORT(p);
 		System.out.println("after the declareatio");
 	}
     @FXML
@@ -431,7 +426,7 @@ public class MainController {
     	HttpURLConnection connection = null;
 		try {
 		    //Create connection
-		    URL url = new URL("http://" + IP + ":" + PORT + "/server/" + servletName);
+		    URL url = new URL("http://" + SharedData.getInstance().getIP() + ":" + SharedData.getInstance().getPORT() + "/server/" + servletName);
 		    connection = (HttpURLConnection) url.openConnection();
 		    connection.setRequestMethod("POST");
 		    connection.setDoOutput(true);

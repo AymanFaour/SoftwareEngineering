@@ -257,7 +257,7 @@ public class GuestController {
 		HttpURLConnection connection = null;
 		try {
 			// Create connection
-			URL url = new URL("http://" + MainController.IP + ":" + MainController.PORT + "/server/" + servletName);
+			URL url = new URL("http://" + SharedData.getInstance().getIP() + ":" + SharedData.getInstance().getPORT() + "/server/" + servletName);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);
