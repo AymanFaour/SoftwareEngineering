@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import org.json.JSONObject;
 
-import com.google.gson.stream.JsonReader;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +40,7 @@ public class Main extends Application{
 		// TODO Auto-generated method stub
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("ParkingWrokerView.fxml"));
+		loader.setLocation(Main.class.getResource("MainView.fxml"));
 		
 		try {
 			mainLayout = loader.load();
