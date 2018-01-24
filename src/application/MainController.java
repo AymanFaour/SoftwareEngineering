@@ -30,6 +30,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.SharedData;
 import model.User;
 
 //package com.client;
@@ -47,7 +48,7 @@ public class MainController {
 	static String result;
 	static String PORT;
 	static String IP;
-	static User _currentUser;
+	
 	Alert informationAlert = new Alert(AlertType.INFORMATION);
 	Alert errorAlert = new Alert(AlertType.ERROR);
 	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
@@ -242,30 +243,34 @@ public class MainController {
     		
   
     	}else{
-        	
-        		JSONObject json = new JSONObject().put("username", _username).put("password", _password);
-        		JSONObject ret = request(json, "Login");
-        		System.out.println(ret.toString());
-        		
-        		if(ret.getBoolean("result")){
-        			JSONObject temp = ret.getJSONObject("userInfo");
-        			String _firstname = temp.getString("firstName");
-        			String _lastname = temp.getString("lastName");
-        			String _passwrd = temp.getString("password");
-        			String _type = temp.getString("type");
-        			String _email = temp.getString("email");
-        			String _usernm = temp.getString("username");
-        			int _balance = temp.getInt("balance");
-        			String _company = temp.getString("company");
-        			
-        			
-        			_currentUser = new User(_usernm, _email, _passwrd, _firstname, _lastname, _type, _balance, _company);
-        			
-        			SignInCallBack();
-        		}else{
-        			SignInFailed();
-        		}
-        		        		        	
+	    		if(systemWorkerCheckBox.isSelected() == false)
+	    		{
+	        		JSONObject json = new JSONObject().put("username", _username).put("password", _password);
+	        		JSONObject ret = request(json, "Login");
+	        		System.out.println(ret.toString());
+	        		
+	        		if(ret.getBoolean("result")){
+	        			JSONObject temp = ret.getJSONObject("userInfo");
+	        			String _firstname = temp.getString("firstName");
+	        			String _lastname = temp.getString("lastName");
+	        			String _passwrd = temp.getString("password");
+	        			String _type = temp.getString("type");
+	        			String _email = temp.getString("email");
+	        			String _usernm = temp.getString("username");
+	        			int _balance = temp.getInt("balance");
+	        			String _company = temp.getString("company");
+	        			
+	        			
+	        			SharedData.getInstance().setCurrentUser(new User(_usernm, _email, _passwrd, _firstname,
+	        					_lastname, _type, _balance, _company));
+	        			
+	        			SignInCallBack();
+	        		}else{
+	        			SignInFailed();
+	        		}
+	    		}else{
+	    			
+	    		}
     	}
     	
         		   
@@ -292,9 +297,9 @@ public class MainController {
 		}
 		LogInController logInController = loader.getController();
 		logInController.setWelcome("Welcome to CPS");
-		logInController.setTopOfLogInView(_username, Long.toString(_currentUser.getBalance()));
+		logInController.setTopOfLogInView(_username, Double.toString(SharedData.getInstance().getCurrentUser().getBalance()));
 		
-		if(_currentUser.getType().equals("b")){
+		if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
 			Button businessButton = new Button("Business Routinely Subscription");
 			logInController.setBusinessButton(businessButton);
 			String css = getClass().getResource("application.css").toExternalForm();

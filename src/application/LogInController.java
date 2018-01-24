@@ -45,6 +45,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.SharedData;
 
 public class LogInController {
 	
@@ -292,7 +293,7 @@ public class LogInController {
 
     	parkingReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	parkingReservationButton.getStyleClass().add("pressedButton");
-    	if(MainController._currentUser.getType().equals("b")){
+    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
     		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
     		businessBut.getStyleClass().removeAll("pressedButton", "focus");
     		businessBut.getStyleClass().add("loginView-buttons");
@@ -363,7 +364,7 @@ public class LogInController {
     	
     	regularRoutinelySubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	regularRoutinelySubscriptionButton.getStyleClass().add("pressedButton");
-    	if(MainController._currentUser.getType().equals("b")){
+    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
     		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
     		businessBut.getStyleClass().removeAll("pressedButton", "focus");
     		businessBut.getStyleClass().add("loginView-buttons");
@@ -431,7 +432,7 @@ public class LogInController {
     	MyAccountBorderPane.setVisible(false);
     	ActualParkingBorderPane.setVisible(false);
 
-    	if(MainController._currentUser.getType().equals("b")){
+    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
     		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
     		businessBut.getStyleClass().removeAll("loginView-buttons", "focus");
     		businessBut.getStyleClass().add("pressedButton");
@@ -552,7 +553,7 @@ public class LogInController {
     	parkingReservationButton.getStyleClass().add("loginView-buttons");
     	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
     	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	if(MainController._currentUser.getType().equals("b")){
+    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
     		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
     		businessBut.getStyleClass().removeAll("pressedButton", "focus");
     		businessBut.getStyleClass().add("loginView-buttons");
@@ -588,7 +589,7 @@ public class LogInController {
     	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
     	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
     	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	if(MainController._currentUser.getType().equals("b")){
+    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
     		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
     		businessBut.getStyleClass().removeAll("pressedButton", "focus");
     		businessBut.getStyleClass().add("loginView-buttons");
@@ -686,7 +687,7 @@ public class LogInController {
 					cancelReservation.setId("cancelReservation" + resId.getText());
 					cancelReservation.getStylesheets().clear();
 					cancelReservation.getStylesheets().add(css);
-					cancelReservation.setOnAction(e -> cancel(e));
+					cancelReservation.setOnAction(e -> cancel(e, resId.getText()));
 					cancelReservation.getStyleClass().add("cancel-button");
 					hb.getChildren().add(cancelReservation);
 				}
@@ -875,11 +876,6 @@ public class LogInController {
 		System.out.println("Okay " + b.getId().substring(16));
 	}
     
-    private void cancel(ActionEvent e) {
-    	Button b = (Button) e.getSource();
-		System.out.println("Okay " + b.getId().substring(15));
-	}
-
 	private void activateParking(ActionEvent e, String string) {
     	Button b = (Button) e.getSource();
 		System.out.println("Okay " + b.getId().substring(14));
@@ -908,7 +904,7 @@ public class LogInController {
     	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
     	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	if(MainController._currentUser.getType().equals("b")){
+    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
     		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
     		businessBut.getStyleClass().removeAll("pressedButton", "focus");
     		businessBut.getStyleClass().add("loginView-buttons");
@@ -954,7 +950,7 @@ public class LogInController {
     	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
     	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	if(MainController._currentUser.getType().equals("b")){
+    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
     		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
     		businessBut.getStyleClass().removeAll("pressedButton", "focus");
     		businessBut.getStyleClass().add("loginView-buttons");
@@ -987,7 +983,7 @@ public class LogInController {
     	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
     	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	if(MainController._currentUser.getType().equals("b")){
+    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
     		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
     		businessBut.getStyleClass().removeAll("pressedButton", "focus");
     		businessBut.getStyleClass().add("loginView-buttons");
@@ -1031,6 +1027,36 @@ public class LogInController {
 		return cal;
 	}
 
+	
+	private void cancel(ActionEvent e, String id) {
+    
+//		Button b = (Button) e.getSource();
+//		System.out.println("Okay " + b.getId());
+//		System.out.println("Okay " + id);
+		
+		JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		
+		try {
+			
+			json.put("rid", id);
+			json.put("cmd", "cancelReserve");
+			ret = request(json, "ReservationController");
+			if(ret.getBoolean("result")){
+				System.out.println(ret);
+				loadViewReservation(null);
+				double refund = 0;
+				refund = ret.getDouble("refund");
+				updateBalance(refund);
+			}
+			
+			
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+	}
 	
 	
 	@FXML
@@ -1113,11 +1139,11 @@ public class LogInController {
 		} else {
 			long deff = TimeUnit.MILLISECONDS
 					.toMinutes(Math.abs(leaveCal.getTimeInMillis() - arriveCal.getTimeInMillis()));
-			long cost = Math.round(deff / 60.0) * 4;
+			double cost = Math.round(deff / 60.0) * SharedData.getInstance().getReservationCost();
 			long _start = arriveCal.getTime().getTime();
 			long _end = leaveCal.getTime().getTime();
 
-			String _name = MainController._currentUser.getUsername();
+			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 
 			confirmAlert.setTitle("Confirmation Dialog");
 			confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
@@ -1125,7 +1151,7 @@ public class LogInController {
 			Optional<ButtonType> result = confirmAlert.showAndWait();
 			if (result.get() == ButtonType.OK) {
 
-				if (MainController._currentUser.getBalance() < cost) {
+				if (SharedData.getInstance().getCurrentUser().getBalance() < cost) {
 
 					informationAlert.setTitle("Reservation warrning");
 					informationAlert.setHeaderText(null);
@@ -1151,10 +1177,10 @@ public class LogInController {
 
 //						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
-							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 							
 							updateBalance((-1) * cost);
-							System.out.println("New balance is: " + MainController._currentUser.getBalance());
+							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -1171,7 +1197,7 @@ public class LogInController {
     	
     	String _activationCode = activationBusinessCodeTF.getText();
     	String _carNumber = activationBusinessCarTF.getText();
-    	String _username = MainController._currentUser.getUsername();
+    	String _username = SharedData.getInstance().getCurrentUser().getUsername();
     	
     	if(_activationCode.equals("") || _carNumber.equals("")){
     		informationAlert.setTitle("Reservation warrning");
@@ -1258,17 +1284,19 @@ public class LogInController {
 				leaveHour = "0" + leaveHour;
 			}
 
-			String _name = MainController._currentUser.getUsername();
+			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 
 			JSONObject json = new JSONObject();
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for 240$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(
+						SharedData.getInstance().getRoutineCost()) + "$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
-					if (MainController._currentUser.getBalance() < 240) {
+					if (SharedData.getInstance().getCurrentUser().getBalance() < 
+							SharedData.getInstance().getRoutineCost()) {
 
 						informationAlert.setTitle("Reservation warrning");
 						informationAlert.setHeaderText(null);
@@ -1291,10 +1319,10 @@ public class LogInController {
 
 						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
-							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 //							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
-							updateBalance((-1) * 240);
-							System.out.println("New balance is: " + MainController._currentUser.getBalance());
+							updateBalance((-1) * SharedData.getInstance().getRoutineCost());
+							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
 							informationAlert.setHeaderText(null);
@@ -1370,9 +1398,9 @@ public class LogInController {
 			leaveCal.add(Calendar.MONTH, 1);
 			long _end = leaveCal.getTime().getTime();
 	    	try {
-				json.put("username", MainController._currentUser.getUsername());
-				json.put("company", MainController._currentUser.getCompnay());
-				json.put("lotName", Main._currentParkingLot.get_name());
+				json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
+				json.put("company", SharedData.getInstance().getCurrentUser().getCompnay());
+				json.put("lotName", SharedData.getInstance().getCurrentParkingLot().get_name());
 				
 				boolean flag1 = true;
 				boolean flag2 = true;
@@ -1390,7 +1418,7 @@ public class LogInController {
 		    	}
 				
 				if(flag1){
-					if( ((businessAccountWorkersCounter+1)*270) > MainController._currentUser.getBalance() ){
+					if( ((businessAccountWorkersCounter+1) * SharedData.getInstance().getBusinessCost()) > SharedData.getInstance().getCurrentUser().getBalance() ){
 						flag2 = false;
 					}
 				}
@@ -1433,7 +1461,7 @@ public class LogInController {
 						
 						informationAlert.showAndWait();
 						
-						updateBalance((-1) * 270 * (businessAccountWorkersCounter+1));
+						updateBalance((-1) * SharedData.getInstance().getBusinessCost() * (businessAccountWorkersCounter+1));
 						
 					}
 					
@@ -1470,18 +1498,18 @@ public class LogInController {
 			leaveCal.add(Calendar.MONTH, 1);
 			long _end = leaveCal.getTime().getTime();
 
-			String _name = MainController._currentUser.getUsername();
+			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 
 			JSONObject json = new JSONObject();
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for 288$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(SharedData.getInstance().getFullCost()) + "$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
 					
-					if (MainController._currentUser.getBalance() < 288) {
+					if (SharedData.getInstance().getCurrentUser().getBalance() < SharedData.getInstance().getFullCost()) {
 
 						informationAlert.setTitle("Full Subscription warrning");
 						informationAlert.setHeaderText(null);
@@ -1501,10 +1529,10 @@ public class LogInController {
 
 						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
-							System.out.println("Old balance is: " + MainController._currentUser.getBalance());
+							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 //							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 288);
-							updateBalance((-1) * 288);
-							System.out.println("New balance is: " + MainController._currentUser.getBalance());
+							updateBalance((-1) * SharedData.getInstance().getFullCost());
+							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
 							informationAlert.setHeaderText(null);
@@ -1528,7 +1556,7 @@ public class LogInController {
 //		 getReserves();
 
 		// System.out.println(getReserves());
-		MainController._currentUser = null;
+		SharedData.getInstance().setCurrentUser(null);
 
 		Scene currentScene = signOutButton.getScene();
 		Parent mainLayout = null;
@@ -1551,20 +1579,22 @@ public class LogInController {
 	 * function that get as parameter a change of the balance, change the
 	 * balance of the current user in the DB
 	 */
-	Boolean updateBalance(long cost) {
+	Boolean updateBalance(double cost) {
 
 		JSONObject json = new JSONObject(), ret = new JSONObject();
 
 		try {
 
-			json.put("username", MainController._currentUser.getUsername());
+			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
 			json.put("change", cost);
 			json.put("cmd", "balance");
 			ret = request(json, "UpdateUserInfo");
 
 			if (ret.getBoolean("result")) {
-				MainController._currentUser.setBalance(MainController._currentUser.getBalance() + cost);
-				balanceOnTopOfLogIn.setText(Long.toString(MainController._currentUser.getBalance()));
+				SharedData.getInstance().getCurrentUser().setBalance
+				(SharedData.getInstance().getCurrentUser().getBalance() + cost);
+				balanceOnTopOfLogIn.setText(Double.toString(SharedData.
+						getInstance().getCurrentUser().getBalance()));
 				return true;
 			}
 
@@ -1586,7 +1616,7 @@ public class LogInController {
 		JSONObject ret = new JSONObject();
 		try {
 
-			json.put("username", MainController._currentUser.getUsername());
+			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
 			ret = request(json, "UserServices");
 			System.out.println(ret);
 			if (ret.getBoolean("result")) {
@@ -1644,7 +1674,7 @@ public class LogInController {
 	void reserveActualParking(ActionEvent event) {
 
 		String _carNumber = ActualParkingNumberTF.getText();
-		String _lotName = Main._currentParkingLot.get_name();
+		String _lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 		String _ocLeaveHour = ActualParkingLeavingHourComboBox.getValue();
 		String _ocLeaveMinute = ActualParkingLeavingMinuteComboBox.getValue();
 		LocalDate leaveLocalDate = ActualParkingLeavingDateDP.getValue();
@@ -1701,7 +1731,7 @@ public class LogInController {
 				leaveHour = "0" + leaveHour;
 			}
 
-			String _name = MainController._currentUser.getUsername();
+			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 
 			JSONObject json = new JSONObject();
 			try {
@@ -1768,7 +1798,7 @@ public class LogInController {
 
 		} else {
 			
-			String _name = MainController._currentUser.getUsername();
+			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 			int _orderIdInt=Integer.parseInt(_orderId);
 			JSONObject json = new JSONObject();
 			try {
