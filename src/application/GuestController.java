@@ -39,6 +39,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.SharedData;
 
 public class GuestController {
 	
@@ -89,7 +90,7 @@ public class GuestController {
 
     @FXML
     void signOut(ActionEvent event) {
-    	MainController._currentUser = null;
+    	SharedData.getInstance().setCurrentUser(null);
     	
     	
     	Scene currentScene = signOutButton.getScene(); 
