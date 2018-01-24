@@ -4,6 +4,8 @@
 
 package application;
 
+import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -113,7 +115,8 @@ public class ParkingWorkerController {
    
     @FXML // fx:id="ParkingWorkerDisabledParkingSpotButton"
     private Button ParkingWorkerDisabledParkingSpotButton; // Value injected by FXMLLoader
-
+    
+    private ObservableList<String> myComboBoxParkResComboBox = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
     //private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
@@ -219,6 +222,20 @@ public class ParkingWorkerController {
     		else
     			myComboBoxMinutesData.add(i.toString());
     	}
+    	
+    	ArrayList<String> parkingLotNames = new ArrayList<String>();
+    	parkingLotNames.add("Ben Gurion");
+    	parkingLotNames.add("Carmel");
+    	parkingLotNames.add("Hadar");
+    	parkingLotNames.add("Horev");
+    	parkingLotNames.add("Hanita");
+    	parkingLotNames.add("Neve Shaanan");
+    	
+    	myComboBoxParkResComboBox.clear();
+    	for(int i = 0; i < parkingLotNames.size(); i++){
+    		myComboBoxParkResComboBox.add(parkingLotNames.get(i));
+    	}
+    	parkResComboBox.setItems(myComboBoxParkResComboBox);
 
     	parkResLeavingHourComboBox.setItems(myComboBoxHoursData);
     	parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);

@@ -39,6 +39,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.SharedData;
 
 public class GuestController {
 	
@@ -89,7 +90,7 @@ public class GuestController {
 
     @FXML
     void signOut(ActionEvent event) {
-    	MainController._currentUser = null;
+    	SharedData.getInstance().setCurrentUser(null);
     	
     	
     	Scene currentScene = signOutButton.getScene(); 
@@ -114,7 +115,7 @@ public class GuestController {
     void reserveParking(ActionEvent event) {
 
 		String _carNumber = GuestCarNumberTF.getText();
-		String _lotName = Main._currentParkingLot.get_name();
+		String _lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 		String _ocLeaveHour = GuestLeavingHourComboBox.getValue();
 		String _ocLeaveMinute = GuestLeavingMinuteComboBox.getValue();
 		LocalDate leaveLocalDate = GuestLeavingDateDP.getValue();
@@ -256,7 +257,7 @@ public class GuestController {
 		HttpURLConnection connection = null;
 		try {
 			// Create connection
-			URL url = new URL("http://" + MainController.IP + ":" + MainController.PORT + "/server/" + servletName);
+			URL url = new URL("http://" + SharedData.getInstance().getIP() + ":" + SharedData.getInstance().getPORT() + "/server/" + servletName);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);

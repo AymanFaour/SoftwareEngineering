@@ -18,6 +18,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import model.ParkingLot;
+import model.SharedData;
 //import model.ParkingLot;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,14 +27,6 @@ import javafx.scene.Scene;
 public class Main extends Application{
 	private Parent mainLayout;
 	private Stage primaryStage;
-	public static ParkingLot _currentParkingLot;
-	public static double _reservationCost;
-	public static double _occasonalCost;
-	public static double _routineCost;
-	public static double _businessCost;
-	public static double _fullCost;
-	public static String IP;
-	public static String PORT;
 	
 
 	public static void setprimary(Stage prim){
@@ -94,12 +87,12 @@ public class Main extends Application{
         	
         	JSONObject config = new JSONObject(sb.toString());
 
-        	IP = config.getString("host");
-        	PORT = config.getString("port");
+        	SharedData.getInstance().setIP(config.getString("host"));
+        	SharedData.getInstance().setPORT(config.getString("port"));
         	
 //        	System.out.println(config + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
         	
-        	_currentParkingLot = new ParkingLot(config.getString("lotName"), 3, 3, config.getInt("width"));
+        	SharedData.getInstance().setCurrentParkingLot(new ParkingLot(config.getString("lotName"), 3, 3, config.getInt("width")));
         	
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,11 +105,11 @@ public class Main extends Application{
 				
 				JSONArray costs = ret.getJSONArray("Costs");
 				
-				_reservationCost = ((JSONObject) costs.get(1)).getDouble("cost");
-				_occasonalCost = ((JSONObject) costs.get(0)).getDouble("cost");
-				_routineCost = ((JSONObject) costs.get(2)).getDouble("cost");
-				_businessCost = ((JSONObject) costs.get(3)).getDouble("cost");
-				_fullCost = ((JSONObject) costs.get(4)).getDouble("cost");
+				SharedData.getInstance().setReservationCost(((JSONObject) costs.get(1)).getDouble("cost"));
+				SharedData.getInstance().setOccasionalCost(((JSONObject) costs.get(0)).getDouble("cost"));
+				SharedData.getInstance().setRoutineCost(((JSONObject) costs.get(2)).getDouble("cost"));
+				SharedData.getInstance().setBusinessCost(((JSONObject) costs.get(3)).getDouble("cost"));
+				SharedData.getInstance().setFullCost(((JSONObject) costs.get(4)).getDouble("cost"));
 				
 			}
 		} catch (JSONException e) {
@@ -124,7 +117,7 @@ public class Main extends Application{
 			e.printStackTrace();
 		}
 		
-		MainController.initialize(IP, PORT);
+		MainController.initialize(SharedData.getInstance().getIP(), SharedData.getInstance().getPORT());
 		launch(args);
 	}
 	
@@ -133,7 +126,8 @@ public class Main extends Application{
 		HttpURLConnection connection = null;
 		try {
 			// Create connection
-			URL url = new URL("http://" + IP + ":" + PORT + "/server/" + servletName);
+			URL url = new URL("http://" + SharedData.getInstance().getIP()
+			+ ":" + SharedData.getInstance().getPORT() + "/server/" + servletName);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);
