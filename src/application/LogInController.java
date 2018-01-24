@@ -746,7 +746,7 @@ public class LogInController {
         			status = new Label("used");
         			status.setStyle("-fx-pref-width: 60;");
         		}
-    		
+
 
 		        hb.getChildren().add(subId);
 		        hb.getChildren().add(carId);

@@ -4,6 +4,8 @@
 
 package application;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,16 +25,16 @@ public class ParkingWorkerController {
     private Button disabledParkingSpotButton; // Value injected by FXMLLoader
 
     @FXML // fx:id="DisaParkSpotUntilHourComboBox"
-    private ComboBox<?> DisaParkSpotUntilHourComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> DisaParkSpotUntilHourComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="ParkingReservationParkingLotWorkerBorderPane"
     private BorderPane ParkingReservationParkingLotWorkerBorderPane; // Value injected by FXMLLoader
 
     @FXML // fx:id="parkResLeavingMinuteComboBox"
-    private ComboBox<?> parkResLeavingMinuteComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> parkResLeavingMinuteComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="parkResLeavingHourComboBox"
-    private ComboBox<?> parkResLeavingHourComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> parkResLeavingHourComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="signOutButton"
     private Button signOutButton; // Value injected by FXMLLoader
@@ -47,7 +49,7 @@ public class ParkingWorkerController {
     private Text balanceOnTopOfLogIn; // Value injected by FXMLLoader
 
     @FXML // fx:id="DisaParkSpotUntilMinuteComboBox"
-    private ComboBox<?> DisaParkSpotUntilMinuteComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> DisaParkSpotUntilMinuteComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="ParkingWorkerReserveParkingButton"
     private Button ParkingWorkerReserveParkingButton; // Value injected by FXMLLoader
@@ -62,10 +64,10 @@ public class ParkingWorkerController {
     private TextField DisaParkSpotSpotIdTF; // Value injected by FXMLLoader
 
     @FXML // fx:id="alternativeComboBox"
-    private ComboBox<?> alternativeComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> alternativeComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="parkResComboBox"
-    private ComboBox<?> parkResComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> parkResComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="DisaParkSpotUntilDateDP"
     private DatePicker DisaParkSpotUntilDateDP; // Value injected by FXMLLoader
@@ -80,7 +82,7 @@ public class ParkingWorkerController {
     private DatePicker parkResArrivingDateDP; // Value injected by FXMLLoader
 
     @FXML // fx:id="parkResArrivingMinuteComboBox"
-    private ComboBox<?> parkResArrivingMinuteComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> parkResArrivingMinuteComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="AlternativeParkingParkingLotWorkerBorderPane"
     private BorderPane AlternativeParkingParkingLotWorkerBorderPane; // Value injected by FXMLLoader
@@ -92,7 +94,7 @@ public class ParkingWorkerController {
     private TextField alternativeParkingReservationIdTF; // Value injected by FXMLLoader
 
     @FXML // fx:id="parkResArrivingHourComboBox"
-    private ComboBox<?> parkResArrivingHourComboBox; // Value injected by FXMLLoader
+    private ComboBox<String> parkResArrivingHourComboBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="AlternativeParkingCarNumberTF"
     private TextField AlternativeParkingCarNumberTF; // Value injected by FXMLLoader
@@ -112,7 +114,11 @@ public class ParkingWorkerController {
     @FXML // fx:id="ParkingWorkerDisabledParkingSpotButton"
     private Button ParkingWorkerDisabledParkingSpotButton; // Value injected by FXMLLoader
 
-
+    private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
+    
+    
     @FXML
     void signOut(ActionEvent event) {
 
@@ -134,7 +140,7 @@ public class ParkingWorkerController {
 
     @FXML
     void parkingWorkerReserveParking(ActionEvent event) {
-
+    	
     }
 
 
@@ -196,6 +202,29 @@ public class ParkingWorkerController {
     	disabledParkingSpotButton.getStyleClass().removeAll("pressedButton", "focus");
     	disabledParkingSpotButton.getStyleClass().add("loginView-buttons");
 
+    	myComboBoxHoursData.clear();
+    	for(Integer i = 0; i < 24; i++){
+    		if(i < 10 ){
+    			myComboBoxHoursData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxHoursData.add(i.toString());
+    	}
+    	
+    	myComboBoxMinutesData.clear();
+    	for(Integer i = 0; i < 60; i++){
+    		if(i < 10 ){
+    			myComboBoxMinutesData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxMinutesData.add(i.toString());
+    	}
+
+    	parkResLeavingHourComboBox.setItems(myComboBoxHoursData);
+    	parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
+    	parkResArrivingHourComboBox.setItems(myComboBoxHoursData);
+    	parkResArrivingMinuteComboBox.setItems(myComboBoxMinutesData);
+    	
     }
 
     @FXML
