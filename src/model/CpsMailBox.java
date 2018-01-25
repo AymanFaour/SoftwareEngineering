@@ -16,12 +16,14 @@ public class CpsMailBox {
 
 	private String username;
 	private String password;
+	public String sendTo;
 	Properties props;
 	Session session;
 	
-	public CpsMailBox(String un, String ps){
+	public CpsMailBox(String un, String ps, String to){
 		this.username = un;
 		this.password = ps;
+		this.sendTo = to;
 		this.props = new Properties();
 		this.props.put("mail.smtp.auth", "true");
 		this.props.put("mail.smtp.starttls.enable", "true");
@@ -42,7 +44,7 @@ public class CpsMailBox {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(this.username));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse("ali.safadi01@gmail.com"));
+				InternetAddress.parse(this.sendTo));
 			message.setSubject("Testing Subject");
 			message.setText("Amoot bel chocolate w dan dan");
 	
