@@ -133,7 +133,7 @@ public class CustomerServiceController {
 		Scene currentScene = signOutButton.getScene();
 		Parent mainLayout = null;
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("ParkingWorkerView.fxml"));
+		loader.setLocation(Main.class.getResource("MainView.fxml"));
 		try {
 			mainLayout = loader.load();
 		} catch (IOException | NullPointerException e) {
