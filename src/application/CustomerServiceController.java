@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -104,6 +106,9 @@ public class CustomerServiceController {
 
     @FXML // fx:id="textInTopOfLogIn"
     private Text textInTopOfLogIn; // Value injected by FXMLLoader
+    
+    private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
 
     @FXML
     void signOut(ActionEvent event) {
@@ -335,6 +340,33 @@ public class CustomerServiceController {
     	parkingReservationButton.getStyleClass().add("pressedButton");
     	HandlingComplaintsButton.getStyleClass().removeAll("pressedButton", "focus");
     	HandlingComplaintsButton.getStyleClass().add("loginView-buttons");
+    	
+    	
+    	
+    	
+    	myComboBoxHoursData.clear();
+    	for(Integer i = 0; i < 24; i++){
+    		if(i < 10 ){
+    			myComboBoxHoursData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxHoursData.add(i.toString());
+    	}
+    	
+    	myComboBoxMinutesData.clear();
+    	for(Integer i = 0; i < 60; i++){
+    		if(i < 10 ){
+    			myComboBoxMinutesData.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxMinutesData.add(i.toString());
+    	}
+    	
+    	
+    	CusSerparkResLeavingHourComboBox.setItems(myComboBoxHoursData);
+    	CusSerparkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
+    	CusSerparkResArrivingHourComboBox.setItems(myComboBoxHoursData);
+    	CusSerparkResArrivingMinuteComboBox.setItems(myComboBoxMinutesData);
 
     }
 

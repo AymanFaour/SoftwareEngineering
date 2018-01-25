@@ -49,7 +49,7 @@ public class Main extends Application{
 		// TODO Auto-generated method stub
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		loader.setLocation(Main.class.getResource("ParkingLotDirectorView.fxml"));
 		
 		try {
 			mainLayout = loader.load();
