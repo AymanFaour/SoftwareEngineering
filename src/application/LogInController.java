@@ -1852,6 +1852,7 @@ public class LogInController {
 		} else {
 			
 			String _name = SharedData.getInstance().getCurrentUser().getUsername();
+			String _email = SharedData.getInstance().getCurrentUser().getEmail();
 			int _orderIdInt=Integer.parseInt(_orderId);
 			JSONObject json = new JSONObject();
 			try {
@@ -1862,6 +1863,7 @@ public class LogInController {
 				json.put("username", _name);
 				json.put("orderID", _orderIdInt);
 				json.put("content", _complaint);
+				json.put("email", _email);
 				json.put("date", _date);
 				json.put("cmd", "makeComplaint");
 
