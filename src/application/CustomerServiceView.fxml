@@ -49,78 +49,6 @@
             </HBox>
             <StackPane prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <BorderPane fx:id="ParkingReservationCustomerServiceBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
-                     <center>
-                        <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <HBox prefHeight="50.0" prefWidth="600.0">
-                                 <children>
-                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Car Number:">
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </Label>
-                                    <TextField fx:id="CusSerParkingReservationCarNumberTF" styleClass="text-field-first" stylesheets="@application.css">
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox prefHeight="50.0" prefWidth="600.0">
-                                 <children>
-                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Arriving Hour:" />
-                                    <ComboBox id="#hour-minutes-combo" fx:id="CusSerparkResArrivingHourComboBox" prefWidth="78.0" promptText="Hour" stylesheets="@application.css" />
-                                    <ComboBox fx:id="CusSerparkResArrivingMinuteComboBox" prefWidth="78.0" promptText="Minutes" stylesheets="@application.css">
-                                       <HBox.margin>
-                                          <Insets left="20.0" />
-                                       </HBox.margin>
-                                    </ComboBox>
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="30.0" layoutY="77.0" prefHeight="50.0" prefWidth="600.0">
-                                 <children>
-                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Leaving Hour:" />
-                                    <ComboBox id="#hour-minutes-combo" fx:id="CusSerparkResLeavingHourComboBox" prefWidth="78.0" promptText="Hour" stylesheets="@application.css" />
-                                    <ComboBox fx:id="CusSerparkResLeavingMinuteComboBox" prefWidth="78.0" promptText="Minutes" stylesheets="@application.css">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <HBox.margin>
-                                          <Insets left="20.0" />
-                                       </HBox.margin>
-                                    </ComboBox>
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="30.0" layoutY="134.0" prefHeight="50.0" prefWidth="600.0">
-                                 <children>
-                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Arriving Date:" />
-                                    <DatePicker fx:id="CusSerparkResArrivingDateDP" />
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="30.0" layoutY="191.0" prefHeight="50.0" prefWidth="600.0">
-                                 <children>
-                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Leaving Date:" />
-                                    <DatePicker fx:id="CusSerparkResLeavingDateDP" />
-                                 </children>
-                              </HBox>
-                              <HBox layoutX="30.0" layoutY="248.0" prefHeight="50.0" prefWidth="600.0">
-                                 <children>
-                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Parking Lot Name:" />
-                                    <ComboBox fx:id="CusSerparkResComboBox" prefWidth="150.0" promptText="select parking name" stylesheets="@application.css" />
-                                 </children>
-                              </HBox>
-                              <Button fx:id="CusSerparkResReserveParkingButton" mnemonicParsing="false" onAction="#CustomerServiceParkingReservation" styleClass="go-button" stylesheets="@application.css" text="Reserve" />
-                           </children>
-                           <padding>
-                              <Insets left="20.0" top="10.0" />
-                           </padding>
-                        </VBox>
-                     </center>
-                  </BorderPane>
                   <BorderPane fx:id="HandlingComplaintsCustomerServiceBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -179,6 +107,92 @@
                                  </children>
                               </VBox>
                            </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+                  <BorderPane fx:id="ParkingReservationCustomerServiceBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+                     <center>
+                        <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Car Number:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="CusSerParkingReservationCarNumberTF" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Credit Card Id:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="CusSerParkingReservationCreditCardIdTF" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Arriving Hour:" />
+                                    <ComboBox id="#hour-minutes-combo" fx:id="CusSerparkResArrivingHourComboBox" prefWidth="78.0" promptText="Hour" stylesheets="@application.css" />
+                                    <ComboBox fx:id="CusSerparkResArrivingMinuteComboBox" prefWidth="78.0" promptText="Minutes" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </ComboBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="30.0" layoutY="77.0" prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Leaving Hour:" />
+                                    <ComboBox id="#hour-minutes-combo" fx:id="CusSerparkResLeavingHourComboBox" prefWidth="78.0" promptText="Hour" stylesheets="@application.css" />
+                                    <ComboBox fx:id="CusSerparkResLeavingMinuteComboBox" prefWidth="78.0" promptText="Minutes" stylesheets="@application.css">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </ComboBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="30.0" layoutY="134.0" prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Arriving Date:" />
+                                    <DatePicker fx:id="CusSerparkResArrivingDateDP" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="30.0" layoutY="191.0" prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Leaving Date:" />
+                                    <DatePicker fx:id="CusSerparkResLeavingDateDP" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="30.0" layoutY="248.0" prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Parking Lot Name:" />
+                                    <ComboBox fx:id="CusSerparkResComboBox" prefWidth="150.0" promptText="select parking name" stylesheets="@application.css" />
+                                 </children>
+                              </HBox>
+                              <Button fx:id="CusSerparkResReserveParkingButton" mnemonicParsing="false" onAction="#CustomerServiceParkingReservation" styleClass="go-button" stylesheets="@application.css" text="Reserve" />
+                           </children>
+                           <padding>
+                              <Insets left="20.0" top="10.0" />
+                           </padding>
                         </VBox>
                      </center>
                   </BorderPane>

@@ -135,10 +135,14 @@ public class ParkingWorkerController {
    
     @FXML // fx:id="ParkingWorkerDisabledParkingSpotButton"
     private Button ParkingWorkerDisabledParkingSpotButton; // Value injected by FXMLLoader
-    
+
+    @FXML // fx:id="ParkingReservationCreditCardIdTF"
+    private TextField ParkingReservationCreditCardIdTF; // Value injected by FXMLLoader
+ 
     private ObservableList<String> myComboBoxParkResComboBox = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
+    
     //private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
     
     
@@ -276,6 +280,7 @@ public class ParkingWorkerController {
     @FXML
     void parkingWorkerReserveParking(ActionEvent event) {
 		String _carNumber = ParkingReservationCarNumberTF.getText();
+		String _creditCardNumber= ParkingReservationCreditCardIdTF.getText();
 		String _arriveHour = parkResArrivingHourComboBox.getValue();
 		String _arriveMinute = parkResArrivingMinuteComboBox.getValue();
 		String _leaveHour = parkResLeavingHourComboBox.getValue();
@@ -340,12 +345,12 @@ public class ParkingWorkerController {
 
 		}
 
-		if (_carNumber.equals("") || _lotName == null) {
+		if (_carNumber.equals("") || _lotName == null||_creditCardNumber.equals("")) {
 
 			informationAlert.setTitle("Reservation warrning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText(
-					"Please fill all the car number, arriving date and parking lot fields to complete the reservation");
+					"Please fill all the car number,credit card id, arriving date and parking lot fields to complete the reservation");
 			informationAlert.showAndWait();
 			return;
 

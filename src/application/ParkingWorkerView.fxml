@@ -144,6 +144,20 @@
                               </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Credit Card Id:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="ParkingReservationCreditCardIdTF" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
                                     <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Arriving Hour:" />
                                     <ComboBox id="#hour-minutes-combo" fx:id="parkResArrivingHourComboBox" prefWidth="78.0" promptText="Hour" stylesheets="@application.css" />
                                     <ComboBox fx:id="parkResArrivingMinuteComboBox" prefWidth="78.0" promptText="Minutes" stylesheets="@application.css">

@@ -107,6 +107,9 @@ public class CustomerServiceController {
     @FXML // fx:id="textInTopOfLogIn"
     private Text textInTopOfLogIn; // Value injected by FXMLLoader
     
+    @FXML // fx:id="CusSerParkingReservationCreditCardIdTF"
+    private TextField CusSerParkingReservationCreditCardIdTF; // Value injected by FXMLLoader
+
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
 
@@ -117,7 +120,7 @@ public class CustomerServiceController {
 		Scene currentScene = signOutButton.getScene();
 		Parent mainLayout = null;
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		loader.setLocation(Main.class.getResource("ParkingWorkerView.fxml"));
 		try {
 			mainLayout = loader.load();
 		} catch (IOException | NullPointerException e) {
@@ -137,6 +140,7 @@ public class CustomerServiceController {
     void CustomerServiceParkingReservation(ActionEvent event) {
 
 		String _carNumber = CusSerParkingReservationCarNumberTF.getText();
+		String _CrediCardId = CusSerParkingReservationCreditCardIdTF.getText();
 		String _arriveHour = CusSerparkResArrivingHourComboBox.getValue();
 		String _arriveMinute = CusSerparkResArrivingMinuteComboBox.getValue();
 		String _leaveHour = CusSerparkResLeavingHourComboBox.getValue();
@@ -201,12 +205,12 @@ public class CustomerServiceController {
 
 		}
 
-		if (_carNumber.equals("") || _lotName == null) {
+		if (_carNumber.equals("") || _lotName == null||_CrediCardId.equals("")) {
 
 			informationAlert.setTitle("Reservation warrning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText(
-					"Please fill all the car number, arriving date and parking lot fields to complete the reservation");
+					"Please fill all the car number,credit card id, arriving date and parking lot fields to complete the reservation");
 			informationAlert.showAndWait();
 			return;
 
