@@ -45,6 +45,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.ParkingLot;
 import model.SharedData;
 
 public class LogInController {
@@ -325,13 +326,7 @@ public class LogInController {
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
     	ActualParkingButton.getStyleClass().add("loginView-buttons");
     	
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
+    	ArrayList<ParkingLot> parkingLotNames = SharedData.getInstance().getParkingLotsAL();
     
     	
     	myComboBoxHoursData.clear();
@@ -354,7 +349,7 @@ public class LogInController {
     	
     	myComboBoxData.clear();
     	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxData.add(parkingLotNames.get(i));
+    		myComboBoxData.add(parkingLotNames.get(i).get_name());
     	}
     	parkResComboBox.setItems(myComboBoxData);
     	parkResArrivingHourComboBox.setItems(myComboBoxHoursData);
@@ -422,17 +417,11 @@ public class LogInController {
     	regRouSubRoutineMinuteComboBox.setItems(myComboBoxMinutesData);
     
 
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
-    	
+    	ArrayList<ParkingLot> parkingLotNames = SharedData.getInstance().getParkingLotsAL();
+
     	myComboBoxData.clear();
     	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxData.add(parkingLotNames.get(i));
+    		myComboBoxData.add(parkingLotNames.get(i).get_name());
     	}
     	regRouComboBox.setItems(myComboBoxData);
     	
@@ -474,7 +463,6 @@ public class LogInController {
     	
     	this.setBusinessAccountWorkersCounter(0);
     	int length = this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
-    	System.out.println(length);
     	for (int i = length - 2; i > 0 ; i--){
     		this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(i);
     	}
@@ -497,17 +485,11 @@ public class LogInController {
     			myComboBoxMinutesData.add(i.toString());
     	}
     	
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
+    	ArrayList<ParkingLot> parkingLotNames = SharedData.getInstance().getParkingLotsAL();
     	
     	myComboBoxComplaintParkingData.clear();     
     	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxComplaintParkingData.add(parkingLotNames.get(i));
+    		myComboBoxComplaintParkingData.add(parkingLotNames.get(i).get_name());
     	}
     	
     	busRouLotNameComboBox.setItems(myComboBoxComplaintParkingData);
@@ -516,9 +498,9 @@ public class LogInController {
     	
     	Double subscriptionCost = SharedData.getInstance().getBusinessCost();
     	businessSubscriptionCostText.setText(subscriptionCost.toString() + "\u20AA per subscription");
+    
     }
     
-
     @FXML
     void addWorkerToBusinessAcocunt(ActionEvent event) {
 		HBox hb = new HBox();
@@ -932,17 +914,11 @@ public class LogInController {
     	MyAccountButton.getStyleClass().add("loginView-buttons");
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
     	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
+    	ArrayList<ParkingLot> parkingLotNames = SharedData.getInstance().getParkingLotsAL();
     	
     	myComboBoxComplaintParkingData.clear();     
     	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxComplaintParkingData.add(parkingLotNames.get(i));
+    		myComboBoxComplaintParkingData.add(parkingLotNames.get(i).get_name());
     	}
     	complaintComboBox.setItems(myComboBoxComplaintParkingData);
     }

@@ -38,15 +38,18 @@ public class CpsMailBox {
 		  });
 	}
 	
-	public void sendMail(String response){
+	public void sendMail(String response, String refund){
 		try {
 	
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(this.username));
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(this.sendTo));
-			message.setSubject("Testing Subject");
-			message.setText(response);
+			message.setSubject("CPS customer service response");
+			if (refund.equals(""))
+				message.setText(response);
+			else
+				message.setText(response + "\nand you'r refund was: " + refund +"\u20AA.");
 	
 			Transport.send(message);
 	
