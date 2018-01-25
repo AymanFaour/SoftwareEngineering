@@ -50,210 +50,230 @@ import javafx.stage.Stage;
 import model.SharedData;
 
 public class LogInController {
-	
+
 	Alert informationAlert = new Alert(AlertType.INFORMATION);
 	Alert errorAlert = new Alert(AlertType.ERROR);
 	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
 
 	@FXML // fx:id="welcomeBanner"
-    private Label welcomeBanner; // Value injected by FXMLLoader
+	private Label welcomeBanner; // Value injected by FXMLLoader
 
-    @FXML // fx:id="businessRoutineSubscriptionBorderPane"
-    private BorderPane businessRoutineSubscriptionBorderPane; // Value injected by FXMLLoader
+	@FXML // fx:id="businessRoutineSubscriptionBorderPane"
+	private BorderPane businessRoutineSubscriptionBorderPane; // Value injected
+																// by FXMLLoader
 
-    @FXML // fx:id="regRouSubRegularRoutineSubscriptionButton"
-    private Button regRouSubRegularRoutineSubscriptionButton; // Value injected by FXMLLoader
+	@FXML // fx:id="regRouSubRegularRoutineSubscriptionButton"
+	private Button regRouSubRegularRoutineSubscriptionButton; // Value injected
+																// by FXMLLoader
 
-    @FXML // fx:id="parkResCarNumberTF"
-    private TextField parkResCarNumberTF; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResCarNumberTF"
+	private TextField parkResCarNumberTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="fulSubFullSubscriptionButton"
-    private Button fulSubFullSubscriptionButton; // Value injected by FXMLLoader
+	@FXML // fx:id="fulSubFullSubscriptionButton"
+	private Button fulSubFullSubscriptionButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkingReservationButton"
-    private Button parkingReservationButton; // Value injected by FXMLLoader
+	@FXML // fx:id="parkingReservationButton"
+	private Button parkingReservationButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="balanceOnTopOfLogIn"
-    private Text balanceOnTopOfLogIn; // Value injected by FXMLLoader
+	@FXML // fx:id="balanceOnTopOfLogIn"
+	private Text balanceOnTopOfLogIn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="complaintBorderPane"
-    private BorderPane complaintBorderPane; // Value injected by FXMLLoader
+	@FXML // fx:id="complaintBorderPane"
+	private BorderPane complaintBorderPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="regularRoutineSubscriptionBorderPane"
-    private BorderPane regularRoutineSubscriptionBorderPane; // Value injected by FXMLLoader
+	@FXML // fx:id="regularRoutineSubscriptionBorderPane"
+	private BorderPane regularRoutineSubscriptionBorderPane; // Value injected
+																// by FXMLLoader
 
-    @FXML // fx:id="parkResLeavingHourTF"
-    private TextField parkResLeavingHourTF; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResLeavingHourTF"
+	private TextField parkResLeavingHourTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="regRouSubCarNumberTF"
-    private TextField regRouSubCarNumberTF; // Value injected by FXMLLoader
+	@FXML // fx:id="regRouSubCarNumberTF"
+	private TextField regRouSubCarNumberTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="textInTopOfLogIn"
-    private Text textInTopOfLogIn; // Value injected by FXMLLoader
+	@FXML // fx:id="textInTopOfLogIn"
+	private Text textInTopOfLogIn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="businessRoutinelySubscriptionButton"
-    private Button businessRoutinelySubscriptionButton; // Value injected by FXMLLoader
+	@FXML // fx:id="businessRoutinelySubscriptionButton"
+	private Button businessRoutinelySubscriptionButton; // Value injected by
+														// FXMLLoader
 
-    @FXML // fx:id="fullSubscriptionBorderPane"
-    private BorderPane fullSubscriptionBorderPane; // Value injected by FXMLLoader
+	@FXML // fx:id="fullSubscriptionBorderPane"
+	private BorderPane fullSubscriptionBorderPane; // Value injected by
+													// FXMLLoader
 
-    @FXML // fx:id="regularRoutinelySubscriptionButton"
-    private Button regularRoutinelySubscriptionButton; // Value injected by FXMLLoader
+	@FXML // fx:id="regularRoutinelySubscriptionButton"
+	private Button regularRoutinelySubscriptionButton; // Value injected by
+														// FXMLLoader
 
-    @FXML // fx:id="fulSubCarNumberTF"
-    private TextField fulSubCarNumberTF; // Value injected by FXMLLoader
+	@FXML // fx:id="fulSubCarNumberTF"
+	private TextField fulSubCarNumberTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkResArrivingHourTF"
-    private TextField parkResArrivingHourTF; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResArrivingHourTF"
+	private TextField parkResArrivingHourTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="viewProfileBorderPane"
-    private BorderPane viewProfileBorderPane; // Value injected by FXMLLoader
+	@FXML // fx:id="viewProfileBorderPane"
+	private BorderPane viewProfileBorderPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkResReserveParkingButton"
-    private Button parkResReserveParkingButton; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResReserveParkingButton"
+	private Button parkResReserveParkingButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="fullSubscriptionButton"
-    private Button fullSubscriptionButton; // Value injected by FXMLLoader
+	@FXML // fx:id="fullSubscriptionButton"
+	private Button fullSubscriptionButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="viewReservationButton"
-    private Button viewReservationButton; // Value injected by FXMLLoader
+	@FXML // fx:id="viewReservationButton"
+	private Button viewReservationButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkingReservationBorderPane"
-    private BorderPane parkingReservationBorderPane; // Value injected by FXMLLoader
+	@FXML // fx:id="parkingReservationBorderPane"
+	private BorderPane parkingReservationBorderPane; // Value injected by
+														// FXMLLoader
 
-    @FXML // fx:id="complaintButton"
-    private Button complaintButton; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="signOutButton"
-    private Button signOutButton; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="parkResComboBox"
-    private ComboBox<String> parkResComboBox; // Value injected by FXMLLoader
-    private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
-    private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
-    private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
-    private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
-    
-    @FXML // fx:id="regRouComboBox"
-    private ComboBox<String> regRouComboBox; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="parkResArrivingDateDP"
-    private DatePicker parkResArrivingDateDP; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="parkResLeavingDateDP"
-    private DatePicker parkResLeavingDateDP; // Value injected by FXMLLoader
+	@FXML // fx:id="complaintButton"
+	private Button complaintButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkResArrivingMinuteComboBox"
-    private ComboBox<String> parkResArrivingMinuteComboBox; // Value injected by FXMLLoader
+	@FXML // fx:id="signOutButton"
+	private Button signOutButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkResArrivingHourComboBox"
-    private ComboBox<String> parkResArrivingHourComboBox; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResComboBox"
+	private ComboBox<String> parkResComboBox; // Value injected by FXMLLoader
+	private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
+	private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
+	private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
+	private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
 
-    @FXML // fx:id="parkResLeavingMinuteComboBox"
-    private ComboBox<String> parkResLeavingMinuteComboBox; // Value injected by FXMLLoader
+	@FXML // fx:id="regRouComboBox"
+	private ComboBox<String> regRouComboBox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="parkResLeavingHourComboBox"
-    private ComboBox<String> parkResLeavingHourComboBox; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResArrivingDateDP"
+	private DatePicker parkResArrivingDateDP; // Value injected by FXMLLoader
 
-    @FXML // fx:id="MyAccountButton"
-    private Button MyAccountButton; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResLeavingDateDP"
+	private DatePicker parkResLeavingDateDP; // Value injected by FXMLLoader
 
-    @FXML // fx:id="MyAccountBorderPane"
-    private BorderPane MyAccountBorderPane; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="AmountTF"
-    private TextField AmountTF; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResArrivingMinuteComboBox"
+	private ComboBox<String> parkResArrivingMinuteComboBox; // Value injected by
+															// FXMLLoader
 
-    @FXML // fx:id="CreditCardIDTF"
-    private TextField CreditCardIDTF; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResArrivingHourComboBox"
+	private ComboBox<String> parkResArrivingHourComboBox; // Value injected by
+															// FXMLLoader
 
-    @FXML // fx:id="MyAccountDepositButton"
-    private Button MyAccountDepositButton; // Value injected by FXMLLoader
+	@FXML // fx:id="parkResLeavingMinuteComboBox"
+	private ComboBox<String> parkResLeavingMinuteComboBox; // Value injected by
+															// FXMLLoader
 
-    @FXML
-    private ComboBox<String> regRouSubRoutineHourComboBox;
+	@FXML // fx:id="parkResLeavingHourComboBox"
+	private ComboBox<String> parkResLeavingHourComboBox; // Value injected by
+															// FXMLLoader
 
-    @FXML
-    private ComboBox<String> regRouSubRoutineMinuteComboBox;
-    
-    @FXML // fx:id="reservationsList"
-    private VBox reservationsList; // Value injected by FXMLLoader
+	@FXML // fx:id="MyAccountButton"
+	private Button MyAccountButton; // Value injected by FXMLLoader
 
-   
-    @FXML // fx:id="ActualParkingLeavingMinuteComboBox"
-    private ComboBox<String> ActualParkingLeavingMinuteComboBox; // Value injected by FXMLLoader
-   
-    @FXML // fx:id="ActualParkingLeavingDateDP"
-    private DatePicker ActualParkingLeavingDateDP; // Value injected by FXMLLoader
-  
-    @FXML // fx:id="ActualParkingLeavingHourComboBox"
-    private ComboBox<String> ActualParkingLeavingHourComboBox; // Value injected by FXMLLoader
-   
-    @FXML // fx:id="ActualParkingNumberTF"
-    private TextField ActualParkingNumberTF; // Value injected by FXMLLoader
+	@FXML // fx:id="MyAccountBorderPane"
+	private BorderPane MyAccountBorderPane; // Value injected by FXMLLoader
 
-  
-    @FXML // fx:id="ActualParkingButton"
-    private Button ActualParkingButton; // Value injected by FXMLLoader
+	@FXML // fx:id="AmountTF"
+	private TextField AmountTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="ActualParkingBorderPane"
-    private BorderPane ActualParkingBorderPane; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="ComplaintReservationIdTF"
-    private TextField ComplaintReservationIdTF; // Value injected by FXMLLoader
+	@FXML // fx:id="CreditCardIDTF"
+	private TextField CreditCardIDTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="ComplaintTA"
-    private TextArea ComplaintTA; // Value injected by FXMLLoader
+	@FXML // fx:id="MyAccountDepositButton"
+	private Button MyAccountDepositButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="ComplaintSendButton"
-    private Button ComplaintSendButton; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="ComplaintCarNumberTF"
-    private TextField ComplaintCarNumberTF; // Value injected by FXMLLoader
+	@FXML
+	private ComboBox<String> regRouSubRoutineHourComboBox;
 
-    @FXML // fx:id="subscriptionsList"
-    private VBox subscriptionsList; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="fullSubscriptionsList"
-    private VBox fullSubscriptionsList; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="complaintComboBox"
-    private ComboBox<String> complaintComboBox; // Value injected by FXMLLoader
+	@FXML
+	private ComboBox<String> regRouSubRoutineMinuteComboBox;
 
-    @FXML // fx:id="addWrokerToBusinessAccountButton"
-    private Button addWrokerToBusinessAccountButton; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="listOfAddedWorkersBusinessAcocuntVBOX"
-    private VBox listOfAddedWorkersBusinessAcocuntVBOX; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="remWrokerFromBusinessAccountButton"
-    private Button remWrokerFromBusinessAccountButton; // Value injected by FXMLLoader
+	@FXML // fx:id="reservationsList"
+	private VBox reservationsList; // Value injected by FXMLLoader
 
-    @FXML // fx:id="buyBusinessSubscriptionButton"
-    private Button buyBusinessSubscriptionButton; // Value injected by FXMLLoader
+	@FXML // fx:id="ActualParkingLeavingMinuteComboBox"
+	private ComboBox<String> ActualParkingLeavingMinuteComboBox; // Value
+																	// injected
+																	// by
+																	// FXMLLoader
 
-    @FXML // fx:id="activationBusinessCarTF"
-    private TextField activationBusinessCarTF; // Value injected by FXMLLoader
+	@FXML // fx:id="ActualParkingLeavingDateDP"
+	private DatePicker ActualParkingLeavingDateDP; // Value injected by
+													// FXMLLoader
 
-    @FXML // fx:id="activationBusinessCodeTF"
-    private TextField activationBusinessCodeTF; // Value injected by FXMLLoader
+	@FXML // fx:id="ActualParkingLeavingHourComboBox"
+	private ComboBox<String> ActualParkingLeavingHourComboBox; // Value injected
+																// by FXMLLoader
 
-    @FXML // fx:id="busRouLotNameComboBox"
-    private ComboBox<String> busRouLotNameComboBox; // Value injected by FXMLLoader
+	@FXML // fx:id="ActualParkingNumberTF"
+	private TextField ActualParkingNumberTF; // Value injected by FXMLLoader
 
-    @FXML // fx:id="busRouSubRoutineHourComboBox"
-    private ComboBox<String> busRouSubRoutineHourComboBox; // Value injected by FXMLLoader
+	@FXML // fx:id="ActualParkingButton"
+	private Button ActualParkingButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="buRouSubRoutineMinuteComboBox"
-    private ComboBox<String> busRouSubRoutineMinuteComboBox; // Value injected by FXMLLoader
+	@FXML // fx:id="ActualParkingBorderPane"
+	private BorderPane ActualParkingBorderPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="logInButtonListVbox"
-    private VBox logInButtonListVbox; // Value injected by FXMLLoader
+	@FXML // fx:id="ComplaintReservationIdTF"
+	private TextField ComplaintReservationIdTF; // Value injected by FXMLLoader
 
-    
-    private int businessAccountWorkersCounter = 0;
-    
-    public int getBusinessAccountWorkersCounter() {
+	@FXML // fx:id="ComplaintTA"
+	private TextArea ComplaintTA; // Value injected by FXMLLoader
+
+	@FXML // fx:id="ComplaintSendButton"
+	private Button ComplaintSendButton; // Value injected by FXMLLoader
+
+	@FXML // fx:id="ComplaintCarNumberTF"
+	private TextField ComplaintCarNumberTF; // Value injected by FXMLLoader
+
+	@FXML // fx:id="subscriptionsList"
+	private VBox subscriptionsList; // Value injected by FXMLLoader
+
+	@FXML // fx:id="fullSubscriptionsList"
+	private VBox fullSubscriptionsList; // Value injected by FXMLLoader
+
+	@FXML // fx:id="complaintComboBox"
+	private ComboBox<String> complaintComboBox; // Value injected by FXMLLoader
+
+	@FXML // fx:id="addWrokerToBusinessAccountButton"
+	private Button addWrokerToBusinessAccountButton; // Value injected by
+														// FXMLLoader
+
+	@FXML // fx:id="listOfAddedWorkersBusinessAcocuntVBOX"
+	private VBox listOfAddedWorkersBusinessAcocuntVBOX; // Value injected by
+														// FXMLLoader
+
+	@FXML // fx:id="remWrokerFromBusinessAccountButton"
+	private Button remWrokerFromBusinessAccountButton; // Value injected by
+														// FXMLLoader
+
+	@FXML // fx:id="buyBusinessSubscriptionButton"
+	private Button buyBusinessSubscriptionButton; // Value injected by
+													// FXMLLoader
+
+	@FXML // fx:id="activationBusinessCarTF"
+	private TextField activationBusinessCarTF; // Value injected by FXMLLoader
+
+	@FXML // fx:id="activationBusinessCodeTF"
+	private TextField activationBusinessCodeTF; // Value injected by FXMLLoader
+
+	@FXML // fx:id="busRouLotNameComboBox"
+	private ComboBox<String> busRouLotNameComboBox; // Value injected by
+													// FXMLLoader
+
+	@FXML // fx:id="busRouSubRoutineHourComboBox"
+	private ComboBox<String> busRouSubRoutineHourComboBox; // Value injected by
+															// FXMLLoader
+
+	@FXML // fx:id="buRouSubRoutineMinuteComboBox"
+	private ComboBox<String> busRouSubRoutineMinuteComboBox; // Value injected
+																// by FXMLLoader
+
+	@FXML // fx:id="logInButtonListVbox"
+	private VBox logInButtonListVbox; // Value injected by FXMLLoader
+
+	private int businessAccountWorkersCounter = 0;
+
+	public int getBusinessAccountWorkersCounter() {
 		return businessAccountWorkersCounter;
 	}
 
@@ -261,405 +281,389 @@ public class LogInController {
 		this.businessAccountWorkersCounter = businessAccountWorkersCounter;
 	}
 
-	public void setWelcome(String s){
-    	welcomeBanner.setText(s);
-    }
-    
-    public void setTopOfLogInView(String name, String balance){
-    	textInTopOfLogIn.setText(name);
-    	balanceOnTopOfLogIn.setText(balance);
-    }
-    
-    public void setBusinessButton(Button b){
-    	int counter = 0;
-    	for (int i = 0; i < logInButtonListVbox.getChildren().size(); i++){
-    		if(((Button) logInButtonListVbox.getChildren().get(i)).getText() == "Test"){
-    			counter++;
-    		}
-    	}
-    	if (counter != logInButtonListVbox.getChildren().size())
-    		logInButtonListVbox.getChildren().add(4, b);
-    }
-    
-    @FXML
-    void loadParkingReservation(ActionEvent event) {
-    	businessRoutineSubscriptionBorderPane.setVisible(false);
-    	regularRoutineSubscriptionBorderPane.setVisible(false);
-    	parkingReservationBorderPane.setVisible(true);
-    	fullSubscriptionBorderPane.setVisible(false);
-    	complaintBorderPane.setVisible(false);
-    	viewProfileBorderPane.setVisible(false);
-    	MyAccountBorderPane.setVisible(false);
-    	ActualParkingBorderPane.setVisible(false); 
- 
+	public void setWelcome(String s) {
+		welcomeBanner.setText(s);
+	}
 
-    	parkingReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	parkingReservationButton.getStyleClass().add("pressedButton");
-    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
-    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
-    		businessBut.getStyleClass().add("loginView-buttons");
-    	}
-    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
-    	complaintButton.getStyleClass().add("loginView-buttons");
-    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
-    	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
-    	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    	
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
-    
-    	
-    	myComboBoxHoursData.clear();
-    	for(Integer i = 0; i < 24; i++){
-    		if(i < 10 ){
-    			myComboBoxHoursData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxHoursData.add(i.toString());
-    	}
-    	
-    	myComboBoxMinutesData.clear();
-    	for(Integer i = 0; i < 60; i++){
-    		if(i < 10 ){
-    			myComboBoxMinutesData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxMinutesData.add(i.toString());
-    	}
-    	
-    	myComboBoxData.clear();
-    	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxData.add(parkingLotNames.get(i));
-    	}
-    	parkResComboBox.setItems(myComboBoxData);
-    	parkResArrivingHourComboBox.setItems(myComboBoxHoursData);
-    	parkResArrivingMinuteComboBox.setItems(myComboBoxMinutesData);
-    	parkResLeavingHourComboBox.setItems(myComboBoxHoursData);
-    	parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
-    }
+	public void setTopOfLogInView(String name, String balance) {
+		textInTopOfLogIn.setText(name);
+		balanceOnTopOfLogIn.setText(balance);
+	}
 
-    @FXML
-    void loadRegularRoutinelySubscription(ActionEvent event) {
-    	businessRoutineSubscriptionBorderPane.setVisible(false);
-    	regularRoutineSubscriptionBorderPane.setVisible(true);
-    	parkingReservationBorderPane.setVisible(false);
-    	fullSubscriptionBorderPane.setVisible(false);
-    	complaintBorderPane.setVisible(false);
-    	viewProfileBorderPane.setVisible(false);
-    	MyAccountBorderPane.setVisible(false);
-    	ActualParkingBorderPane.setVisible(false);
+	public void setBusinessButton(Button b) {
+		int counter = 0;
+		for (int i = 0; i < logInButtonListVbox.getChildren().size(); i++) {
+			if (((Button) logInButtonListVbox.getChildren().get(i)).getText() == "Test") {
+				counter++;
+			}
+		}
+		if (counter != logInButtonListVbox.getChildren().size())
+			logInButtonListVbox.getChildren().add(4, b);
+	}
 
+	@FXML
+	void loadParkingReservation(ActionEvent event) {
+		businessRoutineSubscriptionBorderPane.setVisible(false);
+		regularRoutineSubscriptionBorderPane.setVisible(false);
+		parkingReservationBorderPane.setVisible(true);
+		fullSubscriptionBorderPane.setVisible(false);
+		complaintBorderPane.setVisible(false);
+		viewProfileBorderPane.setVisible(false);
+		MyAccountBorderPane.setVisible(false);
+		ActualParkingBorderPane.setVisible(false);
 
-    	
-    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	regularRoutinelySubscriptionButton.getStyleClass().add("pressedButton");
-    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
-    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
-    		businessBut.getStyleClass().add("loginView-buttons");
-    	}
-    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	parkingReservationButton.getStyleClass().add("loginView-buttons");
-    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
-    	complaintButton.getStyleClass().add("loginView-buttons");
-    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
-    	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
-    	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    	
-    	myComboBoxHoursData.clear();
-    	for(Integer i = 0; i < 24; i++){
-    		if(i < 10 ){
-    			myComboBoxHoursData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxHoursData.add(i.toString());
-    	}
-    	
-    	myComboBoxMinutesData.clear();
-    	for(Integer i = 0; i < 60; i++){
-    		if(i < 10 ){
-    			myComboBoxMinutesData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxMinutesData.add(i.toString());
-    	}
-    	
-    	
-    	regRouSubRoutineHourComboBox.setItems(myComboBoxHoursData);
-    	regRouSubRoutineMinuteComboBox.setItems(myComboBoxMinutesData);
-    
+		parkingReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
+		parkingReservationButton.getStyleClass().add("pressedButton");
+		if (SharedData.getInstance().getCurrentUser().getType().equals("b")) {
+			Button businessBut = (Button) activationBusinessCodeTF.getScene()
+					.lookup("#businessRoutinelySubscriptionButton");
+			businessBut.getStyleClass().removeAll("pressedButton", "focus");
+			businessBut.getStyleClass().add("loginView-buttons");
+		}
+		regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+		fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+		viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		viewReservationButton.getStyleClass().add("loginView-buttons");
+		complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+		complaintButton.getStyleClass().add("loginView-buttons");
+		MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+		MyAccountButton.getStyleClass().add("loginView-buttons");
+		ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+		ActualParkingButton.getStyleClass().add("loginView-buttons");
 
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
-    	
-    	myComboBoxData.clear();
-    	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxData.add(parkingLotNames.get(i));
-    	}
-    	regRouComboBox.setItems(myComboBoxData);
-    }
-    
+		ArrayList<String> parkingLotNames = new ArrayList<String>();
+		parkingLotNames.add("Ben Gurion");
+		parkingLotNames.add("Carmel");
+		parkingLotNames.add("Hadar");
+		parkingLotNames.add("Horev");
+		parkingLotNames.add("Hanita");
+		parkingLotNames.add("Neve Shaanan");
 
-    @FXML
-    void loadBusinessRoutinelySubscription(ActionEvent event) {
-    	businessRoutineSubscriptionBorderPane.setVisible(true);
-    	regularRoutineSubscriptionBorderPane.setVisible(false);
-    	parkingReservationBorderPane.setVisible(false);
-    	fullSubscriptionBorderPane.setVisible(false);
-    	complaintBorderPane.setVisible(false);
-    	viewProfileBorderPane.setVisible(false);
-    	MyAccountBorderPane.setVisible(false);
-    	ActualParkingBorderPane.setVisible(false);
+		myComboBoxHoursData.clear();
+		for (Integer i = 0; i < 24; i++) {
+			if (i < 10) {
+				myComboBoxHoursData.add("0" + i.toString());
+			} else
+				myComboBoxHoursData.add(i.toString());
+		}
 
-    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
-    		businessBut.getStyleClass().removeAll("loginView-buttons", "focus");
-    		businessBut.getStyleClass().add("pressedButton");
-    	}
-    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	parkingReservationButton.getStyleClass().add("loginView-buttons");
-    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
-    	complaintButton.getStyleClass().add("loginView-buttons");
-    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
-    	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
-    	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    	
-    	this.setBusinessAccountWorkersCounter(0);
-    	int length = this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
-    	System.out.println(length);
-    	for (int i = length - 2; i > 0 ; i--){
-    		this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(i);
-    	}
-    	
-    	myComboBoxHoursData.clear();
-    	for(Integer i = 0; i < 24; i++){
-    		if(i < 10 ){
-    			myComboBoxHoursData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxHoursData.add(i.toString());
-    	}
-    	
-    	myComboBoxMinutesData.clear();
-    	for(Integer i = 0; i < 60; i++){
-    		if(i < 10 ){
-    			myComboBoxMinutesData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxMinutesData.add(i.toString());
-    	}
-    	
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
-    	
-    	myComboBoxComplaintParkingData.clear();     
-    	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxComplaintParkingData.add(parkingLotNames.get(i));
-    	}
-    	
-    	busRouLotNameComboBox.setItems(myComboBoxComplaintParkingData);
-    	busRouSubRoutineHourComboBox.setItems(myComboBoxHoursData);
-    	busRouSubRoutineMinuteComboBox.setItems(myComboBoxMinutesData);
-    	
-    	
-    }
-    
+		myComboBoxMinutesData.clear();
+		for (Integer i = 0; i < 60; i++) {
+			if (i < 10) {
+				myComboBoxMinutesData.add("0" + i.toString());
+			} else
+				myComboBoxMinutesData.add(i.toString());
+		}
 
-    @FXML
-    void addWorkerToBusinessAcocunt(ActionEvent event) {
+		myComboBoxData.clear();
+		for (int i = 0; i < parkingLotNames.size(); i++) {
+			myComboBoxData.add(parkingLotNames.get(i));
+		}
+		parkResComboBox.setItems(myComboBoxData);
+		parkResArrivingHourComboBox.setItems(myComboBoxHoursData);
+		parkResArrivingMinuteComboBox.setItems(myComboBoxMinutesData);
+		parkResLeavingHourComboBox.setItems(myComboBoxHoursData);
+		parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
+	}
+
+	@FXML
+	void loadRegularRoutinelySubscription(ActionEvent event) {
+		businessRoutineSubscriptionBorderPane.setVisible(false);
+		regularRoutineSubscriptionBorderPane.setVisible(true);
+		parkingReservationBorderPane.setVisible(false);
+		fullSubscriptionBorderPane.setVisible(false);
+		complaintBorderPane.setVisible(false);
+		viewProfileBorderPane.setVisible(false);
+		MyAccountBorderPane.setVisible(false);
+		ActualParkingBorderPane.setVisible(false);
+
+		regularRoutinelySubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
+		regularRoutinelySubscriptionButton.getStyleClass().add("pressedButton");
+		if (SharedData.getInstance().getCurrentUser().getType().equals("b")) {
+			Button businessBut = (Button) activationBusinessCodeTF.getScene()
+					.lookup("#businessRoutinelySubscriptionButton");
+			businessBut.getStyleClass().removeAll("pressedButton", "focus");
+			businessBut.getStyleClass().add("loginView-buttons");
+		}
+		parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		parkingReservationButton.getStyleClass().add("loginView-buttons");
+		fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+		viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		viewReservationButton.getStyleClass().add("loginView-buttons");
+		complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+		complaintButton.getStyleClass().add("loginView-buttons");
+		MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+		MyAccountButton.getStyleClass().add("loginView-buttons");
+		ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+		ActualParkingButton.getStyleClass().add("loginView-buttons");
+
+		myComboBoxHoursData.clear();
+		for (Integer i = 0; i < 24; i++) {
+			if (i < 10) {
+				myComboBoxHoursData.add("0" + i.toString());
+			} else
+				myComboBoxHoursData.add(i.toString());
+		}
+
+		myComboBoxMinutesData.clear();
+		for (Integer i = 0; i < 60; i++) {
+			if (i < 10) {
+				myComboBoxMinutesData.add("0" + i.toString());
+			} else
+				myComboBoxMinutesData.add(i.toString());
+		}
+
+		regRouSubRoutineHourComboBox.setItems(myComboBoxHoursData);
+		regRouSubRoutineMinuteComboBox.setItems(myComboBoxMinutesData);
+
+		ArrayList<String> parkingLotNames = new ArrayList<String>();
+		parkingLotNames.add("Ben Gurion");
+		parkingLotNames.add("Carmel");
+		parkingLotNames.add("Hadar");
+		parkingLotNames.add("Horev");
+		parkingLotNames.add("Hanita");
+		parkingLotNames.add("Neve Shaanan");
+
+		myComboBoxData.clear();
+		for (int i = 0; i < parkingLotNames.size(); i++) {
+			myComboBoxData.add(parkingLotNames.get(i));
+		}
+		regRouComboBox.setItems(myComboBoxData);
+	}
+
+	@FXML
+	void loadBusinessRoutinelySubscription(ActionEvent event) {
+		businessRoutineSubscriptionBorderPane.setVisible(true);
+		regularRoutineSubscriptionBorderPane.setVisible(false);
+		parkingReservationBorderPane.setVisible(false);
+		fullSubscriptionBorderPane.setVisible(false);
+		complaintBorderPane.setVisible(false);
+		viewProfileBorderPane.setVisible(false);
+		MyAccountBorderPane.setVisible(false);
+		ActualParkingBorderPane.setVisible(false);
+
+		if (SharedData.getInstance().getCurrentUser().getType().equals("b")) {
+			Button businessBut = (Button) activationBusinessCodeTF.getScene()
+					.lookup("#businessRoutinelySubscriptionButton");
+			businessBut.getStyleClass().removeAll("loginView-buttons", "focus");
+			businessBut.getStyleClass().add("pressedButton");
+		}
+		parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		parkingReservationButton.getStyleClass().add("loginView-buttons");
+		regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+		fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+		viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		viewReservationButton.getStyleClass().add("loginView-buttons");
+		complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+		complaintButton.getStyleClass().add("loginView-buttons");
+		MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+		MyAccountButton.getStyleClass().add("loginView-buttons");
+		ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+		ActualParkingButton.getStyleClass().add("loginView-buttons");
+
+		this.setBusinessAccountWorkersCounter(0);
+		int length = this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
+		System.out.println(length);
+		for (int i = length - 2; i > 0; i--) {
+			this.listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(i);
+		}
+
+		myComboBoxHoursData.clear();
+		for (Integer i = 0; i < 24; i++) {
+			if (i < 10) {
+				myComboBoxHoursData.add("0" + i.toString());
+			} else
+				myComboBoxHoursData.add(i.toString());
+		}
+
+		myComboBoxMinutesData.clear();
+		for (Integer i = 0; i < 60; i++) {
+			if (i < 10) {
+				myComboBoxMinutesData.add("0" + i.toString());
+			} else
+				myComboBoxMinutesData.add(i.toString());
+		}
+
+		ArrayList<String> parkingLotNames = new ArrayList<String>();
+		parkingLotNames.add("Ben Gurion");
+		parkingLotNames.add("Carmel");
+		parkingLotNames.add("Hadar");
+		parkingLotNames.add("Horev");
+		parkingLotNames.add("Hanita");
+		parkingLotNames.add("Neve Shaanan");
+
+		myComboBoxComplaintParkingData.clear();
+		for (int i = 0; i < parkingLotNames.size(); i++) {
+			myComboBoxComplaintParkingData.add(parkingLotNames.get(i));
+		}
+
+		busRouLotNameComboBox.setItems(myComboBoxComplaintParkingData);
+		busRouSubRoutineHourComboBox.setItems(myComboBoxHoursData);
+		busRouSubRoutineMinuteComboBox.setItems(myComboBoxMinutesData);
+
+	}
+
+	@FXML
+	void addWorkerToBusinessAcocunt(ActionEvent event) {
 		HBox hb = new HBox();
 		hb.setStyle("-fx-pref-height: 30; -fx-padding: 5 0 0 10;");
 		reservationsList.getChildren().add(hb);
-		
+
 		this.setBusinessAccountWorkersCounter(this.getBusinessAccountWorkersCounter() + 1);
-		
+
 		TextField tf = new TextField();
 		String css = getClass().getResource("application.css").toExternalForm();
 		tf.getStylesheets().clear();
 		tf.getStylesheets().add(css);
-		
+
 		tf.getStyleClass().add("text-field-first");
 		tf.setPromptText("Car Number");
 		hb.getChildren().add(tf);
-		
+
 		tf.setId("businessWorkerTF" + Integer.toString(getBusinessAccountWorkersCounter()));
-		
+
 		int lenOfWorkersList = listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
 		listOfAddedWorkersBusinessAcocuntVBOX.getChildren().add(lenOfWorkersList - 1, hb);
-		
-		System.out.println("this is the counter from add:" + this.getBusinessAccountWorkersCounter());
-    }
-    
 
-    @FXML
-    void remWorkerFromBusinessAcocunt(ActionEvent event) {
-    	
+		System.out.println("this is the counter from add:" + this.getBusinessAccountWorkersCounter());
+	}
+
+	@FXML
+	void remWorkerFromBusinessAcocunt(ActionEvent event) {
+
 		int lenOfWorkersList = listOfAddedWorkersBusinessAcocuntVBOX.getChildren().size();
-		if(lenOfWorkersList > 2){
+		if (lenOfWorkersList > 2) {
 			listOfAddedWorkersBusinessAcocuntVBOX.getChildren().remove(lenOfWorkersList - 2);
-			this.setBusinessAccountWorkersCounter(this.getBusinessAccountWorkersCounter()-1);
+			this.setBusinessAccountWorkersCounter(this.getBusinessAccountWorkersCounter() - 1);
 		}
 		System.out.println("this is the counter from remove:" + this.getBusinessAccountWorkersCounter());
-    }
-    
-    @FXML
-    void loadFullSubscription(ActionEvent event) {
-    	businessRoutineSubscriptionBorderPane.setVisible(false);
-    	regularRoutineSubscriptionBorderPane.setVisible(false);
-    	parkingReservationBorderPane.setVisible(false);
-    	fullSubscriptionBorderPane.setVisible(true);
-    	complaintBorderPane.setVisible(false);
-    	viewProfileBorderPane.setVisible(false);
-    	MyAccountBorderPane.setVisible(false);
-    	ActualParkingBorderPane.setVisible(false);
+	}
 
-    
-    	fullSubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	fullSubscriptionButton.getStyleClass().add("pressedButton");
-    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	parkingReservationButton.getStyleClass().add("loginView-buttons");
-    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
-    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
-    		businessBut.getStyleClass().add("loginView-buttons");
-    	}
-    	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
-    	complaintButton.getStyleClass().add("loginView-buttons");
-    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
-    	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
-    	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    
-    }
+	@FXML
+	void loadFullSubscription(ActionEvent event) {
+		businessRoutineSubscriptionBorderPane.setVisible(false);
+		regularRoutineSubscriptionBorderPane.setVisible(false);
+		parkingReservationBorderPane.setVisible(false);
+		fullSubscriptionBorderPane.setVisible(true);
+		complaintBorderPane.setVisible(false);
+		viewProfileBorderPane.setVisible(false);
+		MyAccountBorderPane.setVisible(false);
+		ActualParkingBorderPane.setVisible(false);
 
-    @FXML
-    void loadViewReservation(ActionEvent event) {
-    	businessRoutineSubscriptionBorderPane.setVisible(false);
-    	regularRoutineSubscriptionBorderPane.setVisible(false);
-    	parkingReservationBorderPane.setVisible(false);
-    	fullSubscriptionBorderPane.setVisible(false);
-    	complaintBorderPane.setVisible(false);
-    	viewProfileBorderPane.setVisible(true);
-    	MyAccountBorderPane.setVisible(false);
-    	ActualParkingBorderPane.setVisible(false);
+		fullSubscriptionButton.getStyleClass().removeAll("loginView-buttons", "focus");
+		fullSubscriptionButton.getStyleClass().add("pressedButton");
+		parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		parkingReservationButton.getStyleClass().add("loginView-buttons");
+		regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+		if (SharedData.getInstance().getCurrentUser().getType().equals("b")) {
+			Button businessBut = (Button) activationBusinessCodeTF.getScene()
+					.lookup("#businessRoutinelySubscriptionButton");
+			businessBut.getStyleClass().removeAll("pressedButton", "focus");
+			businessBut.getStyleClass().add("loginView-buttons");
+		}
+		viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		viewReservationButton.getStyleClass().add("loginView-buttons");
+		complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+		complaintButton.getStyleClass().add("loginView-buttons");
+		MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+		MyAccountButton.getStyleClass().add("loginView-buttons");
+		ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+		ActualParkingButton.getStyleClass().add("loginView-buttons");
 
-    	
-    	viewReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	viewReservationButton.getStyleClass().add("pressedButton");
-    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	parkingReservationButton.getStyleClass().add("loginView-buttons");
-    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
-    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
-    		businessBut.getStyleClass().add("loginView-buttons");
-    	}
-    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
-    	complaintButton.getStyleClass().add("loginView-buttons");
-    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
-    	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
-    	ActualParkingButton.getStyleClass().add("loginView-buttons");
+	}
 
-    	
-    	
-    	
-    	JSONObject ret = getReserves();
-    	
-    
-		
-		
-    	
-    	try {
-    		
-    		JSONArray ja = ret.getJSONArray("resArr");
-    		JSONArray ja2 = ret.getJSONArray("routSubArr");
-    		JSONArray ja3 = ret.getJSONArray("fullSubArr");
-    		
-//    		System.out.println(ja);
-    		
-    		
-    		int length = reservationsList.getChildren().size();
-    		reservationsList.getChildren().remove(0, length);
-    		
-//    		ja.put(new JSONObject().put("ID", "12").put("arriving hour", "18:00").put("leaving hour", "20:00")
-//					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "in queue")
-//					.put("car id", "2000").put("parking lot name","majdal shams"));
-//    		
-//    		ja.put(new JSONObject().put("ID", "20").put("arriving hour", "18:00").put("leaving hour", "20:00")
-//					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
-//					.put("car id", "2001").put("parking lot name","majdal shams"));
-//    		
-//    		ja.put(new JSONObject().put("ID", "70").put("arriving hour", "18:00").put("leaving hour", "20:00")
-//					.put("arriving date", "jan 12").put("leaving date", "jan 14").put("status", "parking")
-//					.put("car id", "20002").put("parking lot name","majdal shams"));
-//    		
-//    		
-    		
-    		for(int i = 0; i < ja.length(); i++){
+	@FXML
+	void loadViewReservation(ActionEvent event) {
+		businessRoutineSubscriptionBorderPane.setVisible(false);
+		regularRoutineSubscriptionBorderPane.setVisible(false);
+		parkingReservationBorderPane.setVisible(false);
+		fullSubscriptionBorderPane.setVisible(false);
+		complaintBorderPane.setVisible(false);
+		viewProfileBorderPane.setVisible(true);
+		MyAccountBorderPane.setVisible(false);
+		ActualParkingBorderPane.setVisible(false);
 
-        	    Label resId = new Label(Integer.toString(((JSONObject) ja.get(i)).getInt("reserveID")));
-        	    resId.setStyle("-fx-pref-width: 40;");
-        		Label arriving = new Label(((JSONObject) ja.get(i)).getString("start").substring(0, 16));
-        		arriving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
-        		Label leaving = new Label(((JSONObject) ja.get(i)).getString("end").substring(0, 16));
-        		leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
-        		Label carId = new Label(((JSONObject) ja.get(i)).getString("carNumber"));
-        		carId.setStyle("-fx-pref-width: 80;");
-        		Label parkingLotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
-        		parkingLotName.setStyle("-fx-pref-width: 100;");
-        		Label status = null;
-        		if(((JSONObject) ja.get(i)).getBoolean("activated") == false){
-        			status = new Label("In Queue");
-        			status.setStyle("-fx-pref-width: 60;");
-        		}else{
-        			status = new Label("Parking");
-        			status.setStyle("-fx-pref-width: 60;");
-        		}
-   
-    		
+		viewReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
+		viewReservationButton.getStyleClass().add("pressedButton");
+		parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		parkingReservationButton.getStyleClass().add("loginView-buttons");
+		regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+		fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+		if (SharedData.getInstance().getCurrentUser().getType().equals("b")) {
+			Button businessBut = (Button) activationBusinessCodeTF.getScene()
+					.lookup("#businessRoutinelySubscriptionButton");
+			businessBut.getStyleClass().removeAll("pressedButton", "focus");
+			businessBut.getStyleClass().add("loginView-buttons");
+		}
+		complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+		complaintButton.getStyleClass().add("loginView-buttons");
+		MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+		MyAccountButton.getStyleClass().add("loginView-buttons");
+		ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+		ActualParkingButton.getStyleClass().add("loginView-buttons");
+
+		JSONObject ret = getReserves();
+
+		try {
+
+			JSONArray ja = ret.getJSONArray("resArr");
+			JSONArray ja2 = ret.getJSONArray("routSubArr");
+			JSONArray ja3 = ret.getJSONArray("fullSubArr");
+
+			// System.out.println(ja);
+
+			int length = reservationsList.getChildren().size();
+			reservationsList.getChildren().remove(0, length);
+
+			// ja.put(new JSONObject().put("ID", "12").put("arriving hour",
+			// "18:00").put("leaving hour", "20:00")
+			// .put("arriving date", "jan 12").put("leaving date", "jan
+			// 14").put("status", "in queue")
+			// .put("car id", "2000").put("parking lot name","majdal shams"));
+			//
+			// ja.put(new JSONObject().put("ID", "20").put("arriving hour",
+			// "18:00").put("leaving hour", "20:00")
+			// .put("arriving date", "jan 12").put("leaving date", "jan
+			// 14").put("status", "parking")
+			// .put("car id", "2001").put("parking lot name","majdal shams"));
+			//
+			// ja.put(new JSONObject().put("ID", "70").put("arriving hour",
+			// "18:00").put("leaving hour", "20:00")
+			// .put("arriving date", "jan 12").put("leaving date", "jan
+			// 14").put("status", "parking")
+			// .put("car id", "20002").put("parking lot name","majdal shams"));
+			//
+			//
+
+			for (int i = 0; i < ja.length(); i++) {
+
+				Label resId = new Label(Integer.toString(((JSONObject) ja.get(i)).getInt("reserveID")));
+				resId.setStyle("-fx-pref-width: 40;");
+				Label arriving = new Label(((JSONObject) ja.get(i)).getString("start").substring(0, 16));
+				arriving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
+				Label leaving = new Label(((JSONObject) ja.get(i)).getString("end").substring(0, 16));
+				leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
+				Label carId = new Label(((JSONObject) ja.get(i)).getString("carNumber"));
+				carId.setStyle("-fx-pref-width: 80;");
+				Label parkingLotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
+				parkingLotName.setStyle("-fx-pref-width: 100;");
+				Label status = null;
+				if (((JSONObject) ja.get(i)).getBoolean("activated") == false) {
+					status = new Label("In Queue");
+					status.setStyle("-fx-pref-width: 60;");
+				} else {
+					status = new Label("Parking");
+					status.setStyle("-fx-pref-width: 60;");
+				}
+
 				HBox hb = new HBox();
 				hb.getChildren().add(resId);
 				hb.getChildren().add(carId);
@@ -670,22 +674,23 @@ public class LogInController {
 				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
 				reservationsList.getChildren().add(hb);
-				
-				if(status.getText() == "In Queue"){
+
+				if (status.getText() == "In Queue") {
 					Button activateButton = new Button("Enter");
 					activateButton.setId("activateButton" + resId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
 					activateButton.getStylesheets().clear();
 					activateButton.getStylesheets().add(css);
-					activateButton.setOnAction(e -> activateParking(e, resId.getText(), carId.getText(), arriving.getText(), leaving.getText(), parkingLotName.getText()));
-					
+					activateButton.setOnAction(e -> activateParking(e, resId.getText(), carId.getText(),
+							arriving.getText(), leaving.getText(), parkingLotName.getText()));
+
 					activateButton.getStyleClass().add("activate-button");
 					hb.getChildren().add(activateButton);
-					
+
 					HBox sep = new HBox();
 					sep.setStyle("-fx-pref-width:5px;");
 					hb.getChildren().add(sep);
-					
+
 					Button cancelReservation = new Button("Cancel");
 					cancelReservation.setId("cancelReservation" + resId.getText());
 					cancelReservation.getStylesheets().clear();
@@ -694,89 +699,83 @@ public class LogInController {
 					cancelReservation.getStyleClass().add("cancel-button");
 					hb.getChildren().add(cancelReservation);
 				}
-				
-				if(status.getText() == "Parking"){
+
+				if (status.getText() == "Parking") {
 					Button deActivateButton = new Button("Exit");
 					deActivateButton.setId("deactivateButton" + resId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
 					deActivateButton.getStylesheets().clear();
 					deActivateButton.getStylesheets().add(css);
-					deActivateButton.setOnAction(e -> deActivateParking(e));
+					deActivateButton.setOnAction(e -> deActivateParking(e, resId.getText(), carId.getText()));
 					deActivateButton.getStyleClass().add("deactivate-button");
 					hb.getChildren().add(deActivateButton);
 				}
-				
 
-					
 				/***/
-				
-    		}
-    		
-    		
-    		int length2 = subscriptionsList.getChildren().size();
-    		subscriptionsList.getChildren().remove(0, length2);
-    		
-//    		System.out.println(ja2);
-    		
-			for(int i = 0; i < ja2.length(); i++){
-				
-//				System.out.println("int the for with i = "  + Integer.toString(i) + "@@@@@@@@@@@@@@@@@");
+
+			}
+
+			int length2 = subscriptionsList.getChildren().size();
+			subscriptionsList.getChildren().remove(0, length2);
+
+			// System.out.println(ja2);
+
+			for (int i = 0; i < ja2.length(); i++) {
+
+				// System.out.println("int the for with i = " +
+				// Integer.toString(i) + "@@@@@@@@@@@@@@@@@");
 
 				HBox hb = new HBox();
-				
-        	    Label subId = new Label(Integer.toString(((JSONObject) ja2.get(i)).getInt("routineSubID")));
-        	    subId.setStyle("-fx-pref-width: 40;");
-        		Label leaving = new Label(((JSONObject) ja2.get(i)).getString("end").substring(0,11));
-        		leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
-        		Label starting = new Label(((JSONObject) ja2.get(i)).getString("start").substring(0,11));
-        		starting.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
-        		Label leavingHour = new Label(((JSONObject) ja2.get(i)).getString("leaveHour"));
-        		leavingHour.setStyle("-fx-pref-width: 80;");
-        		Label carId = new Label(((JSONObject) ja2.get(i)).getString("carNumber"));
-        		carId.setStyle("-fx-pref-width: 80;");
-        		Label parkingLotName = new Label(((JSONObject) ja2.get(i)).getString("lotName"));
-        		parkingLotName.setStyle("-fx-pref-width: 80;");
-        		
-        		
-        		
-        		Label status = null;
-        		if(((JSONObject) ja2.get(i)).getInt("used") == 0){
-        			status = new Label("Not Used");
-        			status.setStyle("-fx-pref-width: 60;");
-        		}else if(((JSONObject) ja2.get(i)).getInt("used") == 1){
-        			status = new Label("Parking");
-        			status.setStyle("-fx-pref-width: 60;");
-        		}else{
-        			status = new Label("Used");
-        			status.setStyle("-fx-pref-width: 60;");
-        		}
 
+				Label subId = new Label(Integer.toString(((JSONObject) ja2.get(i)).getInt("routineSubID")));
+				subId.setStyle("-fx-pref-width: 40;");
+				Label leaving = new Label(((JSONObject) ja2.get(i)).getString("end").substring(0, 11));
+				leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
+				Label starting = new Label(((JSONObject) ja2.get(i)).getString("start").substring(0, 11));
+				starting.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
+				Label leavingHour = new Label(((JSONObject) ja2.get(i)).getString("leaveHour"));
+				leavingHour.setStyle("-fx-pref-width: 80;");
+				Label carId = new Label(((JSONObject) ja2.get(i)).getString("carNumber"));
+				carId.setStyle("-fx-pref-width: 80;");
+				Label parkingLotName = new Label(((JSONObject) ja2.get(i)).getString("lotName"));
+				parkingLotName.setStyle("-fx-pref-width: 80;");
 
-		        hb.getChildren().add(subId);
-		        hb.getChildren().add(carId);
+				Label status = null;
+				if (((JSONObject) ja2.get(i)).getInt("used") == 0) {
+					status = new Label("Not Used");
+					status.setStyle("-fx-pref-width: 60;");
+				} else if (((JSONObject) ja2.get(i)).getInt("used") == 1) {
+					status = new Label("Parking");
+					status.setStyle("-fx-pref-width: 60;");
+				} else {
+					status = new Label("Used");
+					status.setStyle("-fx-pref-width: 60;");
+				}
+
+				hb.getChildren().add(subId);
+				hb.getChildren().add(carId);
 				hb.getChildren().add(parkingLotName);
 				hb.getChildren().add(starting);
 				hb.getChildren().add(leaving);
 				hb.getChildren().add(leavingHour);
-				
+
 				hb.getChildren().add(status);
 				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
 				subscriptionsList.getChildren().add(hb);
-				
-				if(status.getText().equals("Not Used")){
+
+				if (status.getText().equals("Not Used")) {
 					Button activateButton = new Button("Enter");
 					activateButton.setId("subActivateButton" + subId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
 					activateButton.getStylesheets().clear();
 					activateButton.getStylesheets().add(css);
-					activateButton.setOnAction(e -> activateParkingSub(e, subId.getText(),
-							parkingLotName.getText()));
+					activateButton.setOnAction(e -> activateParkingSub(e, subId.getText(), parkingLotName.getText()));
 					activateButton.getStyleClass().add("activate-button");
-					hb.getChildren().add(activateButton);	
+					hb.getChildren().add(activateButton);
 				}
-				
-				if(status.getText().equals("Parking")){
+
+				if (status.getText().equals("Parking")) {
 					Button deActivateButton = new Button("Exit");
 					deActivateButton.setId("subDeactivateButton" + subId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
@@ -787,47 +786,42 @@ public class LogInController {
 					hb.getChildren().add(deActivateButton);
 				}
 			}
-			
-			
-    		int length3 = fullSubscriptionsList.getChildren().size();
-    		fullSubscriptionsList.getChildren().remove(0, length3);
-    		
-			for(int i = 0; i < ja3.length(); i++){
-				
-				
-				HBox hb = new HBox();
-				
-        	    Label subId = new Label(Integer.toString(((JSONObject) ja3.get(i)).getInt("fullSubID")));
-        	    subId.setStyle("-fx-pref-width: 40;");
-        		Label leaving = new Label(((JSONObject) ja3.get(i)).getString("end").substring(0,11));
-        		leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
-        		Label starting = new Label(((JSONObject) ja3.get(i)).getString("start").substring(0,11));
-        		starting.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
-        		Label carId = new Label(((JSONObject) ja3.get(i)).getString("carNumber"));
-        		carId.setStyle("-fx-pref-width: 80;");
-        		
-        		
-        		
-        		Label status = null;
-        		if(((JSONObject) ja3.get(i)).getBoolean("isParking")){
-        			status = new Label("Parking");
-        			status.setStyle("-fx-pref-width: 80;");
-        		}else{
-        			status = new Label("Not Parking");
-        			status.setStyle("-fx-pref-width: 80;");
-        		}
-    		
 
-		        hb.getChildren().add(subId);
+			int length3 = fullSubscriptionsList.getChildren().size();
+			fullSubscriptionsList.getChildren().remove(0, length3);
+
+			for (int i = 0; i < ja3.length(); i++) {
+
+				HBox hb = new HBox();
+
+				Label subId = new Label(Integer.toString(((JSONObject) ja3.get(i)).getInt("fullSubID")));
+				subId.setStyle("-fx-pref-width: 40;");
+				Label leaving = new Label(((JSONObject) ja3.get(i)).getString("end").substring(0, 11));
+				leaving.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
+				Label starting = new Label(((JSONObject) ja3.get(i)).getString("start").substring(0, 11));
+				starting.setStyle("-fx-pref-width: 80; -fx-font-size: 8px;");
+				Label carId = new Label(((JSONObject) ja3.get(i)).getString("carNumber"));
+				carId.setStyle("-fx-pref-width: 80;");
+
+				Label status = null;
+				if (((JSONObject) ja3.get(i)).getBoolean("isParking")) {
+					status = new Label("Parking");
+					status.setStyle("-fx-pref-width: 80;");
+				} else {
+					status = new Label("Not Parking");
+					status.setStyle("-fx-pref-width: 80;");
+				}
+
+				hb.getChildren().add(subId);
 				hb.getChildren().add(carId);
 				hb.getChildren().add(starting);
-		        hb.getChildren().add(leaving);
+				hb.getChildren().add(leaving);
 				hb.getChildren().add(status);
 				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
 						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
 				fullSubscriptionsList.getChildren().add(hb);
-				
-				if(status.getText().equals("Not Parking")){
+
+				if (status.getText().equals("Not Parking")) {
 					Button activateButton = new Button("Enter");
 					activateButton.setId("fullSubActivateButton" + subId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
@@ -835,10 +829,10 @@ public class LogInController {
 					activateButton.getStylesheets().add(css);
 					activateButton.setOnAction(e -> activateParkingFullSub(e, subId.getText()));
 					activateButton.getStyleClass().add("activate-button");
-					hb.getChildren().add(activateButton);	
+					hb.getChildren().add(activateButton);
 				}
-				
-				if(status.getText().equals("Parking")){
+
+				if (status.getText().equals("Parking")) {
 					Button deActivateButton = new Button("Exit");
 					deActivateButton.setId("fullSubDeactivateButton" + subId.getText());
 					String css = getClass().getResource("application.css").toExternalForm();
@@ -849,15 +843,15 @@ public class LogInController {
 					hb.getChildren().add(deActivateButton);
 				}
 			}
-			
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-    
-    }
 
-    private void deActivateParkingFullSub(ActionEvent e, String text) {
-    	System.out.println("In the deActivateFullSub function");
+	}
+
+	private void deActivateParkingFullSub(ActionEvent e, String text) {
+		System.out.println("In the deActivateFullSub function");
 	}
 
 	private void activateParkingFullSub(ActionEvent e, String text) {
@@ -865,159 +859,148 @@ public class LogInController {
 	}
 
 	private void deActivateParkingSub(ActionEvent e, String subId) {
-		// TODO Auto-generated method stub
 		System.out.println("this is the subId " + subId);
 	}
 
 	private void activateParkingSub(ActionEvent e, String subId, String lotName) {
-		// TODO Auto-generated method stub
 		System.out.println(subId + " " + lotName);
 	}
 
-	private void deActivateParking(ActionEvent e) {
-    	Button b = (Button) e.getSource();
-		System.out.println("Okay " + b.getId().substring(16));
+	@FXML
+	void loadComplaint(ActionEvent event) {
+		businessRoutineSubscriptionBorderPane.setVisible(false);
+		regularRoutineSubscriptionBorderPane.setVisible(false);
+		parkingReservationBorderPane.setVisible(false);
+		fullSubscriptionBorderPane.setVisible(false);
+		complaintBorderPane.setVisible(true);
+		viewProfileBorderPane.setVisible(false);
+		MyAccountBorderPane.setVisible(false);
+		ActualParkingBorderPane.setVisible(false);
+
+		complaintButton.getStyleClass().removeAll("loginView-buttons", "focus");
+		complaintButton.getStyleClass().add("pressedButton");
+		parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		parkingReservationButton.getStyleClass().add("loginView-buttons");
+		regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+		fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+		viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		viewReservationButton.getStyleClass().add("loginView-buttons");
+		if (SharedData.getInstance().getCurrentUser().getType().equals("b")) {
+			Button businessBut = (Button) activationBusinessCodeTF.getScene()
+					.lookup("#businessRoutinelySubscriptionButton");
+			businessBut.getStyleClass().removeAll("pressedButton", "focus");
+			businessBut.getStyleClass().add("loginView-buttons");
+		}
+		MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+		MyAccountButton.getStyleClass().add("loginView-buttons");
+		ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+		ActualParkingButton.getStyleClass().add("loginView-buttons");
+		ArrayList<String> parkingLotNames = new ArrayList<String>();
+		parkingLotNames.add("Ben Gurion");
+		parkingLotNames.add("Carmel");
+		parkingLotNames.add("Hadar");
+		parkingLotNames.add("Horev");
+		parkingLotNames.add("Hanita");
+		parkingLotNames.add("Neve Shaanan");
+
+		myComboBoxComplaintParkingData.clear();
+		for (int i = 0; i < parkingLotNames.size(); i++) {
+			myComboBoxComplaintParkingData.add(parkingLotNames.get(i));
+		}
+		complaintComboBox.setItems(myComboBoxComplaintParkingData);
 	}
-    
 
 	@FXML
-    void loadComplaint(ActionEvent event) {
-    	businessRoutineSubscriptionBorderPane.setVisible(false);
-    	regularRoutineSubscriptionBorderPane.setVisible(false);
-    	parkingReservationBorderPane.setVisible(false);
-    	fullSubscriptionBorderPane.setVisible(false);
-    	complaintBorderPane.setVisible(true);
-    	viewProfileBorderPane.setVisible(false);
-    	MyAccountBorderPane.setVisible(false);
-    	ActualParkingBorderPane.setVisible(false);
+	void loadMyAccount(ActionEvent event) {
+		businessRoutineSubscriptionBorderPane.setVisible(false);
+		regularRoutineSubscriptionBorderPane.setVisible(false);
+		parkingReservationBorderPane.setVisible(false);
+		fullSubscriptionBorderPane.setVisible(false);
+		complaintBorderPane.setVisible(false);
+		viewProfileBorderPane.setVisible(false);
+		MyAccountBorderPane.setVisible(true);
+		ActualParkingBorderPane.setVisible(false);
 
-    
-    	complaintButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	complaintButton.getStyleClass().add("pressedButton");
-    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	parkingReservationButton.getStyleClass().add("loginView-buttons");
-    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
-    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
-    		businessBut.getStyleClass().add("loginView-buttons");
-    	}
-    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
-    	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
-    	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
-    	
-    	myComboBoxComplaintParkingData.clear();     
-    	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxComplaintParkingData.add(parkingLotNames.get(i));
-    	}
-    	complaintComboBox.setItems(myComboBoxComplaintParkingData);
-    }
-    
-    @FXML
-    void loadMyAccount(ActionEvent event) {
-      	businessRoutineSubscriptionBorderPane.setVisible(false);
-    	regularRoutineSubscriptionBorderPane.setVisible(false);
-    	parkingReservationBorderPane.setVisible(false);
-    	fullSubscriptionBorderPane.setVisible(false);
-    	complaintBorderPane.setVisible(false);
-    	viewProfileBorderPane.setVisible(false);
-    	MyAccountBorderPane.setVisible(true);
-    	ActualParkingBorderPane.setVisible(false);
+		MyAccountButton.getStyleClass().removeAll("loginView-buttons", "focus");
+		MyAccountButton.getStyleClass().add("pressedButton");
+		parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		parkingReservationButton.getStyleClass().add("loginView-buttons");
+		regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+		fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+		viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		viewReservationButton.getStyleClass().add("loginView-buttons");
+		if (SharedData.getInstance().getCurrentUser().getType().equals("b")) {
+			Button businessBut = (Button) activationBusinessCodeTF.getScene()
+					.lookup("#businessRoutinelySubscriptionButton");
+			businessBut.getStyleClass().removeAll("pressedButton", "focus");
+			businessBut.getStyleClass().add("loginView-buttons");
+		}
+		complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+		complaintButton.getStyleClass().add("loginView-buttons");
+		ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
+		ActualParkingButton.getStyleClass().add("loginView-buttons");
 
+	}
 
-    	MyAccountButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	MyAccountButton.getStyleClass().add("pressedButton");
-    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	parkingReservationButton.getStyleClass().add("loginView-buttons");
-    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
-    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
-    		businessBut.getStyleClass().add("loginView-buttons");
-    	}
-    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
-    	complaintButton.getStyleClass().add("loginView-buttons");
-    	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
-    	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    
-    }
-    @FXML
-    void loadActualParking(ActionEvent event) { /** THIS IS THE OCCASIONAL PARKING 2ere be osama **/
-    	businessRoutineSubscriptionBorderPane.setVisible(false);
-    	regularRoutineSubscriptionBorderPane.setVisible(false);
-    	parkingReservationBorderPane.setVisible(false);
-    	fullSubscriptionBorderPane.setVisible(false);
-    	complaintBorderPane.setVisible(false);
-    	viewProfileBorderPane.setVisible(false);
-    	MyAccountBorderPane.setVisible(false);
-    	ActualParkingBorderPane.setVisible(true);
-    	
-    	
-    	ActualParkingButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	ActualParkingButton.getStyleClass().add("pressedButton");
-    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	parkingReservationButton.getStyleClass().add("loginView-buttons");
-    	regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
-    	fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
-    	fullSubscriptionButton.getStyleClass().add("loginView-buttons");
-    	viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	viewReservationButton.getStyleClass().add("loginView-buttons");
-    	if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
-    		Button businessBut = (Button) activationBusinessCodeTF.getScene().lookup("#businessRoutinelySubscriptionButton");
-    		businessBut.getStyleClass().removeAll("pressedButton", "focus");
-    		businessBut.getStyleClass().add("loginView-buttons");
-    	}
-    	complaintButton.getStyleClass().removeAll("pressedButton", "focus");
-    	complaintButton.getStyleClass().add("loginView-buttons");
-    	MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
-    	MyAccountButton.getStyleClass().add("loginView-buttons");
-    	
-    	myComboBoxHoursData.clear();
-    	for(Integer i = 0; i < 24; i++){
-    		if(i < 10 ){
-    			myComboBoxHoursData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxHoursData.add(i.toString());
-    	}
-    	
-    	myComboBoxMinutesData.clear();
-    	for(Integer i = 0; i < 60; i++){
-    		if(i < 10 ){
-    			myComboBoxMinutesData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxMinutesData.add(i.toString());
-    	}
-    	
-       
-    	ActualParkingLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
-        ActualParkingLeavingHourComboBox.setItems(myComboBoxHoursData);
-       
-    	
-    	
-    }
+	@FXML
+	void loadActualParking(ActionEvent event) { /**
+												 * THIS IS THE OCCASIONAL
+												 * PARKING 2ere be osama
+												 **/
+		businessRoutineSubscriptionBorderPane.setVisible(false);
+		regularRoutineSubscriptionBorderPane.setVisible(false);
+		parkingReservationBorderPane.setVisible(false);
+		fullSubscriptionBorderPane.setVisible(false);
+		complaintBorderPane.setVisible(false);
+		viewProfileBorderPane.setVisible(false);
+		MyAccountBorderPane.setVisible(false);
+		ActualParkingBorderPane.setVisible(true);
 
+		ActualParkingButton.getStyleClass().removeAll("loginView-buttons", "focus");
+		ActualParkingButton.getStyleClass().add("pressedButton");
+		parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		parkingReservationButton.getStyleClass().add("loginView-buttons");
+		regularRoutinelySubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		regularRoutinelySubscriptionButton.getStyleClass().add("loginView-buttons");
+		fullSubscriptionButton.getStyleClass().removeAll("pressedButton", "focus");
+		fullSubscriptionButton.getStyleClass().add("loginView-buttons");
+		viewReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+		viewReservationButton.getStyleClass().add("loginView-buttons");
+		if (SharedData.getInstance().getCurrentUser().getType().equals("b")) {
+			Button businessBut = (Button) activationBusinessCodeTF.getScene()
+					.lookup("#businessRoutinelySubscriptionButton");
+			businessBut.getStyleClass().removeAll("pressedButton", "focus");
+			businessBut.getStyleClass().add("loginView-buttons");
+		}
+		complaintButton.getStyleClass().removeAll("pressedButton", "focus");
+		complaintButton.getStyleClass().add("loginView-buttons");
+		MyAccountButton.getStyleClass().removeAll("pressedButton", "focus");
+		MyAccountButton.getStyleClass().add("loginView-buttons");
 
+		myComboBoxHoursData.clear();
+		for (Integer i = 0; i < 24; i++) {
+			if (i < 10) {
+				myComboBoxHoursData.add("0" + i.toString());
+			} else
+				myComboBoxHoursData.add(i.toString());
+		}
+
+		myComboBoxMinutesData.clear();
+		for (Integer i = 0; i < 60; i++) {
+			if (i < 10) {
+				myComboBoxMinutesData.add("0" + i.toString());
+			} else
+				myComboBoxMinutesData.add(i.toString());
+		}
+
+		ActualParkingLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
+		ActualParkingLeavingHourComboBox.setItems(myComboBoxHoursData);
+
+	}
 
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
@@ -1025,79 +1008,225 @@ public class LogInController {
 		return cal;
 	}
 
-	
 	private void cancel(ActionEvent e, String id) {
-    
-//		Button b = (Button) e.getSource();
-//		System.out.println("Okay " + b.getId());
-//		System.out.println("Okay " + id);
-		
+
+		// Button b = (Button) e.getSource();
+		// System.out.println("Okay " + b.getId());
+		// System.out.println("Okay " + id);
+
 		JSONObject json = new JSONObject();
 		JSONObject ret = new JSONObject();
-		
+
 		try {
-			
+
 			json.put("rid", id);
 			json.put("cmd", "cancelReserve");
 			ret = request(json, "ReservationController");
 			System.out.println(ret);
-			if(ret.getBoolean("result")){
-				
+			if (ret.getBoolean("result")) {
+
 				loadViewReservation(null);
 				double refund = 0;
 				refund = ret.getDouble("refund");
 				updateBalance(refund);
 			}
-			
-			
+
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	
+
 	}
-	
-	
-	private void activateParking(ActionEvent e, String resId, String carId, String arriving, String leaving, String parkingLotName) {
-    	
+
+	/**
+	 * 
+	 * activate reserved order
+	 * 
+	 * @param e
+	 * @param resId
+	 * @param carId
+	 * @param arriving
+	 * @param leaving
+	 * @param parkingLotName
+	 */
+	private void activateParking(ActionEvent e, String resId, String carId, String arriving, String leaving,
+			String parkingLotName) {
+
 		System.out.println(resId);
 		System.out.println(carId);
 		System.out.println(arriving);
 		System.out.println(leaving);
 		System.out.println(parkingLotName);
-		
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	    try {
-			
-	    	Calendar arrivingCal = Calendar.getInstance();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		try {
+
+			Calendar arrivingCal = Calendar.getInstance();
 			arrivingCal.setTime(sdf.parse(arriving));
-			System.out.println(arrivingCal.getTime().getTime());
-			System.out.println(arrivingCal.getTime());
-			
+			// System.out.println(arrivingCal.getTime().getTime());
+			// System.out.println(arrivingCal.getTime());
+
 			Calendar leavingCal = Calendar.getInstance();
 			leavingCal.setTime(sdf.parse(leaving));
-			System.out.println(leavingCal.getTime());
-			
-			if(parkingLotName.equals(SharedData.getInstance().getCurrentParkingLot().get_name())){
-				
-				
-				
-			}else{
-				
+			// System.out.println(leavingCal.getTime());
+
+			if (parkingLotName.equals(SharedData.getInstance().getCurrentParkingLot().get_name())) {
+
+				if (Calendar.getInstance().before(arrivingCal)) {
+
+					informationAlert.setTitle("Activate reservation");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText(
+							"Sorry, you can't activate your reserve at this time, please wait to the assigned time");
+					informationAlert.showAndWait();
+
+				} else {
+
+					boolean res = SharedData.getInstance().getCurrentParkingLot().InsertCar(carId, arrivingCal,
+							leavingCal);
+
+					if (res) {
+
+						informationAlert.setTitle("Parking Succeeded !!");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Your car has been parked in safe hands, have a NICE day.");
+						informationAlert.showAndWait();
+
+						try {
+
+							JSONObject ret = request(new JSONObject().put("cmd", "activateReserve").put("rid", resId)
+									.put("carNumber", carId), "ReservationController");
+
+							System.out.println(ret);
+
+						} catch (JSONException e1) {
+							e1.printStackTrace();
+						}
+
+						loadViewReservation(null);
+
+					} else {
+
+						informationAlert.setTitle("Parking Error");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Failed park the car!");
+						informationAlert.showAndWait();
+
+					}
+				}
+
+			} else {
+
 				informationAlert.setTitle("Wrong Parking lot");
 				informationAlert.setHeaderText(null);
-				informationAlert.setContentText("The parking lot in the reservation dosn't correspond to the current parking lot. \n inorder to use this reservation please go to the parking lot \n writtin in the reservation.");
-				informationAlert.showAndWait();			
+				informationAlert.setContentText(
+						"The parking lot in the reservation dosn't correspond to the current parking lot. \n inorder to use this reservation please go to the parking lot \n writtin in the reservation.");
+				informationAlert.showAndWait();
 			}
-		
+
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	    
-		
+
 	}
-	
+
+	private void deActivateParking(ActionEvent e, String rid, String carNumber) {
+
+		try {
+			JSONObject ret = request(new JSONObject().put("cmd", "exit").put("rid", rid).put("carNumber", carNumber),
+					"ReservationController");
+			System.out.println(ret);
+			if (ret.getBoolean("result")) {
+
+				// TODO: exit the car from the lot
+
+				System.out.println(SharedData.getInstance().getCurrentParkingLot().getEmptySlots());
+				boolean res = SharedData.getInstance().getCurrentParkingLot().ExtractCar(carNumber);
+				System.out.println(SharedData.getInstance().getCurrentParkingLot().getEmptySlots());
+
+				JSONObject order = new JSONObject();
+
+				order = ret.getJSONObject("order");
+
+				String arriveDate = order.getString("start");
+				String leaveDate = order.getString("end");
+				String type = order.getString("type");
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+				Calendar arrivingCal = Calendar.getInstance();
+				Calendar leavingCal = Calendar.getInstance();
+
+				try {
+					arrivingCal.setTime(sdf.parse(arriveDate));
+					leavingCal.setTime(sdf.parse(leaveDate));
+				} catch (ParseException e1) {
+
+					e1.printStackTrace();
+				}
+				long _end = leavingCal.getTime().getTime();
+
+				if (type == "r") {
+					long fin = (long) (Math.max(0, Calendar.getInstance().getTime().getTime() - _end) * 2
+							* SharedData.getInstance().getOccasionalCost());
+					updateBalance((-1) * fin);
+
+					informationAlert.setTitle("additional charging report");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("we have charged your balance " + fin + "$, for being late.");
+					informationAlert.showAndWait();
+
+				} else if (type == "o") {
+
+					long deff = TimeUnit.MILLISECONDS
+							.toMinutes(Math.abs(leavingCal.getTimeInMillis() - arrivingCal.getTimeInMillis()));
+					System.out.println(
+							"$$ -> " + (Math.ceil(deff / 60.0) * SharedData.getInstance().getOccasionalCost()));
+					System.out.println("$$ -> " + Math.max(0, Calendar.getInstance().getTime().getTime() - _end) * 2
+							* SharedData.getInstance().getOccasionalCost());
+					long cost = (long) ((Math.ceil(deff / 60.0) * SharedData.getInstance().getOccasionalCost())
+							+ (Math.max(0, Calendar.getInstance().getTime().getTime() - _end) * 2
+									* SharedData.getInstance().getOccasionalCost()));
+
+					updateBalance((-1) * cost);
+
+					informationAlert.setTitle("additional charging report");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("we have charged your balance " + cost + "$.");
+					informationAlert.showAndWait();
+
+				}
+
+				if (res) {
+
+					loadViewReservation(null);
+
+					informationAlert.setTitle("Extracting Succeeded !!");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText(
+							"Get your car and have a NICE day. \n Glad doing business with you, see you soon");
+					informationAlert.showAndWait();
+
+				} else {
+
+					informationAlert.setTitle("Parking Error");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Failed park the car!");
+					informationAlert.showAndWait();
+
+				}
+
+			} else {
+				informationAlert.setTitle("Reservation Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("You dont have a car in the parking lot, no reserve for this car");
+				informationAlert.showAndWait();
+			}
+		} catch (JSONException e1) {
+
+			e1.printStackTrace();
+		}
+
+	}
+
 	@FXML
 	void reserveParking(ActionEvent event) {
 		String _carNumber = parkResCarNumberTF.getText();
@@ -1136,7 +1265,7 @@ public class LogInController {
 			arriveCal = toCalendar(date);
 			arriveCal.set(Calendar.HOUR, Integer.parseInt(_arriveHour));
 			arriveCal.set(Calendar.MINUTE, Integer.parseInt(_arriveMinute));
-//			System.out.println(arriveCal.getTimeInMillis());
+			// System.out.println(arriveCal.getTimeInMillis());
 		} else {
 			informationAlert.setTitle("Reservation Warning");
 			informationAlert.setHeaderText(null);
@@ -1155,14 +1284,14 @@ public class LogInController {
 			leaveCal = toCalendar(date2);
 			leaveCal.set(Calendar.HOUR, Integer.parseInt(_leaveHour));
 			leaveCal.set(Calendar.MINUTE, Integer.parseInt(_leaveMinute));
-//			System.out.println(leaveCal.toString());
+			// System.out.println(leaveCal.toString());
 		} else {
 			Instant instant2 = Instant.from(arriveLocalDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1));
 			Date date2 = Date.from(instant2);
 			leaveCal = toCalendar(date2);
 			leaveCal.set(Calendar.HOUR, Integer.parseInt(_leaveHour));
 			leaveCal.set(Calendar.MINUTE, Integer.parseInt(_leaveMinute));
-//			System.out.println(leaveCal.getTime().toString());
+			// System.out.println(leaveCal.getTime().toString());
 
 		}
 
@@ -1183,32 +1312,32 @@ public class LogInController {
 			long _end = leaveCal.getTime().getTime();
 			long _now = Calendar.getInstance().getTime().getTime();
 			System.out.println(_now + " and the start is" + _start + " and the end is " + _end);
-			if(_now > _start || _now > _end || _start >= _end){
+			if (_now > _start || _now > _end || _start >= _end) {
 				informationAlert.setTitle("Reservation Warning");
 				informationAlert.setHeaderText(null);
 				informationAlert.setContentText("please adjust dates");
 				informationAlert.showAndWait();
-			}else{
+			} else {
 				String _name = SharedData.getInstance().getCurrentUser().getUsername();
-	
+
 				confirmAlert.setTitle("Confirmation Dialog");
 				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
-	
+
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
-	
+
 					if (SharedData.getInstance().getCurrentUser().getBalance() < cost) {
-	
+
 						informationAlert.setTitle("Reservation warrning");
 						informationAlert.setHeaderText(null);
 						informationAlert.setContentText(
 								"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
 						informationAlert.showAndWait();
-	
+
 					} else {
 						JSONObject json = new JSONObject();
 						try {
-	
+
 							json.put("carNumber", _carNumber);
 							json.put("lotName", _lotName);
 							json.put("username", _name);
@@ -1218,75 +1347,98 @@ public class LogInController {
 							json.put("type", "r");
 							json.put("activated", 0);
 							json.put("cmd", "reserveAhead");
-	
-							// send to reservation servlet
-							JSONObject ret = request(json, "ReservationController");
-	
-	//						System.out.println(ret.getBoolean("result"));
-							if (ret.getBoolean("result")) {
-								System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-								
-								updateBalance((-1) * cost);
-								System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+
+							JSONObject check = request(new JSONObject().put("start", _start).put("end", _end)
+									.put("lotName", _lotName).put("cmd", "overlappingOrders"), "LotOperator");
+							System.out.println(check);
+							System.out.println("$$:> the number of orders that its overlapping is: "
+									+ check.getInt("overlapping"));
+							boolean canI = SharedData.getInstance().getCurrentParkingLot()
+									.CanReserve(check.getInt("overlapping"));
+
+							if (canI) {
+								// send to reservation servlet
+								JSONObject ret = request(json, "ReservationController");
+
+								// System.out.println(ret.getBoolean("result"));
+								if (ret.getBoolean("result")) {
+									System.out.println("Old balance is: "
+											+ SharedData.getInstance().getCurrentUser().getBalance());
+
+									updateBalance((-1) * cost);
+									System.out.println("New balance is: "
+											+ SharedData.getInstance().getCurrentUser().getBalance());
+								}
+							} else {
+								informationAlert.setTitle("Reservation warrning");
+								informationAlert.setHeaderText(null);
+								informationAlert.setContentText(
+										"Sorry for the inconvenience, for the wanted date, there are no enough place in this parking lot.");
+								informationAlert.showAndWait();
 							}
+
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
 					}
+				} else {
+
+					informationAlert.setTitle("Reservation warrning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("you havn't enough cost");
+					informationAlert.showAndWait();
+
 				}
 			}
 		}
 
 	}
 
-	
 	@FXML
-    void activateBusinessSubscriptionByCodeAndCar(ActionEvent event) {
-    	
-    	String _activationCode = activationBusinessCodeTF.getText();
-    	String _carNumber = activationBusinessCarTF.getText();
-    	String _username = SharedData.getInstance().getCurrentUser().getUsername();
-    	
-    	if(_activationCode.equals("") || _carNumber.equals("")){
-    		informationAlert.setTitle("Reservation warrning");
+	void activateBusinessSubscriptionByCodeAndCar(ActionEvent event) {
+
+		String _activationCode = activationBusinessCodeTF.getText();
+		String _carNumber = activationBusinessCarTF.getText();
+		String _username = SharedData.getInstance().getCurrentUser().getUsername();
+
+		if (_activationCode.equals("") || _carNumber.equals("")) {
+			informationAlert.setTitle("Reservation warrning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please fill all the above field to complete the reservation");
 			informationAlert.showAndWait();
-    	}else{
-    	
-	    	JSONObject json = new JSONObject();
-	    	JSONObject ret = new JSONObject();
-	    	try {
+		} else {
+
+			JSONObject json = new JSONObject();
+			JSONObject ret = new JSONObject();
+			try {
 				json.put("carNumber", _carNumber);
-				json.put("code",_activationCode);
+				json.put("code", _activationCode);
 				json.put("username", _username);
-				
+
 				json.put("cmd", "ActivateBusinessSubscription");
-				
+
 				ret = request(json, "SubscriptionController");
 				System.out.println(ret);
-				if(ret.getBoolean("result")){
+				if (ret.getBoolean("result")) {
 					informationAlert.setTitle("Purchasing routine subscription Succeeded");
 					informationAlert.setHeaderText(null);
 					informationAlert.setContentText("Purchasing routine subscription finished Successfully.");
 					informationAlert.showAndWait();
-				}else{
-					if(ret != null){
+				} else {
+					if (ret != null) {
 						informationAlert.setTitle("Reservation warrning");
 						informationAlert.setHeaderText(null);
 						informationAlert.setContentText(ret.getString("info"));
 						informationAlert.showAndWait();
 					}
 				}
-				
-				
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-    	}
-    }
-	
-	
+		}
+	}
+
 	@FXML
 	void buyRegularRoutineSubscription(ActionEvent event) {
 		String _carNumber = regRouSubCarNumberTF.getText();
@@ -1338,13 +1490,13 @@ public class LogInController {
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(
-						SharedData.getInstance().getRoutineCost()) + "$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for "
+						+ Double.toString(SharedData.getInstance().getRoutineCost()) + "$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
-					if (SharedData.getInstance().getCurrentUser().getBalance() < 
-							SharedData.getInstance().getRoutineCost()) {
+					if (SharedData.getInstance().getCurrentUser().getBalance() < SharedData.getInstance()
+							.getRoutineCost()) {
 
 						informationAlert.setTitle("Reservation warrning");
 						informationAlert.setHeaderText(null);
@@ -1354,7 +1506,6 @@ public class LogInController {
 
 					} else {
 
-						
 						json.put("carNumber", _carNumber);
 						json.put("lotName", _lotName);
 						json.put("username", _name);
@@ -1367,10 +1518,13 @@ public class LogInController {
 
 						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
-							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-//							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 240);
+							System.out.println(
+									"Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+							// MainController._currentUser.setBalance(MainController._currentUser.getBalance()
+							// - 240);
 							updateBalance((-1) * SharedData.getInstance().getRoutineCost());
-							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+							System.out.println(
+									"New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
 							informationAlert.setHeaderText(null);
@@ -1378,7 +1532,7 @@ public class LogInController {
 							informationAlert.showAndWait();
 
 						} else {
-							
+
 						}
 
 					}
@@ -1392,145 +1546,146 @@ public class LogInController {
 		}
 	}
 
-	 @FXML
-	    void buyBusinessSubscription(ActionEvent event) {
-	    	
-			String _lotName = busRouLotNameComboBox.getValue();
-//	    	String _lotName = "Carmel";
-			String _routLeaveHour = busRouSubRoutineHourComboBox.getValue();
-			String _routLeaveMinute = busRouSubRoutineMinuteComboBox.getValue();
+	@FXML
+	void buyBusinessSubscription(ActionEvent event) {
 
-//	    	String _routLeaveHour = "07";
-//	    	String _routLeaveMinute = "44";
-	    	
-	    	Calendar leaveCal = Calendar.getInstance();
-			// System.out.println(leaveCal.toString() + "@@@@@@@@@@@@@@@@@@@");
+		String _lotName = busRouLotNameComboBox.getValue();
+		// String _lotName = "Carmel";
+		String _routLeaveHour = busRouSubRoutineHourComboBox.getValue();
+		String _routLeaveMinute = busRouSubRoutineMinuteComboBox.getValue();
 
-			if (_routLeaveHour == null) {
-				_routLeaveHour = "23";
+		// String _routLeaveHour = "07";
+		// String _routLeaveMinute = "44";
+
+		Calendar leaveCal = Calendar.getInstance();
+		// System.out.println(leaveCal.toString() + "@@@@@@@@@@@@@@@@@@@");
+
+		if (_routLeaveHour == null) {
+			_routLeaveHour = "23";
+		}
+
+		if (_routLeaveMinute == null) {
+			_routLeaveMinute = "59";
+		}
+
+		if ((_lotName == null)) {
+			informationAlert.setTitle("Reservation warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please fill the parking lot field to complete the reservation");
+			informationAlert.showAndWait();
+			return;
+
+		}
+
+		int routLeaveHourInt = Integer.parseInt(_routLeaveHour);
+		int routLeaveMinuteInt = Integer.parseInt(_routLeaveMinute);
+
+		String leaveHour = "";
+		if (routLeaveMinuteInt < 10) {
+			leaveHour = (routLeaveHourInt) + ":0" + (routLeaveMinuteInt);
+		} else {
+			leaveHour = (routLeaveHourInt) + ":" + (routLeaveMinuteInt);
+		}
+
+		if (routLeaveHourInt < 10) {
+			leaveHour = "0" + leaveHour;
+		}
+
+		JSONObject json = new JSONObject();
+
+		long _start = leaveCal.getTime().getTime();
+		leaveCal.add(Calendar.MONTH, 1);
+		long _end = leaveCal.getTime().getTime();
+		try {
+			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
+			json.put("company", SharedData.getInstance().getCurrentUser().getCompnay());
+			json.put("lotName", SharedData.getInstance().getCurrentParkingLot().get_name());
+
+			boolean flag1 = true;
+			boolean flag2 = true;
+
+			for (int i = 0; i < businessAccountWorkersCounter + 1; i++) {
+
+				// System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF"
+				// + Integer.toString(i))));
+				// System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
+
+				TextField checkInput = (TextField) (listOfAddedWorkersBusinessAcocuntVBOX.getScene()
+						.lookup("#businessWorkerTF" + Integer.toString(i)));
+				// System.out.println(temp.getText());
+				if (checkInput.getText().equals("")) {
+					flag1 = false;
+				}
 			}
 
-			if (_routLeaveMinute == null) {
-				_routLeaveMinute = "59";
-			}
-
-			if ((_lotName == null)) {
-				informationAlert.setTitle("Reservation warrning");
+			if (flag1) {
+				if (((businessAccountWorkersCounter + 1) * SharedData.getInstance().getBusinessCost()) > SharedData
+						.getInstance().getCurrentUser().getBalance()) {
+					flag2 = false;
+				}
+			} else {
+				informationAlert.setTitle("Business Subscription Warrning");
 				informationAlert.setHeaderText(null);
-				informationAlert.setContentText("Please fill the parking lot field to complete the reservation");
+				informationAlert.setContentText("Please fill all car number fields to complete the purchase");
 				informationAlert.showAndWait();
 				return;
-
-			}
-			
-			int routLeaveHourInt = Integer.parseInt(_routLeaveHour);
-			int routLeaveMinuteInt = Integer.parseInt(_routLeaveMinute);
-
-			String leaveHour = "";
-			if (routLeaveMinuteInt < 10) {
-				leaveHour = (routLeaveHourInt) + ":0" + (routLeaveMinuteInt);
-			} else {
-				leaveHour = (routLeaveHourInt) + ":" + (routLeaveMinuteInt);
 			}
 
-			if (routLeaveHourInt < 10) {
-				leaveHour = "0" + leaveHour;
-			}
+			if (flag2) {
+				String carsNumber = "";
+				for (int i = 0; i < businessAccountWorkersCounter + 1; i++) {
 
-	    	
-	    	
-	    	JSONObject json = new JSONObject();
-			
-			
-			long _start = leaveCal.getTime().getTime();
-			leaveCal.add(Calendar.MONTH, 1);
-			long _end = leaveCal.getTime().getTime();
-	    	try {
-				json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
-				json.put("company", SharedData.getInstance().getCurrentUser().getCompnay());
-				json.put("lotName", SharedData.getInstance().getCurrentParkingLot().get_name());
-				
-				boolean flag1 = true;
-				boolean flag2 = true;
-				
-				for(int i=0; i < businessAccountWorkersCounter+1; i++){
-		    		
-//		    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
-//		    		System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
-		    		
-		    		TextField checkInput = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
-//		    		System.out.println(temp.getText());
-		    		if(checkInput.getText().equals("")){
-		    			flag1 = false;
-		    		}
-		    	}
-				
-				if(flag1){
-					if( ((businessAccountWorkersCounter+1) * SharedData.getInstance().getBusinessCost()) > SharedData.getInstance().getCurrentUser().getBalance() ){
-						flag2 = false;
-					}
+					// System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF"
+					// + Integer.toString(i))));
+					// System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
+
+					TextField temp = (TextField) (listOfAddedWorkersBusinessAcocuntVBOX.getScene()
+							.lookup("#businessWorkerTF" + Integer.toString(i)));
+					// System.out.println(temp.getText());
+					carsNumber += temp.getText() + ";";
 				}
-				else{
-					informationAlert.setTitle("Business Subscription Warrning");
+				json.put("cars", carsNumber);
+				json.put("start", _start);
+				json.put("end", _end);
+				json.put("leaveHour", leaveHour);
+				json.put("lotName", _lotName);
+				json.put("cmd", "BusinessSubscription");
+
+				JSONObject ret = new JSONObject();
+				ret = request(json, "SubscriptionController");
+
+				if (ret.getBoolean("result")) {
+					System.out.println(ret);
+
+					informationAlert.setTitle("Business Subscription Succeeded");
 					informationAlert.setHeaderText(null);
-					informationAlert.setContentText("Please fill all car number fields to complete the purchase");
+					informationAlert.setContentText("Business Subscription for"
+							+ Integer.toString(businessAccountWorkersCounter) + "employees finished Successfully."
+							+ "\nPlease share this Activation key: " + ret.getString("code") + " to your employees");
+
 					informationAlert.showAndWait();
-					return;
+
+					updateBalance(
+							(-1) * SharedData.getInstance().getBusinessCost() * (businessAccountWorkersCounter + 1));
+
 				}
-				
-				if(flag2){
-					String carsNumber = "";
-					for(int i=0; i < businessAccountWorkersCounter+1; i++){
-			    		
-	//		    		System.out.println(((TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("businessWorkerTF" + Integer.toString(i))));
-	//		    		System.out.println(((TextField)listOfAddedWorkersBusinessAcocuntVBOX.getChildren()).getText());
-			    		
-			    		TextField temp = (TextField)(listOfAddedWorkersBusinessAcocuntVBOX.getScene().lookup("#businessWorkerTF" + Integer.toString(i)));
-	//		    		System.out.println(temp.getText());
-			    		carsNumber += temp.getText() + ";";
-			    	}
-					json.put("cars", carsNumber);
-					json.put("start", _start);
-					json.put("end", _end);
-					json.put("leaveHour", leaveHour);
-					json.put("lotName", _lotName);
-					json.put("cmd", "BusinessSubscription");
-					
-					JSONObject ret = new JSONObject();
-					ret = request(json, "SubscriptionController");
-					
-					if(ret.getBoolean("result")){
-						System.out.println(ret);
-						
-						informationAlert.setTitle("Business Subscription Succeeded");
-						informationAlert.setHeaderText(null);
-						informationAlert.setContentText("Business Subscription for" + Integer.toString(businessAccountWorkersCounter) + "employees finished Successfully."
-								+ "\nPlease share this Activation key: " + ret.getString("code") + " to your employees");
-						
-						informationAlert.showAndWait();
-						
-						updateBalance((-1) * SharedData.getInstance().getBusinessCost() * (businessAccountWorkersCounter+1));
-						
-					}
-					
-				
-	    		}else{
-	    			informationAlert.setTitle("Business Subscription Warrning");
-	    			informationAlert.setHeaderText(null);
-	    			informationAlert.setContentText("Insufficient Funds");
-	    			informationAlert.showAndWait();
-	    			return;
-	    		}
-			} catch (JSONException e) {
-				e.printStackTrace();
+
+			} else {
+				informationAlert.setTitle("Business Subscription Warrning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Insufficient Funds");
+				informationAlert.showAndWait();
+				return;
 			}
-			
-	    	
-	    }
-	
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	@FXML
 	void buyfulSubFullSubscription(ActionEvent event) {
-		
+
 		String _carNumber = fulSubCarNumberTF.getText();
 		Calendar leaveCal = Calendar.getInstance();
 
@@ -1545,28 +1700,30 @@ public class LogInController {
 			long _start = leaveCal.getTime().getTime();
 			leaveCal.add(Calendar.MONTH, 1);
 			long _end = leaveCal.getTime().getTime();
-					
+
 			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 
 			JSONObject json = new JSONObject();
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(SharedData.getInstance().getFullCost()) + "$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for "
+						+ Double.toString(SharedData.getInstance().getFullCost()) + "$ ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
-					
-					if (SharedData.getInstance().getCurrentUser().getBalance() < SharedData.getInstance().getFullCost()) {
+
+					if (SharedData.getInstance().getCurrentUser().getBalance() < SharedData.getInstance()
+							.getFullCost()) {
 
 						informationAlert.setTitle("Full Subscription warrning");
 						informationAlert.setHeaderText(null);
-						informationAlert.setContentText("Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+						informationAlert.setContentText(
+								"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
 						informationAlert.showAndWait();
 
 					} else {
 
-						
 						json.put("carNumber", _carNumber);
 						json.put("username", _name);
 						json.put("start", _start);
@@ -1577,20 +1734,23 @@ public class LogInController {
 
 						System.out.println(ret.getBoolean("result"));
 						if (ret.getBoolean("result")) {
-							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-//							MainController._currentUser.setBalance(MainController._currentUser.getBalance() - 288);
+							System.out.println(
+									"Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+							// MainController._currentUser.setBalance(MainController._currentUser.getBalance()
+							// - 288);
 							updateBalance((-1) * SharedData.getInstance().getFullCost());
-							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+							System.out.println(
+									"New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 
 							informationAlert.setTitle("Depositing Succeeded");
 							informationAlert.setHeaderText(null);
 							informationAlert.setContentText("Purchasing full subscription finished Successfully.");
 							informationAlert.showAndWait();
 
-						} 
+						}
 
 					}
-				} 
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -1601,7 +1761,7 @@ public class LogInController {
 	@FXML
 	void signOut(ActionEvent event) {
 
-//		 getReserves();
+		// getReserves();
 
 		// System.out.println(getReserves());
 		SharedData.getInstance().setCurrentUser(null);
@@ -1639,10 +1799,10 @@ public class LogInController {
 			ret = request(json, "UpdateUserInfo");
 
 			if (ret.getBoolean("result")) {
-				SharedData.getInstance().getCurrentUser().setBalance
-				(SharedData.getInstance().getCurrentUser().getBalance() + cost);
-				balanceOnTopOfLogIn.setText(Double.toString(SharedData.
-						getInstance().getCurrentUser().getBalance()));
+				SharedData.getInstance().getCurrentUser()
+						.setBalance(SharedData.getInstance().getCurrentUser().getBalance() + cost);
+				balanceOnTopOfLogIn
+						.setText(String.format("%.2f", (SharedData.getInstance().getCurrentUser().getBalance())));
 				return true;
 			}
 
@@ -1715,8 +1875,6 @@ public class LogInController {
 		}
 
 	}
-	
-
 
 	@FXML
 	void reserveActualParking(ActionEvent event) {
@@ -1748,10 +1906,10 @@ public class LogInController {
 			leaveCal = toCalendar(leaveDate);
 			leaveCal.set(Calendar.HOUR, Integer.parseInt(_ocLeaveHour));
 			leaveCal.set(Calendar.MINUTE, Integer.parseInt(_ocLeaveMinute));
-//			System.out.println(leaveCal.toString());
+			// System.out.println(leaveCal.toString());
 		}
 
-		if (_carNumber.equals("")  || (leaveLocalDate == null)) {
+		if (_carNumber.equals("") || (leaveLocalDate == null)) {
 			informationAlert.setTitle("Reservation warrning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please fill all the above field to complete the reservation");
@@ -1767,7 +1925,6 @@ public class LogInController {
 			int ocLeaveHourInt = Integer.parseInt(_ocLeaveHour);
 			int ocLeaveMinuteInt = Integer.parseInt(_ocLeaveMinute);
 
-			
 			String leaveHour = "";
 			if (ocLeaveMinuteInt < 10) {
 				leaveHour = (ocLeaveHourInt) + ":0" + (ocLeaveMinuteInt);
@@ -1781,52 +1938,96 @@ public class LogInController {
 
 			String _name = SharedData.getInstance().getCurrentUser().getUsername();
 
-			if(_start > _end){
+			if (_start > _end) {
 				informationAlert.setTitle("Reservation Warning");
 				informationAlert.setHeaderText(null);
 				informationAlert.setContentText("please adjust dates");
 				informationAlert.showAndWait();
-			}
-			else{
+			} else {
 				JSONObject json = new JSONObject();
 				try {
 					confirmAlert.setTitle("Confirmation Dialog");
 					confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
-	
+
 					Optional<ButtonType> result = confirmAlert.showAndWait();
 					if (result.get() == ButtonType.OK) {
-	
-							json.put("carNumber", _carNumber);
-							json.put("lotName", _lotName);
-							json.put("username", _name);
-							json.put("leave", leaveHour);
-							json.put("start", _start);
-							json.put("end", _end);
-							json.put("type", "o");
-							json.put("activated", 1);
-							json.put("cmd", "reserveAhead");
-	
+
+						json.put("carNumber", _carNumber);
+						json.put("lotName", _lotName);
+						json.put("username", _name);
+						json.put("leave", leaveHour);
+						json.put("start", _start);
+						json.put("end", _end);
+						json.put("type", "o");
+						json.put("activated", 1);
+						json.put("cmd", "reserveAhead");
+
+						JSONObject check = request(new JSONObject().put("start", _start).put("end", _end)
+								.put("lotName", _lotName).put("cmd", "overlappingOrders"), "LotOperator");
+
+						System.out.println(check);
+						System.out.println(
+								"$$:> the number of orders that its overlapping is: " + check.getInt("overlapping"));
+
+						boolean canI = SharedData.getInstance().getCurrentParkingLot()
+								.CanPark(check.getInt("overlapping"));
+
+						if (canI) {
+
 							JSONObject ret = request(json, "ReservationController");
-	
+
 							System.out.println(ret.getBoolean("result"));
 							if (ret.getBoolean("result")) {
-								
-								
+
 								informationAlert.setTitle("Parking succeeded");
 								informationAlert.setHeaderText(null);
-								informationAlert.setContentText("Please pay attention that the payment is after exiting the car.");
+								informationAlert.setContentText(
+										"Please pay attention that the payment is after exiting the car.");
 								informationAlert.showAndWait();
-								
+
 								// TODO: consider the payment issues in the exit
-								// TODO: call the occasional enterPark function
-								
+
+								boolean res = SharedData.getInstance().getCurrentParkingLot().InsertCar(_carNumber,
+										arriveCal, leaveCal);
+
+								if (res) {
+
+									informationAlert.setTitle("Parking Succeeded !!");
+									informationAlert.setHeaderText(null);
+									informationAlert
+											.setContentText("Your car has been parked in safe hands, have a NICE day.");
+									informationAlert.showAndWait();
+
+								} else {
+
+									informationAlert.setTitle("Parking Error");
+									informationAlert.setHeaderText(null);
+									informationAlert.setContentText("Failed park the car!");
+									informationAlert.showAndWait();
+
+								}
+
 								loadViewReservation(null);
-								
+
+							}
+
+						} else {
+
+							informationAlert.setTitle("Reservation warrning");
+							informationAlert.setHeaderText(null);
+							informationAlert.setContentText(
+									"Sorry for the inconvenience, for now, there are no enough place in this parking lot.");
+							informationAlert.showAndWait();
+
 						}
+
 					} else {
-	
+						informationAlert.setTitle("Reservation warrning");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("you havn't enough cost");
+						informationAlert.showAndWait();
 					}
-	
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -1835,7 +2036,8 @@ public class LogInController {
 
 	}
 
-	@FXML // make complaint but AL OS decided to name it makeSend for mysterious reasons
+	@FXML // make complaint but AL OS decided to name it makeSend for mysterious
+			// reasons
 	void makeSend(ActionEvent event) {
 
 		String _carNumber = ComplaintCarNumberTF.getText();
@@ -1843,7 +2045,6 @@ public class LogInController {
 		String _orderId = ComplaintReservationIdTF.getText();
 		String _complaint = ComplaintTA.getText();
 		Calendar _cal = Calendar.getInstance();
-		
 
 		if (_carNumber.equals("") || (_lotName == null) || _orderId.equals("") || _complaint.equals("")) {
 			informationAlert.setTitle("complaint warrning");
@@ -1852,13 +2053,13 @@ public class LogInController {
 			informationAlert.showAndWait();
 
 		} else {
-			
+
 			String _name = SharedData.getInstance().getCurrentUser().getUsername();
-			int _orderIdInt=Integer.parseInt(_orderId);
+			int _orderIdInt = Integer.parseInt(_orderId);
 			JSONObject json = new JSONObject();
 			try {
 				long _date = _cal.getTime().getTime();
-		
+
 				json.put("carNumber", _carNumber);
 				json.put("lotName", _lotName);
 				json.put("username", _name);
@@ -1872,22 +2073,20 @@ public class LogInController {
 				System.out.println(ret.getBoolean("result"));
 				if (ret.getBoolean("result")) {
 					confirmAlert.setTitle("Confirmation Dialog");
-					confirmAlert.setContentText("Dear "+_name+", your complaint is in process, we'll update you ASAP.");
+					confirmAlert
+							.setContentText("Dear " + _name + ", your complaint is in process, we'll update you ASAP.");
 					confirmAlert.showAndWait();
-				}
-				else{
+				} else {
 					informationAlert.setTitle("Complaint Error");
-			    	informationAlert.setHeaderText(null);
-			    	informationAlert.setContentText("Failed to send complaint, try again later");
-			    	informationAlert.showAndWait();
-				} 
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Failed to send complaint, try again later");
+					informationAlert.showAndWait();
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 
 		}
-	
-		
 
 	}
 
@@ -1895,7 +2094,8 @@ public class LogInController {
 		HttpURLConnection connection = null;
 		try {
 			// Create connection
-			URL url = new URL("http://" + SharedData.getInstance().getIP() + ":" + SharedData.getInstance().getPORT() + "/server/" + servletName);
+			URL url = new URL("http://" + SharedData.getInstance().getIP() + ":" + SharedData.getInstance().getPORT()
+					+ "/server/" + servletName);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setDoOutput(true);

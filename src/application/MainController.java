@@ -240,7 +240,7 @@ public class MainController {
     	}else{
 	    		if(systemWorkerCheckBox.isSelected() == false)
 	    		{
-	        		JSONObject json = new JSONObject().put("username", _username).put("password", _password);
+	        		JSONObject json = new JSONObject().put("username", _username).put("password", _password).put("cmd", "Regular");
 	        		JSONObject ret = request(json, "Login");
 	        		System.out.println(ret.toString());
 	        		
@@ -292,7 +292,7 @@ public class MainController {
 		}
 		LogInController logInController = loader.getController();
 		logInController.setWelcome("Welcome to CPS");
-		logInController.setTopOfLogInView(_username, Double.toString(SharedData.getInstance().getCurrentUser().getBalance()));
+		logInController.setTopOfLogInView(_username, String.format("%.2f",SharedData.getInstance().getCurrentUser().getBalance()));
 		
 		if(SharedData.getInstance().getCurrentUser().getType().equals("b")){
 			Button businessButton = new Button("Business Routinely Subscription");
