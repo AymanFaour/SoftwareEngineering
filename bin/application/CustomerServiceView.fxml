@@ -49,7 +49,7 @@
             </HBox>
             <StackPane prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <BorderPane fx:id="HandlingComplaintsCustomerServiceBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+                  <BorderPane fx:id="HandlingComplaintsCustomerServiceBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
@@ -58,7 +58,7 @@
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7499b5" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
                                     <HBox prefHeight="20.0" prefWidth="600.0">
                                        <children>
-                                          <Label prefWidth="40.0" text="Res ID">
+                                          <Label prefWidth="50.0" text="Res ID">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
@@ -71,23 +71,23 @@
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets left="20.0" />
+                                                <Insets />
                                              </HBox.margin>
                                           </Label>
-                                          <Label layoutX="195.0" layoutY="12.0" prefWidth="100.0" text="Parking Lot Name">
+                                          <Label layoutX="195.0" layoutY="12.0" prefWidth="80.0" text="Lot Name">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets left="20.0" />
+                                                <Insets />
                                              </HBox.margin>
                                           </Label>
-                                          <Label layoutX="15.0" layoutY="12.0" prefWidth="40.0" text="Status">
+                                          <Label layoutX="15.0" layoutY="12.0" prefWidth="80.0" text="Status">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets left="20.0" />
+                                                <Insets />
                                              </HBox.margin>
                                           </Label>
                                        </children>
@@ -101,7 +101,7 @@
                                  <children>
                                     <ScrollPane prefHeight="522.0" prefWidth="600.0">
                                        <content>
-                                          <VBox fx:id="reservationsList" prefWidth="570.0" />
+                                          <VBox fx:id="complaintsListVBox" prefWidth="570.0" />
                                        </content>
                                     </ScrollPane>
                                  </children>

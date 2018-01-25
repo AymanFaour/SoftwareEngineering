@@ -83,7 +83,7 @@
                                  </children>
                               </HBox>
                               <HBox prefHeight="18.0" prefWidth="580.0" />
-                              <HBox prefHeight="188.0" prefWidth="577.0">
+                              <HBox prefHeight="50.0" prefWidth="100.0">
                                  <children>
                                     <Button fx:id="alternativeParkingReToAlterParkButton" mnemonicParsing="false" onAction="#ReferenceToAlternativeParking" styleClass="go-button" stylesheets="@application.css" text="Reference to Alternative Parking" />
                                  </children>
