@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,6 +112,15 @@ public class Main extends Application{
 				SharedData.getInstance().setBusinessCost(((JSONObject) costs.get(3)).getDouble("cost"));
 				SharedData.getInstance().setFullCost(((JSONObject) costs.get(4)).getDouble("cost"));
 				
+				JSONArray parkingLotsJA = ret.getJSONArray("lots");
+				ArrayList<ParkingLot> parkingLotsAL= new ArrayList<ParkingLot>();
+				for (int i = 0; i < parkingLotsJA.length(); i++){
+					parkingLotsAL.add(new ParkingLot(parkingLotsJA.getJSONObject(i).getString("lotName")
+							, 3, 3, parkingLotsJA.getJSONObject(i).getInt("width")));
+				}
+				
+				SharedData.getInstance().setParkingLotsAL(parkingLotsAL);
+
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
