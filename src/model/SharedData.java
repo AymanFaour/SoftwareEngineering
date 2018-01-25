@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 
 public class SharedData {
 		private User currentUser;
@@ -12,6 +13,7 @@ public class SharedData {
 		private double fullCost;
 		private String IP;
 		private String PORT;
+		private ArrayList<ParkingLot> parkingLotsAL;
 		private static SharedData instance = null;
 	   	private SharedData() {
 	   		currentUser = null;
@@ -24,6 +26,7 @@ public class SharedData {
 	   		fullCost = -1;
 	   		IP = null;
 	   		PORT = null;
+	   		parkingLotsAL = null;
 	   	}
 	   	
 		public static SharedData getInstance() {
@@ -112,5 +115,14 @@ public class SharedData {
 		public void setCurrentSystemUser(SystemUser currentSystemUser) {
 			this.currentSystemUser = currentSystemUser;
 		}
+
+		public ArrayList<ParkingLot> getParkingLotsAL() {
+			return parkingLotsAL;
+		}
+
+		public void setParkingLotsAL(ArrayList<ParkingLot> parkingLotsAL) {
+			this.parkingLotsAL = parkingLotsAL;
+		}
+		
 	   	
 }
