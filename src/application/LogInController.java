@@ -360,6 +360,9 @@ public class LogInController {
     	parkResArrivingMinuteComboBox.setItems(myComboBoxMinutesData);
     	parkResLeavingHourComboBox.setItems(myComboBoxHoursData);
     	parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
+    	
+    	Double reservationCost = SharedData.getInstance().getReservationCost();
+    	parkingReservationCostText.setText(reservationCost.toString() + "$ per hour");
     }
 
     @FXML
