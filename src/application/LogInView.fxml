@@ -367,6 +367,16 @@
                            <children>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
+                                    <Label prefWidth="40.0" styleClass="label-first" stylesheets="@application.css" text="Cost:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Text fx:id="regularRoutineSubscriptionCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
                                     <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Car Number:" />
                                     <TextField fx:id="regRouSubCarNumberTF" styleClass="text-field-first" stylesheets="@application.css">
                                        <HBox.margin>
@@ -547,6 +557,16 @@
                            <children>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
+                                    <Label prefWidth="40.0" styleClass="label-first" stylesheets="@application.css" text="Cost:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Text fx:id="fullSubscriptionCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
                                     <Label prefWidth="137.0" styleClass="label-first" stylesheets="@application.css" text="Car Number:" />
                                     <TextField fx:id="fulSubCarNumberTF" styleClass="text-field-first" stylesheets="@application.css">
                                        <HBox.margin>
@@ -602,6 +622,16 @@
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="40.0" styleClass="label-first" stylesheets="@application.css" text="Cost:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Text fx:id="actualParkingCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                 </children>
+                              </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
                                     <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Car Number:">

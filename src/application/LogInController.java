@@ -252,8 +252,16 @@ public class LogInController {
     
     @FXML // fx:id="parkingReservationCostText"
     private Text parkingReservationCostText; // Value injected by FXMLLoader
+   
+    @FXML // fx:id="actualParkingCostText"
+    private Text actualParkingCostText; // Value injected by FXMLLoader
 
-    
+    @FXML // fx:id="fullSubscriptionCostText"
+    private Text fullSubscriptionCostText; // Value injected by FXMLLoader
+   
+    @FXML // fx:id="regularRoutineSubscriptionCostText"
+    private Text regularRoutineSubscriptionCostText; // Value injected by FXMLLoader
+
     private int businessAccountWorkersCounter = 0;
     
     public int getBusinessAccountWorkersCounter() {
