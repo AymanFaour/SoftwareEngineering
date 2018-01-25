@@ -49,7 +49,7 @@ public class CpsMailBox {
 			if (refund.equals(""))
 				message.setText(response);
 			else
-				message.setText(response + "\nand you'r refund was: " + refund +"\u20AA.");
+				message.setText(response + "\nand your refund is: " + refund +" NIS.");
 	
 			Transport.send(message);
 	

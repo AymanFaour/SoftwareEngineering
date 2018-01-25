@@ -497,10 +497,8 @@ public class CustomerServiceController {
     	int checkRefund=0;
     	String refundTF=((TextField)(((HBox)vb.getChildren().get(4)).getChildren().get(1))).getText();	
     	String response=((TextArea)((ScrollPane)vb.getChildren().get(3)).getContent()).getText();
-    	
     	try {
-    		double refundDouble=Double.parseDouble(refundTF);
-
+    		 Double.parseDouble(refundTF);
     	}
     	catch (Exception e) {
     		checkRefund=1;
@@ -509,7 +507,7 @@ public class CustomerServiceController {
     	System.out.println(refundTF);
     	if (refundTF.equals("") || response.equals("") ) {
 
-			informationAlert.setTitle(" warrning");
+			informationAlert.setTitle("warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText(
 					"Please fill the  response and refund fields.");
@@ -551,53 +549,69 @@ public class CustomerServiceController {
 		int length = complaintsListVBox.getChildren().size();
 		complaintsListVBox.getChildren().remove(0, length);
 		
+		JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		try {
+			json.put("cmd", "getComplaints");
+			ret = request(json, "CustomerService");
+			System.out.println(ret.toString());
+			if(ret.getBoolean("result")){
+				JSONArray ja = ret.getJSONArray("complaints");
+				for(int i = 0; i < ja.length(); i++){
+	        	    Label resId = new Label(Integer.toString(((JSONObject) ja.get(i)).getInt("complaintID")));
+	        	    resId.setStyle("-fx-pref-width: 50; -fx-padding: 3.5 0 0 0");
+	        		Label carNumber = new Label(((JSONObject) ja.get(i)).getString("carNumber"));
+	        		carNumber.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
+	        		Label lotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
+	        		lotName.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
+	        		Label status = null;
+	        		status = new Label("Not Handled");
+	        		status.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
+
+	   
+	    		
+					HBox hb = new HBox();
+					hb.getChildren().add(resId);
+					hb.getChildren().add(carNumber);
+					hb.getChildren().add(lotName);
+					hb.getChildren().add(status);
+					hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+							+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+					complaintsListVBox.getChildren().add(hb);
+					
+					if(status.getText() == "Not Handled"){
+						Button handleComplaintButton = new Button("Handle");
+						handleComplaintButton.setId("handleComplaintButton");
+						String css = getClass().getResource("application.css").toExternalForm();
+						handleComplaintButton.getStylesheets().clear();
+						handleComplaintButton.getStylesheets().add(css);
+						handleComplaintButton.setOnAction(e -> complainHandlerCallBack(e));
+						
+						handleComplaintButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(handleComplaintButton);
+					}
+					
+					if(status.getText() == "Handled"){
+
+					}
+	    		}
+			}
+			
+			
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+		
+		
+		
+		
     	JSONArray ja = new JSONArray();
 		try {
 			ja.put(new JSONObject().put("resID", 12).put("car number", "987101023").put("lot name", "Horev")
 					.put("status", false).put("complaint body", "I found scratches on the car"));
-			for(int i = 0; i < ja.length(); i++){
 
-        	    Label resId = new Label(Integer.toString(((JSONObject) ja.get(i)).getInt("resID")));
-        	    resId.setStyle("-fx-pref-width: 50; -fx-padding: 3.5 0 0 0");
-        		Label carNumber = new Label(((JSONObject) ja.get(i)).getString("car number"));
-        		carNumber.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
-        		Label lotName = new Label(((JSONObject) ja.get(i)).getString("lot name"));
-        		lotName.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
-        		Label status = null;
-        		if(((JSONObject) ja.get(i)).getBoolean("status") == false){
-        			status = new Label("Not Handled");
-        			status.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
-        		}else{
-        			status = new Label("Done");
-        			status.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
-        		}
-   
-    		
-				HBox hb = new HBox();
-				hb.getChildren().add(resId);
-				hb.getChildren().add(carNumber);
-				hb.getChildren().add(lotName);
-				hb.getChildren().add(status);
-				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
-						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
-				complaintsListVBox.getChildren().add(hb);
-				
-				if(status.getText() == "Not Handled"){
-					Button handleComplaintButton = new Button("Handle");
-					handleComplaintButton.setId("handleComplaintButton");
-					String css = getClass().getResource("application.css").toExternalForm();
-					handleComplaintButton.getStylesheets().clear();
-					handleComplaintButton.getStylesheets().add(css);
-					handleComplaintButton.setOnAction(e -> complainHandlerCallBack(e));
-					
-					handleComplaintButton.getStyleClass().add("loginView-buttons");
-					hb.getChildren().add(handleComplaintButton);
-				}
-				
-				if(status.getText() == "Handled"){
-
-				}
-    		}
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
