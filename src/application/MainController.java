@@ -456,7 +456,7 @@ public class MainController {
     	}
     }
     @FXML
-    void TrakReservation(ActionEvent event) throws IOException 
+    void TrackReservation(ActionEvent event) throws IOException 
     {
     	   
     	 	TrakCheck=0;
@@ -475,16 +475,10 @@ public class MainController {
     		    
     		
     		Button trackbutton= new Button("Track");    
-    		     
-    		
-    		
-    		
-    		     
-
+    	
     		HBox layout= new HBox(10);
     		HBox layout2= new HBox(10);
     		VBox vB=new VBox();
-    		
     		
     		vB.setPadding(new Insets(10, 10, 10, 10));   
     		
