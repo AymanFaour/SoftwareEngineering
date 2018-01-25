@@ -1,12 +1,11 @@
 package model;
 
-
 public class ParkingPosition {
 	public final int x;
 	public final int y;
 	public final int z;
 	public final SpotStatus status;
-	
+
 	public ParkingPosition(int x, int y, int z) {
 		super();
 		this.x = x;
@@ -14,6 +13,5 @@ public class ParkingPosition {
 		this.z = z;
 		this.status = SpotStatus.Available;
 	}
-	
-	
+
 }
