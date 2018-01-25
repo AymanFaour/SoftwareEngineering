@@ -387,8 +387,7 @@ public class CustomerServiceController {
 
     }
 	
-    @SuppressWarnings("static-access")
-	@FXML
+
     void HandlingComplaintsPopUp(ActionEvent event) throws IOException 
     {
     		
@@ -437,25 +436,20 @@ public class CustomerServiceController {
     		Button sendButton= new Button("send");    
     	
     		HBox layout= new HBox();
-    		HBox layout2= new HBox(10);
     		
     		VBox vB=new VBox();
     		vB.setPadding(new Insets(10, 10, 10, 10));   
     		
     		
     		layout.getChildren().addAll(RefundLable,RefundTF);
-    		layout.setMargin(RefundTF, new Insets(0,0,0,0));
     		
     		vB.getChildren().addAll(complaint,complaintScrollPane,response,responseScrollPane,layout,sendButton);
     		vB.setMargin(response, new Insets(30,0,0,0));
     		vB.setMargin(layout, new Insets(10,0,0,0));
-    		//layout.setAlignment(Pos.CENTER);
-    	
-			
-    		
+			    		
     		sendButton.setOnAction(e -> {
 				try {
-		    		send(vB);
+		    		sendTheComplaintResponse(vB);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -469,11 +463,14 @@ public class CustomerServiceController {
     		      
     		popupwindow.showAndWait();
     }
-    void send(VBox vb) throws IOException  {
+    
+    void sendTheComplaintResponse(VBox vb) throws IOException  {
     	String refundTF=((TextField)(((HBox)vb.getChildren().get(4)).getChildren().get(1))).getText();	
     	String response=((TextArea)((ScrollPane)vb.getChildren().get(3)).getContent()).getText();
     	System.out.println(response);
     	System.out.println(refundTF);
+		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200","cps.client4@gmail.com");
+		mail.sendMail(response);
     	this.popupwindow.close();
     	
     	
@@ -541,11 +538,6 @@ public class CustomerServiceController {
 				if(status.getText() == "Handled"){
 
 				}
-				
-
-					
-				
-				
     		}
 
 		} catch (JSONException e) {
@@ -558,8 +550,12 @@ public class CustomerServiceController {
 
 	private void complainHandlerCallBack(ActionEvent e) {
 		// TODO Auto-generated method stub
-		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200");
-		mail.sendMail();
+		try {
+			HandlingComplaintsPopUp(null);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 

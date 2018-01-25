@@ -36,7 +36,7 @@ public class CpsMailBox {
 		  });
 	}
 	
-	public void sendMail(){
+	public void sendMail(String response){
 		try {
 	
 			Message message = new MimeMessage(session);
@@ -44,7 +44,7 @@ public class CpsMailBox {
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse("ali.safadi01@gmail.com"));
 			message.setSubject("Testing Subject");
-			message.setText("Amoot bel chocolate w dan dan");
+			message.setText(response);
 	
 			Transport.send(message);
 	
