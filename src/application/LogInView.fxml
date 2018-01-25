@@ -283,6 +283,16 @@
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
+                              <HBox layoutX="30.0" layoutY="20.0" prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefWidth="40.0" styleClass="label-first" stylesheets="@application.css" text="Cost:">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Text fx:id="parkingReservationCostText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                                 </children>
+                              </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
                                     <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Car Number:">

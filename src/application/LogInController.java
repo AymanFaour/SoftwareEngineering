@@ -249,6 +249,9 @@ public class LogInController {
 
     @FXML // fx:id="logInButtonListVbox"
     private VBox logInButtonListVbox; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="parkingReservationCostText"
+    private Text parkingReservationCostText; // Value injected by FXMLLoader
 
     
     private int businessAccountWorkersCounter = 0;
