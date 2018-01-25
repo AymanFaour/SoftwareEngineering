@@ -214,6 +214,7 @@
                   <Insets />
                </VBox.margin>
             </Button>
+            <Button mnemonicParsing="false" onAction="#HandlingComplaintsPopUp" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="test" />
          </children>
          <BorderPane.margin>
             <Insets />
