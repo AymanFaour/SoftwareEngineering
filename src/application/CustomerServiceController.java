@@ -124,7 +124,7 @@ public class CustomerServiceController {
     
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
-    private Stage popupwindow=new Stage();
+    private Stage popupwindow;
 
     @FXML
     void signOut(ActionEvent event) {
@@ -390,7 +390,7 @@ public class CustomerServiceController {
 
     void HandlingComplaintsPopUp(ActionEvent event) throws IOException 
     {
-    		
+    		popupwindow=new Stage();
     		      
     		popupwindow.initModality(Modality.APPLICATION_MODAL);
     		popupwindow.setTitle("Handling Complaints");
@@ -414,39 +414,36 @@ public class CustomerServiceController {
     		ScrollPane complaintScrollPane =new ScrollPane();
     		ScrollPane responseScrollPane =new ScrollPane();
     		
-    		complaintText.setWrappingWidth(450);
-    		complaintText.setStyle("-fx-pref-width: 450px");
+    		complaintText.setWrappingWidth(480);
+    		complaintText.setStyle("-fx-pref-width: 480px");
     		complaintText.setStyle("-fx-pref-height: 200px");
     		
     		//complaintText.setEditable(false);
     		complaintScrollPane.setContent(complaintText);
-    		complaintScrollPane.setStyle("-fx-pref-width: 450px");
-    		complaintScrollPane.setStyle("-fx-pref-height: 200px");
+    		complaintScrollPane.setStyle("-fx-pref-width: 480px");
+    		complaintScrollPane.setStyle("-fx-pref-height: 200px; -fx-padding: 0 0 0 5;");
     		
     		responseText.setWrapText(true);
-    		responseText.setStyle("-fx-pref-width: 450px");
+    		responseText.setStyle("-fx-pref-width: 480px");
     		responseText.setStyle("-fx-pref-height: 200px");
     		
-    		responseScrollPane.setStyle("-fx-pref-width: 450px");
+    		responseScrollPane.setStyle("-fx-pref-width: 480px");
     		responseScrollPane.setStyle("-fx-pref-height: 200px");
-    		
     		responseScrollPane.setContent(responseText);
     		
     	
-    		Button sendButton= new Button("send");    
-    	
+    		Button sendButton= new Button("Respond");
     		HBox layout= new HBox();
+    		HBox layout2= new HBox();
     		
     		VBox vB=new VBox();
     		vB.setPadding(new Insets(10, 10, 10, 10));   
     		
-    		
+    		layout.setStyle("-fx-padding: 5 5 0 0;");
     		layout.getChildren().addAll(RefundLable,RefundTF);
-    		
-    		vB.getChildren().addAll(complaint,complaintScrollPane,response,responseScrollPane,layout,sendButton);
-    		vB.setMargin(response, new Insets(30,0,0,0));
-    		vB.setMargin(layout, new Insets(10,0,0,0));
-			    		
+    		layout2.getChildren().add(sendButton);
+    		layout2.setStyle("-fx-padding: 5 5 0 0;");
+    		vB.getChildren().addAll(complaint,complaintScrollPane,response,responseScrollPane,layout,layout2);		
     		sendButton.setOnAction(e -> {
 				try {
 		    		sendTheComplaintResponse(vB);
