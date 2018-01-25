@@ -462,10 +462,40 @@ public class CustomerServiceController {
     }
     
     void sendTheComplaintResponse(VBox vb) throws IOException  {
+    	int checkRefund=0;
     	String refundTF=((TextField)(((HBox)vb.getChildren().get(4)).getChildren().get(1))).getText();	
     	String response=((TextArea)((ScrollPane)vb.getChildren().get(3)).getContent()).getText();
+    	
+    	try {
+    		double refundDouble=Double.parseDouble(refundTF);
+
+    	}
+    	catch (Exception e) {
+    		checkRefund=1;
+    	}
     	System.out.println(response);
     	System.out.println(refundTF);
+    	if (refundTF.equals("") || response.equals("") ) {
+
+			informationAlert.setTitle(" warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText(
+					"Please fill the  response and refund fields.");
+			informationAlert.showAndWait();
+			return;
+
+		}
+    	
+    	if (checkRefund==1||refundTF.indexOf('-')!=-1) {
+
+			informationAlert.setTitle(" warrning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText(
+					"refund value must contain only numbers.");
+			informationAlert.showAndWait();
+			return;
+
+		}
 		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200","cps.client4@gmail.com");
 		mail.sendMail(response);
     	this.popupwindow.close();
