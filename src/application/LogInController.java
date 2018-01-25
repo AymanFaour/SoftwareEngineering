@@ -22,10 +22,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -262,6 +260,9 @@ public class LogInController {
     @FXML // fx:id="regularRoutineSubscriptionCostText"
     private Text regularRoutineSubscriptionCostText; // Value injected by FXMLLoader
 
+    @FXML // fx:id="businessSubscriptionCostText"
+    private Text businessSubscriptionCostText; // Value injected by FXMLLoader
+    
     private int businessAccountWorkersCounter = 0;
     
     public int getBusinessAccountWorkersCounter() {
@@ -362,7 +363,7 @@ public class LogInController {
     	parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
     	
     	Double reservationCost = SharedData.getInstance().getReservationCost();
-    	parkingReservationCostText.setText(reservationCost.toString() + "$ per hour");
+    	parkingReservationCostText.setText(reservationCost.toString() + "\u20AA per hour");
     }
 
     @FXML
@@ -434,6 +435,9 @@ public class LogInController {
     		myComboBoxData.add(parkingLotNames.get(i));
     	}
     	regRouComboBox.setItems(myComboBoxData);
+    	
+    	Double subscriptionCost = SharedData.getInstance().getRoutineCost();
+    	regularRoutineSubscriptionCostText.setText(subscriptionCost.toString() + "\u20AA per subscription");
     }
     
 
@@ -510,7 +514,8 @@ public class LogInController {
     	busRouSubRoutineHourComboBox.setItems(myComboBoxHoursData);
     	busRouSubRoutineMinuteComboBox.setItems(myComboBoxMinutesData);
     	
-    	
+    	Double subscriptionCost = SharedData.getInstance().getBusinessCost();
+    	businessSubscriptionCostText.setText(subscriptionCost.toString() + "\u20AA per subscription");
     }
     
 
@@ -582,7 +587,9 @@ public class LogInController {
     	MyAccountButton.getStyleClass().add("loginView-buttons");
     	ActualParkingButton.getStyleClass().removeAll("pressedButton", "focus");
     	ActualParkingButton.getStyleClass().add("loginView-buttons");
-    
+    	
+    	Double subscriptionCost = SharedData.getInstance().getFullCost();
+    	fullSubscriptionCostText.setText(subscriptionCost.toString() + "\u20AA per subscription");
     }
 
     @FXML
@@ -1027,7 +1034,8 @@ public class LogInController {
     	ActualParkingLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
         ActualParkingLeavingHourComboBox.setItems(myComboBoxHoursData);
        
-    	
+    	Double reservationCost = SharedData.getInstance().getOccasionalCost();
+    	actualParkingCostText.setText(reservationCost.toString() + "\u20AA per hour");
     	
     }
 
@@ -1200,13 +1208,13 @@ public class LogInController {
 			if(_now > _start || _now > _end || _start >= _end){
 				informationAlert.setTitle("Reservation Warning");
 				informationAlert.setHeaderText(null);
-				informationAlert.setContentText("please adjust dates");
+				informationAlert.setContentText("Please adjust dates and hours to convenient values");
 				informationAlert.showAndWait();
 			}else{
 				String _name = SharedData.getInstance().getCurrentUser().getUsername();
 	
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "\u20AA ?");
 	
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
@@ -1353,7 +1361,7 @@ public class LogInController {
 
 				confirmAlert.setTitle("Confirmation Dialog");
 				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(
-						SharedData.getInstance().getRoutineCost()) + "$ ?");
+						SharedData.getInstance().getRoutineCost()) + "\u20AA ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
@@ -1566,7 +1574,7 @@ public class LogInController {
 			try {
 
 				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(SharedData.getInstance().getFullCost()) + "$ ?");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + Double.toString(SharedData.getInstance().getFullCost()) + "\u20AA ?");
 
 				Optional<ButtonType> result = confirmAlert.showAndWait();
 				if (result.get() == ButtonType.OK) {
@@ -1798,14 +1806,14 @@ public class LogInController {
 			if(_start > _end){
 				informationAlert.setTitle("Reservation Warning");
 				informationAlert.setHeaderText(null);
-				informationAlert.setContentText("please adjust dates");
+				informationAlert.setContentText("Please adjust dates and hours to convenient values");
 				informationAlert.showAndWait();
 			}
 			else{
 				JSONObject json = new JSONObject();
 				try {
 					confirmAlert.setTitle("Confirmation Dialog");
-					confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
+					confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "\u20AA ?");
 	
 					Optional<ButtonType> result = confirmAlert.showAndWait();
 					if (result.get() == ButtonType.OK) {
@@ -1953,4 +1961,8 @@ public class LogInController {
 		return null;
 
 	}
+	
+
 }
+
+
