@@ -49,7 +49,7 @@
             </HBox>
             <StackPane prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <BorderPane fx:id="AlternativeParkingParkingLotWorkerBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+                  <BorderPane fx:id="AlternativeParkingParkingLotWorkerBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
@@ -83,9 +83,9 @@
                                  </children>
                               </HBox>
                               <HBox prefHeight="18.0" prefWidth="580.0" />
-                              <HBox prefHeight="188.0" prefWidth="577.0">
+                              <HBox prefHeight="50.0" prefWidth="100.0">
                                  <children>
-                                    <Button fx:id="alternativeParkingReToAlterParkButton" mnemonicParsing="false" onAction="#ReferenceToAlternativeParking" prefHeight="39.0" prefWidth="293.0" styleClass="go-button" stylesheets="@application.css" text="Reference to Alternative Parking" />
+                                    <Button fx:id="alternativeParkingReToAlterParkButton" mnemonicParsing="false" onAction="#ReferenceToAlternativeParking" styleClass="go-button" stylesheets="@application.css" text="Reference To Alternative Parking" />
                                  </children>
                               </HBox>
                            </children>
