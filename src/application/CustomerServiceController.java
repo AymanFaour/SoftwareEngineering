@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,8 +39,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.CpsMailBox;
 import model.SharedData;
 
 public class CustomerServiceController {
@@ -110,6 +114,10 @@ public class CustomerServiceController {
     @FXML // fx:id="CusSerParkingReservationCreditCardIdTF"
     private TextField CusSerParkingReservationCreditCardIdTF; // Value injected by FXMLLoader
 
+    @FXML // fx:id="complaintsListVBox"
+    private VBox complaintsListVBox; // Value injected by FXMLLoader
+
+    
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
 
@@ -378,17 +386,81 @@ public class CustomerServiceController {
     void loadHandlingComplaints(ActionEvent event) {
     	HandlingComplaintsCustomerServiceBorderPane.setVisible(true);
     	ParkingReservationCustomerServiceBorderPane.setVisible(false);
-    	
-    
-    	
-    	
-    	
+
     	HandlingComplaintsButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	HandlingComplaintsButton.getStyleClass().add("pressedButton");
     	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
     	parkingReservationButton.getStyleClass().add("loginView-buttons");
 
+		int length = complaintsListVBox.getChildren().size();
+		complaintsListVBox.getChildren().remove(0, length);
+		
+    	JSONArray ja = new JSONArray();
+		try {
+			ja.put(new JSONObject().put("resID", 12).put("car number", "987101023").put("lot name", "Horev")
+					.put("status", false).put("complaint body", "I found scratches on the car"));
+			for(int i = 0; i < ja.length(); i++){
+
+        	    Label resId = new Label(Integer.toString(((JSONObject) ja.get(i)).getInt("resID")));
+        	    resId.setStyle("-fx-pref-width: 50; -fx-padding: 3.5 0 0 0");
+        		Label carNumber = new Label(((JSONObject) ja.get(i)).getString("car number"));
+        		carNumber.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
+        		Label lotName = new Label(((JSONObject) ja.get(i)).getString("lot name"));
+        		lotName.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
+        		Label status = null;
+        		if(((JSONObject) ja.get(i)).getBoolean("status") == false){
+        			status = new Label("Not Handled");
+        			status.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
+        		}else{
+        			status = new Label("Done");
+        			status.setStyle("-fx-pref-width: 80; -fx-padding: 3.5 0 0 0");
+        		}
+   
+    		
+				HBox hb = new HBox();
+				hb.getChildren().add(resId);
+				hb.getChildren().add(carNumber);
+				hb.getChildren().add(lotName);
+				hb.getChildren().add(status);
+				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+				complaintsListVBox.getChildren().add(hb);
+				
+				if(status.getText() == "Not Handled"){
+					Button handleComplaintButton = new Button("Handle");
+					handleComplaintButton.setId("handleComplaintButton");
+					String css = getClass().getResource("application.css").toExternalForm();
+					handleComplaintButton.getStylesheets().clear();
+					handleComplaintButton.getStylesheets().add(css);
+					handleComplaintButton.setOnAction(e -> complainHandlerCallBack(e));
+					
+					handleComplaintButton.getStyleClass().add("loginView-buttons");
+					hb.getChildren().add(handleComplaintButton);
+				}
+				
+				if(status.getText() == "Handled"){
+
+				}
+				
+
+					
+				
+				
+    		}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
+
+
+
+	private void complainHandlerCallBack(ActionEvent e) {
+		// TODO Auto-generated method stub
+		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200");
+		mail.sendMail();
+	}
 
 
 
