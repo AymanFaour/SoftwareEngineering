@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -117,7 +118,8 @@ public class AdministratorController {
 		Scene scene1= new Scene(vB, 520, 520);
 		      
 		popupwindow.setScene(scene1);
-		      
+		
+
 		popupwindow.showAndWait();
 //
 //    	currentSituationCallBack(event);

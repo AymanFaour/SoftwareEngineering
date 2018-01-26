@@ -521,34 +521,25 @@ public class CustomerServiceController {
 										 SharedData.getInstance().getCPSPassword(), email);
 		mail.sendMailToClientComplaint(response,refundTF, theUser, theComplaint, theLotName);
 		
-//		JSONObject json = new JSONObject();
-//		try {
-//			
-//			//TODO: synchronize with server
-//
-//			json.put("complaintID", complaintId);
-//			json.put("lotName", _lotName);
-//			json.put("username", _name);
-//			json.put("start", _start);
-//			json.put("end", _end);
-//			json.put("cost", cost);
-//			json.put("type", "r");
-//			json.put("activated", 0);
-//			json.put("cmd", "reserveAhead");
-//
-//			// send to reservation servlet
-////			JSONObject ret = request(json, "CustomerServiceReservationController");
-////
-//////			System.out.println(ret.getBoolean("result"));
-////			if (ret.getBoolean("result")) {
-////				System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-////				
-//////				updateBalance((-1) * cost);
-//////				System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-////			}
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
+		JSONObject json = new JSONObject();
+		try {
+			
+			double refundDouble=Double.parseDouble(refundTF);
+			
+			//TODO: synchronize with server
+			System.out.println("the complaint is " + complaintId);
+			json.put("complaintID", complaintId);
+			json.put("username", theUser);
+			json.put("refund", refundDouble);
+			json.put("cmd", "handleComplaint");
+
+			// send to reservation servlet
+			JSONObject ret = request(json, "CustomerService");
+
+			System.out.println(ret.getBoolean("result"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
     	this.popupwindow.close();
     	
     	
@@ -560,6 +551,19 @@ public class CustomerServiceController {
     @FXML
     void loadHandlingComplaints(ActionEvent event) {
 
+    	HandlingComplaintsCustomerServiceBorderPane.setVisible(true);
+    	ParkingReservationCustomerServiceBorderPane.setVisible(false);
+    	
+    
+    
+    	
+    	
+    	
+    	HandlingComplaintsButton.getStyleClass().removeAll("loginView-buttons", "focus");
+    	HandlingComplaintsButton.getStyleClass().add("pressedButton");
+    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
+    	parkingReservationButton.getStyleClass().add("loginView-buttons");
+    	
 		int length = complaintsListVBox.getChildren().size();
 		complaintsListVBox.getChildren().remove(0, length);
 		
@@ -600,6 +604,7 @@ public class CustomerServiceController {
 						handleComplaintButton.getStylesheets().clear();
 						handleComplaintButton.getStylesheets().add(css);
 						JSONObject ret2 = (JSONObject) ja.get(i);
+						System.out.println(ret2.toString());
 						handleComplaintButton.setOnAction(e -> complainHandlerCallBack(e, ret2));
 						
 						handleComplaintButton.getStyleClass().add("loginView-buttons");
