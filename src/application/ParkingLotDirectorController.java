@@ -4,9 +4,16 @@
 
 package application;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.SharedData;
@@ -99,6 +107,16 @@ public class ParkingLotDirectorController {
     @FXML // fx:id="occasionalChangeButton"
     private Button occasionalChangeButton; // Value injected by FXMLLoader
     
+    @FXML // fx:id="administratorRequestsButton"
+    private Button administratorRequestsButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="viewAdministratorReqeustBorderPane"
+    private BorderPane viewAdministratorReqeustBorderPane; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="administratorRequestsListVB"
+    private VBox administratorRequestsListVB; // Value injected by FXMLLoader
+
+    
     private ObservableList<String> myComboBoxParLotDirecReport= FXCollections.observableArrayList();
     
 
@@ -130,7 +148,7 @@ public class ParkingLotDirectorController {
     	
     	if (report == null) {
 
-			informationAlert.setTitle("Report warrning");
+			informationAlert.setTitle("Report warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please choose report type to complete the report");
 			informationAlert.showAndWait();
@@ -171,7 +189,7 @@ public class ParkingLotDirectorController {
     	
     	if (cost.equals("")) {
 
-			informationAlert.setTitle("change warrning");
+			informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new cost");
 			informationAlert.showAndWait();
@@ -206,7 +224,7 @@ public class ParkingLotDirectorController {
     	
     	if (cost.equals("")) {
 
-			informationAlert.setTitle("change warrning");
+			informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new cost");
 			informationAlert.showAndWait();
@@ -241,7 +259,7 @@ public class ParkingLotDirectorController {
     	
     	if (hours.equals("")) {
 
-			informationAlert.setTitle("change warrning");
+			informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new number of hours");
 			informationAlert.showAndWait();
@@ -276,7 +294,7 @@ public class ParkingLotDirectorController {
     	
     	if (hours.equals("")) {
 
-			informationAlert.setTitle("change warrning");
+			informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new number of hours");
 			informationAlert.showAndWait();
@@ -347,11 +365,15 @@ public class ParkingLotDirectorController {
     void loadReports(ActionEvent event) {
     	ReportsParkingLotDirectorBorderPane.setVisible(true);
     	ChangePricesParkingLotDirectorBorderPane.setVisible(false);
+    	viewAdministratorReqeustBorderPane.setVisible(false);
     	
     	parkingLotDirectorReportsButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	parkingLotDirectorReportsButton.getStyleClass().add("pressedButton");
     	parkingLotDirectorCahngePriceButton.getStyleClass().removeAll("pressedButton", "focus");
     	parkingLotDirectorCahngePriceButton.getStyleClass().add("loginView-buttons");
+    	administratorRequestsButton.getStyleClass().removeAll("pressedButton", "focus");
+    	administratorRequestsButton.getStyleClass().add("loginView-buttons");
+    	
     	ArrayList<String> Reports = new ArrayList<String>();
     	Reports.add("Reservations");
     	Reports.add("Complaints");
@@ -374,16 +396,124 @@ public class ParkingLotDirectorController {
     void loadChangePrices(ActionEvent event) {
     	ReportsParkingLotDirectorBorderPane.setVisible(false);
     	ChangePricesParkingLotDirectorBorderPane.setVisible(true);
+    	viewAdministratorReqeustBorderPane.setVisible(false);
     	
     	parkingLotDirectorCahngePriceButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	parkingLotDirectorCahngePriceButton.getStyleClass().add("pressedButton");
     	parkingLotDirectorReportsButton.getStyleClass().removeAll("pressedButton", "focus");
     	parkingLotDirectorReportsButton.getStyleClass().add("loginView-buttons");
+    	administratorRequestsButton.getStyleClass().removeAll("pressedButton", "focus");
+    	administratorRequestsButton.getStyleClass().add("loginView-buttons");
     	
     	
     	
 
     }
+    
+
+    @FXML
+    void loadAdministratorRequests(ActionEvent event) {
+    	ReportsParkingLotDirectorBorderPane.setVisible(false);
+    	ChangePricesParkingLotDirectorBorderPane.setVisible(false);
+    	viewAdministratorReqeustBorderPane.setVisible(true);
+    	
+    	parkingLotDirectorCahngePriceButton.getStyleClass().removeAll("pressedButton", "focus");
+    	parkingLotDirectorCahngePriceButton.getStyleClass().add("loginView-buttons");
+    	parkingLotDirectorReportsButton.getStyleClass().removeAll("pressedButton", "focus");
+    	parkingLotDirectorReportsButton.getStyleClass().add("loginView-buttons");
+    	administratorRequestsButton.getStyleClass().removeAll("loginView-buttons", "focus");
+    	administratorRequestsButton.getStyleClass().add("pressedButton");
+
+    	/*JSONObject ret = getAdminRequest();
+
+		try {
+
+			JSONArray ja = ret.getJSONArray("resArr");
+
+			System.out.println(ja);
+
+			int length = administratorRequestsListVB.getChildren().size();
+			administratorRequestsListVB.getChildren().remove(0, length);
+			
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}*/
+
+    }
+
+	/*private JSONObject getAdminRequest() {
+		// TODO Auto-generated method stub
+		JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		try {
+
+			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
+			ret = request(json, "UserServices");
+			System.out.println(ret);
+			if (ret.getBoolean("result")) {
+				JSONArray reservs = ret.getJSONArray("resArr");
+				System.out.println(reservs.toString());
+				return ret;
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	JSONObject request(JSONObject json, String servletName) {
+		HttpURLConnection connection = null;
+		try {
+			// Create connection
+			URL url = new URL("http://" + SharedData.getInstance().getIP() + ":" + SharedData.getInstance().getPORT()
+					+ "/server/" + servletName);
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setDoOutput(true);
+
+			// Send request
+			DataOutputStream sentData = new DataOutputStream(connection.getOutputStream());
+
+			sentData.writeBytes(json.toString());
+
+			sentData.close();
+			JSONObject ret;
+
+			// Get Response
+			InputStream is = connection.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			StringBuilder response = new StringBuilder(); // or StringBuffer if
+															// Java version 5+
+			String line;
+			while ((line = rd.readLine()) != null) {
+				response.append(line);
+				// response.append('\r');
+			}
+
+			rd.close();
+			// System.out.println(response.toString() +
+			// "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			ret = new JSONObject(response.toString());
+
+			return ret;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (connection != null) {
+				connection.disconnect();
+			}
+
+		}
+
+		return null;
+
+	}
+	*/
 
 	public void setWelcome(String welcome) {
 		// TODO Auto-generated method stub

@@ -180,6 +180,48 @@
                         </VBox>
                      </right>
                   </BorderPane>
+               	   <BorderPane fx:id="viewAdministratorReqeustBorderPane" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+                     <left>
+                        <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <StackPane alignment="TOP_LEFT" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: #7499b5;">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7499b5" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
+                                    <HBox prefHeight="20.0" prefWidth="600.0">
+                                       <children>
+                                          <Label prefWidth="100.0" text="Request">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="System Bold" size="10.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="15.0" layoutY="12.0" prefWidth="40.0" text="Status">
+                                             <font>
+                                                <Font name="System Bold" size="10.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="5.0" top="1.5" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </StackPane>
+                              <VBox prefHeight="500.0" prefWidth="600.0">
+                                 <children>
+                                    <ScrollPane prefHeight="500.0" prefWidth="600.0">
+                                       <content>
+                                          <VBox fx:id="administratorRequestsListVB" prefHeight="493.0" prefWidth="570.0" />
+                                       </content>
+                                    </ScrollPane>
+                                 </children></VBox>
+                           </children>
+                        </VBox>
+                     </left>
+                  </BorderPane>
+            
                </children>
             </StackPane>
          </children>
@@ -198,6 +240,7 @@
                   <Insets />
                </VBox.margin>
             </Button>
+            <Button fx:id="administratorRequestsButton" layoutX="10.0" layoutY="67.0" mnemonicParsing="false" onAction="#loadAdministratorRequests" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Administrator Requests" />
          </children>
          <BorderPane.margin>
             <Insets />

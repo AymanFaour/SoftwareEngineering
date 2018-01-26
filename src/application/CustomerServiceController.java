@@ -559,13 +559,6 @@ public class CustomerServiceController {
 
     @FXML
     void loadHandlingComplaints(ActionEvent event) {
-    	HandlingComplaintsCustomerServiceBorderPane.setVisible(true);
-    	ParkingReservationCustomerServiceBorderPane.setVisible(false);
-
-    	HandlingComplaintsButton.getStyleClass().removeAll("loginView-buttons", "focus");
-    	HandlingComplaintsButton.getStyleClass().add("pressedButton");
-    	parkingReservationButton.getStyleClass().removeAll("pressedButton", "focus");
-    	parkingReservationButton.getStyleClass().add("loginView-buttons");
 
 		int length = complaintsListVBox.getChildren().size();
 		complaintsListVBox.getChildren().remove(0, length);

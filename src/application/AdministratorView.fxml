@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CustomerServiceController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdministratorController">
    <center>
       <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -49,40 +49,69 @@
             </HBox>
             <StackPane prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <BorderPane fx:id="parkingReservationBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
-                     <center>
+                  <BorderPane fx:id="reportsBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+                     <left>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
-                              <HBox prefHeight="50.0" prefWidth="600.0">
+                              <HBox prefHeight="40.0" prefWidth="580.0">
                                  <children>
                                     <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Parking Lot Name:" />
-                                    <ComboBox fx:id="parkResComboBox1" prefWidth="150.0" promptText="select parking name" stylesheets="@application.css" />
-                                    <Button fx:id="parkResReserveParkingButton1" mnemonicParsing="false" onAction="#reserveParking" styleClass="go-button" stylesheets="@application.css" text="Current Situation.">
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </Button>
+                                    <ComboBox fx:id="parkLotNameComboBox" prefWidth="150.0" promptText="select parking name" stylesheets="@application.css" />
                                  </children>
                               </HBox>
+                              <Button fx:id="currentSituationButton" mnemonicParsing="false" onAction="#getCurrentSituation" styleClass="go-button" stylesheets="@application.css" text="Current Situation" />
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
                                     <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Report:" />
-                                    <ComboBox fx:id="ParLotDirecReportComboBox" prefWidth="150.0" promptText="select report " stylesheets="@application.css" />
-                                    <Button fx:id="parkResReserveParkingButton" mnemonicParsing="false" onAction="#reserveParking" styleClass="go-button" stylesheets="@application.css" text="Current situation.">
-                                       <HBox.margin>
-                                          <Insets left="30.0" />
-                                       </HBox.margin>
-                                    </Button>
+                                    <ComboBox fx:id="ReportComboBox" prefWidth="150.0" promptText="select report " stylesheets="@application.css" />
                                  </children>
                                  <VBox.margin>
-                                    <Insets top="20.0" />
+                                    <Insets top="30.0" />
                                  </VBox.margin>
                               </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="From:" />
+                                    <DatePicker fx:id="fromDateDP" prefWidth="130.0" />
+                                 </children>
                               </HBox>
+                              <HBox prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <HBox prefHeight="50.0" prefWidth="600.0">
+                                       <children>
+                                          <HBox prefHeight="50.0" prefWidth="600.0">
+                                             <children>
+                                                <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="to:">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <DatePicker fx:id="toDateDP" prefWidth="130.0" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="30.0" layoutY="77.0" prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Button fx:id="getReportButton" mnemonicParsing="false" onAction="#getReport" styleClass="go-button" stylesheets="@application.css" text="Get Report " />
+                                 </children></HBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </left>
+                  </BorderPane>
+                  <BorderPane fx:id="changePricesRequestsBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+                     <center>
+                        <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <HBox prefHeight="50.0" prefWidth="600.0" />
                               <HBox prefHeight="50.0" prefWidth="600.0" />
                               <HBox layoutX="30.0" layoutY="77.0" prefHeight="50.0" prefWidth="600.0" />
                            </children>
@@ -101,6 +130,10 @@
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
+         <children>
+            <Button fx:id="reportsButton" mnemonicParsing="false" onAction="#loadReporsBorderPane" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Reports" />
+            <Button fx:id="changePricesRequestsButton" mnemonicParsing="false" onAction="#loadChangePricesRequestsBorderPane" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Change Prices Requests " />
+         </children>
       </VBox>
    </left>
    <top>
