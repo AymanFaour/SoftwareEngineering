@@ -1077,7 +1077,8 @@ public class LogInController {
 
 			if (parkingLotName.equals(SharedData.getInstance().getCurrentParkingLot().get_name())) {
 
-				if (Calendar.getInstance().before(arrivingCal)) {
+//				if (Calendar.getInstance().before(arrivingCal)) {
+				if (false) {
 
 					informationAlert.setTitle("Activate reservation");
 					informationAlert.setHeaderText(null);
@@ -1511,35 +1512,58 @@ public class LogInController {
 						informationAlert.showAndWait();
 
 					} else {
+						
+						JSONObject check = request(new JSONObject().put("start", _start).put("end", _end)
+								.put("lotName", _lotName).put("cmd", "overlappingOrdersRF"), "LotOperator");
+						System.out.println(check);
+						System.out.println("$$:> the number of orders that its overlapping is: "
+								+ check.getInt("overlapping"));
+						boolean canI = SharedData.getInstance().getCurrentParkingLot()
+								.CanReserve(check.getInt("overlapping"));
 
-						json.put("carNumber", _carNumber);
-						json.put("lotName", _lotName);
-						json.put("username", _name);
-						json.put("leave", leaveHour);
-						json.put("start", _start);
-						json.put("end", _end);
-						json.put("cmd", "RegularRoutineSubscription");
+						if(canI){
+							
+							json.put("carNumber", _carNumber);
+							json.put("lotName", _lotName);
+							json.put("username", _name);
+							json.put("leave", leaveHour);
+							json.put("start", _start);
+							json.put("end", _end);
+							json.put("cmd", "RegularRoutineSubscription");
 
-						JSONObject ret = request(json, "SubscriptionController");
+							JSONObject ret = request(json, "SubscriptionController");
 
-						System.out.println(ret.getBoolean("result"));
-						if (ret.getBoolean("result")) {
-							System.out.println(
-									"Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-							// MainController._currentUser.setBalance(MainController._currentUser.getBalance()
-							// - 240);
-							updateBalance((-1) * SharedData.getInstance().getRoutineCost());
-							System.out.println(
-									"New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+							System.out.println(ret.getBoolean("result"));
+							if (ret.getBoolean("result")) {
+								System.out.println(
+										"Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+								// MainController._currentUser.setBalance(MainController._currentUser.getBalance()
+								// - 240);
+								updateBalance((-1) * SharedData.getInstance().getRoutineCost());
+								System.out.println(
+										"New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 
-							informationAlert.setTitle("Depositing Succeeded");
+								informationAlert.setTitle("Rutine Subscription Succeeded");
+								informationAlert.setHeaderText(null);
+								informationAlert.setContentText("Purchasing routine subscription finished Successfully.");
+								informationAlert.showAndWait();
+
+							} else {
+
+								informationAlert.setTitle("Rutine Subscription Failed");
+								informationAlert.setHeaderText(null);
+								informationAlert.setContentText("Something went wrong.");
+								informationAlert.showAndWait();
+								
+							}
+						}else{
+							informationAlert.setTitle("Routine Subscription Failed");
 							informationAlert.setHeaderText(null);
-							informationAlert.setContentText("Purchasing routine subscription finished Successfully.");
+							informationAlert.setContentText("Sorry dude, we havn't place at the wanted time, please choose other time.");
 							informationAlert.showAndWait();
-
-						} else {
-
 						}
+						
+						
 
 					}
 				} else {
