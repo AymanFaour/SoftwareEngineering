@@ -14,6 +14,7 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
@@ -48,6 +49,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.CpsMailBox;
+import model.ParkingLot;
 import model.SharedData;
 
 public class CustomerServiceController {
@@ -124,6 +126,7 @@ public class CustomerServiceController {
     
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxParkingLotData = FXCollections.observableArrayList();
     private Stage popupwindow;
 
     @FXML
@@ -233,51 +236,59 @@ public class CustomerServiceController {
 			double cost = Math.round(deff / 60.0) * SharedData.getInstance().getReservationCost();
 			long _start = arriveCal.getTime().getTime();
 			long _end = leaveCal.getTime().getTime();
-
-			String _name = SharedData.getInstance().getCurrentUser().getUsername();
-
-			confirmAlert.setTitle("Confirmation Dialog");
-			confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
-
-			Optional<ButtonType> result = confirmAlert.showAndWait();
-			if (result.get() == ButtonType.OK) {
-
-				if (SharedData.getInstance().getCurrentUser().getBalance() < cost) {
-
-					informationAlert.setTitle("Reservation warrning");
-					informationAlert.setHeaderText(null);
-					informationAlert.setContentText(
-							"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
-					informationAlert.showAndWait();
-
-				} else {
-					JSONObject json = new JSONObject();
-					try {
-						
-						//TODO: synchronize with server
-
-						json.put("carNumber", _carNumber);
-						json.put("lotName", _lotName);
-						json.put("username", _name);
-						json.put("start", _start);
-						json.put("end", _end);
-						json.put("cost", cost);
-						json.put("type", "r");
-						json.put("activated", 0);
-						json.put("cmd", "reserveAhead");
-
-						// send to reservation servlet
-//						JSONObject ret = request(json, "CustomerServiceReservationController");
-//
-////						System.out.println(ret.getBoolean("result"));
-//						if (ret.getBoolean("result")) {
-//							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-//							
-////							updateBalance((-1) * cost);
-////							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-//						}
-					} catch (JSONException e) {
-						e.printStackTrace();
+			long _now = Calendar.getInstance().getTime().getTime();
+			System.out.println(_now + " and the start is" + _start + " and the end is " + _end);
+			if (_now > _start || _now > _end || _start >= _end) {
+				informationAlert.setTitle("Reservation Warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Please adjust dates and hours to convenient values");
+				informationAlert.showAndWait();
+			}else{
+				String _name = SharedData.getInstance().getCurrentUser().getUsername();
+	
+				confirmAlert.setTitle("Confirmation Dialog");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
+	
+				Optional<ButtonType> result = confirmAlert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+	
+					if (SharedData.getInstance().getCurrentUser().getBalance() < cost) {
+	
+						informationAlert.setTitle("Reservation warrning");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText(
+								"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+						informationAlert.showAndWait();
+	
+					} else {
+						JSONObject json = new JSONObject();
+						try {
+							
+							//TODO: synchronize with server
+	
+							json.put("carNumber", _carNumber);
+							json.put("lotName", _lotName);
+							json.put("username", _name);
+							json.put("start", _start);
+							json.put("end", _end);
+							json.put("cost", cost);
+							json.put("type", "r");
+							json.put("activated", 0);
+							json.put("cmd", "reserveAhead");
+	
+							// send to reservation servlet
+	//						JSONObject ret = request(json, "CustomerServiceReservationController");
+	//
+	////						System.out.println(ret.getBoolean("result"));
+	//						if (ret.getBoolean("result")) {
+	//							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+	//							
+	////							updateBalance((-1) * cost);
+	////							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+	//						}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -378,13 +389,21 @@ public class CustomerServiceController {
     		else
     			myComboBoxMinutesData.add(i.toString());
     	}
+
+    	ArrayList<ParkingLot> parkingLotNames = SharedData.getInstance().getParkingLotsAL();
     	
+    	myComboBoxParkingLotData.clear();
+    	for(int i = 0; i < parkingLotNames.size(); i++){
+    		myComboBoxParkingLotData.add(parkingLotNames.get(i).get_name());
+    	}
     	
     	CusSerparkResLeavingHourComboBox.setItems(myComboBoxHoursData);
     	CusSerparkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
     	CusSerparkResArrivingHourComboBox.setItems(myComboBoxHoursData);
     	CusSerparkResArrivingMinuteComboBox.setItems(myComboBoxMinutesData);
-
+    	CusSerparkResComboBox.setItems(myComboBoxParkingLotData);
+    	
+    	
     }
 	
 
@@ -497,7 +516,9 @@ public class CustomerServiceController {
     	String theComplaint = complaintJO.getString("content");
     	String theUser = complaintJO.getString("username");
     	String theLotName = complaintJO.getString("lotName");
-		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200", email);
+    	int complaintId = complaintJO.getInt("complaintID");
+		CpsMailBox mail = new CpsMailBox(SharedData.getInstance().getCPSEmail(),
+										 SharedData.getInstance().getCPSPassword(), email);
 		mail.sendMailToClientComplaint(response,refundTF, theUser, theComplaint, theLotName);
 		
 //		JSONObject json = new JSONObject();
@@ -505,7 +526,7 @@ public class CustomerServiceController {
 //			
 //			//TODO: synchronize with server
 //
-//			json.put("carNumber", _carNumber);
+//			json.put("complaintID", complaintId);
 //			json.put("lotName", _lotName);
 //			json.put("username", _name);
 //			json.put("start", _start);

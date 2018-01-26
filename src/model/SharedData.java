@@ -13,6 +13,8 @@ public class SharedData {
 		private double fullCost;
 		private String IP;
 		private String PORT;
+		private String CPSEmail;
+		private String CPSPassword;
 		private ArrayList<ParkingLot> parkingLotsAL;
 		private static SharedData instance = null;
 	   	private SharedData() {
@@ -27,6 +29,8 @@ public class SharedData {
 	   		IP = null;
 	   		PORT = null;
 	   		parkingLotsAL = null;
+	   		CPSEmail = null;
+	   		CPSPassword = null;
 	   	}
 	   	
 		public static SharedData getInstance() {
@@ -122,6 +126,22 @@ public class SharedData {
 
 		public void setParkingLotsAL(ArrayList<ParkingLot> parkingLotsAL) {
 			this.parkingLotsAL = parkingLotsAL;
+		}
+
+		public String getCPSEmail() {
+			return CPSEmail;
+		}
+
+		public void setCPSEmail(String cPSEmail) {
+			CPSEmail = cPSEmail;
+		}
+
+		public String getCPSPassword() {
+			return CPSPassword;
+		}
+
+		public void setCPSPassword(String cPSPassword) {
+			CPSPassword = cPSPassword;
 		}
 		
 	   	

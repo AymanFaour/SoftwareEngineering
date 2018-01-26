@@ -5,6 +5,7 @@
 package application;
 
 import java.io.IOException;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,7 +36,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.SharedData;
+import model.*;
 
 public class ParkingWorkerController {
 
@@ -181,24 +182,88 @@ public class ParkingWorkerController {
     
     @FXML
     void disabledParkingSpot(ActionEvent event) {
-    	String spotId=DisaParkSpotSpotIdTF.getText();
     	
-    	if (spotId.equals("")) {
+    	if((HeightComboBox.getValue() == null) || (WidthComboBox.getValue() == null) || (DepthComboBox.getValue() == null)) {
 
 			informationAlert.setTitle("disable Spot warrning");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please enter spot ID");
+			informationAlert.setContentText("Please fill all the positions");
 			informationAlert.showAndWait();
 			return;
 			
 		} else {
+			
+			Integer _x = Integer.parseInt(HeightComboBox.getValue());
+	    	Integer _y = Integer.parseInt(WidthComboBox.getValue());
+	    	Integer _z = Integer.parseInt(DepthComboBox.getValue());
+	    	
+			
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			
+			int _high = _x - 1;
+			int _width = _y - 1;
+			int _depth = _z - 1;
+			
+			boolean canI = SharedData.getInstance().getCurrentParkingLot().CanDisapled();
+			
+			if(canI){
+				
+				if(SharedData.getInstance().getCurrentParkingLot().IsBusy(_high, _width, _depth)){
+					
+					informationAlert.setTitle("Disapling slot warrning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("There are a car parking in the wanted slot, please wait for the slot to be availabe");
+					informationAlert.showAndWait();
+					
+				}else if(SharedData.getInstance().getCurrentParkingLot().IsDisapled(_high, _width, _depth)){
+					
+					informationAlert.setTitle("Disapling slot warrning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Pay attention that this parking slot is already disapled.");
+					informationAlert.showAndWait();
+					
+				}else if(SharedData.getInstance().getCurrentParkingLot().IsAvailable(_high, _width, _depth)){
+					
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					boolean temp = SharedData.getInstance().getCurrentParkingLot().disaplySlot(_high, _width, _depth);
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					
+					if(temp){
+					
+						
+						//TODO: synchronize with server
+
+						
+						informationAlert.setTitle("Disapling slot Succeeded");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Disapling slot succeeded.");
+						informationAlert.showAndWait();
+					
+					}else{
+						
+						informationAlert.setTitle("Disapling slot Error");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Something went wrong!!.");
+						informationAlert.showAndWait();
+						
+					}
+					
+				}
+				
+			}else{
+				
+				informationAlert.setTitle("Disapling slot Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("No slots to disable them!!.");
+				informationAlert.showAndWait();
+				
+			}
+			
 			JSONObject json = new JSONObject();
 			try {
 				
-				//TODO: synchronize with server
 	
-				json.put("spotID", spotId);
+				
 				json.put("lotName", lotName);
 				json.put("cmd", "disableSpot");
 	
@@ -214,27 +279,90 @@ public class ParkingWorkerController {
     
     @FXML
     void activateParkingSpot(ActionEvent event) {
-
-    	String spotId=DisaParkSpotSpotIdTF.getText();
     	
-    	if (spotId.equals("")) {
+    	
+    	if((HeightComboBox.getValue() == null) || (WidthComboBox.getValue() == null) || (DepthComboBox.getValue() == null)) {
 
-			informationAlert.setTitle("activate Spot warrning");
+			informationAlert.setTitle("disable Spot warrning");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please enter spot ID");
+			informationAlert.setContentText("Please fill all the positions");
 			informationAlert.showAndWait();
 			return;
 			
 		} else {
+			
+			Integer _x = Integer.parseInt(HeightComboBox.getValue());
+	    	Integer _y = Integer.parseInt(WidthComboBox.getValue());
+	    	Integer _z = Integer.parseInt(DepthComboBox.getValue());
+	    	
+			
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			
+			int _high = _x - 1;
+			int _width = _y - 1;
+			int _depth = _z - 1;
+			
+			boolean canI = SharedData.getInstance().getCurrentParkingLot().CanUnDisapled();
+			
+			if(canI){
+				
+				if(SharedData.getInstance().getCurrentParkingLot().IsDisapled(_high, _width, _depth)){
+					
+					
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					boolean temp = SharedData.getInstance().getCurrentParkingLot().undisaplySlot(_high, _width, _depth);
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					
+					if(temp){
+					
+						
+						//TODO: synchronize with server
+						
+						informationAlert.setTitle("Activating disapled slot Succeeded");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Activating disapled slot Succeeded.");
+						informationAlert.showAndWait();
+						
+						
+					
+					}else{
+						
+						informationAlert.setTitle("Activating disapled slot Error");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Something went wrong!!.");
+						informationAlert.showAndWait();
+						
+					}
+					
+				}else{
+					
+						
+					informationAlert.setTitle("Disapling slot Warning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("The wanted slot is not disapled!!.");
+					informationAlert.showAndWait();
+					
+					
+					
+				}
+				
+			}else{
+				
+				informationAlert.setTitle("Disapling slot Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("No disapled slots to available them!!.");
+				informationAlert.showAndWait();
+				
+			}
+			
 			JSONObject json = new JSONObject();
 			try {
 				
-				//TODO: synchronize with server
+				
 	
-				json.put("spotID", spotId);
+				
 				json.put("lotName", lotName);
-				json.put("cmd", "activateSpote");
+				json.put("cmd", "disableSpot");
 	
 				// send to reservation servlet
 	//			JSONObject ret = request(json, "CustomerServiceReservationController");
@@ -244,7 +372,6 @@ public class ParkingWorkerController {
 				e.printStackTrace();
 			}
 		}
-    	
     }
 
     @FXML
@@ -372,58 +499,64 @@ public class ParkingWorkerController {
 			double cost = Math.round(deff / 60.0) * SharedData.getInstance().getReservationCost();
 			long _start = arriveCal.getTime().getTime();
 			long _end = leaveCal.getTime().getTime();
-
-			String _name = SharedData.getInstance().getCurrentUser().getUsername();
-
-			confirmAlert.setTitle("Confirmation Dialog");
-			confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
-
-			Optional<ButtonType> result = confirmAlert.showAndWait();
-			if (result.get() == ButtonType.OK) {
-
-				if (SharedData.getInstance().getCurrentUser().getBalance() < cost) {
-
-					informationAlert.setTitle("Reservation warrning");
-					informationAlert.setHeaderText(null);
-					informationAlert.setContentText(
-							"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
-					informationAlert.showAndWait();
-
-				} else {
-					JSONObject json = new JSONObject();
-					try {
-						
-						//TODO: synchronize with server
-
-						json.put("carNumber", _carNumber);
-						json.put("lotName", _lotName);
-						json.put("username", _name);
-						json.put("start", _start);
-						json.put("end", _end);
-						json.put("cost", cost);
-						json.put("type", "r");
-						json.put("activated", 0);
-						json.put("cmd", "reserveAhead");
-
-						// send to reservation servlet
-//						JSONObject ret = request(json, "CustomerServiceReservationController");
-//
-////						System.out.println(ret.getBoolean("result"));
-//						if (ret.getBoolean("result")) {
-//							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-//							
-////							updateBalance((-1) * cost);
-////							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-//						}
-					} catch (JSONException e) {
-						e.printStackTrace();
+			long _now = Calendar.getInstance().getTime().getTime();
+			System.out.println(_now + " and the start is" + _start + " and the end is " + _end);
+			if (_now > _start || _now > _end || _start >= _end) {
+				informationAlert.setTitle("Reservation Warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Please adjust dates and hours to convenient values");
+				informationAlert.showAndWait();
+			}else{
+				String _name = SharedData.getInstance().getCurrentUser().getUsername();
+	
+				confirmAlert.setTitle("Confirmation Dialog");
+				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
+	
+				Optional<ButtonType> result = confirmAlert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+	
+					if (SharedData.getInstance().getCurrentUser().getBalance() < cost) {
+	
+						informationAlert.setTitle("Reservation warrning");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText(
+								"Insufficient fund, please make a deposit, you can do charge your wallet by clicking in Acount");
+						informationAlert.showAndWait();
+	
+					} else {
+						JSONObject json = new JSONObject();
+						try {
+							
+							//TODO: synchronize with server
+	
+							json.put("carNumber", _carNumber);
+							json.put("lotName", _lotName);
+							json.put("username", _name);
+							json.put("start", _start);
+							json.put("end", _end);
+							json.put("cost", cost);
+							json.put("type", "r");
+							json.put("activated", 0);
+							json.put("cmd", "reserveAhead");
+	
+							// send to reservation servlet
+	//						JSONObject ret = request(json, "CustomerServiceReservationController");
+	//
+	////						System.out.println(ret.getBoolean("result"));
+	//						if (ret.getBoolean("result")) {
+	//							System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+	//							
+	////							updateBalance((-1) * cost);
+	////							System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+	//						}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
 		}
     }
-
-
 
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
@@ -574,12 +707,12 @@ public class ParkingWorkerController {
     	
 
     }
-	public void setWelcome(String welcome) {
-		// TODO Auto-generated method stub
+	
+    public void setWelcome(String welcome) {
 		welcomeBanner.setText(welcome);
 	}
+	
 	public void setTopOfParkingWorker(String _username) {
-		// TODO Auto-generated method stub
 		textInTopOfLogIn.setText(_username);
 	}
 
