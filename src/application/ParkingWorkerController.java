@@ -183,10 +183,6 @@ public class ParkingWorkerController {
     @FXML
     void disabledParkingSpot(ActionEvent event) {
     	
-    	
-    	
-    	
-    	
     	if((HeightComboBox.getValue() == null) || (WidthComboBox.getValue() == null) || (DepthComboBox.getValue() == null)) {
 
 			informationAlert.setTitle("disable Spot warrning");
@@ -234,6 +230,10 @@ public class ParkingWorkerController {
 					
 					if(temp){
 					
+						
+						//TODO: synchronize with server
+
+						
 						informationAlert.setTitle("Disapling slot Succeeded");
 						informationAlert.setHeaderText(null);
 						informationAlert.setContentText("Disapling slot succeeded.");
@@ -250,12 +250,18 @@ public class ParkingWorkerController {
 					
 				}
 				
+			}else{
+				
+				informationAlert.setTitle("Disapling slot Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("No slots to disable them!!.");
+				informationAlert.showAndWait();
+				
 			}
 			
 			JSONObject json = new JSONObject();
 			try {
 				
-				//TODO: synchronize with server
 	
 				
 				json.put("lotName", lotName);
@@ -273,27 +279,90 @@ public class ParkingWorkerController {
     
     @FXML
     void activateParkingSpot(ActionEvent event) {
-
-    	String spotId=DisaParkSpotSpotIdTF.getText();
     	
-    	if (spotId.equals("")) {
+    	
+    	if((HeightComboBox.getValue() == null) || (WidthComboBox.getValue() == null) || (DepthComboBox.getValue() == null)) {
 
-			informationAlert.setTitle("activate Spot warrning");
+			informationAlert.setTitle("disable Spot warrning");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please enter spot ID");
+			informationAlert.setContentText("Please fill all the positions");
 			informationAlert.showAndWait();
 			return;
 			
 		} else {
+			
+			Integer _x = Integer.parseInt(HeightComboBox.getValue());
+	    	Integer _y = Integer.parseInt(WidthComboBox.getValue());
+	    	Integer _z = Integer.parseInt(DepthComboBox.getValue());
+	    	
+			
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			
+			int _high = _x - 1;
+			int _width = _y - 1;
+			int _depth = _z - 1;
+			
+			boolean canI = SharedData.getInstance().getCurrentParkingLot().CanUnDisapled();
+			
+			if(canI){
+				
+				if(SharedData.getInstance().getCurrentParkingLot().IsDisapled(_high, _width, _depth)){
+					
+					
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					boolean temp = SharedData.getInstance().getCurrentParkingLot().undisaplySlot(_high, _width, _depth);
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					
+					if(temp){
+					
+						
+						//TODO: synchronize with server
+						
+						informationAlert.setTitle("Activating disapled slot Succeeded");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Activating disapled slot Succeeded.");
+						informationAlert.showAndWait();
+						
+						
+					
+					}else{
+						
+						informationAlert.setTitle("Activating disapled slot Error");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Something went wrong!!.");
+						informationAlert.showAndWait();
+						
+					}
+					
+				}else{
+					
+						
+					informationAlert.setTitle("Disapling slot Warning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("The wanted slot is not disapled!!.");
+					informationAlert.showAndWait();
+					
+					
+					
+				}
+				
+			}else{
+				
+				informationAlert.setTitle("Disapling slot Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("No disapled slots to available them!!.");
+				informationAlert.showAndWait();
+				
+			}
+			
 			JSONObject json = new JSONObject();
 			try {
 				
-				//TODO: synchronize with server
+				
 	
-				json.put("spotID", spotId);
+				
 				json.put("lotName", lotName);
-				json.put("cmd", "activateSpote");
+				json.put("cmd", "disableSpot");
 	
 				// send to reservation servlet
 	//			JSONObject ret = request(json, "CustomerServiceReservationController");
@@ -303,7 +372,6 @@ public class ParkingWorkerController {
 				e.printStackTrace();
 			}
 		}
-    	
     }
 
     @FXML
@@ -490,8 +558,6 @@ public class ParkingWorkerController {
 		}
     }
 
-
-
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -641,12 +707,12 @@ public class ParkingWorkerController {
     	
 
     }
-	public void setWelcome(String welcome) {
-		// TODO Auto-generated method stub
+	
+    public void setWelcome(String welcome) {
 		welcomeBanner.setText(welcome);
 	}
+	
 	public void setTopOfParkingWorker(String _username) {
-		// TODO Auto-generated method stub
 		textInTopOfLogIn.setText(_username);
 	}
 
