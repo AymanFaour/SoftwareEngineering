@@ -516,7 +516,9 @@ public class CustomerServiceController {
     	String theComplaint = complaintJO.getString("content");
     	String theUser = complaintJO.getString("username");
     	String theLotName = complaintJO.getString("lotName");
-		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200", email);
+    	int complaintId = complaintJO.getInt("complaintID");
+		CpsMailBox mail = new CpsMailBox(SharedData.getInstance().getCPSEmail(),
+										 SharedData.getInstance().getCPSPassword(), email);
 		mail.sendMailToClientComplaint(response,refundTF, theUser, theComplaint, theLotName);
 		
 //		JSONObject json = new JSONObject();
@@ -524,7 +526,7 @@ public class CustomerServiceController {
 //			
 //			//TODO: synchronize with server
 //
-//			json.put("carNumber", _carNumber);
+//			json.put("complaintID", complaintId);
 //			json.put("lotName", _lotName);
 //			json.put("username", _name);
 //			json.put("start", _start);
