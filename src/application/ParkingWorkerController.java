@@ -5,7 +5,6 @@
 package application;
 
 import java.io.IOException;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -148,6 +147,8 @@ public class ParkingWorkerController {
 
     @FXML // fx:id="HeightComboBox"
     private ComboBox<String> HeightComboBox; // Value injected by FXMLLoader
+
+
 
     private ObservableList<String> myComboBoxParkResComboBox = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
@@ -580,7 +581,6 @@ public class ParkingWorkerController {
     	parkingReservationButton.getStyleClass().add("loginView-buttons");
     	disabledParkingSpotButton.getStyleClass().removeAll("pressedButton", "focus");
     	disabledParkingSpotButton.getStyleClass().add("loginView-buttons");
-    
     }
 
     @FXML
@@ -715,7 +715,5 @@ public class ParkingWorkerController {
 	public void setTopOfParkingWorker(String _username) {
 		textInTopOfLogIn.setText(_username);
 	}
-
- 
 
 }
