@@ -16,7 +16,7 @@ public class CpsMailBox {
 
 	private String username;
 	private String password;
-	public String sendTo;
+	private String sendTo;
 	Properties props;
 	Session session;
 	
