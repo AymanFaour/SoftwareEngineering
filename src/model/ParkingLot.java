@@ -209,5 +209,34 @@ public class ParkingLot {
 		return total < _capacity;
 
 	}
+	
+	public boolean CanDisapled(){
+		return (_usedSlots + _disabledSlots) < _capacity;
+	}
+	
+	public boolean IsBusy(int hight, int width, int depth){
+		return _lot[hight][width][depth].getStatus() == SpotStatus.Busy;
+	}
+	
+	public boolean IsAvailable(int hight, int width, int depth){
+		return _lot[hight][width][depth].getStatus() == SpotStatus.Available;
+	}
+	
+	public boolean IsDisapled(int hight, int width, int depth){
+		return _lot[hight][width][depth].getStatus() == SpotStatus.Unavailable;
+	}
+	
+	public boolean disaplySlot(int hight, int width, int depth) {
+		
+		_lot[hight][width][depth].setCarNumber("");
+		_lot[hight][width][depth].setStatus(SpotStatus.Unavailable);
+		_lot[hight][width][depth].setArrive(null);
+		_lot[hight][width][depth].setLeave(null);
+		
+		_disabledSlots++;
+		
+		return true;
+		
+	}
 
 }

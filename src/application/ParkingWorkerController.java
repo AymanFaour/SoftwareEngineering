@@ -5,6 +5,7 @@
 package application;
 
 import java.io.IOException;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,7 +36,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.SharedData;
+import model.*;
 
 public class ParkingWorkerController {
 
@@ -181,24 +182,82 @@ public class ParkingWorkerController {
     
     @FXML
     void disabledParkingSpot(ActionEvent event) {
-    	String spotId=DisaParkSpotSpotIdTF.getText();
     	
-    	if (spotId.equals("")) {
+    	
+    	
+    	
+    	
+    	if((HeightComboBox.getValue() == null) || (WidthComboBox.getValue() == null) || (DepthComboBox.getValue() == null)) {
 
 			informationAlert.setTitle("disable Spot warrning");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please enter spot ID");
+			informationAlert.setContentText("Please fill all the positions");
 			informationAlert.showAndWait();
 			return;
 			
 		} else {
+			
+			Integer _x = Integer.parseInt(HeightComboBox.getValue());
+	    	Integer _y = Integer.parseInt(WidthComboBox.getValue());
+	    	Integer _z = Integer.parseInt(DepthComboBox.getValue());
+	    	
+			
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			
+			int _high = _x - 1;
+			int _width = _y - 1;
+			int _depth = _z - 1;
+			
+			boolean canI = SharedData.getInstance().getCurrentParkingLot().CanDisapled();
+			
+			if(canI){
+				
+				if(SharedData.getInstance().getCurrentParkingLot().IsBusy(_high, _width, _depth)){
+					
+					informationAlert.setTitle("Disapling slot warrning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("There are a car parking in the wanted slot, please wait for the slot to be availabe");
+					informationAlert.showAndWait();
+					
+				}else if(SharedData.getInstance().getCurrentParkingLot().IsDisapled(_high, _width, _depth)){
+					
+					informationAlert.setTitle("Disapling slot warrning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Pay attention that this parking slot is already disapled.");
+					informationAlert.showAndWait();
+					
+				}else if(SharedData.getInstance().getCurrentParkingLot().IsAvailable(_high, _width, _depth)){
+					
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					boolean temp = SharedData.getInstance().getCurrentParkingLot().disaplySlot(_high, _width, _depth);
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					
+					if(temp){
+					
+						informationAlert.setTitle("Disapling slot Succeeded");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Disapling slot succeeded.");
+						informationAlert.showAndWait();
+					
+					}else{
+						
+						informationAlert.setTitle("Disapling slot Error");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Something went wrong!!.");
+						informationAlert.showAndWait();
+						
+					}
+					
+				}
+				
+			}
+			
 			JSONObject json = new JSONObject();
 			try {
 				
 				//TODO: synchronize with server
 	
-				json.put("spotID", spotId);
+				
 				json.put("lotName", lotName);
 				json.put("cmd", "disableSpot");
 	
