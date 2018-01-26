@@ -358,21 +358,12 @@ public class CustomerServiceController {
     void loadParkingReservation(ActionEvent event) {
     	HandlingComplaintsCustomerServiceBorderPane.setVisible(false);
     	ParkingReservationCustomerServiceBorderPane.setVisible(true);
-    	
-    
-    
-    	
-    	
-    	
     	parkingReservationButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	parkingReservationButton.getStyleClass().add("pressedButton");
     	HandlingComplaintsButton.getStyleClass().removeAll("pressedButton", "focus");
     	HandlingComplaintsButton.getStyleClass().add("loginView-buttons");
-    	
-    	
-    	
-    	
     	myComboBoxHoursData.clear();
+    	
     	for(Integer i = 0; i < 24; i++){
     		if(i < 10 ){
     			myComboBoxHoursData.add("0" + i.toString());
@@ -541,7 +532,7 @@ public class CustomerServiceController {
 			e.printStackTrace();
 		}
     	this.popupwindow.close();
-    	
+    	loadHandlingComplaints(null);
     	
     }
     
