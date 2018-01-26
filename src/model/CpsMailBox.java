@@ -38,7 +38,7 @@ public class CpsMailBox {
 		  });
 	}
 	
-	public void sendMail(String response, String refund){
+	public void sendMailToClientComplaint(String response, String refund, String theUser, String theComplaint, String theLotName){
 		try {
 	
 			Message message = new MimeMessage(session);
@@ -46,11 +46,11 @@ public class CpsMailBox {
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(this.sendTo));
 			message.setSubject("CPS customer service response");
-			message.setText(response + "\nand your refund is: " + refund +" NIS.");
+			message.setText("Dear " + theUser + ",\n\nYour complaint:\n" + theComplaint
+				+"\n\nThe response: \n" + response + "\n\nYour refund: " + refund +" NIS.\n\nThank you, "
+						+ "and have a nice day.\nCPS Customer Service.");
 	
 			Transport.send(message);
-	
-			System.out.println("Done");
 	
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);

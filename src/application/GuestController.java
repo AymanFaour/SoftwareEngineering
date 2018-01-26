@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.JsonNull;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -54,7 +53,6 @@ public class GuestController {
 	@FXML // fx:id="GuestLeavingHourComboBox"
 	private ComboBox<String> GuestLeavingHourComboBox; // Value injected by
 														// FXMLLoader
-
 	@FXML // fx:id="welcomeBanner"
 	private Label welcomeBanner; // Value injected by FXMLLoader
 
@@ -64,7 +62,6 @@ public class GuestController {
 	@FXML // fx:id="GuestLeavingMinuteComboBox"
 	private ComboBox<String> GuestLeavingMinuteComboBox; // Value injected by
 															// FXMLLoader
-
 	@FXML // fx:id="GuestLeavingDateDP"
 	private DatePicker GuestLeavingDateDP; // Value injected by FXMLLoader
 
@@ -165,95 +162,102 @@ public class GuestController {
 			long cost = (long) (Math.ceil(deff / 60.0) * SharedData.getInstance().getOccasionalCost());
 			int ocLeaveHourInt = Integer.parseInt(_ocLeaveHour);
 			int ocLeaveMinuteInt = Integer.parseInt(_ocLeaveMinute);
-
-			String leaveHour = "";
-			if (ocLeaveMinuteInt < 10) {
-				leaveHour = (ocLeaveHourInt) + ":0" + (ocLeaveMinuteInt);
-			} else {
-				leaveHour = (ocLeaveHourInt) + ":" + (ocLeaveMinuteInt);
-			}
-
-			if (ocLeaveHourInt < 10) {
-				leaveHour = "0" + leaveHour;
-			}
-
-			JSONObject json = new JSONObject();
-			try {
-				confirmAlert.setTitle("Confirmation Dialog");
-				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "$ ?");
-
-				Optional<ButtonType> result = confirmAlert.showAndWait();
-				if (result.get() == ButtonType.OK) {
-
-					json.put("carNumber", _carNumber);
-					json.put("lotName", _lotName);
-					json.put("username", "GUEST");
-					json.put("leave", leaveHour);
-					json.put("start", _start);
-					json.put("end", _end);
-					json.put("type", "o");
-					json.put("activated", 1);
-					json.put("cmd", "reserveAhead");
-
-					JSONObject check = request(new JSONObject().put("start", _start).put("end", _end)
-							.put("lotName", _lotName).put("cmd", "overlappingOrders"), "LotOperator");
-					boolean canI = SharedData.getInstance().getCurrentParkingLot().CanPark(check.getInt("overlapping"));
-
-					if (canI) {
-
-						JSONObject ret = request(json, "ReservationController");
-
-						System.out.println(ret.getBoolean("result"));
-						if (ret.getBoolean("result")) {
-
-							informationAlert.setTitle("Parking succeeded");
-							informationAlert.setHeaderText(null);
-							informationAlert
-									.setContentText("Please pay attention that the payment is after exiting the car.");
-							informationAlert.showAndWait();
-
-							boolean res = SharedData.getInstance().getCurrentParkingLot().InsertCar(_carNumber,
-									arriveCal, leaveCal);
-
-							if (res) {
-								informationAlert.setTitle("Parking Succeeded");
-								informationAlert.setHeaderText(null);
-								informationAlert.setContentText("Your car in a safe hands, have a nice day");
-								informationAlert.showAndWait();
-							} else {
-								informationAlert.setTitle("Parking error");
-								informationAlert.setHeaderText(null);
-								informationAlert.setContentText("Error while parking the car !!");
-								informationAlert.showAndWait();
-							}
-
-							signOut(null);
-						}
-
-					} else {
-
-						informationAlert.setTitle("Reservation warrning");
-						informationAlert.setHeaderText(null);
-						informationAlert.setContentText(
-								"Sorry for the inconvenience, for now, there are no enough place in this parking lot.");
-						informationAlert.showAndWait();
-
-					}
-
+			long _now = Calendar.getInstance().getTime().getTime();
+			System.out.println(_now + " and the start is" + _start + " and the end is " + _end);
+			if (_now > _start || _now > _end || _start >= _end) {
+				informationAlert.setTitle("Reservation Warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Please adjust dates and hours to convenient values");
+				informationAlert.showAndWait();
+				} else{
+				String leaveHour = "";
+				if (ocLeaveMinuteInt < 10) {
+					leaveHour = (ocLeaveHourInt) + ":0" + (ocLeaveMinuteInt);
 				} else {
-
-					informationAlert.setTitle("Reservation warrning");
-					informationAlert.setHeaderText(null);
-					informationAlert.setContentText("you havn't enough cost");
-					informationAlert.showAndWait();
+					leaveHour = (ocLeaveHourInt) + ":" + (ocLeaveMinuteInt);
 				}
-
-			} catch (JSONException e) {
-				e.printStackTrace();
+	
+				if (ocLeaveHourInt < 10) {
+					leaveHour = "0" + leaveHour;
+				}
+	
+				JSONObject json = new JSONObject();
+				try {
+					confirmAlert.setTitle("Confirmation Dialog");
+					confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "\u20AA ?");
+	
+					Optional<ButtonType> result = confirmAlert.showAndWait();
+					if (result.get() == ButtonType.OK) {
+	
+						json.put("carNumber", _carNumber);
+						json.put("lotName", _lotName);
+						json.put("username", "GUEST");
+						json.put("leave", leaveHour);
+						json.put("start", _start);
+						json.put("end", _end);
+						json.put("type", "o");
+						json.put("activated", 1);
+						json.put("cmd", "reserveAhead");
+	
+						JSONObject check = request(new JSONObject().put("start", _start).put("end", _end)
+								.put("lotName", _lotName).put("cmd", "overlappingOrders"), "LotOperator");
+						boolean canI = SharedData.getInstance().getCurrentParkingLot().CanPark(check.getInt("overlapping"));
+	
+						if (canI) {
+	
+							JSONObject ret = request(json, "ReservationController");
+	
+							System.out.println(ret.getBoolean("result"));
+							if (ret.getBoolean("result")) {
+	
+								informationAlert.setTitle("Parking succeeded");
+								informationAlert.setHeaderText(null);
+								informationAlert
+										.setContentText("Please pay attention that the payment is after exiting the car.");
+								informationAlert.showAndWait();
+	
+								boolean res = SharedData.getInstance().getCurrentParkingLot().InsertCar(_carNumber,
+										arriveCal, leaveCal);
+	
+								if (res) {
+									informationAlert.setTitle("Parking Succeeded");
+									informationAlert.setHeaderText(null);
+									informationAlert.setContentText("Your car in a safe hands, have a nice day");
+									informationAlert.showAndWait();
+								} else {
+									informationAlert.setTitle("Parking error");
+									informationAlert.setHeaderText(null);
+									informationAlert.setContentText("Error while parking the car !!");
+									informationAlert.showAndWait();
+								}
+	
+								signOut(null);
+							}
+	
+						} else {
+	
+							informationAlert.setTitle("Reservation warning");
+							informationAlert.setHeaderText(null);
+							informationAlert.setContentText(
+									"Sorry for the inconvenience, for now, there are no enough place in this parking lot.");
+							informationAlert.showAndWait();
+	
+						}
+	
+					} else {
+	
+						informationAlert.setTitle("Reservation warning");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Okay, we didn't charge you");
+						informationAlert.showAndWait();
+					}
+	
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+	
 			}
-
 		}
-
 	}
 
 	@FXML
@@ -311,7 +315,7 @@ public class GuestController {
 
 						informationAlert.setTitle("bill confirmation");
 						informationAlert.setHeaderText(null);
-						informationAlert.setContentText("you have been charged " + cost + "$ from your credit card");
+						informationAlert.setContentText("you have been charged " + cost + "\u20AA from your credit card");
 						informationAlert.showAndWait();
 
 						JSONObject res = request(new JSONObject().put("cmd", "exit").put("rid", order.getInt("rid"))

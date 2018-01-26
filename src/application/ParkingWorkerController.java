@@ -140,10 +140,22 @@ public class ParkingWorkerController {
     @FXML // fx:id="ParkingReservationCreditCardIdTF"
     private TextField ParkingReservationCreditCardIdTF; // Value injected by FXMLLoader
  
+    @FXML // fx:id="DepthComboBox"
+    private ComboBox<String> DepthComboBox; // Value injected by FXMLLoader
+   
+    @FXML // fx:id="WidthComboBox"
+    private ComboBox<String> WidthComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="HeightComboBox"
+    private ComboBox<String> HeightComboBox; // Value injected by FXMLLoader
+
     private ObservableList<String> myComboBoxParkResComboBox = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
     
+    private ObservableList<String> myComboBoxWidth = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxDepth = FXCollections.observableArrayList();
+    private ObservableList<String> myComboBoxHeight = FXCollections.observableArrayList();
     //private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
     
     
@@ -585,6 +597,37 @@ public class ParkingWorkerController {
     	parkingReservationButton.getStyleClass().add("loginView-buttons");
     	alternativeParkButton.getStyleClass().removeAll("pressedButton", "focus");
     	alternativeParkButton.getStyleClass().add("loginView-buttons");
+    	
+    	myComboBoxWidth.clear();
+    	for(Integer i = 1; i <SharedData.getInstance().getCurrentParkingLot().getWidth()+1 ; i++){
+    		if(i < 10 ){
+    			myComboBoxWidth.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxWidth.add(i.toString());
+    	}
+    	
+    	myComboBoxHeight.clear();
+    	for(Integer i = 1; i <SharedData.getInstance().getCurrentParkingLot().getHeight()+1 ; i++){
+    		if(i < 10 ){
+    			myComboBoxHeight.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxHeight.add(i.toString());
+    	}
+    	myComboBoxDepth.clear();
+    	for(Integer i = 1; i < SharedData.getInstance().getCurrentParkingLot().getDepth()+1 ; i++){
+    		if(i < 10 ){
+    			myComboBoxDepth.add("0" + i.toString());
+    		}
+    		else
+    			myComboBoxDepth.add(i.toString());
+    	}
+    	DepthComboBox.setItems(myComboBoxDepth);
+    	WidthComboBox.setItems(myComboBoxWidth);
+    	HeightComboBox.setItems(myComboBoxHeight);
+        
+    	
 
     }
 	public void setWelcome(String welcome) {
