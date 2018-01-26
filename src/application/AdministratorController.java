@@ -1,18 +1,30 @@
 package application;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.ParkingLot;
+import model.ParkingSituation;
 import model.SharedData;
 
 public class AdministratorController {
@@ -57,18 +69,64 @@ public class AdministratorController {
     private Button changePricesRequestsButton;
     private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
     private ObservableList<String> myComboxReport = FXCollections.observableArrayList();
+    private Stage popupwindow;
  
 
     @FXML
     void signOut(ActionEvent event) {
+		SharedData.getInstance().setCurrentSystemUser(null);
+
+		Scene currentScene = signOutButton.getScene();
+		Parent mainLayout = null;
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		try {
+			mainLayout = loader.load();
+		} catch (IOException | NullPointerException e) {
+
+			e.printStackTrace();
+		}
+
+		Scene scene = new Scene(mainLayout);
+		Stage stage = (Stage) currentScene.getWindow();
+		stage.setScene(scene);
 
     }
 
     @FXML
     void getCurrentSituation(ActionEvent event) {
 
+    	popupwindow=new Stage();
+		popupwindow.initModality(Modality.APPLICATION_MODAL);
+		popupwindow.setTitle("Current Situation");
+		
+		VBox vB=new VBox();
+		vB.setPadding(new Insets(10, 10, 10, 10));
+		
+		vB.getChildren().clear();
+		ParkingLot pl = SharedData.getInstance().getCurrentParkingLot();
+		ParkingSituation ps = new ParkingSituation(pl.getHeight(), pl.getWidth());
+		ArrayList<GridPane> gpAL = ps.getGridLayer(pl);
+		for(int i = 0 ; i < gpAL.size(); i++){
+			Label layerNumber = new Label("Layer #" + Integer.toString(i+1) +":");
+			vB.getChildren().add(layerNumber);
+			vB.getChildren().add(gpAL.get(i));
+		}
+		
+		
+		Scene scene1= new Scene(vB, 520, 520);
+		      
+		popupwindow.setScene(scene1);
+		      
+		popupwindow.showAndWait();
+//
+//    	currentSituationCallBack(event);
     }
-
+ 
+    
+  
+  
+    
     @FXML
     void getReport(ActionEvent event) {
 

@@ -130,7 +130,7 @@ public class ParkingLotDirectorController {
     	
     	if (report == null) {
 
-			informationAlert.setTitle("Report warrning");
+			informationAlert.setTitle("Report warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please choose report type to complete the report");
 			informationAlert.showAndWait();
@@ -171,7 +171,7 @@ public class ParkingLotDirectorController {
     	
     	if (cost.equals("")) {
 
-			informationAlert.setTitle("change warrning");
+			informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new cost");
 			informationAlert.showAndWait();
@@ -206,7 +206,7 @@ public class ParkingLotDirectorController {
     	
     	if (cost.equals("")) {
 
-			informationAlert.setTitle("change warrning");
+			informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new cost");
 			informationAlert.showAndWait();
@@ -241,7 +241,7 @@ public class ParkingLotDirectorController {
     	
     	if (hours.equals("")) {
 
-			informationAlert.setTitle("change warrning");
+			informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new number of hours");
 			informationAlert.showAndWait();
@@ -276,7 +276,7 @@ public class ParkingLotDirectorController {
     	
     	if (hours.equals("")) {
 
-			informationAlert.setTitle("change warrning");
+			informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new number of hours");
 			informationAlert.showAndWait();
