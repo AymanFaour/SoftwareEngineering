@@ -1019,20 +1019,26 @@ public class LogInController {
 		JSONObject ret = new JSONObject();
 
 		try {
+			
+			confirmAlert.setTitle("Cancelation Dialog");
+			confirmAlert.setContentText("Are you sure that you want to cancel this reserve ?");
 
-			json.put("rid", id);
-			json.put("cmd", "cancelReserve");
-			ret = request(json, "ReservationController");
-			System.out.println(ret);
-			if (ret.getBoolean("result")) {
+			Optional<ButtonType> result = confirmAlert.showAndWait();
+			if (result.get() == ButtonType.OK) {
 
-				loadViewReservation(null);
-				double refund = 0;
-				refund = ret.getDouble("refund");
-				updateBalance(refund);
+				json.put("rid", id);
+				json.put("cmd", "cancelReserve");
+				ret = request(json, "ReservationController");
+				System.out.println(ret);
+				if (ret.getBoolean("result")) {
+	
+					loadViewReservation(null);
+					double refund = 0;
+					refund = ret.getDouble("refund");
+					updateBalance(refund);
+				}
 			}
-
-		} catch (JSONException e1) {
+		} catch(JSONException e1) {
 			e1.printStackTrace();
 		}
 
