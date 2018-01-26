@@ -85,7 +85,9 @@ public class Main extends Application {
 
 			SharedData.getInstance().setIP(config.getString("host"));
 			SharedData.getInstance().setPORT(config.getString("port"));
-
+			SharedData.getInstance().setCPSEmail(config.getString("cpsemail"));
+			SharedData.getInstance().setCPSPassword(config.getString("cpsemailpassword"));
+			
 			// System.out.println(config + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 			ParkingLot park = new ParkingLot(config.getString("lotName"), 3, 3, config.getInt("width"));
