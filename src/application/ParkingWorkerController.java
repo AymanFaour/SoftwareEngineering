@@ -182,14 +182,12 @@ public class ParkingWorkerController {
     
     @FXML
     void disabledParkingSpot(ActionEvent event) {
-    	String spotId=DisaParkSpotSpotIdTF.getText();
-    	
-    	Integer _x = 1;
-    	Integer _y = 1;
-    	Integer _z = 1;
     	
     	
-    	if((_x == null) || (_y == null) || (_z == null)) {
+    	
+    	
+    	
+    	if((HeightComboBox.getValue() == null) || (WidthComboBox.getValue() == null) || (DepthComboBox.getValue() == null)) {
 
 			informationAlert.setTitle("disable Spot warrning");
 			informationAlert.setHeaderText(null);
@@ -198,6 +196,11 @@ public class ParkingWorkerController {
 			return;
 			
 		} else {
+			
+			Integer _x = Integer.parseInt(HeightComboBox.getValue());
+	    	Integer _y = Integer.parseInt(WidthComboBox.getValue());
+	    	Integer _z = Integer.parseInt(DepthComboBox.getValue());
+	    	
 			
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 			
@@ -254,7 +257,7 @@ public class ParkingWorkerController {
 				
 				//TODO: synchronize with server
 	
-				json.put("spotID", spotId);
+				
 				json.put("lotName", lotName);
 				json.put("cmd", "disableSpot");
 	
