@@ -59,7 +59,7 @@
                                     <ComboBox fx:id="parkLotNameComboBox" prefWidth="150.0" promptText="select parking name" stylesheets="@application.css" />
                                  </children>
                               </HBox>
-                              <Button fx:id="currentSituationButton" mnemonicParsing="false" onAction="#getCurrentSituation" styleClass="go-button" stylesheets="@application.css" text="Current Situation." />
+                              <Button fx:id="currentSituationButton" mnemonicParsing="false" onAction="#getCurrentSituation" styleClass="go-button" stylesheets="@application.css" text="Current Situation" />
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
                                     <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Report:" />

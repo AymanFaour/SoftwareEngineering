@@ -429,7 +429,26 @@ public class MainController {
 
 			}
 			else{
-				
+				String _fullname = SharedData.getInstance().getCurrentSystemUser().get_firstName()
+		    			+ " " + SharedData.getInstance().getCurrentSystemUser().get_lastName();
+		    	Scene currentScene = signiInButton.getScene();
+		    	
+		    	Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("AdministratorView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+					
+					e.printStackTrace();
+				}
+				AdministratorController administratorController = loader.getController();
+				administratorController.setWelcome("Welcome to Workers System");
+				administratorController.setTopOfParkingWorker(_fullname);
+				Scene scene = new Scene(mainLayout);
+		    	
+		    	Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
 			}
 
 		}		
