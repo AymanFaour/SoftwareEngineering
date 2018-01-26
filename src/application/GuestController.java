@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.gson.JsonNull;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
