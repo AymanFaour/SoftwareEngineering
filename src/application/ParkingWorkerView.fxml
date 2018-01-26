@@ -218,11 +218,9 @@
                                           <Insets />
                                        </HBox.margin>
                                     </Label>
-                                    <TextField fx:id="DisaParkSpotSpotIdTF" styleClass="text-field-first" stylesheets="@application.css">
-                                       <HBox.margin>
-                                          <Insets left="5.0" />
-                                       </HBox.margin>
-                                    </TextField>
+                                    <ComboBox id="#hour-minutes-combo" fx:id="HeightComboBox" prefWidth="78.0" promptText="Height" stylesheets="@application.css" />
+                                    <ComboBox fx:id="WidthComboBox" prefWidth="78.0" promptText="Width " stylesheets="@application.css" />
+                                    <ComboBox id="#hour-minutes-combo" fx:id="DepthComboBox" prefWidth="78.0" promptText="Depth" stylesheets="@application.css" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />

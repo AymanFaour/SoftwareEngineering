@@ -49,7 +49,7 @@
             </HBox>
             <StackPane prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <BorderPane fx:id="HandlingComplaintsCustomerServiceBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+                  <BorderPane fx:id="HandlingComplaintsCustomerServiceBorderPane" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
