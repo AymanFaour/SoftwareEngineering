@@ -388,10 +388,10 @@ public class CustomerServiceController {
     }
 	
 
-    void HandlingComplaintsPopUp(ActionEvent event) throws IOException 
+    void HandlingComplaintsPopUp(ActionEvent event, JSONObject complaintsJO) throws IOException, JSONException 
     {
     		popupwindow=new Stage();
-    		      
+    		System.out.println(complaintsJO.toString() + "from the ppop up func");
     		popupwindow.initModality(Modality.APPLICATION_MODAL);
     		popupwindow.setTitle("Handling Complaints");
    
@@ -407,41 +407,8 @@ public class CustomerServiceController {
     		
     		Text response= new Text("Response :");
     		Text complaint= new Text("Complaint :");
-    		Text complaintText =new Text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    				+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    		String content = complaintsJO.getString("content");
+    		Text complaintText =new Text(content);
     		TextArea responseText =new TextArea();
     		ScrollPane complaintScrollPane =new ScrollPane();
     		ScrollPane responseScrollPane =new ScrollPane();
@@ -478,8 +445,8 @@ public class CustomerServiceController {
     		vB.getChildren().addAll(complaint,complaintScrollPane,response,responseScrollPane,layout,layout2);		
     		sendButton.setOnAction(e -> {
 				try {
-		    		sendTheComplaintResponse(vB);
-				} catch (IOException e1) {
+					sendTheComplaintResponse(vB, complaintsJO);
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -493,7 +460,7 @@ public class CustomerServiceController {
     		popupwindow.showAndWait();
     }
     
-    void sendTheComplaintResponse(VBox vb) throws IOException  {
+    void sendTheComplaintResponse(VBox vb, JSONObject complaintJO) throws IOException, JSONException  {
     	int checkRefund=0;
     	String refundTF=((TextField)(((HBox)vb.getChildren().get(4)).getChildren().get(1))).getText();	
     	String response=((TextArea)((ScrollPane)vb.getChildren().get(3)).getContent()).getText();
@@ -518,7 +485,7 @@ public class CustomerServiceController {
     	
     	if (checkRefund==1||refundTF.indexOf('-')!=-1) {
 
-			informationAlert.setTitle(" warrning");
+			informationAlert.setTitle("warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText(
 					"refund value must contain only numbers.");
@@ -526,8 +493,41 @@ public class CustomerServiceController {
 			return;
 
 		}
-		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200","cps.client4@gmail.com");
-		mail.sendMail(response,refundTF);
+    	String email = complaintJO.getString("email");
+    	String theComplaint = complaintJO.getString("content");
+    	String theUser = complaintJO.getString("username");
+    	String theLotName = complaintJO.getString("lotName");
+		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200", email);
+		mail.sendMailToClientComplaint(response,refundTF, theUser, theComplaint, theLotName);
+		
+//		JSONObject json = new JSONObject();
+//		try {
+//			
+//			//TODO: synchronize with server
+//
+//			json.put("carNumber", _carNumber);
+//			json.put("lotName", _lotName);
+//			json.put("username", _name);
+//			json.put("start", _start);
+//			json.put("end", _end);
+//			json.put("cost", cost);
+//			json.put("type", "r");
+//			json.put("activated", 0);
+//			json.put("cmd", "reserveAhead");
+//
+//			// send to reservation servlet
+////			JSONObject ret = request(json, "CustomerServiceReservationController");
+////
+//////			System.out.println(ret.getBoolean("result"));
+////			if (ret.getBoolean("result")) {
+////				System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+////				
+//////				updateBalance((-1) * cost);
+//////				System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+////			}
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
     	this.popupwindow.close();
     	
     	
@@ -585,7 +585,8 @@ public class CustomerServiceController {
 						String css = getClass().getResource("application.css").toExternalForm();
 						handleComplaintButton.getStylesheets().clear();
 						handleComplaintButton.getStylesheets().add(css);
-						handleComplaintButton.setOnAction(e -> complainHandlerCallBack(e));
+						JSONObject ret2 = (JSONObject) ja.get(i);
+						handleComplaintButton.setOnAction(e -> complainHandlerCallBack(e, ret2));
 						
 						handleComplaintButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(handleComplaintButton);
@@ -621,11 +622,14 @@ public class CustomerServiceController {
 
 
 
-	private void complainHandlerCallBack(ActionEvent e) {
+	private void complainHandlerCallBack(ActionEvent e, JSONObject obj) {
 		// TODO Auto-generated method stub
 		try {
-			HandlingComplaintsPopUp(null);
+			HandlingComplaintsPopUp(null, obj);
 		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
