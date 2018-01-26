@@ -516,7 +516,7 @@ public class CustomerServiceController {
     	String theComplaint = complaintJO.getString("content");
     	String theUser = complaintJO.getString("username");
     	String theLotName = complaintJO.getString("lotName");
-    	String complaintId = complaintJO.getString("complaintID");
+    	int complaintId = complaintJO.getInt("complaintID");
 		CpsMailBox mail = new CpsMailBox("cps.team4@gmail.com", "200200200", email);
 		mail.sendMailToClientComplaint(response,refundTF, theUser, theComplaint, theLotName);
 		
