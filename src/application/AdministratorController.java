@@ -27,6 +27,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -75,11 +76,16 @@ public class AdministratorController {
 
     @FXML
     private Button changePricesRequestsButton;
+    
+    @FXML // fx:id="changePricesRequestVbox"
+    private VBox changePricesRequestVbox; // Value injected by FXMLLoader
+
+    
     private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
     private ObservableList<String> myComboxReport = FXCollections.observableArrayList();
     private Stage popupwindow;
- 
 
+    
     @FXML
     void signOut(ActionEvent event) {
     	
@@ -248,6 +254,77 @@ public class AdministratorController {
     	reportsButton.getStyleClass().removeAll("pressedButton", "focus");
     	reportsButton.getStyleClass().add("loginView-buttons");
     	
+    	//int length = changePricesRequestVbox.getChildren().size();
+    	//changePricesRequestVbox.getChildren().remove(0, length);
+		
+    	 Label  occasionalReservationPrice= new Label("10");
+    	 occasionalReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+ 		Label RegularReservationPrice = new Label("10");
+ 		RegularReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+ 		Label  routinelySubscriptionHours = new Label("10");
+ 		routinelySubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+ 		Label   businessSubscriptionHours = new Label("10");
+ 		businessSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+ 		Label   fullSubscriptionHours = new Label("10");
+ 		fullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+ 		
+ 		Label  NewOccasionalReservationPrice= new Label("15");
+ 		NewOccasionalReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		Label newRegularReservationPrice = new Label("15");
+		newRegularReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		Label  newRoutinelySubscriptionHours = new Label("15");
+		newRoutinelySubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		Label   newbusinessSubscriptionHours = new Label("15");
+		newbusinessSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		Label   newFullSubscriptionHours = new Label("15");
+		newFullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		
+    	HBox oldHbox = new HBox();
+    	oldHbox.getChildren().add(occasionalReservationPrice);
+    	oldHbox.getChildren().add(RegularReservationPrice);
+    	oldHbox.getChildren().add(routinelySubscriptionHours);
+    	oldHbox.getChildren().add(businessSubscriptionHours);
+    	oldHbox.getChildren().add(fullSubscriptionHours);
+    	oldHbox.setStyle("-fx-background-color: red");
+    	oldHbox.getStyleClass().add("hbox");
+    
+    	Button approve=new Button("Approve");
+		Button refuse=new Button("Refuse");
+				
+		HBox newHbox = new HBox();
+		newHbox.getChildren().add(NewOccasionalReservationPrice);
+		newHbox.getChildren().add(newRegularReservationPrice);
+		newHbox.getChildren().add(newRoutinelySubscriptionHours);
+		newHbox.getChildren().add(newFullSubscriptionHours);
+		newHbox.getChildren().add(newbusinessSubscriptionHours);
+		newHbox.getChildren().add(approve);
+		newHbox.getChildren().add(refuse);
+		oldHbox.setStyle("-fx-background-color: green");
+		
+		
+		
+		approve.setId("approveButton" /*+ resId.getText()*/);
+		String css = getClass().getResource("application.css").toExternalForm();
+		approve.getStylesheets().clear();
+		approve.getStylesheets().add(css);
+		//approve.setOnAction(e -> approve(e,requestId.getText());
+		approve.getStyleClass().add("approve-button");
+		approve.setStyle("-fx-color: #d0e6f8;");
+	
+		refuse.setId("refuseButton" /*+ resId.getText()*/);
+		refuse.getStylesheets().clear();
+		refuse.getStylesheets().add(css);
+		//approve.setOnAction(e -> refuse(e, requestId.getText());
+		refuse.getStyleClass().add("approve-button");
+		refuse.setStyle("-fx-color: #8d2626;");
+	
+		newHbox.setStyle("-fx-background-color:#98FB98;-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+				+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+		oldHbox.setStyle("-fx-background-color: #FF4500;-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+				+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+		changePricesRequestVbox.getChildren().add(oldHbox);
+		changePricesRequestVbox.getChildren().add(newHbox);
+    	
     	//TODO: to get all the price change costs
     	
     	JSONObject json = new JSONObject();
@@ -275,6 +352,7 @@ public class AdministratorController {
     	
 
     }
+    
 
 	public void setWelcome(String welcome) {
 		welcomeBanner.setText(welcome);
