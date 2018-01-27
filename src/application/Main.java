@@ -105,9 +105,9 @@ public class Main extends Application {
 				System.out.println(ret);
 
 				JSONArray costs = ret.getJSONArray("Costs");
-
-				SharedData.getInstance().setReservationCost(((JSONObject) costs.get(1)).getDouble("cost"));
+				
 				SharedData.getInstance().setOccasionalCost(((JSONObject) costs.get(0)).getDouble("cost"));
+				SharedData.getInstance().setReservationCost(((JSONObject) costs.get(1)).getDouble("cost"));
 				SharedData.getInstance().setRoutineCost(((JSONObject) costs.get(2)).getDouble("cost"));
 				SharedData.getInstance().setBusinessCost(((JSONObject) costs.get(3)).getDouble("cost"));
 				SharedData.getInstance().setFullCost(((JSONObject) costs.get(4)).getDouble("cost"));
