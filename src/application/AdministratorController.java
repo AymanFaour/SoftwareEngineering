@@ -106,12 +106,7 @@ public class AdministratorController {
 		vB.getChildren().clear();
 		ParkingLot pl = SharedData.getInstance().getCurrentParkingLot();
 		ParkingSituation ps = new ParkingSituation(pl.getHeight(), pl.getWidth());
-		ArrayList<GridPane> gpAL = ps.getGridLayer(pl);
-		for(int i = 0 ; i < gpAL.size(); i++){
-			Label layerNumber = new Label("Layer #" + Integer.toString(i+1) +":");
-			vB.getChildren().add(layerNumber);
-			vB.getChildren().add(gpAL.get(i));
-		}
+		ps.getGridLayer(pl);
 		
 		
 		Scene scene1= new Scene(vB, 520, 520);
