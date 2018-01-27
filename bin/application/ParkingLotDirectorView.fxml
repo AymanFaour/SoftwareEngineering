@@ -82,11 +82,6 @@
                                           <Insets left="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button fx:id="occasionalChangeButton" mnemonicParsing="false" onAction="#occasionalChange" styleClass="go-button" stylesheets="@application.css" text="Change">
-                                       <HBox.margin>
-                                          <Insets left="30.0" top="10.0" />
-                                       </HBox.margin>
-                                    </Button>
                                  </children>
                               </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
@@ -100,11 +95,6 @@
                                           <Insets left="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button fx:id="regularChangeButton" mnemonicParsing="false" onAction="#regularChange" styleClass="go-button" stylesheets="@application.css" text="Change">
-                                       <HBox.margin>
-                                          <Insets left="30.0" top="10.0" />
-                                       </HBox.margin>
-                                    </Button>
                                  </children>
                               </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
@@ -118,11 +108,6 @@
                                           <Insets left="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button fx:id="routinelySubscriptionChangeButton" mnemonicParsing="false" onAction="#routinelySubscriptionChange" styleClass="go-button" stylesheets="@application.css" text="Change">
-                                       <HBox.margin>
-                                          <Insets left="30.0" top="10.0" />
-                                       </HBox.margin>
-                                    </Button>
                                  </children>
                               </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
@@ -136,11 +121,6 @@
                                           <Insets left="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button fx:id="businessSubscriptionHoursChangeButton" mnemonicParsing="false" onAction="#businessSubscriptionHoursChange" styleClass="go-button" stylesheets="@application.css" text="Change">
-                                       <HBox.margin>
-                                          <Insets left="30.0" top="10.0" />
-                                       </HBox.margin>
-                                    </Button>
                                  </children>
                               </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
@@ -154,17 +134,19 @@
                                           <Insets left="5.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <Button fx:id="fullSubscriptionHoursChangeButton" mnemonicParsing="false" onAction="#fullSubscriptionHoursChange" styleClass="go-button" stylesheets="@application.css" text="Change">
-                                       <HBox.margin>
-                                          <Insets left="30.0" top="10.0" />
-                                       </HBox.margin>
-                                    </Button>
                                  </children>
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </HBox>
-                              <HBox prefHeight="18.0" prefWidth="580.0" />
+                              <HBox prefHeight="18.0" prefWidth="580.0">
+                                 <children>
+                                    <Button fx:id="occasionalChangeButton" mnemonicParsing="false" onAction="#occasionalChange" styleClass="go-button" stylesheets="@application.css" text="Change">
+                                       <HBox.margin>
+                                          <Insets top="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children></HBox>
                               <HBox prefHeight="188.0" prefWidth="577.0">
                                  <VBox.margin>
                                     <Insets top="20.0" />
