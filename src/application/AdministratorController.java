@@ -37,6 +37,7 @@ import model.ParkingLot;
 import model.ParkingSituation;
 import model.SharedData;
 
+
 public class AdministratorController {
 
     @FXML
