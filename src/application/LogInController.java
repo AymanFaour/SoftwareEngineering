@@ -770,7 +770,8 @@ public class LogInController {
 					String css = getClass().getResource("application.css").toExternalForm();
 					activateButton.getStylesheets().clear();
 					activateButton.getStylesheets().add(css);
-					activateButton.setOnAction(e -> activateParkingSub(e, subId.getText(), parkingLotName.getText()));
+					activateButton.setOnAction(e -> activateParkingSub(e, carId.getText(), subId.getText(), 
+																			parkingLotName.getText(), leavingHour.getText()));
 					activateButton.getStyleClass().add("activate-button");
 					hb.getChildren().add(activateButton);
 				}
@@ -781,7 +782,7 @@ public class LogInController {
 					String css = getClass().getResource("application.css").toExternalForm();
 					deActivateButton.getStylesheets().clear();
 					deActivateButton.getStylesheets().add(css);
-					deActivateButton.setOnAction(e -> deActivateParkingSub(e, subId.getText()));
+					deActivateButton.setOnAction(e -> deActivateParkingSub(e, carId.getText(), subId.getText(), leavingHour.getText(), parkingLotName.getText()));
 					deActivateButton.getStyleClass().add("deactivate-button");
 					hb.getChildren().add(deActivateButton);
 				}
@@ -827,7 +828,7 @@ public class LogInController {
 					String css = getClass().getResource("application.css").toExternalForm();
 					activateButton.getStylesheets().clear();
 					activateButton.getStylesheets().add(css);
-					activateButton.setOnAction(e -> activateParkingFullSub(e, subId.getText()));
+					activateButton.setOnAction(e -> activateParkingFullSub(e, carId.getText(), subId.getText()));
 					activateButton.getStyleClass().add("activate-button");
 					hb.getChildren().add(activateButton);
 				}
@@ -838,7 +839,7 @@ public class LogInController {
 					String css = getClass().getResource("application.css").toExternalForm();
 					deActivateButton.getStylesheets().clear();
 					deActivateButton.getStylesheets().add(css);
-					deActivateButton.setOnAction(e -> deActivateParkingFullSub(e, subId.getText()));
+					deActivateButton.setOnAction(e -> deActivateParkingFullSub(e, carId.getText(), subId.getText()));
 					deActivateButton.getStyleClass().add("deactivate-button");
 					hb.getChildren().add(deActivateButton);
 				}
@@ -850,22 +851,255 @@ public class LogInController {
 
 	}
 
-	private void deActivateParkingFullSub(ActionEvent e, String text) {
+	private void deActivateParkingFullSub(ActionEvent e, String carId, String resId) {
 		System.out.println("In the deActivateFullSub function");
+		
+		System.out.println(SharedData.getInstance().getCurrentParkingLot().getEmptySlots());
+		boolean res = SharedData.getInstance().getCurrentParkingLot().ExtractCar(carId);
+		System.out.println(SharedData.getInstance().getCurrentParkingLot().getEmptySlots());
+		
+		if (res) {
+
+			JSONObject ret;
+			try {
+				
+				ret = request(new JSONObject().put("cmd", "toggleParkingFull").put("fsid", resId)
+						.put("carNumber", carId).put("flag", false), "ReservationController");
+				System.out.println(ret);
+				
+			
+			} catch (JSONException e1) {
+				
+				e1.printStackTrace();
+			}
+
+			
+			loadViewReservation(null);
+
+			informationAlert.setTitle("Extracting Succeeded !!");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText(
+					"Get your car and have a NICE day. \n Glad doing business with you, see you soon");
+			informationAlert.showAndWait();
+
+		} else {
+
+			informationAlert.setTitle("Parking Error");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Failed park the car!");
+			informationAlert.showAndWait();
+
+		}
+		
 	}
 
-	private void activateParkingFullSub(ActionEvent e, String text) {
+	private void activateParkingFullSub(ActionEvent e, String carId, String resId) {
 		System.out.println("In the activateFullSub function");
+		
+		Calendar arrivingCal = Calendar.getInstance();
+		Calendar leavingCal = Calendar.getInstance();
+		leavingCal.set(Calendar.HOUR_OF_DAY,23);
+		leavingCal.set(Calendar.MINUTE,59);
+		
+		boolean isFull = SharedData.getInstance().getCurrentParkingLot().isFull();
+		if(isFull){
+			informationAlert.setTitle("Parking Error");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Unfortunatly dude, as we notified you once purchasing the subscription, no place in the parking lot for now.\nPlease choose another parking lot.!");
+			informationAlert.showAndWait();
+			return ;
+		}
+		
+		boolean res = SharedData.getInstance().getCurrentParkingLot().InsertCar(carId, arrivingCal,leavingCal);
+
+		if (res) {
+
+			informationAlert.setTitle("Parking Succeeded !!");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Your car has been parked in safe hands, have a NICE day.");
+			informationAlert.showAndWait();
+
+			try {
+
+				JSONObject ret = request(new JSONObject().put("cmd", "toggleParkingFull").put("fsid", resId)
+						.put("carNumber", carId).put("flag", true), "ReservationController");
+
+				System.out.println(ret);
+
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+
+			loadViewReservation(null);
+
+		} else {
+
+			informationAlert.setTitle("Parking Error");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Failed park the car!");
+			informationAlert.showAndWait();
+
+		}
+
+				
 	}
 
-	private void deActivateParkingSub(ActionEvent e, String subId) {
+	
+	
+	private void deActivateParkingSub(ActionEvent e, String carId, String subId, String leavingHour, String lotName) {
 		System.out.println("this is the subId " + subId);
+		
+		//TODO: check  we extract the car after the leaving hour
+
+		System.out.println("In the deActivateFullSub function");
+		
+		if (lotName.equals(SharedData.getInstance().getCurrentParkingLot().get_name())) {
+			
+			Calendar nowCal = Calendar.getInstance();
+			Calendar leave = Calendar.getInstance();
+			leave.set(Calendar.HOUR_OF_DAY, Integer.parseInt(leavingHour.substring(0, 2)));
+			leave.set(Calendar.MINUTE, Integer.parseInt(leavingHour.substring(3)));
+			
+			Date now = new Date();
+			now.setHours(Integer.parseInt(leavingHour.substring(0, 2)));
+			now.setMinutes(Integer.parseInt(leavingHour.substring(3)));
+			
+			leave.setTime(now);
+			
+			long deff = TimeUnit.MILLISECONDS
+					.toMinutes((nowCal.getTimeInMillis() - leave.getTimeInMillis()));
+			
+			System.out.println(
+					"$$ -> " + (Math.ceil(deff / 60.0) * SharedData.getInstance().getOccasionalCost()));
+
+			
+			// fining if he expandes
+			if(deff > 0){
+				
+				long cost = (long) ((Math.ceil(deff / 60.0) * SharedData.getInstance().getOccasionalCost() * 2));
+
+				updateBalance((-1) * cost);
+				
+			}
+			
+			
+			System.out.println(SharedData.getInstance().getCurrentParkingLot().getEmptySlots());
+			boolean res = SharedData.getInstance().getCurrentParkingLot().ExtractCar(carId);
+			System.out.println(SharedData.getInstance().getCurrentParkingLot().getEmptySlots());
+			
+			if (res) {
+	
+				JSONObject ret;
+				try {
+					
+					ret = request(new JSONObject().put("cmd", "toggleRoutineParking").put("rsid", subId)
+							.put("flag", false), "ReservationController");
+					System.out.println(ret);
+					
+				
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+	
+				
+				loadViewReservation(null);
+	
+				informationAlert.setTitle("Extracting Succeeded !!");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText(
+						"Get your car and have a NICE day. \nGlad doing business with you, see you soon");
+				informationAlert.showAndWait();
+	
+			} else {
+	
+				informationAlert.setTitle("Parking Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Failed park the car!");
+				informationAlert.showAndWait();
+	
+			}
+		}else{
+			informationAlert.setTitle("Parking Error");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please pay attenetion that this is not your routinly parking lot");
+			informationAlert.showAndWait();
+		}
+	
+		
+		
 	}
 
-	private void activateParkingSub(ActionEvent e, String subId, String lotName) {
+	private void activateParkingSub(ActionEvent e, String carId, String subId, String lotName, String leavingHour) {
 		System.out.println(subId + " " + lotName);
+		
+		if (lotName.equals(SharedData.getInstance().getCurrentParkingLot().get_name())) {
+			
+			Calendar arrivingCal = Calendar.getInstance();
+			Calendar leave = Calendar.getInstance();
+			leave.set(Calendar.HOUR_OF_DAY, Integer.parseInt(leavingHour.substring(0, 2)));
+			leave.set(Calendar.MINUTE, Integer.parseInt(leavingHour.substring(3)));
+			
+			Date now = new Date();
+			now.setHours(Integer.parseInt(leavingHour.substring(0, 2)));
+			now.setMinutes(Integer.parseInt(leavingHour.substring(3)));
+			
+			leave.setTime(now);
+			
+			System.out.println(leavingHour);
+			System.out.println("The hours is: " + leavingHour.substring(0, 2) + " & The minuts is: " + leavingHour.substring(3));
+			System.out.println("The hours is: " + leave.getTime().getHours() + " & The minuts is: " + leave.getTime().getMinutes());
+			
+			boolean isFull = SharedData.getInstance().getCurrentParkingLot().isFull();
+			if(isFull){
+				informationAlert.setTitle("Parking Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Unfortunatly dude, as we notified you once purchasing the subscription, no place in the parking lot for now.\nPlease choose another parking lot.!");
+				informationAlert.showAndWait();
+				return ;
+			}
+			
+			boolean res = SharedData.getInstance().getCurrentParkingLot().checkParkForRoutineSub(carId, arrivingCal, leave);
+		
+			if (res) {
+		
+				informationAlert.setTitle("Parking Succeeded !!");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Your car has been parked in safe hands, have a NICE day.");
+				informationAlert.showAndWait();
+		
+				try {
+		
+					JSONObject ret = request(new JSONObject().put("cmd", "toggleRoutineParking").put("rsid", subId)
+							.put("flag", true), "ReservationController");
+		
+					System.out.println(ret);
+		
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+		
+				loadViewReservation(null);
+		
+			} else {
+		
+				informationAlert.setTitle("Parking Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Please pay attention that you have parked today.\nAccording to the policy, you can park once a day");
+				informationAlert.showAndWait();
+		
+			}
+		}else{
+			informationAlert.setTitle("Parking Error");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please pay attenetion that this is not your routinly parking lot");
+			informationAlert.showAndWait();
+		}
+		
 	}
+	
+	
 
+	
 	@FXML
     void loadComplaint(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -1144,7 +1378,7 @@ public class LogInController {
 			System.out.println(ret);
 			if (ret.getBoolean("result")) {
 
-				// TODO: exit the car from the lot
+			
 
 				System.out.println(SharedData.getInstance().getCurrentParkingLot().getEmptySlots());
 				boolean res = SharedData.getInstance().getCurrentParkingLot().ExtractCar(carNumber);
@@ -1678,33 +1912,50 @@ public class LogInController {
 				}
 				
 				
-				//TODO: check if can reserve for all of them!
-				json.put("cars", carsNumber);
-				json.put("start", _start);
-				json.put("end", _end);
-				json.put("leaveHour", leaveHour);
-				json.put("lotName", _lotName);
-				json.put("cmd", "BusinessSubscription");
+				JSONObject check = request(new JSONObject().put("start", _start).put("end", _end).put("isFull", false)
+						.put("lotName", _lotName).put("cmd", "overlappingOrdersRF"), "LotOperator");
+				System.out.println(check);
+				System.out.println("$$:> the number of orders that its overlapping is: "
+						+ check.getInt("overlapping"));
+				boolean canI = SharedData.getInstance().getCurrentParkingLot()
+						.CanReserve(check.getInt("overlapping") + businessAccountWorkersCounter + 1);
+				
+				if(canI){
+				
+					json.put("cars", carsNumber);
+					json.put("start", _start);
+					json.put("end", _end);
+					json.put("leaveHour", leaveHour);
+					json.put("lotName", _lotName);
+					json.put("cmd", "BusinessSubscription");
 
-				JSONObject ret = new JSONObject();
-				ret = request(json, "SubscriptionController");
+					JSONObject ret = new JSONObject();
+					ret = request(json, "SubscriptionController");
 
-				if (ret.getBoolean("result")) {
-					System.out.println(ret);
+					if (ret.getBoolean("result")) {
+						System.out.println(ret);
 
-					informationAlert.setTitle("Business Subscription Succeeded");
+						informationAlert.setTitle("Business Subscription Succeeded");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Business Subscription for"
+								+ Integer.toString(businessAccountWorkersCounter) + "employees finished Successfully."
+								+ "\nPlease share this Activation key: " + ret.getString("code") + " to your employees");
+
+						informationAlert.showAndWait();
+
+						updateBalance(
+								(-1) * SharedData.getInstance().getBusinessCost() * (businessAccountWorkersCounter + 1));
+
+					}
+
+					
+				}else{
+					informationAlert.setTitle("Routine Subscription Failed");
 					informationAlert.setHeaderText(null);
-					informationAlert.setContentText("Business Subscription for"
-							+ Integer.toString(businessAccountWorkersCounter) + "employees finished Successfully."
-							+ "\nPlease share this Activation key: " + ret.getString("code") + " to your employees");
-
+					informationAlert.setContentText("Sorry dude, we havn't place at the wanted time, please choose other time.");
 					informationAlert.showAndWait();
-
-					updateBalance(
-							(-1) * SharedData.getInstance().getBusinessCost() * (businessAccountWorkersCounter + 1));
-
 				}
-
+				
 			} else {
 				informationAlert.setTitle("Business Subscription Warrning");
 				informationAlert.setHeaderText(null);
@@ -1758,31 +2009,90 @@ public class LogInController {
 
 					} else {
 
-						json.put("carNumber", _carNumber);
-						json.put("username", _name);
-						json.put("start", _start);
-						json.put("end", _end);
-						json.put("isFull", true);
-						json.put("cmd", "FullSubscription");
+						
+						JSONObject chk = new JSONObject().put("cmd", "overlappingOrdersRF").put("isFull", true);
+						JSONObject canI = request(chk, "LotOperator");
+						
+						System.out.println(canI);
+						if(canI.getBoolean("result")){
+							
+							int overlapping = canI.getInt("overlapping");
+							
+							boolean canFull = SharedData.getInstance().getCurrentParkingLot().CanReserve(overlapping);
+							
+							if(canFull){
+								
+								json.put("carNumber", _carNumber);
+								json.put("username", _name);
+								json.put("start", _start);
+								json.put("end", _end);
+								
+								json.put("cmd", "FullSubscription");
 
-						JSONObject ret = request(json, "SubscriptionController");
+								JSONObject ret = request(json, "SubscriptionController");
 
-						System.out.println(ret.getBoolean("result"));
-						if (ret.getBoolean("result")) {
-							System.out.println(
-									"Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-							// MainController._currentUser.setBalance(MainController._currentUser.getBalance()
-							// - 288);
-							updateBalance((-1) * SharedData.getInstance().getFullCost());
-							System.out.println(
-									"New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+								System.out.println(ret.getBoolean("result"));
+								if (ret.getBoolean("result")) {
+									System.out.println(
+											"Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+									// MainController._currentUser.setBalance(MainController._currentUser.getBalance()
+									// - 288);
+									updateBalance((-1) * SharedData.getInstance().getFullCost());
+									System.out.println(
+											"New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
 
-							informationAlert.setTitle("Depositing Succeeded");
+									informationAlert.setTitle("Depositing Succeeded");
+									informationAlert.setHeaderText(null);
+									informationAlert.setContentText("Purchasing full subscription finished Successfully.");
+									informationAlert.showAndWait();
+
+								}
+								
+							}else{
+								
+									confirmAlert.setTitle("Confirmation Dialog");
+									confirmAlert.setContentText("For your information, due to circumstances, Maybe one day you will dont find a place in one of our parking lots.\nWould you like to continue? \n");
+					
+									Optional<ButtonType> cont = confirmAlert.showAndWait();
+									if (cont.get() == ButtonType.OK) {
+										json.put("carNumber", _carNumber);
+										json.put("username", _name);
+										json.put("start", _start);
+										json.put("end", _end);
+										
+										json.put("cmd", "FullSubscription");
+
+										JSONObject ret = request(json, "SubscriptionController");
+
+										System.out.println(ret.getBoolean("result"));
+										if (ret.getBoolean("result")) {
+											System.out.println(
+													"Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+											// MainController._currentUser.setBalance(MainController._currentUser.getBalance()
+											// - 288);
+											updateBalance((-1) * SharedData.getInstance().getFullCost());
+											System.out.println(
+													"New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
+
+											informationAlert.setTitle("Depositing Succeeded");
+											informationAlert.setHeaderText(null);
+											informationAlert.setContentText("Purchasing full subscription finished Successfully.");
+											informationAlert.showAndWait();
+
+										}
+									}
+								}
+							
+						}else{
+							
+							informationAlert.setTitle("Full Subscription ERROR");
 							informationAlert.setHeaderText(null);
-							informationAlert.setContentText("Purchasing full subscription finished Successfully.");
+							informationAlert.setContentText(
+									"ERROR @ checking overlapping full subscription.");
 							informationAlert.showAndWait();
-
+							
 						}
+						
 
 					}
 				}
@@ -2020,7 +2330,6 @@ public class LogInController {
 										"Please pay attention that the payment is after exiting the car.");
 								informationAlert.showAndWait();
 
-								// TODO: consider the payment issues in the exit
 
 								boolean res = SharedData.getInstance().getCurrentParkingLot().InsertCar(_carNumber,
 										arriveCal, leaveCal);

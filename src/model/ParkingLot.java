@@ -17,6 +17,7 @@ public class ParkingLot {
 	private int _disabledSlots;
 
 	private HashMap<String, ParkingPosition> _hash; // list of parked cars
+	private HashMap<String, Calendar> _isParkedToday;
 
 	public ParkingLot(String _name, int _depth, int _height, int _width) {
 
@@ -43,6 +44,7 @@ public class ParkingLot {
 		_disabledSlots = 0;
 
 		_hash = new HashMap<>();
+		_isParkedToday = new HashMap<>();
 
 	}
 
@@ -259,5 +261,26 @@ public class ParkingLot {
 		return true;
 		
 	}
+	
+	public boolean checkParkForRoutineSub(String carNumber, Calendar arrive, Calendar leave){
+		
+		if(_isParkedToday.get(carNumber) == null || 
+				(_isParkedToday.get(carNumber).get(Calendar.DAY_OF_MONTH) < Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) ||
+				(_isParkedToday.get(carNumber).get(Calendar.MONTH) < Calendar.getInstance().get(Calendar.MONTH))){
+			return parkThisRoutine(carNumber, arrive, leave);
+		}
+		return false;
+	}
+	
+	public boolean parkThisRoutine(String carNumber, Calendar arrive, Calendar leave){
+		if(_isParkedToday.get(carNumber) != null){
+			_isParkedToday.get(carNumber).setTime(arrive.getTime());
+		}else{
+			_isParkedToday.put(carNumber, arrive);
+		}
+		
+		return InsertCar(carNumber, arrive, leave);
+	}
+	
 
 }
