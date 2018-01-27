@@ -124,9 +124,6 @@
                   <BorderPane fx:id="ParkingReservationParkingLotWorkerBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                      <center>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                           <padding>
-                              <Insets left="20.0" top="10.0" />
-                           </padding>
                            <children>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
@@ -139,12 +136,59 @@
                                     <ComboBox fx:id="reserveWidthComboBox" prefWidth="78.0" promptText="Width " stylesheets="@application.css" />
                                     <ComboBox id="#hour-minutes-combo" fx:id="reserveDepthComboBox" prefWidth="78.0" promptText="Depth" stylesheets="@application.css" />
                                  </children>
+                                 <padding>
+                                    <Insets left="10.0" top="10.0" />
+                                 </padding>
                               </HBox>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
                                     <Button fx:id="reserveParkingByWorkerButton" mnemonicParsing="false" onAction="#reserveParkingByWorker" styleClass="go-button" stylesheets="@application.css" text="Reserve Parking Spot" />
                                  </children>
+                                 <padding>
+                                    <Insets left="10.0" top="10.0" />
+                                 </padding>
                               </HBox>
+                              <StackPane prefHeight="30.0" prefWidth="600.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7499b5" height="30.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
+                                    <HBox prefHeight="30.0" prefWidth="600.0">
+                                       <children>
+                                          <Label prefWidth="80.0" text="Height">
+                                             <font>
+                                                <Font name="System Bold" size="11.0" />
+                                             </font>
+                                          </Label>
+                                          <Label prefWidth="80.0" text="Width">
+                                             <font>
+                                                <Font name="System Bold" size="11.0" />
+                                             </font>
+                                          </Label>
+                                          <Label prefWidth="80.0" text="Depth">
+                                             <font>
+                                                <Font name="System Bold" size="11.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
+                                       <padding>
+                                          <Insets left="10.0" top="7.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </StackPane>
+                              <ScrollPane prefHeight="400.0" prefWidth="600.0">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                                 <content>
+                                    <VBox fx:id="reservedByWorkerSpotsVB" prefHeight="360.0" prefWidth="590.0" />
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </VBox>
                      </center>

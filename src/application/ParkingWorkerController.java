@@ -33,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.*;
@@ -157,10 +158,11 @@ public class ParkingWorkerController {
     @FXML // fx:id="reserveWidthComboBox"
     private ComboBox<String> reserveWidthComboBox; // Value injected by FXMLLoader
 
+    @FXML // fx:id="reservedByWorkerSpotsVB"
+    private VBox reservedByWorkerSpotsVB; // Value injected by FXMLLoader
+
 
     private ObservableList<String> myComboBoxParkResComboBox = FXCollections.observableArrayList();
-    private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
-    private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
     
     private ObservableList<String> myComboBoxWidth = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxDepth = FXCollections.observableArrayList();
@@ -276,10 +278,6 @@ public class ParkingWorkerController {
 				json.put("lotName", lotName);
 				json.put("cmd", "disableSpot");
 	
-				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -659,7 +657,18 @@ public class ParkingWorkerController {
     
     @FXML
     void reserveParkingByWorker(ActionEvent event) {
+    	if((reserveHeightComboBox.getValue() == null) || (reserveWidthComboBox.getValue() == null) 
+    			|| (reserveDepthComboBox.getValue() == null)) {
 
+			informationAlert.setTitle("Reserve Spot Warning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please fill all the positions");
+			informationAlert.showAndWait();
+			return;
+			
+		} else {
+			
+		}
     }
 
     @FXML
@@ -697,7 +706,7 @@ public class ParkingWorkerController {
     	HeightComboBox.setItems(myComboBoxHeight);
         
     	
-
+    	
     }
     
     @FXML
