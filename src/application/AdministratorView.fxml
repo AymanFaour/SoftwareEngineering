@@ -156,6 +156,11 @@
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                           </Label>
+                                          <Label prefHeight="15.0" prefWidth="90.0" text="Parking Lot Name:">
+                                             <font>
+                                                <Font name="System Bold" size="10.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                        <padding>
                                           <Insets left="5.0" top="1.5" />

@@ -107,7 +107,7 @@
                         </VBox>
                      </left>
                   </BorderPane>
-                  <BorderPane fx:id="changePricesRequestsBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+                  <BorderPane fx:id="changePricesRequestsBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                      <center>
                         <VBox fx:id="changePricesRequestVbox" prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <padding>
@@ -152,6 +152,11 @@
                                              </HBox.margin>
                                           </Label>
                                           <Label prefHeight="15.0" prefWidth="90.0" text=" Full  Hours:">
+                                             <font>
+                                                <Font name="System Bold" size="10.0" />
+                                             </font>
+                                          </Label>
+                                          <Label prefHeight="15.0" prefWidth="90.0" text="Parking Lot Name:">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>

@@ -219,7 +219,7 @@ public class ParkingLotDirectorController {
 				json.put("routineHours", intRoutineHours);
 				json.put("fullHours", intFullHours );
 				json.put("businessHours",intBusinessHours);
-
+				
 				json.put("cmd", "requestCostChange");
 	
 				JSONObject ret = request(json, "SystemUserServices");
