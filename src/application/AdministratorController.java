@@ -371,7 +371,7 @@ public class AdministratorController {
 						
 				    
 				    	Button approve=new Button("Approve");
-						Button refuse=new Button("Refuse");
+						Button refuse=new Button("Decline");
 								
 						HBox newHbox = new HBox();
 						newHbox.getChildren().add(NewOccasionalReservationPrice);
