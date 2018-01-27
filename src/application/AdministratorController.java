@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.CpsMailBox;
 import model.ParkingLot;
 import model.ParkingSituation;
 import model.SharedData;
@@ -114,8 +115,14 @@ public class AdministratorController {
 		      
 		popupwindow.setScene(scene1);
 		
+		String email = "cps.client4@gmail.com";
+		CpsMailBox mail = new CpsMailBox(SharedData.getInstance().getCPSEmail(),
+				 SharedData.getInstance().getCPSPassword(), email);
+		mail.sendMailToAdministrator();
+		
 
 		popupwindow.showAndWait();
+		
 //
 //    	currentSituationCallBack(event);
     }

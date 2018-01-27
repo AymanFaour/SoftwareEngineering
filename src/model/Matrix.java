@@ -30,7 +30,7 @@ public class Matrix extends JPanel {
 		 */
 	public void makeMatrix(ParkingLot parkingLot){
 
-			ParkingSlot[][][] _parkingSlot = parkingLot.get_lot();
+		   ParkingSlot[][][] _parkingSlot = parkingLot.get_lot();
 		   JFrame frame = new JFrame("Testing");
            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
            frame.setLayout(new BorderLayout());
@@ -41,14 +41,16 @@ public class Matrix extends JPanel {
            fullContainer.setLayout(new BoxLayout(fullContainer, BoxLayout.Y_AXIS));
            fullContainer.setBackground(Color.WHITE);
            //fullContainer.setSize(800,800);
-           JLabel label = new JLabel("i am a label");
-           //JPanel textPanel = new JPanel();
-           label.setSize(100,100);
-           JPanel mat = new Matrix(parkingLot.getHeight(), parkingLot.getWidth(),0, _parkingSlot);
-           mat.setBackground(Color.WHITE);
-           mat.setSize(200, 200);
-           fullContainer.add(label);
-           fullContainer.add(mat);
+           for (int i=0;i<parkingLot.getDepth();i++){
+	           JLabel label = new JLabel("floor " + (i+1) +":");
+	           //JPanel textPanel = new JPanel();
+	           label.setSize(100,100);
+	           JPanel mat = new Matrix(parkingLot.getHeight(), parkingLot.getWidth(),i, _parkingSlot);
+	           mat.setBackground(Color.WHITE);
+	           mat.setSize(200, 200);
+	           fullContainer.add(label);
+	           fullContainer.add(mat);
+           }
            frame.add(fullContainer);
            frame.pack();
            frame.setLocationRelativeTo(null);
@@ -94,7 +96,7 @@ public class Matrix extends JPanel {
                     gbc.gridx = col;
                     gbc.gridy = row;
 
-                    CellPane cellPane = new CellPane(height, width, depth, parkingSlot);
+                    CellPane cellPane = new CellPane(row, col, depth, parkingSlot);
                     Border border = null;
                     if (row < height - 1) {
                         if (col < width - 1) {

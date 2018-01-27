@@ -20,9 +20,8 @@ public class ParkingSituation {
 		this.width = width;
 	}
 
-		public void getGridLayer(ParkingLot parkingLot) {
-
-			Matrix mat = new Matrix(parkingLot.getHeight(), parkingLot.getWidth(), parkingLot.getDepth(), parkingLot.get_lot());
+	public void getGridLayer(ParkingLot parkingLot) {
+			Matrix mat = new Matrix(parkingLot.getHeight(), parkingLot.getWidth(), 1, parkingLot.get_lot());
 			mat.makeMatrix(parkingLot);
 	   }
             
