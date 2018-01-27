@@ -124,7 +124,7 @@ public class ParkingLot {
 				for (int k = 0; k < this._height; k++) {
 					// System.out.println(_lot[k][j][i] + " "+ i + j + k);
 					if (_lot[k][j][i].getStatus() == SpotStatus.Available) {
-						return new ParkingPosition(i, j, k);
+						return new ParkingPosition(k, j, i);
 					}
 				}
 			}
@@ -137,6 +137,7 @@ public class ParkingLot {
 		ParkingPosition pos;
 		if (!this.isFull()) {
 			if (_hash.containsKey(carNumber)) {
+//				System.out.println("@@@@@@:> your car is already in !!");
 				return false;
 			} else {
 				pos = getEmptyParkingPosition();

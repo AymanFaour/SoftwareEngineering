@@ -1077,8 +1077,8 @@ public class LogInController {
 
 			if (parkingLotName.equals(SharedData.getInstance().getCurrentParkingLot().get_name())) {
 
-//				if (Calendar.getInstance().before(arrivingCal)) {
-				if (false) {
+				if (Calendar.getInstance().before(arrivingCal)) {
+//				if (false) {
 
 					informationAlert.setTitle("Activate reservation");
 					informationAlert.setHeaderText(null);

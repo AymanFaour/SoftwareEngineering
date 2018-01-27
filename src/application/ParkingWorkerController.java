@@ -581,6 +581,16 @@ public class ParkingWorkerController {
     	parkingReservationButton.getStyleClass().add("loginView-buttons");
     	disabledParkingSpotButton.getStyleClass().removeAll("pressedButton", "focus");
     	disabledParkingSpotButton.getStyleClass().add("loginView-buttons");
+    	
+    	ArrayList<ParkingLot> parkingLotNames = SharedData.getInstance().getParkingLotsAL();
+
+    	myComboBoxParkResComboBox.clear();
+    	for(int i = 0; i < parkingLotNames.size(); i++){
+    		myComboBoxParkResComboBox.add(parkingLotNames.get(i).get_name());
+    	}
+    	
+    	alternativeComboBox.setItems(myComboBoxParkResComboBox);
+
     }
 
     @FXML
@@ -637,19 +647,35 @@ public class ParkingWorkerController {
     			myComboBoxMinutesData.add(i.toString());
     	}
     	
-    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	parkingLotNames.add("Ben Gurion");
-    	parkingLotNames.add("Carmel");
-    	parkingLotNames.add("Hadar");
-    	parkingLotNames.add("Horev");
-    	parkingLotNames.add("Hanita");
-    	parkingLotNames.add("Neve Shaanan");
+//    	ArrayList<String> parkingLotNames = new ArrayList<String>();
+    	
+    	ArrayList<ParkingLot> parkingLotNames = SharedData.getInstance().getParkingLotsAL();
+
+    	for(int i = 0; i < parkingLotNames.size(); i++){
+    		myComboBoxParkResComboBox.add(parkingLotNames.get(i).get_name());
+    	}
     	
     	myComboBoxParkResComboBox.clear();
     	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxParkResComboBox.add(parkingLotNames.get(i));
+    		myComboBoxParkResComboBox.add(parkingLotNames.get(i).get_name());
     	}
+    	
     	parkResComboBox.setItems(myComboBoxParkResComboBox);
+    	
+//    	
+//    	parkingLotNames.add("Ben Gurion");
+//    	parkingLotNames.add("Carmel");
+//    	parkingLotNames.add("Hadar");
+//    	parkingLotNames.add("Horev");
+//    	parkingLotNames.add("Hanita");
+//    	parkingLotNames.add("Neve Shaanan");
+//    	
+//    	myComboBoxParkResComboBox.clear();
+//    	for(int i = 0; i < parkingLotNames.size(); i++){
+//    		myComboBoxParkResComboBox.add(parkingLotNames.get(i));
+//    	}
+    	
+//    	parkResComboBox.setItems(myComboBoxParkResComboBox);
 
     	parkResLeavingHourComboBox.setItems(myComboBoxHoursData);
     	parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);

@@ -526,6 +526,16 @@ public class CustomerServiceController {
 
 			// send to reservation servlet
 			JSONObject ret = request(json, "CustomerService");
+			
+			if(ret.getBoolean("result")){
+				
+				informationAlert.setTitle("Handleing Complaint Send Seccesfully");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText(
+						"Handling complaint Done.\nMail has been send to the client");
+				informationAlert.showAndWait();
+				
+			}
 
 			System.out.println(ret.getBoolean("result"));
 		} catch (JSONException e) {

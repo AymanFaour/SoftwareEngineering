@@ -164,7 +164,7 @@ public class GuestController {
 			int ocLeaveMinuteInt = Integer.parseInt(_ocLeaveMinute);
 			long _now = Calendar.getInstance().getTime().getTime();
 			System.out.println(_now + " and the start is" + _start + " and the end is " + _end);
-			if (_now > _start || _now > _end || _start >= _end) {
+			if (_now > _end || _start >= _end) {
 				informationAlert.setTitle("Reservation Warning");
 				informationAlert.setHeaderText(null);
 				informationAlert.setContentText("Please adjust dates and hours to convenient values");
