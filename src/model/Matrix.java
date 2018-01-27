@@ -58,7 +58,7 @@ public class Matrix extends JPanel {
            
            Document document = new Document();
            try {
-               PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("C:\\temp\\test.pdf"));
+               PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("./test.pdf"));
                document.open();
                PdfContentByte contentByte = writer.getDirectContent();
                PdfTemplate template = contentByte.createTemplate(500, 500);

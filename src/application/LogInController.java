@@ -1448,6 +1448,7 @@ public class LogInController {
 
 	@FXML
 	void buyRegularRoutineSubscription(ActionEvent event) {
+		System.out.println("IN the routine subscription function.");
 		String _carNumber = regRouSubCarNumberTF.getText();
 		String _lotName = regRouComboBox.getValue();
 		String _routLeaveHour = regRouSubRoutineHourComboBox.getValue();
@@ -1513,7 +1514,7 @@ public class LogInController {
 
 					} else {
 						
-						JSONObject check = request(new JSONObject().put("start", _start).put("end", _end)
+						JSONObject check = request(new JSONObject().put("start", _start).put("end", _end).put("isFull", false)
 								.put("lotName", _lotName).put("cmd", "overlappingOrdersRF"), "LotOperator");
 						System.out.println(check);
 						System.out.println("$$:> the number of orders that its overlapping is: "
@@ -1529,6 +1530,7 @@ public class LogInController {
 							json.put("leave", leaveHour);
 							json.put("start", _start);
 							json.put("end", _end);
+							json.put("isFull", false);
 							json.put("cmd", "RegularRoutineSubscription");
 
 							JSONObject ret = request(json, "SubscriptionController");
@@ -1674,6 +1676,9 @@ public class LogInController {
 					// System.out.println(temp.getText());
 					carsNumber += temp.getText() + ";";
 				}
+				
+				
+				//TODO: check if can reserve for all of them!
 				json.put("cars", carsNumber);
 				json.put("start", _start);
 				json.put("end", _end);
@@ -1757,6 +1762,7 @@ public class LogInController {
 						json.put("username", _name);
 						json.put("start", _start);
 						json.put("end", _end);
+						json.put("isFull", true);
 						json.put("cmd", "FullSubscription");
 
 						JSONObject ret = request(json, "SubscriptionController");

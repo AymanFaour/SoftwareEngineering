@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -110,8 +111,9 @@ public class AdministratorController {
 
     }
     
-    void aproveUpdateCost(int reqID){
+    void aproveUpdateCost(ActionEvent e, int reqID){
     	
+    	System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     	JSONObject json = new JSONObject();
     	try {
 			json.put("requestID", reqID);
@@ -127,6 +129,7 @@ public class AdministratorController {
 				JSONObject upd = request(null, "SystemQueries");
 				System.out.println(upd);
 				System.out.println(upd.getJSONArray("Costs"));
+				loadChangePricesRequestsBorderPane(null);
 				
 			}else{
 				
@@ -134,13 +137,13 @@ public class AdministratorController {
 				
 			}
 			
-		} catch (JSONException e) {
-			e.printStackTrace();
+		} catch (JSONException e1) {
+			e1.printStackTrace();
 		}
     	
     }
     
-    void declineUpdtae(int reqID){
+    void declineUpdtae(ActionEvent e, int reqID){
     
     	JSONObject json = new JSONObject();
     	try {
@@ -158,14 +161,16 @@ public class AdministratorController {
 				System.out.println(upd);
 				System.out.println(upd.getJSONArray("Costs"));
 				
+				loadChangePricesRequestsBorderPane(null);
+				
 			}else{
 				
 				System.out.println("ERROR @ Declining the new Costs.");
 				
 			}
 			
-		} catch (JSONException e) {
-			e.printStackTrace();
+		} catch (JSONException e1) {
+			e1.printStackTrace();
 		}
     	
     }
@@ -258,79 +263,10 @@ public class AdministratorController {
     	reportsButton.getStyleClass().removeAll("pressedButton", "focus");
     	reportsButton.getStyleClass().add("loginView-buttons");
     	
-    	//int length = changePricesRequestVbox.getChildren().size();
-    	//changePricesRequestVbox.getChildren().remove(0, length);
+    	int length = changePricesRequestVbox.getChildren().size();
+    	changePricesRequestVbox.getChildren().remove(0, length);
 		
-    	 Label  occasionalReservationPrice= new Label("10");
-    	 occasionalReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
- 		Label RegularReservationPrice = new Label("10");
- 		RegularReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
- 		Label  routinelySubscriptionHours = new Label("10");
- 		routinelySubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
- 		Label   businessSubscriptionHours = new Label("10");
- 		businessSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
- 		Label   fullSubscriptionHours = new Label("10");
- 		fullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
- 		Label lotName = new Label("from Carmel");
- 		lotName.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
- 		
- 		Label  NewOccasionalReservationPrice= new Label("15");
- 		NewOccasionalReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
-		Label newRegularReservationPrice = new Label("15");
-		newRegularReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
-		Label  newRoutinelySubscriptionHours = new Label("15");
-		newRoutinelySubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
-		Label   newbusinessSubscriptionHours = new Label("15");
-		newbusinessSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
-		Label   newFullSubscriptionHours = new Label("15");
-		newFullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
-		
-    	HBox oldHbox = new HBox();
-    	oldHbox.getChildren().add(occasionalReservationPrice);
-    	oldHbox.getChildren().add(RegularReservationPrice);
-    	oldHbox.getChildren().add(routinelySubscriptionHours);
-    	oldHbox.getChildren().add(businessSubscriptionHours);
-    	oldHbox.getChildren().add(fullSubscriptionHours);
-    	oldHbox.getChildren().add(lotName);
-    	oldHbox.setStyle("-fx-background-color: red");
-    	oldHbox.getStyleClass().add("hbox");
-    
-    	Button approve=new Button("Approve");
-		Button refuse=new Button("Refuse");
-				
-		HBox newHbox = new HBox();
-		newHbox.getChildren().add(NewOccasionalReservationPrice);
-		newHbox.getChildren().add(newRegularReservationPrice);
-		newHbox.getChildren().add(newRoutinelySubscriptionHours);
-		newHbox.getChildren().add(newFullSubscriptionHours);
-		newHbox.getChildren().add(newbusinessSubscriptionHours);
-		newHbox.getChildren().add(approve);
-		newHbox.getChildren().add(refuse);
-		oldHbox.setStyle("-fx-background-color: green");
-		
-		
-		
-		approve.setId("approveButton" /*+ resId.getText()*/);
-		String css = getClass().getResource("application.css").toExternalForm();
-		approve.getStylesheets().clear();
-		approve.getStylesheets().add(css);
-		//approve.setOnAction(e -> approve(e,requestId.getText());
-		approve.getStyleClass().add("approve-button");
-		approve.setStyle("-fx-color: #d0e6f8;");
-	
-		refuse.setId("refuseButton" /*+ resId.getText()*/);
-		refuse.getStylesheets().clear();
-		refuse.getStylesheets().add(css);
-		//approve.setOnAction(e -> refuse(e, requestId.getText());
-		refuse.getStyleClass().add("approve-button");
-		refuse.setStyle("-fx-color: #8d2626;");
-	
-		newHbox.setStyle("-fx-background-color:#98FB98;-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
-				+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
-		oldHbox.setStyle("-fx-background-color: #FF4500;-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
-				+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
-		changePricesRequestVbox.getChildren().add(oldHbox);
-		changePricesRequestVbox.getChildren().add(newHbox);
+    	
     	
     	//TODO: to get all the price change costs
     	
@@ -343,8 +279,113 @@ public class AdministratorController {
 			System.out.println(ret);
 			if(ret.getBoolean("result")){
 				System.out.println("SUCCESS @ get cost change requests");
+				
+
+					
+				JSONObject updateCost = request(null, "SystemQueries");
+			
+				if (updateCost.getBoolean("result")) {
+					System.out.println(updateCost);
+
+					JSONArray costs = updateCost.getJSONArray("Costs");
+					
+					SharedData.getInstance().setOccasionalCost(((JSONObject) costs.get(0)).getDouble("cost"));
+					SharedData.getInstance().setReservationCost(((JSONObject) costs.get(1)).getDouble("cost"));
+					SharedData.getInstance().setRoutineCost(((JSONObject) costs.get(2)).getDouble("cost"));
+					SharedData.getInstance().setBusinessCost(((JSONObject) costs.get(3)).getDouble("cost"));
+					SharedData.getInstance().setFullCost(((JSONObject) costs.get(4)).getDouble("cost"));
+				}
+				
+				
+				
+				Label  occasionalReservationPrice= new Label(SharedData.getInstance().getOccasionalCost() + "");
+		    	occasionalReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		 		Label RegularReservationPrice = new Label(SharedData.getInstance().getReservationCost() + "");
+		 		RegularReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		 		Label  routinelySubscriptionHours = new Label(SharedData.getInstance().getRoutineCost() / SharedData.getInstance().getReservationCost() + "");
+		 		routinelySubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		 		Label   businessSubscriptionHours = new Label(SharedData.getInstance().getBusinessCost() / SharedData.getInstance().getReservationCost() + "");
+		 		businessSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		 		Label   fullSubscriptionHours = new Label(SharedData.getInstance().getFullCost() / SharedData.getInstance().getReservationCost() + "");
+		 		fullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		 		Label lotName = new Label("OLD Costs");
+		 		lotName.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+		 		
+		 		HBox oldHbox = new HBox();
+		    	oldHbox.getChildren().add(occasionalReservationPrice);
+		    	oldHbox.getChildren().add(RegularReservationPrice);
+		    	oldHbox.getChildren().add(routinelySubscriptionHours);
+		    	oldHbox.getChildren().add(businessSubscriptionHours);
+		    	oldHbox.getChildren().add(fullSubscriptionHours);
+		    	oldHbox.getChildren().add(lotName);
+		    	oldHbox.setStyle("-fx-background-color: red");
+		    	oldHbox.getStyleClass().add("hbox");
+		    	
+				changePricesRequestVbox.getChildren().add(oldHbox);
+
 				if(ret.getJSONArray("changeRequests").length() > 0){
-					System.out.println("handle this requests");
+					JSONArray loop = ret.getJSONArray("changeRequests");
+					
+					for(int i = 0; i < ret.getJSONArray("changeRequests").length(); i++){
+						
+						
+				 		
+				 		Label  NewOccasionalReservationPrice= new Label(((JSONObject)loop.get(i)).getInt("occasional") + "");
+				 		NewOccasionalReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+						Label newRegularReservationPrice = new Label(((JSONObject)loop.get(i)).getInt("reserveAhead") + "");
+						newRegularReservationPrice.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+						Label  newRoutinelySubscriptionHours = new Label(((JSONObject)loop.get(i)).getInt("routineHours") + "");
+						newRoutinelySubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+						Label   newbusinessSubscriptionHours = new Label(((JSONObject)loop.get(i)).getInt("businessHours") + "");
+						newbusinessSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+						Label   newFullSubscriptionHours = new Label(((JSONObject)loop.get(i)).getInt("fullHours") + "");
+						newFullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
+						Label   newLotName = new Label(((JSONObject)loop.get(i)).getString("lotName"));
+						newFullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 0 3.5 0 0");
+				    	
+				    
+				    	Button approve=new Button("Approve");
+						Button refuse=new Button("Refuse");
+								
+						HBox newHbox = new HBox();
+						newHbox.getChildren().add(NewOccasionalReservationPrice);
+						newHbox.getChildren().add(newRegularReservationPrice);
+						newHbox.getChildren().add(newRoutinelySubscriptionHours);
+						newHbox.getChildren().add(newbusinessSubscriptionHours);
+						newHbox.getChildren().add(newFullSubscriptionHours);
+						newHbox.getChildren().add(newLotName);
+						newHbox.getChildren().add(approve);
+						newHbox.getChildren().add(refuse);
+						oldHbox.setStyle("-fx-background-color: green");
+						
+						
+						Label   id = new Label(((JSONObject)loop.get(i)).getInt("requestID") + "");
+						
+						
+						approve.setId("approveButton" /*+ resId.getText()*/);
+						String css = getClass().getResource("application.css").toExternalForm();
+						approve.getStylesheets().clear();
+						approve.getStylesheets().add(css);
+						approve.setOnAction(e -> aproveUpdateCost(e, Integer.parseInt(id.getText())));
+						approve.getStyleClass().add("approve-button");
+						approve.setStyle("-fx-color: #d0e6f8;");
+					
+						refuse.setId("refuseButton" /*+ resId.getText()*/);
+						refuse.getStylesheets().clear();
+						refuse.getStylesheets().add(css);
+						refuse.setOnAction(e -> declineUpdtae(e, Integer.parseInt(id.getText())));
+						refuse.getStyleClass().add("approve-button");
+						refuse.setStyle("-fx-color: #8d2626;");
+					
+						newHbox.setStyle("-fx-background-color:#98FB98;-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+								+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+						oldHbox.setStyle("-fx-background-color: #FF4500;-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+								+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+						changePricesRequestVbox.getChildren().add(newHbox);
+						
+					}
+				
+				
 				}else{
 					System.out.println("no requests to handle");
 				}
@@ -353,7 +394,7 @@ public class AdministratorController {
 			}
 			
 			
-		} catch (JSONException e) {
+		} catch (JSONException | NumberFormatException e) {
 			e.printStackTrace();
 		}
     	

@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -135,6 +137,7 @@ public class MainController {
     	
     	// updating the costs and lot names
 		JSONObject upd = request(null, "SystemQueries");
+		
 		try {
 			if (upd.getBoolean("result")) {
 				System.out.println(upd);
@@ -626,9 +629,11 @@ public class MainController {
 		    //Send request
 		    DataOutputStream sentData = new DataOutputStream (connection.getOutputStream());
 		   
-		    sentData.writeBytes(json.toString());
-		    
-		    sentData.close();
+		    if(json != null){
+		    	sentData.writeBytes(json.toString());
+			    
+			    sentData.close();
+		    }
 		    JSONObject ret;
 
 		    //Get Response  

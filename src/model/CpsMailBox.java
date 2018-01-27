@@ -77,7 +77,7 @@ public class CpsMailBox {
 		        Multipart multipart = new MimeMultipart();
 
 		        messageBodyPart = new MimeBodyPart();
-		        String file = "C:\\temp\\test.pdf";
+		        String file = "./test.pdf";
 		        String fileName = "test.pdf";
 		        DataSource source = new FileDataSource(file);
 		        messageBodyPart.setDataHandler(new DataHandler(source));
