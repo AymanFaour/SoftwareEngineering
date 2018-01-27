@@ -185,38 +185,71 @@ public class ParkingLotDirectorController {
 
     @FXML
     void occasionalChange(ActionEvent event) {
-    	String cost =occasionalReservationPriceTF.getText();
+    	String cost = occasionalReservationPriceTF.getText();
     	
     	if (cost.equals("")) {
 
-			informationAlert.setTitle("change warning");
+    		informationAlert.setTitle("change warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please enter the desired new cost");
 			informationAlert.showAndWait();
 			return;
 
 		} else {
-			double doubleCost=Double.parseDouble(cost);
-			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			
 			JSONObject json = new JSONObject();
 			try {
 				
+				
+				String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+				
 				//TODO: synchronize with server
 	
-				json.put("cost", doubleCost);
+				json.put("username", SharedData.getInstance().getCurrentSystemUser().get_username());
 				json.put("lotName", lotName);
-				json.put("cmd", "report");
+				
+				json.put("occasional", Double.parseDouble(cost));
+				json.put("reserveAhead", SharedData.getInstance().getReservationCost());
+				json.put("routineHours", (int)SharedData.getInstance().getRoutineCost() / (int)SharedData.getInstance().getReservationCost());
+				json.put("fullHours", (int)SharedData.getInstance().getFullCost() / (int)SharedData.getInstance().getReservationCost());
+				json.put("businessHours", (int)SharedData.getInstance().getBusinessCost() / (int)SharedData.getInstance().getReservationCost());
+
+				json.put("cmd", "requestCostChange");
 	
-				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
+				JSONObject ret = request(json, "SystemUserServices");
+	
+				System.out.println(ret);
+				if(ret.getBoolean("result")){
+					System.out.println("Changing occasional price SUCCEEDED!");
+					
+					informationAlert.setTitle("Request Success");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Your request has been sent to the adminstrator");
+					informationAlert.showAndWait();
+				
+				}else{
+					System.out.println("ERROR @ occasional change price");
+					
+					informationAlert.setTitle("Request Failed");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Something went wrong in sending the request.");
+					informationAlert.showAndWait();
+					
+				}
+				
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
+			}catch(NumberFormatException e){
+				informationAlert.setTitle("change warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("new cast ONLY number value.");
+				informationAlert.showAndWait();
 			}
 		}
     }
 
+    
     @FXML
     void regularChange(ActionEvent event) {
 
@@ -231,28 +264,60 @@ public class ParkingLotDirectorController {
 			return;
 			
 		} else {
-			double doubleCost=Double.parseDouble(cost);
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 			JSONObject json = new JSONObject();
 			try {
 				
+				
+				
 				//TODO: synchronize with server
 	
-				json.put("cost", doubleCost);
+				json.put("username", SharedData.getInstance().getCurrentSystemUser().get_username());
 				json.put("lotName", lotName);
-				json.put("cmd", "report");
+				
+				json.put("occasional", SharedData.getInstance().getOccasionalCost());
+				json.put("reserveAhead", Double.parseDouble(cost));
+				json.put("routineHours", (int)SharedData.getInstance().getRoutineCost() / (int)SharedData.getInstance().getReservationCost());
+				json.put("fullHours", (int)SharedData.getInstance().getFullCost() / (int)SharedData.getInstance().getReservationCost());
+				json.put("businessHours", (int)SharedData.getInstance().getBusinessCost() / (int)SharedData.getInstance().getReservationCost());
+
+				json.put("cmd", "requestCostChange");
 	
-				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
+				JSONObject ret = request(json, "SystemUserServices");
+	
+				System.out.println(ret);
+				if(ret.getBoolean("result")){
+					System.out.println("Changing reserve price SUCCEEDED!");
+					
+					informationAlert.setTitle("Request Success");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Your request has been sent to the adminstrator");
+					informationAlert.showAndWait();
+				
+				}else{
+					System.out.println("ERROR @ reserve change price");
+					
+					informationAlert.setTitle("Request Failed");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Something went wrong in sending the request.");
+					informationAlert.showAndWait();
+					
+				}
+				
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
+			}catch(NumberFormatException e){
+				informationAlert.setTitle("change warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("new cast ONLY number value.");
+				informationAlert.showAndWait();
 			}
 		}
 
     }
 
+    
     @FXML
     void routinelySubscriptionChange(ActionEvent event) {
     	String hours = routinelySubscriptionHoursTF.getText();
@@ -266,27 +331,61 @@ public class ParkingLotDirectorController {
 			return;
 			
 		} else {
-			int intHours=Integer.parseInt(hours);
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 			JSONObject json = new JSONObject();
 			try {
 				
+				int intHours=Integer.parseInt(hours);
+
+
+			
 				//TODO: synchronize with server
 	
-				json.put("cost", intHours);
+				json.put("username", SharedData.getInstance().getCurrentSystemUser().get_username());
 				json.put("lotName", lotName);
-				json.put("cmd", "report");
+				
+				json.put("occasional", SharedData.getInstance().getOccasionalCost());
+				json.put("reserveAhead", SharedData.getInstance().getReservationCost());
+				json.put("routineHours", intHours);
+				json.put("fullHours", (int)SharedData.getInstance().getFullCost() / (int)SharedData.getInstance().getReservationCost());
+				json.put("businessHours", (int)SharedData.getInstance().getBusinessCost() / (int)SharedData.getInstance().getReservationCost());
+
+				json.put("cmd", "requestCostChange");
 	
-				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
+				JSONObject ret = request(json, "SystemUserServices");
+	
+				System.out.println(ret);
+				if(ret.getBoolean("result")){
+					System.out.println("Changing routine hours SUCCEEDED!");
+					
+					informationAlert.setTitle("Request Success");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Your request has been sent to the adminstrator");
+					informationAlert.showAndWait();
+				
+				}else{
+					System.out.println("ERROR @ routine change hours");
+					
+					informationAlert.setTitle("Request Failed");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Something went wrong in sending the request.");
+					informationAlert.showAndWait();
+					
+				}
+				
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
+			}catch(NumberFormatException e){
+				informationAlert.setTitle("change warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("new cast ONLY number value.");
+				informationAlert.showAndWait();
 			}
 		}
     }
 
+    
     @FXML
     void businessSubscriptionHoursChange(ActionEvent event) {
 
@@ -301,29 +400,59 @@ public class ParkingLotDirectorController {
 			return;
 			
 		} else {
-			int intHours=Integer.parseInt(hours);
+			
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 			JSONObject json = new JSONObject();
 			try {
+				int intHours=Integer.parseInt(hours);
 				
-				//TODO: synchronize with server
-	
-				json.put("cost", intHours);
+				json.put("username", SharedData.getInstance().getCurrentSystemUser().get_username());
 				json.put("lotName", lotName);
-				json.put("cmd", "report");
+				
+				json.put("occasional", SharedData.getInstance().getOccasionalCost());
+				json.put("reserveAhead", SharedData.getInstance().getReservationCost());
+				json.put("routineHours", (int)SharedData.getInstance().getRoutineCost() / (int)SharedData.getInstance().getReservationCost());
+				json.put("fullHours",  (int)SharedData.getInstance().getFullCost() / (int)SharedData.getInstance().getReservationCost());
+				json.put("businessHours", intHours);
+
+				json.put("cmd", "requestCostChange");
 	
-				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
+				JSONObject ret = request(json, "SystemUserServices");
+	
+				System.out.println(ret);
+				if(ret.getBoolean("result")){
+					System.out.println("Changing business hours SUCCEEDED!");
+					
+					informationAlert.setTitle("Request Success");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Your request has been sent to the adminstrator");
+					informationAlert.showAndWait();
+				
+				}else{
+					System.out.println("ERROR @ business change hours");
+					
+					informationAlert.setTitle("Request Failed");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Something went wrong in sending the request.");
+					informationAlert.showAndWait();
+					
+				}
+				
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
+			}catch(NumberFormatException e){
+				informationAlert.setTitle("change warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("new cast ONLY number value.");
+				informationAlert.showAndWait();
 			}
 		}
     
 
     }
 
+    
     @FXML
     void fullSubscriptionHoursChange(ActionEvent event) {
 
@@ -339,23 +468,53 @@ public class ParkingLotDirectorController {
 			return;
 			
 		} else {
-			int intHours=Integer.parseInt(hours);
+			
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 			JSONObject json = new JSONObject();
 			try {
-				
+				int intHours=Integer.parseInt(hours);
 				//TODO: synchronize with server
-	
-				json.put("cost", intHours);
+				
+				json.put("username", SharedData.getInstance().getCurrentSystemUser().get_username());
 				json.put("lotName", lotName);
-				json.put("cmd", "report");
+				
+				json.put("occasional", SharedData.getInstance().getOccasionalCost());
+				json.put("reserveAhead", SharedData.getInstance().getReservationCost());
+				json.put("routineHours", (int)SharedData.getInstance().getRoutineCost() / (int)SharedData.getInstance().getReservationCost());
+				json.put("fullHours", intHours);
+				json.put("businessHours", (int)SharedData.getInstance().getBusinessCost() / (int)SharedData.getInstance().getReservationCost());
+
+				json.put("cmd", "requestCostChange");
 	
-				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
+				JSONObject ret = request(json, "SystemUserServices");
+	
+				System.out.println(ret);
+				if(ret.getBoolean("result")){
+					System.out.println("Changing full hours SUCCEEDED!");
+					
+					informationAlert.setTitle("Request Success");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Your request has been sent to the adminstrator");
+					informationAlert.showAndWait();
+				
+				}else{
+					System.out.println("ERROR @ full change hours");
+					
+					informationAlert.setTitle("Request Failed");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Something went wrong in sending the request.");
+					informationAlert.showAndWait();
+					
+				}
+				
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
+			}catch(NumberFormatException e){
+				informationAlert.setTitle("change warning");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("new cast ONLY number value.");
+				informationAlert.showAndWait();
 			}
 		}
 
@@ -406,6 +565,11 @@ public class ParkingLotDirectorController {
     	administratorRequestsButton.getStyleClass().add("loginView-buttons");
     	
     	
+    	occasionalReservationPriceTF.setText("old: " + Double.toString(SharedData.getInstance().getOccasionalCost()));
+    	regularReservationPriceTF.setText("old: " + Double.toString(SharedData.getInstance().getReservationCost()));
+    	routinelySubscriptionHoursTF.setText("old: " + Double.toString(SharedData.getInstance().getRoutineCost() / (int)SharedData.getInstance().getReservationCost() ));
+    	businessSubscriptionHoursTF.setText("old: " + Double.toString(SharedData.getInstance().getBusinessCost() / (int)SharedData.getInstance().getReservationCost() ));
+    	fullSubscriptionHoursTF.setText("old: " + Double.toString(SharedData.getInstance().getFullCost()/ (int)SharedData.getInstance().getReservationCost() ));
     	
 
     }
@@ -442,7 +606,9 @@ public class ParkingLotDirectorController {
 
     }
 
-	/*private JSONObject getAdminRequest() {
+	
+    
+    /*private JSONObject getAdminRequest() {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
 		JSONObject ret = new JSONObject();
@@ -463,7 +629,8 @@ public class ParkingLotDirectorController {
 
 		return null;
 	}
-	
+	*/
+    
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
 		try {
@@ -513,7 +680,7 @@ public class ParkingLotDirectorController {
 		return null;
 
 	}
-	*/
+	
 
 	public void setWelcome(String welcome) {
 		// TODO Auto-generated method stub

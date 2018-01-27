@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,6 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.ParkingLot;
 import model.SharedData;
 import model.SystemUser;
 import model.User;
@@ -41,6 +43,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class MainController {
@@ -130,6 +133,35 @@ public class MainController {
     			setted2.add(i.toString());
     	}
     	
+    	// updating the costs and lot names
+		JSONObject upd = request(null, "SystemQueries");
+		try {
+			if (upd.getBoolean("result")) {
+				System.out.println(upd);
+
+				JSONArray costs = upd.getJSONArray("Costs");
+
+				SharedData.getInstance().setReservationCost(((JSONObject) costs.get(1)).getDouble("cost"));
+				SharedData.getInstance().setOccasionalCost(((JSONObject) costs.get(0)).getDouble("cost"));
+				SharedData.getInstance().setRoutineCost(((JSONObject) costs.get(2)).getDouble("cost"));
+				SharedData.getInstance().setBusinessCost(((JSONObject) costs.get(3)).getDouble("cost"));
+				SharedData.getInstance().setFullCost(((JSONObject) costs.get(4)).getDouble("cost"));
+				
+				JSONArray parkingLotsJA = upd.getJSONArray("lots");
+				ArrayList<ParkingLot> parkingLotsAL= new ArrayList<ParkingLot>();
+				for (int i = 0; i < parkingLotsJA.length(); i++){
+					parkingLotsAL.add(new ParkingLot(parkingLotsJA.getJSONObject(i).getString("lotName")
+							, 3, 3, parkingLotsJA.getJSONObject(i).getInt("width")));
+				}
+				
+				SharedData.getInstance().setParkingLotsAL(parkingLotsAL);
+				
+			}
+		}catch(JSONException e){
+			System.out.println("Something ERROR while updating once log in");
+			e.printStackTrace();
+		}
+    	
     	
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GuestView.fxml"));
         Parent root;
@@ -137,7 +169,6 @@ public class MainController {
 			root = loader.load();
 	        guestButton.getScene().setRoot(root);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         GuestController gu = loader.getController();
@@ -246,6 +277,7 @@ public class MainController {
 	        		System.out.println(ret.toString());
 	        		
 	        		if(ret.getBoolean("result")){
+	        			
 	        			JSONObject temp = ret.getJSONObject("userInfo");
 	        			String _firstname = temp.getString("firstName");
 	        			String _lastname = temp.getString("lastName");
@@ -259,6 +291,38 @@ public class MainController {
 	        			
 	        			SharedData.getInstance().setCurrentUser(new User(_usernm, _email, _passwrd, _firstname,
 	        					_lastname, _type, _balance, _company));
+	        			
+	        			
+	        			// updating the costs and lot names
+	        			JSONObject upd = request(null, "SystemQueries");
+	        			try {
+	        				if (upd.getBoolean("result")) {
+	        					System.out.println(upd);
+
+	        					JSONArray costs = upd.getJSONArray("Costs");
+
+	        					SharedData.getInstance().setReservationCost(((JSONObject) costs.get(1)).getDouble("cost"));
+	        					SharedData.getInstance().setOccasionalCost(((JSONObject) costs.get(0)).getDouble("cost"));
+	        					SharedData.getInstance().setRoutineCost(((JSONObject) costs.get(2)).getDouble("cost"));
+	        					SharedData.getInstance().setBusinessCost(((JSONObject) costs.get(3)).getDouble("cost"));
+	        					SharedData.getInstance().setFullCost(((JSONObject) costs.get(4)).getDouble("cost"));
+	        					
+	        					JSONArray parkingLotsJA = upd.getJSONArray("lots");
+	        					ArrayList<ParkingLot> parkingLotsAL= new ArrayList<ParkingLot>();
+	        					for (int i = 0; i < parkingLotsJA.length(); i++){
+	        						parkingLotsAL.add(new ParkingLot(parkingLotsJA.getJSONObject(i).getString("lotName")
+	        								, 3, 3, parkingLotsJA.getJSONObject(i).getInt("width")));
+	        					}
+	        					
+	        					SharedData.getInstance().setParkingLotsAL(parkingLotsAL);
+	        					
+	        				}
+	        			}catch(JSONException e){
+	        				System.out.println("Something ERROR while updating once log in");
+	        				e.printStackTrace();
+	        			}
+	        			
+	        			//TODO: change the costs and parking lots name
 	        			
 	        			SignInCallBack();
 	        		}else{
@@ -511,7 +575,6 @@ public class MainController {
 				try {
 					trackbutton(vB);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			});
