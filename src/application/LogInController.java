@@ -517,7 +517,7 @@ public class LogInController {
 		for (int i = 0; i < ja.length(); i++) {
 
 			Label resId = new Label(((JSONObject) ja.get(i)).getString("subCode"));
-			resId.setStyle("-fx-pref-width: 60;");
+			resId.setStyle("-fx-pref-width: 80;");
 			Label startDate = new Label(((JSONObject) ja.get(i)).getString("start"));
 			startDate.setStyle("-fx-pref-width: 150;");
 			Label endDate = new Label(((JSONObject) ja.get(i)).getString("end"));
@@ -547,6 +547,10 @@ public class LogInController {
 	} catch (JSONException e) {
 		e.printStackTrace();
 	}
+    	
+    	TextField checkInput = (TextField) (listOfAddedWorkersBusinessAcocuntVBOX.getScene()
+				.lookup("#businessWorkerTF0"));
+    	checkInput.setText("");
     	
     }
     
@@ -1767,6 +1771,8 @@ public class LogInController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+		loadBusinessRoutinelySubscription(null);
 
 	}
 
