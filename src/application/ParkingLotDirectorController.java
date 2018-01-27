@@ -31,9 +31,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.CpsMailBox;
+import model.ParkingLot;
+import model.ParkingSituation;
 import model.SharedData;
 
 
@@ -588,38 +592,111 @@ public class ParkingLotDirectorController {
     	administratorRequestsButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	administratorRequestsButton.getStyleClass().add("pressedButton");
 
-    	/*JSONObject ret = getAdminRequest();
+    	JSONObject ret = getAdminRequest();
 
 		try {
 
-			JSONArray ja = ret.getJSONArray("resArr");
+			JSONArray ja = ret.getJSONArray("managementRequests");
 
 			System.out.println(ja);
-
+			
 			int length = administratorRequestsListVB.getChildren().size();
 			administratorRequestsListVB.getChildren().remove(0, length);
 			
+			for(int i = 0; i < ja.length(); i++){
+				String rt = ((JSONObject) ja.get(i)).getString("requestType");
+				Label request = null;
+				if(rt.equals("lotCurrentSituation")){
+					request = new Label("Lot Current Situation");	
+				}
+        	    request.setStyle("-fx-pref-width: 100; -fx-padding: 3.5 0 0 0");
+        		Label status = new Label("Pending");
+        		status.setStyle("-fx-pref-width: 100; -fx-padding: 3.5 0 0 0");
+        		//int requestID = ((JSONObject) ja.get(i)).getInt("reqeustID");
+   
+    		
+				HBox hb = new HBox();
+				hb.getChildren().add(request);
+				hb.getChildren().add(status);
+				hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+				administratorRequestsListVB.getChildren().add(hb);
+				
+				if(status.getText() == "Pending"){
+					Button sendCurrentSituationToAdmin = new Button("Send Report");
+					sendCurrentSituationToAdmin.setId("sendCurrentSituationToAdminButton");
+					String css = getClass().getResource("application.css").toExternalForm();
+					sendCurrentSituationToAdmin.getStylesheets().clear();
+					sendCurrentSituationToAdmin.getStylesheets().add(css);
+					JSONObject ret2 = (JSONObject) ja.get(i);
+					System.out.println(ret2.toString());
+					sendCurrentSituationToAdmin.setOnAction(e -> sendCurrentSituationToAdminCallBack(e, ret2));
+					
+					sendCurrentSituationToAdmin.getStyleClass().add("loginView-buttons");
+					hb.getChildren().add(sendCurrentSituationToAdmin);
+				}
+				
+    		}
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
-		}*/
+		}
 
     }
 
 	
     
-    /*private JSONObject getAdminRequest() {
+    private void sendCurrentSituationToAdminCallBack(ActionEvent e, JSONObject ret2) {
+		// TODO Auto-generated method stub
+    	JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+
+		try {
+				json.put("requestID", ret2.getInt("requestID"));
+				json.put("cmd", "handleManagementRequest");
+				ret = request(json, "SystemUserServices");
+				System.out.println(ret);
+				if (ret.getBoolean("result")) {
+					
+			    	ParkingLot pl = SharedData.getInstance().getCurrentParkingLot();
+					ParkingSituation ps = new ParkingSituation(pl.getHeight(), pl.getWidth());
+					ps.getGridLayer(pl);
+					
+					String email = "cps.client4@gmail.com";
+					CpsMailBox mail = new CpsMailBox(SharedData.getInstance().getCPSEmail(),
+							 SharedData.getInstance().getCPSPassword(), email);
+					mail.sendMailToAdministrator();
+					
+					
+					informationAlert.setTitle("successful Respond");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText(
+							"Your respond was sent successfully.\nCurrent Situation mail was send to CPS "
+							+ "general manager");
+					informationAlert.showAndWait();
+
+					loadAdministratorRequests(null);
+				}
+			
+		} catch(JSONException e1) {
+			e1.printStackTrace();
+		}
+
+
+    	return;
+	}
+
+	private JSONObject getAdminRequest() {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
 		JSONObject ret = new JSONObject();
 		try {
 
-			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
-			ret = request(json, "UserServices");
+			json.put("lotName", SharedData.getInstance().getCurrentParkingLot().get_name());
+			json.put("cmd", "getManagementRequests");
+			ret = request(json, "SystemUserServices");
 			System.out.println(ret);
 			if (ret.getBoolean("result")) {
-				JSONArray reservs = ret.getJSONArray("resArr");
-				System.out.println(reservs.toString());
 				return ret;
 			}
 
@@ -629,7 +706,7 @@ public class ParkingLotDirectorController {
 
 		return null;
 	}
-	*/
+	
     
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
