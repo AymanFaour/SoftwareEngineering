@@ -162,7 +162,7 @@
                         </VBox>
                      </right>
                   </BorderPane>
-               	   <BorderPane fx:id="viewAdministratorReqeustBorderPane" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+               	   <BorderPane fx:id="viewAdministratorReqeustBorderPane" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                      <left>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
@@ -171,7 +171,7 @@
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7499b5" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
                                     <HBox prefHeight="20.0" prefWidth="600.0">
                                        <children>
-                                          <Label prefWidth="100.0" text="Request">
+                                          <Label prefWidth="130.0" text="Request">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>
@@ -179,7 +179,7 @@
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="15.0" layoutY="12.0" prefWidth="40.0" text="Status">
+                                          <Label layoutX="15.0" layoutY="12.0" prefWidth="70.0" text="Status">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>

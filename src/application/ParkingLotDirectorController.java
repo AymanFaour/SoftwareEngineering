@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -345,9 +346,9 @@ public class ParkingLotDirectorController {
 				if(rt.equals("lotCurrentSituation")){
 					request = new Label("Lot Current Situation");	
 				}
-        	    request.setStyle("-fx-pref-width: 100; -fx-padding: 3.5 0 0 0");
+        	    request.setStyle("-fx-pref-width: 130; -fx-padding: 3.5 0 0 0");
         		Label status = new Label("Pending");
-        		status.setStyle("-fx-pref-width: 100; -fx-padding: 3.5 0 0 0");
+        		status.setStyle("-fx-pref-width: 70; -fx-padding: 3.5 0 0 0");
         		//int requestID = ((JSONObject) ja.get(i)).getInt("reqeustID");
    
     		
