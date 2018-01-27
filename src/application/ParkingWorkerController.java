@@ -699,6 +699,23 @@ public class ParkingWorkerController {
     	
 
     }
+    
+    @FXML
+    void InitializeParkingLot(ActionEvent event) {
+    	informationAlert.setTitle("Confirmation Dialog");
+		confirmAlert.setContentText("Are you sure you want to initialize the parking lot?");
+
+		Optional<ButtonType> result = confirmAlert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+
+			SharedData.getInstance().getCurrentParkingLot().initialize();
+			informationAlert.setTitle("Initialization Succeeded");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("You have initialized the parking lot successfully");
+			informationAlert.showAndWait();
+		}
+
+    }
 	
     public void setWelcome(String welcome) {
 		welcomeBanner.setText(welcome);

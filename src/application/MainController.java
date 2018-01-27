@@ -576,7 +576,7 @@ public class MainController {
     		
     		trackbutton.setOnAction(e -> {
 				try {
-					trackbutton(vB);
+					trackbutton(vB, carNumberTF.getText());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -590,10 +590,12 @@ public class MainController {
     }
     
     
-    void trackbutton(VBox vb) throws IOException 
+    void trackbutton(VBox vb, String carNumber) throws IOException 
     {
     	if(TrakCheck==0) {
-    		TextArea  trakTA=new TextArea();
+    		String trackingResponse = SharedData.getInstance().getCurrentParkingLot().carExists(carNumber);
+    		TextArea  trakTA=new TextArea(trackingResponse);
+    		trakTA.setWrapText(true);
     		vb.getChildren().add(trakTA);
     		TrakCheck=1;
     		trakTA.setEditable(false);
