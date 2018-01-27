@@ -331,7 +331,7 @@ public class AdministratorController {
 		 		businessSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
 		 		Label   fullSubscriptionHours = new Label(SharedData.getInstance().getFullCost() / SharedData.getInstance().getReservationCost() + "");
 		 		fullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
-		 		Label lotName = new Label("OLD Costs");
+		 		Label lotName = new Label("Current Price");
 		 		lotName.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
 		 		
 		 		HBox oldHbox = new HBox();
@@ -365,7 +365,10 @@ public class AdministratorController {
 						newFullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 3.5 0 0 0");
 						Label   newLotName = new Label(((JSONObject)loop.get(i)).getString("lotName"));
 						newFullSubscriptionHours.setStyle("-fx-pref-width: 90; -fx-padding: 0 3.5 0 0");
-				    	
+						
+						Label   space = new Label("       ");
+						newFullSubscriptionHours.setStyle("-fx-pref-width:90 ;");
+						
 				    
 				    	Button approve=new Button("Approve");
 						Button refuse=new Button("Refuse");
@@ -377,6 +380,7 @@ public class AdministratorController {
 						newHbox.getChildren().add(newbusinessSubscriptionHours);
 						newHbox.getChildren().add(newFullSubscriptionHours);
 						newHbox.getChildren().add(newLotName);
+						newHbox.getChildren().add(space);
 						newHbox.getChildren().add(approve);
 						newHbox.getChildren().add(refuse);
 						oldHbox.setStyle("-fx-background-color: green");

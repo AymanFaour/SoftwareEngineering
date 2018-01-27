@@ -110,9 +110,6 @@
                   <BorderPane fx:id="changePricesRequestsBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                      <center>
                         <VBox fx:id="changePricesRequestVbox" prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-                           <padding>
-                              <Insets left="5.0" top="10.0" />
-                           </padding>
                            <children>
                               <StackPane alignment="TOP_LEFT" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #7499b5;">
                                  <children>
@@ -156,6 +153,11 @@
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                           </Label>
+                                          <Label prefHeight="15.0" prefWidth="90.0" text="Parking Lot Name:">
+                                             <font>
+                                                <Font name="System Bold" size="10.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                        <padding>
                                           <Insets left="5.0" top="1.5" />
@@ -163,9 +165,9 @@
                                     </HBox>
                                  </children>
                               </StackPane>
-                              <ScrollPane prefHeight="400.0" prefWidth="647.0">
+                              <ScrollPane prefHeight="600.0" prefWidth="600.0">
                                  <content>
-                                    <VBox fx:id="changePricesRequestVbox" prefHeight="400.0" prefWidth="630.0" />
+                                    <VBox fx:id="changePricesRequestVbox" prefHeight="498.0" prefWidth="649.0" />
                                  </content>
                               </ScrollPane>
                            </children>
