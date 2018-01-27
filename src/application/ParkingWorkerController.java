@@ -33,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.*;
@@ -148,11 +149,20 @@ public class ParkingWorkerController {
     @FXML // fx:id="HeightComboBox"
     private ComboBox<String> HeightComboBox; // Value injected by FXMLLoader
 
+    @FXML // fx:id="reserveHeightComboBox"
+    private ComboBox<String> reserveHeightComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="reserveDepthComboBox"
+    private ComboBox<String> reserveDepthComboBox; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="reserveWidthComboBox"
+    private ComboBox<String> reserveWidthComboBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="reservedByWorkerSpotsVB"
+    private VBox reservedByWorkerSpotsVB; // Value injected by FXMLLoader
 
 
     private ObservableList<String> myComboBoxParkResComboBox = FXCollections.observableArrayList();
-    private ObservableList<String> myComboBoxHoursData = FXCollections.observableArrayList();
-    private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
     
     private ObservableList<String> myComboBoxWidth = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxDepth = FXCollections.observableArrayList();
@@ -268,10 +278,6 @@ public class ParkingWorkerController {
 				json.put("lotName", lotName);
 				json.put("cmd", "disableSpot");
 	
-				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -629,59 +635,40 @@ public class ParkingWorkerController {
     	disabledParkingSpotButton.getStyleClass().removeAll("pressedButton", "focus");
     	disabledParkingSpotButton.getStyleClass().add("loginView-buttons");
 
-    	myComboBoxHoursData.clear();
-    	for(Integer i = 0; i < 24; i++){
-    		if(i < 10 ){
-    			myComboBoxHoursData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxHoursData.add(i.toString());
+    	myComboBoxWidth.clear();
+    	for(Integer i = 1; i <SharedData.getInstance().getCurrentParkingLot().getWidth()+1 ; i++){
+    			myComboBoxWidth.add(i.toString());
     	}
     	
-    	myComboBoxMinutesData.clear();
-    	for(Integer i = 0; i < 60; i++){
-    		if(i < 10 ){
-    			myComboBoxMinutesData.add("0" + i.toString());
-    		}
-    		else
-    			myComboBoxMinutesData.add(i.toString());
+    	myComboBoxHeight.clear();
+    	for(Integer i = 1; i <SharedData.getInstance().getCurrentParkingLot().getHeight()+1 ; i++){
+    			myComboBoxHeight.add(i.toString());
     	}
-    	
-//    	ArrayList<String> parkingLotNames = new ArrayList<String>();
-    	
-    	ArrayList<ParkingLot> parkingLotNames = SharedData.getInstance().getParkingLotsAL();
+    	myComboBoxDepth.clear();
+    	for(Integer i = 1; i < SharedData.getInstance().getCurrentParkingLot().getDepth()+1 ; i++){
+    			myComboBoxDepth.add(i.toString());
+    	}
+    	reserveDepthComboBox.setItems(myComboBoxDepth);
+    	reserveWidthComboBox.setItems(myComboBoxWidth);
+    	reserveHeightComboBox.setItems(myComboBoxHeight);
+        
+     	
+    }
+    
+    @FXML
+    void reserveParkingByWorker(ActionEvent event) {
+    	if((reserveHeightComboBox.getValue() == null) || (reserveWidthComboBox.getValue() == null) 
+    			|| (reserveDepthComboBox.getValue() == null)) {
 
-    	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxParkResComboBox.add(parkingLotNames.get(i).get_name());
-    	}
-    	
-    	myComboBoxParkResComboBox.clear();
-    	for(int i = 0; i < parkingLotNames.size(); i++){
-    		myComboBoxParkResComboBox.add(parkingLotNames.get(i).get_name());
-    	}
-    	
-    	parkResComboBox.setItems(myComboBoxParkResComboBox);
-    	
-//    	
-//    	parkingLotNames.add("Ben Gurion");
-//    	parkingLotNames.add("Carmel");
-//    	parkingLotNames.add("Hadar");
-//    	parkingLotNames.add("Horev");
-//    	parkingLotNames.add("Hanita");
-//    	parkingLotNames.add("Neve Shaanan");
-//    	
-//    	myComboBoxParkResComboBox.clear();
-//    	for(int i = 0; i < parkingLotNames.size(); i++){
-//    		myComboBoxParkResComboBox.add(parkingLotNames.get(i));
-//    	}
-    	
-//    	parkResComboBox.setItems(myComboBoxParkResComboBox);
-
-    	parkResLeavingHourComboBox.setItems(myComboBoxHoursData);
-    	parkResLeavingMinuteComboBox.setItems(myComboBoxMinutesData);
-    	parkResArrivingHourComboBox.setItems(myComboBoxHoursData);
-    	parkResArrivingMinuteComboBox.setItems(myComboBoxMinutesData);
-    	
+			informationAlert.setTitle("Reserve Spot Warning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Please fill all the positions");
+			informationAlert.showAndWait();
+			return;
+			
+		} else {
+			
+		}
     }
 
     @FXML
@@ -703,27 +690,15 @@ public class ParkingWorkerController {
     	
     	myComboBoxWidth.clear();
     	for(Integer i = 1; i <SharedData.getInstance().getCurrentParkingLot().getWidth()+1 ; i++){
-    		if(i < 10 ){
-    			myComboBoxWidth.add("0" + i.toString());
-    		}
-    		else
     			myComboBoxWidth.add(i.toString());
     	}
     	
     	myComboBoxHeight.clear();
     	for(Integer i = 1; i <SharedData.getInstance().getCurrentParkingLot().getHeight()+1 ; i++){
-    		if(i < 10 ){
-    			myComboBoxHeight.add("0" + i.toString());
-    		}
-    		else
     			myComboBoxHeight.add(i.toString());
     	}
     	myComboBoxDepth.clear();
     	for(Integer i = 1; i < SharedData.getInstance().getCurrentParkingLot().getDepth()+1 ; i++){
-    		if(i < 10 ){
-    			myComboBoxDepth.add("0" + i.toString());
-    		}
-    		else
     			myComboBoxDepth.add(i.toString());
     	}
     	DepthComboBox.setItems(myComboBoxDepth);
@@ -731,6 +706,23 @@ public class ParkingWorkerController {
     	HeightComboBox.setItems(myComboBoxHeight);
         
     	
+    	
+    }
+    
+    @FXML
+    void InitializeParkingLot(ActionEvent event) {
+    	informationAlert.setTitle("Confirmation Dialog");
+		confirmAlert.setContentText("Are you sure you want to initialize the parking lot?");
+
+		Optional<ButtonType> result = confirmAlert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+
+			SharedData.getInstance().getCurrentParkingLot().initialize();
+			informationAlert.setTitle("Initialization Succeeded");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("You have initialized the parking lot successfully");
+			informationAlert.showAndWait();
+		}
 
     }
 	

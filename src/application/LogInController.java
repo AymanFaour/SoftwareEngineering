@@ -264,6 +264,9 @@ public class LogInController {
     @FXML // fx:id="businessSubscriptionCostText"
     private Text businessSubscriptionCostText; // Value injected by FXMLLoader
     
+    @FXML // fx:id="businessRoutinelySubscriptionListVB"
+    private VBox businessRoutinelySubscriptionListVB; // Value injected by FXMLLoader
+    
     private int businessAccountWorkersCounter = 0;
     
     public int getBusinessAccountWorkersCounter() {
@@ -501,10 +504,83 @@ public class LogInController {
     	Double subscriptionCost = SharedData.getInstance().getBusinessCost();
     	businessSubscriptionCostText.setText(subscriptionCost.toString() + "\u20AA per subscription");
     
+    	JSONObject ret = getBusinessReserves();
+    	try{
+
+		JSONArray ja = ret.getJSONArray("businessInfo");
+
+		System.out.println(ja);
+
+		int length2 = businessRoutinelySubscriptionListVB.getChildren().size();
+		businessRoutinelySubscriptionListVB.getChildren().remove(0, length2);
+
+		for (int i = 0; i < ja.length(); i++) {
+
+			Label resId = new Label(((JSONObject) ja.get(i)).getString("subCode"));
+			resId.setStyle("-fx-pref-width: 80;");
+			Label startDate = new Label(((JSONObject) ja.get(i)).getString("start"));
+			startDate.setStyle("-fx-pref-width: 150;");
+			Label endDate = new Label(((JSONObject) ja.get(i)).getString("end"));
+			endDate.setStyle("-fx-pref-width: 150;");
+			VBox numberOfWorkersVB = new VBox();
+			numberOfWorkersVB.setStyle("-fx-pref-width: 120;");
+			String[] carsNumberArray = ((JSONObject) ja.get(i)).getString("cars").split(";");
+			int length3 = numberOfWorkersVB.getChildren().size();
+			numberOfWorkersVB.getChildren().remove(0, length3);
+
+			for (int j = 0; j < carsNumberArray.length; j ++){
+				Label l = new Label(carsNumberArray[j]);
+				l.setStyle("-fx-pref-width: 120;");
+				numberOfWorkersVB.getChildren().add(l);
+			}
+			
+			HBox hb = new HBox();
+			hb.getChildren().add(resId);
+			hb.getChildren().add(startDate);
+			hb.getChildren().add(endDate);
+			hb.getChildren().add(numberOfWorkersVB);
+			hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+					+ "-fx-border-color: #d0e6f8; -fx-padding: 2 0 0 10;");
+			businessRoutinelySubscriptionListVB.getChildren().add(hb);
+	}
+
+	} catch (JSONException e) {
+		e.printStackTrace();
+	}
+    	
+    	TextField checkInput = (TextField) (listOfAddedWorkersBusinessAcocuntVBOX.getScene()
+				.lookup("#businessWorkerTF0"));
+    	checkInput.setText("");
+    	
     }
     
     
-    @FXML
+    private JSONObject getBusinessReserves() {
+		// TODO Auto-generated method stub
+    	JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		try {
+
+			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
+			json.put("cmd", "BusinessInfo");
+			ret = request(json, "SubscriptionController");
+			System.out.println(ret);
+			if (ret.getBoolean("result")) {
+				JSONArray reservs = ret.getJSONArray("businessInfo");
+				System.out.println(reservs.toString());
+				return ret;
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+
+	@FXML
     void addWorkerToBusinessAcocunt(ActionEvent event) {
 		HBox hb = new HBox();
 		hb.setStyle("-fx-pref-height: 30; -fx-padding: 5 0 0 10;");
@@ -622,26 +698,6 @@ public class LogInController {
 
 			int length = reservationsList.getChildren().size();
 			reservationsList.getChildren().remove(0, length);
-
-			// ja.put(new JSONObject().put("ID", "12").put("arriving hour",
-			// "18:00").put("leaving hour", "20:00")
-			// .put("arriving date", "jan 12").put("leaving date", "jan
-			// 14").put("status", "in queue")
-			// .put("car id", "2000").put("parking lot name","majdal shams"));
-			//
-			// ja.put(new JSONObject().put("ID", "20").put("arriving hour",
-			// "18:00").put("leaving hour", "20:00")
-			// .put("arriving date", "jan 12").put("leaving date", "jan
-			// 14").put("status", "parking")
-			// .put("car id", "2001").put("parking lot name","majdal shams"));
-			//
-			// ja.put(new JSONObject().put("ID", "70").put("arriving hour",
-			// "18:00").put("leaving hour", "20:00")
-			// .put("arriving date", "jan 12").put("leaving date", "jan
-			// 14").put("status", "parking")
-			// .put("car id", "20002").put("parking lot name","majdal shams"));
-			//
-			//
 
 			for (int i = 0; i < ja.length(); i++) {
 
@@ -1966,6 +2022,8 @@ public class LogInController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+		loadBusinessRoutinelySubscription(null);
 
 	}
 

@@ -8,3 +8,5 @@ bin/application/LogInController\.class
 bin/application/Main\.class
 
 *.class
+
+test\.pdf

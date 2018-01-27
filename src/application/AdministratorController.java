@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,10 +23,13 @@ import javafx.geometry.Insets;
 import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -88,6 +92,10 @@ public class AdministratorController {
     private ObservableList<String> myComboxReport = FXCollections.observableArrayList();
     private Stage popupwindow;
 
+
+	Alert informationAlert = new Alert(AlertType.INFORMATION);
+	Alert errorAlert = new Alert(AlertType.ERROR);
+	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
     
     @FXML
     void signOut(ActionEvent event) {
@@ -178,34 +186,49 @@ public class AdministratorController {
     @FXML
     void getCurrentSituation(ActionEvent event) {
     	
-    	popupwindow=new Stage();
-		popupwindow.initModality(Modality.APPLICATION_MODAL);
-		popupwindow.setTitle("Current Situation");
-		
-		VBox vB=new VBox();
-		vB.setPadding(new Insets(10, 10, 10, 10));
-		
-		vB.getChildren().clear();
-		ParkingLot pl = SharedData.getInstance().getCurrentParkingLot();
-		ParkingSituation ps = new ParkingSituation(pl.getHeight(), pl.getWidth());
-		ps.getGridLayer(pl);
-		
-		
-		Scene scene1= new Scene(vB, 520, 520);
-		      
-		popupwindow.setScene(scene1);
-		
-		String email = "cps.client4@gmail.com";
-		CpsMailBox mail = new CpsMailBox(SharedData.getInstance().getCPSEmail(),
-				 SharedData.getInstance().getCPSPassword(), email);
-		mail.sendMailToAdministrator();
-		
-
-		popupwindow.showAndWait();
-		
-//
-//    	currentSituationCallBack(event);
+    	String _lotName = parkLotNameComboBox.getValue();
+    	if(_lotName == null){
+    		informationAlert.setTitle("Warning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("You must choose a parking lot");
+			informationAlert.showAndWait();
+			return;
+    	}
     	
+    	else{
+    		JSONObject json = new JSONObject();
+    		JSONObject ret = new JSONObject();
+
+    		try {
+    				json.put("lotName", _lotName);
+    				json.put("requestType", "lotCurrentSituation");
+    				json.put("cmd", "managementRequest");
+    				ret = request(json, "SystemUserServices");
+    				System.out.println(ret);
+    				if (ret.getBoolean("result")) {
+    					informationAlert.setTitle("Your request was sent successfully");
+    					informationAlert.setHeaderText(null);
+    					informationAlert.setContentText(
+    							"Your request was sent successfully.\nPlease wait for the parking lot "
+    							+ "manager to send response in a mail");
+    					informationAlert.showAndWait();
+    				}else{
+    					if(ret.getString("info").equals("Request already exist")){
+        					informationAlert.setTitle("Pending request");
+        					informationAlert.setHeaderText(null);
+        					informationAlert.setContentText(
+        							"Previous request was send earlier.\nPlease wait for the parking lot "
+        							+ "manager to send response in a mail");
+        					informationAlert.showAndWait();
+    					}
+    				}
+    			
+    		} catch(JSONException e1) {
+    			e1.printStackTrace();
+    		}
+
+    	}
+		
     }
  
     
@@ -348,7 +371,7 @@ public class AdministratorController {
 						
 				    
 				    	Button approve=new Button("Approve");
-						Button refuse=new Button("Refuse");
+						Button refuse=new Button("Decline");
 								
 						HBox newHbox = new HBox();
 						newHbox.getChildren().add(NewOccasionalReservationPrice);

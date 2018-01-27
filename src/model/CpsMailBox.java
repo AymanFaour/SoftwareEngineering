@@ -33,6 +33,7 @@ public class CpsMailBox {
 		this.props = new Properties();
 		this.props.put("mail.smtp.auth", "true");
 		this.props.put("mail.smtp.starttls.enable", "true");
+		this.props.put("mail.smtp.ssl.trust", "*");
 		this.props.put("mail.smtp.host", "smtp.gmail.com");
 		this.props.put("mail.smtp.port", "587");
 	

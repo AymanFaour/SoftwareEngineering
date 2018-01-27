@@ -30,7 +30,24 @@ public class CellPane extends JPanel {
    }
 
     
-    @Override
+    public CellPane(int row, int col, SpotStatus e) {
+		// TODO Auto-generated constructor stub
+    	if(e.equals(SpotStatus.Busy)){
+    		setBackground(Color.BLUE);
+        }
+        else if(e.equals(SpotStatus.Available)){
+        	setBackground(Color.GREEN);
+        }	                    
+        else if(e.equals(SpotStatus.Reserved)){
+        	setBackground(Color.YELLOW);
+        }
+        else{
+        	setBackground(Color.RED);
+        }  
+	}
+
+
+	@Override
     public Dimension getPreferredSize() {
         return new Dimension(20, 20);
     }

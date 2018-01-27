@@ -529,7 +529,7 @@ public class CustomerServiceController {
 			
 			if(ret.getBoolean("result")){
 				
-				informationAlert.setTitle("Handleing Complaint Send Seccesfully");
+				informationAlert.setTitle("Your complaint was handled successfully");
 				informationAlert.setHeaderText(null);
 				informationAlert.setContentText(
 						"Handling complaint Done.\nMail has been send to the client");
