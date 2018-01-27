@@ -441,22 +441,22 @@
                                  <children>
                                     <HBox prefHeight="20.0" prefWidth="200.0">
                                        <children>
-                                          <Label prefWidth="60.0" text="Sub ID">
+                                          <Label prefWidth="80.0" text="Act Code">
                                              <font>
                                                 <Font name="Arial Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="10.0" layoutY="10.0" prefWidth="80.0" text="Start Date">
+                                          <Label layoutX="10.0" layoutY="10.0" prefWidth="150.0" text="Start Date">
                                              <font>
                                                 <Font name="Arial Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="50.0" layoutY="10.0" prefWidth="80.0" text="End Date">
+                                          <Label layoutX="50.0" layoutY="10.0" prefWidth="150.0" text="End Date">
                                              <font>
                                                 <Font name="Arial Bold" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="160.0" layoutY="12.0" prefWidth="80.0" text="#Workers">
+                                          <Label layoutX="160.0" layoutY="12.0" prefWidth="100.0" text="Ca Numbers">
                                              <font>
                                                 <Font name="Arial Bold" size="12.0" />
                                              </font>
@@ -468,7 +468,10 @@
                                     </HBox>
                                  </children>
                               </StackPane>
-                              <ScrollPane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #dddddd;" />
+                              <ScrollPane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #dddddd;">
+                                 <content>
+                                    <VBox fx:id="businessRoutinelySubscriptionListVB" prefHeight="79.0" prefWidth="580.0" />
+                                 </content></ScrollPane>
                               <HBox prefHeight="30.0" prefWidth="200.0">
                                  <children>
                                     <Label prefWidth="40.0" styleClass="label-first" stylesheets="@application.css" text="Cost:" />

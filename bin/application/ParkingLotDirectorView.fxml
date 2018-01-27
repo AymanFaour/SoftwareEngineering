@@ -71,15 +71,65 @@
                      <right>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
+                              <StackPane alignment="TOP_LEFT" prefHeight="20.0" prefWidth="600.0" style="-fx-background-color: #7499b5;">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7499b5" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
+                                    <HBox prefHeight="20.0" prefWidth="600.0">
+                                       <children>
+                                          <Label prefWidth="100.0">
+                                             <font>
+                                                <Font name="System Bold" size="10.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                          <Label layoutX="15.0" layoutY="12.0" prefHeight="15.0" prefWidth="107.0">
+                                             <font>
+                                                <Font name="System Bold" size="10.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Label prefHeight="15.0" prefWidth="80.0" text="    Old                 ">
+                                                   <font>
+                                                      <Font name="System Bold" size="10.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets top="3.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                                <Label prefHeight="15.0" prefWidth="90.0" text="     new  ">
+                                                   <font>
+                                                      <Font name="System Bold" size="10.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets top="3.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </StackPane>
                               <HBox prefHeight="50.0" prefWidth="600.0">
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="198.0" styleClass="label-first" stylesheets="@application.css" text=" Occasional Reservation Price:">
                                        <HBox.margin>
-                                          <Insets top="10.0" />
-                                       </HBox.margin></Label>
-                                    <TextField fx:id="occasionalReservationPriceTF" prefHeight="39.0" prefWidth="66.0" styleClass="text-field-first" stylesheets="@application.css">
+                                          <Insets top="25.0" />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding></Label>
+                                    <Label fx:id="occasionalReservationPriceT" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="45.0" text="Label">
                                        <HBox.margin>
-                                          <Insets left="5.0" />
+                                          <Insets left="15.0" top="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="occasionalReservationPriceTF" prefHeight="39.0" prefWidth="35.0" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
                                        </HBox.margin>
                                     </TextField>
                                  </children>
@@ -88,11 +138,19 @@
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="198.0" styleClass="label-first" stylesheets="@application.css" text=" Regular Reservation Price:">
                                        <HBox.margin>
-                                          <Insets top="10.0" />
-                                       </HBox.margin></Label>
-                                    <TextField fx:id="regularReservationPriceTF" prefHeight="39.0" prefWidth="66.0" styleClass="text-field-first" stylesheets="@application.css">
+                                          <Insets top="25.0" />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding></Label>
+                                    <Label fx:id="regularReservationPriceT" maxWidth="1.7976931348623157E308" prefWidth="45.0" text="Label">
                                        <HBox.margin>
-                                          <Insets left="5.0" />
+                                          <Insets left="15.0" top="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="regularReservationPriceTF" prefHeight="39.0" prefWidth="35.0" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
                                        </HBox.margin>
                                     </TextField>
                                  </children>
@@ -101,11 +159,19 @@
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="198.0" styleClass="label-first" stylesheets="@application.css" text=" Routinely Subscription Hours:">
                                        <HBox.margin>
-                                          <Insets top="10.0" />
-                                       </HBox.margin></Label>
-                                    <TextField fx:id="routinelySubscriptionHoursTF" prefHeight="39.0" prefWidth="66.0" styleClass="text-field-first" stylesheets="@application.css">
+                                          <Insets top="25.0" />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding></Label>
+                                    <Label fx:id="routinelySubscriptionHoursT" maxWidth="1.7976931348623157E308" prefWidth="45.0" text="Label">
                                        <HBox.margin>
-                                          <Insets left="5.0" />
+                                          <Insets left="15.0" top="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="routinelySubscriptionHoursTF" prefHeight="39.0" prefWidth="35.0" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
                                        </HBox.margin>
                                     </TextField>
                                  </children>
@@ -114,11 +180,19 @@
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="198.0" styleClass="label-first" stylesheets="@application.css" text=" Business Subscription Hours:">
                                        <HBox.margin>
-                                          <Insets top="10.0" />
-                                       </HBox.margin></Label>
-                                    <TextField fx:id="businessSubscriptionHoursTF" prefHeight="39.0" prefWidth="66.0" styleClass="text-field-first" stylesheets="@application.css">
+                                          <Insets top="25.0" />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding></Label>
+                                    <Label fx:id="businessSubscriptionHoursT" maxWidth="1.7976931348623157E308" prefWidth="45.0" text="Label">
                                        <HBox.margin>
-                                          <Insets left="5.0" />
+                                          <Insets left="15.0" top="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="businessSubscriptionHoursTF" prefHeight="39.0" prefWidth="35.0" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
                                        </HBox.margin>
                                     </TextField>
                                  </children>
@@ -127,11 +201,19 @@
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="198.0" styleClass="label-first" stylesheets="@application.css" text=" Full Subscription Hours:">
                                        <HBox.margin>
-                                          <Insets top="10.0" />
-                                       </HBox.margin></Label>
-                                    <TextField fx:id="fullSubscriptionHoursTF" prefHeight="39.0" prefWidth="66.0" styleClass="text-field-first" stylesheets="@application.css">
+                                          <Insets top="25.0" />
+                                       </HBox.margin>
+                                       <padding>
+                                          <Insets left="10.0" />
+                                       </padding></Label>
+                                    <Label fx:id="fullSubscriptionHoursT" maxWidth="1.7976931348623157E308" prefWidth="45.0" text="Label">
                                        <HBox.margin>
-                                          <Insets left="5.0" />
+                                          <Insets left="15.0" top="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="fullSubscriptionHoursTF" prefHeight="39.0" prefWidth="35.0" styleClass="text-field-first" stylesheets="@application.css">
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
                                        </HBox.margin>
                                     </TextField>
                                  </children>
@@ -143,7 +225,7 @@
                                  <children>
                                     <Button fx:id="occasionalChangeButton" mnemonicParsing="false" onAction="#occasionalChange" styleClass="go-button" stylesheets="@application.css" text="Change">
                                        <HBox.margin>
-                                          <Insets top="10.0" />
+                                          <Insets left="10.0" top="20.0" />
                                        </HBox.margin>
                                     </Button>
                                  </children></HBox>
@@ -153,16 +235,13 @@
                                  </VBox.margin>
                               </HBox>
                            </children>
-                           <padding>
-                              <Insets left="20.0" top="10.0" />
-                           </padding>
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin>
                         </VBox>
                      </right>
                   </BorderPane>
-               	   <BorderPane fx:id="viewAdministratorReqeustBorderPane" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
+               	   <BorderPane fx:id="viewAdministratorReqeustBorderPane" layoutX="10.0" layoutY="10.0" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
                      <left>
                         <VBox prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
@@ -171,7 +250,7 @@
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7499b5" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="600.0" />
                                     <HBox prefHeight="20.0" prefWidth="600.0">
                                        <children>
-                                          <Label prefWidth="100.0" text="Request">
+                                          <Label prefWidth="130.0" text="Request">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>
@@ -179,7 +258,7 @@
                                                 <Font name="System Bold" size="10.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="15.0" layoutY="12.0" prefWidth="40.0" text="Status">
+                                          <Label layoutX="15.0" layoutY="12.0" prefWidth="70.0" text="Status">
                                              <font>
                                                 <Font name="System Bold" size="10.0" />
                                              </font>

@@ -120,7 +120,22 @@ public class ParkingLotDirectorController {
     @FXML // fx:id="administratorRequestsListVB"
     private VBox administratorRequestsListVB; // Value injected by FXMLLoader
 
-    
+    @FXML // fx:id="businessSubscriptionHoursT"
+    private Label businessSubscriptionHoursT; // Value injected by FXMLLoader
+
+    @FXML // fx:id="occasionalReservationPriceT"
+    private Label occasionalReservationPriceT; // Value injected by FXMLLoader
+
+    @FXML // fx:id="regularReservationPriceF"
+    private Label regularReservationPriceT; // Value injected by FXMLLoader
+
+    @FXML // fx:id="routinelySubscriptionHoursT"
+    private Label routinelySubscriptionHoursT; // Value injected by FXMLLoader
+
+    @FXML // fx:id="fullSubscriptionHoursT"
+    private Label fullSubscriptionHoursT; // Value injected by FXMLLoader
+
+
     private ObservableList<String> myComboBoxParLotDirecReport= FXCollections.observableArrayList();
     
 
@@ -306,12 +321,13 @@ public class ParkingLotDirectorController {
     	administratorRequestsButton.getStyleClass().add("loginView-buttons");
     	
     	
-    	occasionalReservationPriceTF.setPromptText("old: " +(int)(SharedData.getInstance().getOccasionalCost()));
-    	regularReservationPriceTF.setPromptText("old: " + (int)(SharedData.getInstance().getReservationCost()));
-    	routinelySubscriptionHoursTF.setPromptText("old: " + (int)(SharedData.getInstance().getRoutineCost() / (int)SharedData.getInstance().getReservationCost() ));
-    	businessSubscriptionHoursTF.setPromptText("old: " + (int)(SharedData.getInstance().getBusinessCost() / (int)SharedData.getInstance().getReservationCost() ));
-    	fullSubscriptionHoursTF.setPromptText("old: " + (int)(SharedData.getInstance().getFullCost()/ (int)SharedData.getInstance().getReservationCost() ));
-    	
+
+
+    	occasionalReservationPriceT.setText(SharedData.getInstance().getOccasionalCost()+"");
+    	regularReservationPriceT.setText(SharedData.getInstance().getReservationCost()+"");
+    	routinelySubscriptionHoursT.setText( ((int)SharedData.getInstance().getRoutineCost() / (int)SharedData.getInstance().getReservationCost() )+"");
+    	businessSubscriptionHoursT.setText(((int)SharedData.getInstance().getBusinessCost() / (int)SharedData.getInstance().getReservationCost())+"");
+    	fullSubscriptionHoursT.setText(((int)SharedData.getInstance().getFullCost()/ (int)SharedData.getInstance().getReservationCost() )+"");
 
     }
     
@@ -346,9 +362,9 @@ public class ParkingLotDirectorController {
 				if(rt.equals("lotCurrentSituation")){
 					request = new Label("Lot Current Situation");	
 				}
-        	    request.setStyle("-fx-pref-width: 100; -fx-padding: 3.5 0 0 0");
+        	    request.setStyle("-fx-pref-width: 130; -fx-padding: 3.5 0 0 0");
         		Label status = new Label("Pending");
-        		status.setStyle("-fx-pref-width: 100; -fx-padding: 3.5 0 0 0");
+        		status.setStyle("-fx-pref-width: 70; -fx-padding: 3.5 0 0 0");
         		//int requestID = ((JSONObject) ja.get(i)).getInt("reqeustID");
    
     		
