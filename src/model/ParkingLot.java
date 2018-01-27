@@ -191,7 +191,39 @@ public class ParkingLot {
 			return false;
 		}
 	}
-
+	
+	public void initialize() {
+		_hash.clear();
+		
+		for (int i = 0; i < this._depth; i++) {
+			for (int j = 0; j < this._width; j++) {
+				for (int k = 0; k < this._height; k++) {
+					_lot[k][j][i] = new ParkingSlot();
+					_lot[k][j][i].setCarNumber("");
+					_lot[k][j][i].setStatus(SpotStatus.Available);
+					_lot[k][j][i].setArrive(null);
+					_lot[k][j][i].setLeave(null);
+				}
+			}	
+		}
+		_usedSlots=0;
+		_emptySlots=_capacity;
+		
+	}
+	
+	public String carExists(String carNumber) {
+		if (_hash.containsKey(carNumber)) {
+			ParkingPosition pos = _hash.get(carNumber);
+			Calendar arrive = _lot[pos.x][pos.y][pos.z].getArrive();
+			Calendar leave = _lot[pos.x][pos.y][pos.z].getLeave();
+			return("Your car has been entered to the parking lot in " + arrive.getTime().toString()
+					+"\nIt is in safe hands."
+					+"\nyou are expected to arrive here in " + leave.getTime().toString() + " and take it."
+					+"\nPlease try to be in time.");
+		} else {
+			return("Car doesn't exists in the parking lot.");
+		}
+	}
 	public ParkingPosition getPosition(String carNumber) {
 		return _hash.get(carNumber);
 
