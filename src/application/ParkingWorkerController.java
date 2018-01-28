@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import model.ParkingSlot;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -162,6 +161,8 @@ public class ParkingWorkerController {
     @FXML // fx:id="reservedByWorkerSpotsVB"
     private VBox reservedByWorkerSpotsVB; // Value injected by FXMLLoader
 
+    @FXML // fx:id="disabledByWorkerSpotsVB"
+    private VBox disabledByWorkerSpotsVB; // Value injected by FXMLLoader
 
     private ObservableList<String> myComboBoxParkResComboBox = FXCollections.observableArrayList();
     
@@ -197,7 +198,7 @@ public class ParkingWorkerController {
     	
     	if((HeightComboBox.getValue() == null) || (WidthComboBox.getValue() == null) || (DepthComboBox.getValue() == null)) {
 
-			informationAlert.setTitle("disable Spot warrning");
+			informationAlert.setTitle("disable Spot warning");
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("Please fill all the positions");
 			informationAlert.showAndWait();
@@ -222,16 +223,23 @@ public class ParkingWorkerController {
 				
 				if(SharedData.getInstance().getCurrentParkingLot().IsBusy(_high, _width, _depth)){
 					
-					informationAlert.setTitle("Disapling slot warrning");
+					informationAlert.setTitle("Disabling slot warning");
 					informationAlert.setHeaderText(null);
 					informationAlert.setContentText("There are a car parking in the wanted slot, please wait for the slot to be availabe");
 					informationAlert.showAndWait();
 					
 				}else if(SharedData.getInstance().getCurrentParkingLot().IsDisapled(_high, _width, _depth)){
 					
-					informationAlert.setTitle("Disapling slot warrning");
+					informationAlert.setTitle("Disabling slot warning");
 					informationAlert.setHeaderText(null);
-					informationAlert.setContentText("Pay attention that this parking slot is already disapled.");
+					informationAlert.setContentText("Pay attention that this parking slot is already disabled.");
+					informationAlert.showAndWait();
+					
+				}else if(SharedData.getInstance().getCurrentParkingLot().IsReserved(_high, _width, _depth)){
+					
+					informationAlert.setTitle("Disabling slot warning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Pay attention that this parking slot is already reserved.");
 					informationAlert.showAndWait();
 					
 				}else if(SharedData.getInstance().getCurrentParkingLot().IsAvailable(_high, _width, _depth)){
@@ -246,14 +254,16 @@ public class ParkingWorkerController {
 						//TODO: synchronize with server
 
 						
-						informationAlert.setTitle("Disapling slot Succeeded");
+						informationAlert.setTitle("Disabling slot Succeeded");
 						informationAlert.setHeaderText(null);
-						informationAlert.setContentText("Disapling slot succeeded.");
+						informationAlert.setContentText("Disabling slot succeeded.");
 						informationAlert.showAndWait();
+						
+						
 					
 					}else{
 						
-						informationAlert.setTitle("Disapling slot Error");
+						informationAlert.setTitle("Disabling slot Error");
 						informationAlert.setHeaderText(null);
 						informationAlert.setContentText("Something went wrong!!.");
 						informationAlert.showAndWait();
@@ -264,7 +274,7 @@ public class ParkingWorkerController {
 				
 			}else{
 				
-				informationAlert.setTitle("Disapling slot Error");
+				informationAlert.setTitle("Disabling slot Error");
 				informationAlert.setHeaderText(null);
 				informationAlert.setContentText("No slots to disable them!!.");
 				informationAlert.showAndWait();
@@ -282,33 +292,27 @@ public class ParkingWorkerController {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			
+
+			loadDisabledParkingSpot(null);
 		}
     }
     
-    @FXML
-    void activateParkingSpot(ActionEvent event) {
+    
+    void activateParkingSpot(ActionEvent event, int height, int width, int depth) {
     	
-    	
-    	if((HeightComboBox.getValue() == null) || (WidthComboBox.getValue() == null) || (DepthComboBox.getValue() == null)) {
 
-			informationAlert.setTitle("disable Spot warrning");
-			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please fill all the positions");
-			informationAlert.showAndWait();
-			return;
 			
-		} else {
-			
-			Integer _x = Integer.parseInt(HeightComboBox.getValue());
-	    	Integer _y = Integer.parseInt(WidthComboBox.getValue());
-	    	Integer _z = Integer.parseInt(DepthComboBox.getValue());
+			Integer _x = height;
+	    	Integer _y = width;
+	    	Integer _z = depth;
 	    	
 			
 			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
 			
-			int _high = _x - 1;
-			int _width = _y - 1;
-			int _depth = _z - 1;
+			int _high = _x;
+			int _width = _y;
+			int _depth = _z;
 			
 			boolean canI = SharedData.getInstance().getCurrentParkingLot().CanUnDisapled();
 			
@@ -379,7 +383,7 @@ public class ParkingWorkerController {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		}
+			loadDisabledParkingSpot(null);
     }
 
     @FXML
@@ -834,7 +838,41 @@ public class ParkingWorkerController {
     	WidthComboBox.setItems(myComboBoxWidth);
     	HeightComboBox.setItems(myComboBoxHeight);
         
-		    	
+    	int length2 = disabledByWorkerSpotsVB.getChildren().size();
+    	disabledByWorkerSpotsVB.getChildren().remove(0, length2);
+
+    	
+    	ArrayList<ParkingPosition> ps = SharedData.getInstance().getCurrentParkingLot().getSlotsByDisabled();
+    	for(int i = 0; i < ps.size(); i++){
+    		int x = ps.get(i).x;
+    		int y = ps.get(i).y;
+    		int z = ps.get(i).z;
+    		Label heightLabel = new Label(Integer.toString(ps.get(i).x + 1));
+    		heightLabel.setStyle("-fx-pref-width: 80;");
+			Label widthLabel = new Label(Integer.toString(ps.get(i).y + 1));
+			widthLabel.setStyle("-fx-pref-width: 80;");
+			Label depthLabel = new Label(Integer.toString(ps.get(i).z + 1));
+			depthLabel.setStyle("-fx-pref-width: 80;");
+			
+			HBox hb = new HBox();
+			hb.getChildren().add(heightLabel);
+			hb.getChildren().add(widthLabel);
+			hb.getChildren().add(depthLabel);
+			hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+					+ "-fx-border-color: #d0e6f8; -fx-padding: 2 0 0 10;");
+			disabledByWorkerSpotsVB.getChildren().add(hb);
+	
+			Button unReserveButton = new Button("Activate Spot");
+			String css = getClass().getResource("application.css").toExternalForm();
+			unReserveButton.getStylesheets().clear();
+			unReserveButton.getStylesheets().add(css);
+			unReserveButton.setOnAction(e -> activateParkingSpot(e, x, y, z));
+
+			unReserveButton.getStyleClass().add("activate-button");
+			hb.getChildren().add(unReserveButton);
+			
+    	}
+
     	
     }
     
