@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-
+import model.ParkingSlot;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -652,10 +653,52 @@ public class ParkingWorkerController {
     	reserveWidthComboBox.setItems(myComboBoxWidth);
     	reserveHeightComboBox.setItems(myComboBoxHeight);
         
-     	
+    	int length2 = reservedByWorkerSpotsVB.getChildren().size();
+		reservedByWorkerSpotsVB.getChildren().remove(0, length2);
+
+    	
+    	ArrayList<ParkingPosition> ps = SharedData.getInstance().getCurrentParkingLot().getSlotsByReserved();
+    	for(int i = 0; i < ps.size(); i++){
+    		int x = ps.get(i).x;
+    		int y = ps.get(i).y;
+    		int z = ps.get(i).z;
+    		Label heightLabel = new Label(Integer.toString(ps.get(i).x + 1));
+    		heightLabel.setStyle("-fx-pref-width: 80;");
+			Label widthLabel = new Label(Integer.toString(ps.get(i).y + 1));
+			widthLabel.setStyle("-fx-pref-width: 80;");
+			Label depthLabel = new Label(Integer.toString(ps.get(i).z + 1));
+			depthLabel.setStyle("-fx-pref-width: 80;");
+			
+			HBox hb = new HBox();
+			hb.getChildren().add(heightLabel);
+			hb.getChildren().add(widthLabel);
+			hb.getChildren().add(depthLabel);
+			hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+					+ "-fx-border-color: #d0e6f8; -fx-padding: 2 0 0 10;");
+			reservedByWorkerSpotsVB.getChildren().add(hb);
+	
+			Button unReserveButton = new Button("Cancel Reservation");
+			String css = getClass().getResource("application.css").toExternalForm();
+			unReserveButton.getStylesheets().clear();
+			unReserveButton.getStylesheets().add(css);
+			unReserveButton.setOnAction(e -> unReservationCallBack(e, x, y, z));
+
+			unReserveButton.getStyleClass().add("activate-button");
+			hb.getChildren().add(unReserveButton);
+    	}
+    	
+
+    	
     }
     
-    @FXML
+    private void unReservationCallBack(ActionEvent e, int height, int width, int depth) {
+		// TODO Auto-generated method stub
+    	SharedData.getInstance().getCurrentParkingLot().unReserveSlot(height, width, depth);
+    	loadParkingReservation(null);
+    	return;
+	}
+
+	@FXML
     void reserveParkingByWorker(ActionEvent event) {
     	if((reserveHeightComboBox.getValue() == null) || (reserveWidthComboBox.getValue() == null) 
     			|| (reserveDepthComboBox.getValue() == null)) {
@@ -667,6 +710,92 @@ public class ParkingWorkerController {
 			return;
 			
 		} else {
+			
+			Integer _x = Integer.parseInt(reserveHeightComboBox.getValue());
+	    	Integer _y = Integer.parseInt(reserveWidthComboBox.getValue());
+	    	Integer _z = Integer.parseInt(reserveDepthComboBox.getValue());
+	    	
+			
+			String lotName = SharedData.getInstance().getCurrentParkingLot().get_name();
+			
+			int _high = _x - 1;
+			int _width = _y - 1;
+			int _depth = _z - 1;
+			
+			boolean canI = SharedData.getInstance().getCurrentParkingLot().CanDisapled();
+			
+			if(canI){
+				
+				if(SharedData.getInstance().getCurrentParkingLot().IsBusy(_high, _width, _depth)){
+					
+					informationAlert.setTitle("Reserving slot Warning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("There are a car parking in the wanted slot, please wait for the slot to be availabe");
+					informationAlert.showAndWait();
+					
+				}else if(SharedData.getInstance().getCurrentParkingLot().IsDisapled(_high, _width, _depth)){
+					
+					informationAlert.setTitle("Reserving slot Warning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Pay attention that this parking slot is already disabled.");
+					informationAlert.showAndWait();
+					
+				}else if(SharedData.getInstance().getCurrentParkingLot().IsReserved(_high, _width, _depth)){
+					
+					informationAlert.setTitle("Reserving slot Warning");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("Pay attention that this parking slot is already reserved.");
+					informationAlert.showAndWait();
+					
+				}else if(SharedData.getInstance().getCurrentParkingLot().IsAvailable(_high, _width, _depth)){
+					
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					boolean temp = SharedData.getInstance().getCurrentParkingLot().reserveSlot(_high, _width, _depth);
+					System.out.println("we have " + SharedData.getInstance().getCurrentParkingLot().getDisableSlots() + " disapled Slots");
+					
+					if(temp){
+					
+						
+						//TODO: synchronize with server
+
+						
+						informationAlert.setTitle("Reserving slot Succeeded");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Reserving slot succeeded.");
+						informationAlert.showAndWait();
+						loadParkingReservation(null);
+					}else{
+						
+						informationAlert.setTitle("Disapling slot Error");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText("Something went wrong!!.");
+						informationAlert.showAndWait();
+						
+					}
+					
+				}
+				
+			}else{
+				
+				informationAlert.setTitle("Disapling slot Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("No slots to disable them!!.");
+				informationAlert.showAndWait();
+				
+			}
+			
+			JSONObject json = new JSONObject();
+			try {
+				
+	
+				
+				json.put("lotName", lotName);
+				json.put("cmd", "disableSpot");
+	
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		
 			
 		}
     }
@@ -705,7 +834,7 @@ public class ParkingWorkerController {
     	WidthComboBox.setItems(myComboBoxWidth);
     	HeightComboBox.setItems(myComboBoxHeight);
         
-    	
+		    	
     	
     }
     
@@ -726,6 +855,7 @@ public class ParkingWorkerController {
 
     }
 	
+
     public void setWelcome(String welcome) {
 		welcomeBanner.setText(welcome);
 	}

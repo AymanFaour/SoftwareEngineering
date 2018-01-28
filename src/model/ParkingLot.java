@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -291,5 +292,52 @@ public class ParkingLot {
 		return true;
 		
 	}
+	
+	public boolean reserveSlot(int hight, int width, int depth) {
+		
+		_lot[hight][width][depth].setCarNumber("");
+		_lot[hight][width][depth].setStatus(SpotStatus.Reserved);
+		_lot[hight][width][depth].setArrive(null);
+		_lot[hight][width][depth].setLeave(null);
+		
+		_reservedSlots++;
+		_emptySlots--;
+		
+		return true;
+		
+	}
+	
+	public boolean unReserveSlot(int hight, int width, int depth) {
+		
+		_lot[hight][width][depth].setCarNumber("");
+		_lot[hight][width][depth].setStatus(SpotStatus.Available);
+		_lot[hight][width][depth].setArrive(null);
+		_lot[hight][width][depth].setLeave(null);
+		
+		_reservedSlots--;
+		_emptySlots++;
+		
+		return true;
+		
+	}
+	
+    public ArrayList<ParkingPosition> getSlotsByReserved(){
+		ArrayList <ParkingPosition> slotsAL = new ArrayList<ParkingPosition>();
+		for(int x = 0; x < this._height; x++){
+			for(int y = 0; y < this._width; y++){
+				for(int z = 0; z < this._depth; z++){
+					if(this._lot[x][y][z].getStatus().equals(SpotStatus.Reserved)){
+						slotsAL.add(new ParkingPosition(x,y,z));
+					}
+				}
+			}
+		}
+    	return slotsAL;
+    }
+
+	public boolean IsReserved(int hight, int width, int depth){
+		return _lot[hight][width][depth].getStatus() == SpotStatus.Reserved;
+	}
+    
 
 }
