@@ -1,17 +1,18 @@
 package model;
 
+import java.util.Calendar;
 
 public class ParkingReservation {
 	
 	private String  _carNumber;
 	private String  _lotName;
 	private String _name;
-	private String  _start;
-	private String _end;
-	private String cost;
+	private Calendar _start;
+	private Calendar _end;
+	private double cost;
 	
-	public ParkingReservation(String _carNumber, String _lotName, String _name, String _start, String _end,
-			String cost) {
+	public ParkingReservation(String _carNumber, String _lotName, String _name, Calendar _start, Calendar _end,
+			double cost) {
 		super();
 		this._carNumber = _carNumber;
 		this._lotName = _lotName;
@@ -45,27 +46,27 @@ public class ParkingReservation {
 		this._name = _name;
 	}
 
-	public String get_start() {
+	public Calendar get_start() {
 		return _start;
 	}
 
-	public void set_start(String _start) {
+	public void set_start(Calendar _start) {
 		this._start = _start;
 	}
 
-	public String get_end() {
+	public Calendar get_end() {
 		return _end;
 	}
 
-	public void set_end(String _end) {
+	public void set_end(Calendar _end) {
 		this._end = _end;
 	}
 
-	public String getCost() {
+	public double getCost() {
 		return cost;
 	}
 
-	public void setCost(String cost) {
+	public void setCost(double cost) {
 		this.cost = cost;
 	}
 	

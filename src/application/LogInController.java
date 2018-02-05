@@ -299,6 +299,10 @@ public class LogInController {
 			logInButtonListVbox.getChildren().add(4, b);
 	}
 
+	/**
+	 * View Parking Reservation page
+	 * @param event
+	 */
 	@FXML
 	void loadParkingReservation(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -366,7 +370,10 @@ public class LogInController {
     	parkingReservationCostText.setText(reservationCost.toString() + "\u20AA per hour");
     }
     
-
+	/**
+	 * View Regular Routinely Subscription page
+	 * @param event
+	 */
     @FXML
     void loadRegularRoutinelySubscription(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -435,6 +442,10 @@ public class LogInController {
     	regularRoutineSubscriptionCostText.setText(subscriptionCost.toString() + "\u20AA per subscription");
     }
     
+    /**
+     *View Business Routinely Subscription page 
+     * @param event
+     */
     @FXML
     void loadBusinessRoutinelySubscription(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(true);
@@ -554,7 +565,10 @@ public class LogInController {
     	
     }
     
-    
+    /**
+     * 
+     * @return JSON Object
+      */
     private JSONObject getBusinessReserves() {
 		// TODO Auto-generated method stub
     	JSONObject json = new JSONObject();
@@ -579,7 +593,10 @@ public class LogInController {
 
 	}
 
-
+    /**
+     * adding Worker Account by a Business Manger
+     * @param event
+     */
 	@FXML
     void addWorkerToBusinessAcocunt(ActionEvent event) {
 		HBox hb = new HBox();
@@ -606,6 +623,11 @@ public class LogInController {
 	}
     
 
+
+    /**
+     * removing Worker Account by Business Manger
+     * @param event
+     */
 	@FXML
 	void remWorkerFromBusinessAcocunt(ActionEvent event) {
 
@@ -617,6 +639,10 @@ public class LogInController {
 		System.out.println("this is the counter from remove:" + this.getBusinessAccountWorkersCounter());
 	}
 
+	/**
+	 * view Full Subscription Page
+	 * @param event
+	 */
 	 @FXML
 	    void loadFullSubscription(ActionEvent event) {
 	    	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -654,6 +680,10 @@ public class LogInController {
 	    }
 
 
+	 /**
+	  * view all user's reservations in user Profile Page 
+	  * @param event
+	  */
 	@FXML
 	void loadViewReservation(ActionEvent event) {
 		businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -907,6 +937,12 @@ public class LogInController {
 
 	}
 
+	/**
+	 * 
+	 * @param e
+	 * @param carId
+	 * @param resId
+	 */
 	private void deActivateParkingFullSub(ActionEvent e, String carId, String resId) {
 		System.out.println("In the deActivateFullSub function");
 		
@@ -948,7 +984,13 @@ public class LogInController {
 		}
 		
 	}
-
+	
+	/**
+	 * 
+	 * @param e
+	 * @param carId
+	 * @param resId
+	 */
 	private void activateParkingFullSub(ActionEvent e, String carId, String resId) {
 		System.out.println("In the activateFullSub function");
 		
@@ -1001,7 +1043,14 @@ public class LogInController {
 	}
 
 	
-	
+	/**
+	 * 
+	 * @param e
+	 * @param carId
+	 * @param subId
+	 * @param leavingHour
+	 * @param lotName
+	 */
 	private void deActivateParkingSub(ActionEvent e, String carId, String subId, String leavingHour, String lotName) {
 		System.out.println("this is the subId " + subId);
 		
@@ -1085,6 +1134,14 @@ public class LogInController {
 		
 	}
 
+	/**
+	 * 
+	 * @param e
+	 * @param carId
+	 * @param subId
+	 * @param lotName
+	 * @param leavingHour
+	 */
 	private void activateParkingSub(ActionEvent e, String carId, String subId, String lotName, String leavingHour) {
 		System.out.println(subId + " " + lotName);
 		
@@ -1292,13 +1349,23 @@ public class LogInController {
     	
     }
 
-		
+		/**
+		 * casting from object date to object calendar
+		 * @param date
+		 * @return calendar 
+		 */
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		return cal;
 	}
 
+	
+	/**
+	 * cancel reservation 
+	 * @param e
+	 * @param id
+	 */
 	private void cancel(ActionEvent e, String id) {
 
 		// Button b = (Button) e.getSource();
@@ -1524,6 +1591,11 @@ public class LogInController {
 
 	}
 
+	
+	/**
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void reserveParking(ActionEvent event) {
 		String _carNumber = parkResCarNumberTF.getText();

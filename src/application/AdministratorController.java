@@ -97,6 +97,10 @@ public class AdministratorController {
 	Alert errorAlert = new Alert(AlertType.ERROR);
 	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
     
+	/**
+	 * sign out from system
+	 * @param event
+	 */
     @FXML
     void signOut(ActionEvent event) {
     	
@@ -118,6 +122,11 @@ public class AdministratorController {
 		stage.setScene(scene);
 
     }
+    /**
+     * aprove to update costs that Suggested by Parking Lot Director 
+     * @param e
+     * @param reqID
+     */
     
     void aproveUpdateCost(ActionEvent e, int reqID){
     	
@@ -150,7 +159,12 @@ public class AdministratorController {
 		}
     	
     }
-    
+   
+    /**
+     * decline to update costs that Suggested by Parking Lot Director 
+     * @param e
+     * @param reqID
+     */
     void declineUpdtae(ActionEvent e, int reqID){
     
     	JSONObject json = new JSONObject();
@@ -183,6 +197,11 @@ public class AdministratorController {
     	
     }
 
+    /**
+     * this method sends request to parking lot director and asks him  to send the lot's Current Situation.
+     * The administrator will get a main that contains  pdf of parking lot current Situation.
+     * @param event
+     */
     @FXML
     void getCurrentSituation(ActionEvent event) {
     	
@@ -240,6 +259,11 @@ public class AdministratorController {
 
     }
 
+   
+   /**
+    * view Reports page  
+    * @param event
+    */
     @FXML
     void loadReporsBorderPane(ActionEvent event) {
     	reportsBorderPane.setVisible(true);
@@ -275,6 +299,10 @@ public class AdministratorController {
     	
     }
 
+    /**
+     * view Change PricesREquests page  
+     * @param event
+     */  
     @FXML
     void loadChangePricesRequestsBorderPane(ActionEvent event) {
     	reportsBorderPane.setVisible(false);
@@ -436,6 +464,8 @@ public class AdministratorController {
 	public void setTopOfParkingWorker(String _fullname) {
 		textInTopOfLogIn.setText(_fullname);
 	}
+	
+	
 	
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
