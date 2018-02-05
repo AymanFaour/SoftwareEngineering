@@ -1523,6 +1523,17 @@ public class LogInController {
 		}
 
 	}
+	
+	/**
+	 * Sending to the server request to make parking reservation with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * carNumber
+	 * lotName
+	 * .... 
+	 * @param event 
+	 */
 
 	@FXML
 	void reserveParking(ActionEvent event) {
@@ -1691,6 +1702,15 @@ public class LogInController {
 		}
 
 	}
+	
+	/**
+	 * Sending to the server request to activate a business subscription by sending the activation code 
+	 * and the car number
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * 
+	 * @param event
+	 */
 
 	@FXML
 	void activateBusinessSubscriptionByCodeAndCar(ActionEvent event) {
@@ -1737,6 +1757,19 @@ public class LogInController {
 		}
 	}
 
+	
+	/**
+	 * 
+	 * Sending to the server request to make a regular routine subscription with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * carNumber
+	 * lotName
+	 * .... 
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buyRegularRoutineSubscription(ActionEvent event) {
 		System.out.println("IN the routine subscription function.");
@@ -1869,6 +1902,19 @@ public class LogInController {
 		}
 	}
 
+	
+	/**
+	 * 
+	 * Sending to the server request to make a business subscription with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * This method activated only in business user and he will have the ability to add multiple cars 
+	 * to the account and every car will take an activation code from the system .
+	 * The cars will have the permission to enter to the system by entering the activation code.
+	 *  
+	 * @param event
+	 */
 	@FXML
 	void buyBusinessSubscription(ActionEvent event) {
 
@@ -2028,6 +2074,17 @@ public class LogInController {
 
 	}
 
+	/**
+	 * Sending to the server request to make a full subscription with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * carNumber
+	 * lotName
+	 * .... 
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buyfulSubFullSubscription(ActionEvent event) {
 
@@ -2161,6 +2218,12 @@ public class LogInController {
 
 		}
 	}
+	
+	/**
+	 * Signing out from the system and update it in the server.
+	 * 
+	 * @param event
+	 */
 
 	@FXML
 	void signOut(ActionEvent event) {
@@ -2203,9 +2266,17 @@ public class LogInController {
 		
 	}
 
-	/*
-	 * function that get as parameter a change of the balance, change the
-	 * balance of the current user in the DB
+
+	/**
+	 * Updating the user's balance after every reservation.
+	 * The method gets cost argument that contains the new balance and updating it
+	 * in the data base.
+	 * This function returns a boolean argument, True if the method has succeeded
+	 * else it returns False.
+	 * 
+	 * @param cost the new client balance
+	 * @return  True if the method has succeeded, else it returns False. 
+	 * 
 	 */
 	Boolean updateBalance(double cost) {
 
@@ -2234,9 +2305,11 @@ public class LogInController {
 
 	}
 
-	/*
-	 * function that return a JSONArray for all the reserves of a specific user
-	 * name
+	
+	/**
+	 * Return a JSONArray for all the reserves of a specific user.
+	 * 
+	 * @return
 	 */
 	JSONObject getReserves() {
 
@@ -2260,6 +2333,11 @@ public class LogInController {
 		return null;
 
 	}
+	
+	/**
+	 * charging the user's balance by inserting the desired amount and the credit card.
+	 * @param event
+	 */
 
 	@FXML
 	void makeDeposit(ActionEvent event) {
@@ -2295,6 +2373,17 @@ public class LogInController {
 		}
 
 	}
+	
+	/**
+	 * Sending to the server request to make an occasional parking with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * carNumber
+	 * lotName
+	 * 
+	 * @param event
+	 */
 
 	@FXML
 	void reserveActualParking(ActionEvent event) {
@@ -2454,6 +2543,12 @@ public class LogInController {
 		}
 
 	}
+	
+	
+	/**
+	 * Sending to the customer service a complaint and waiting to get a response in the mail.
+	 * @param event
+	 */
 
 	@FXML // make complaint but AL OS decided to name it makeSend for mysterious
 			// reasons
@@ -2510,6 +2605,16 @@ public class LogInController {
 		}
 
 	}
+	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
 
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
