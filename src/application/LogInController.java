@@ -1688,7 +1688,7 @@ public class LogInController {
 				informationAlert.showAndWait();
 			} else {
 				String _name = SharedData.getInstance().getCurrentUser().getUsername();
-
+				String _email = SharedData.getInstance().getCurrentUser().getEmail();
 				confirmAlert.setTitle("Confirmation Dialog");
 				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "\u20AA ?");
 	
@@ -1712,6 +1712,7 @@ public class LogInController {
 							json.put("username", _name);
 							json.put("start", _start);
 							json.put("end", _end);
+							json.put("email", _email);
 							json.put("cost", cost);
 							json.put("type", "r");
 							json.put("activated", 0);
@@ -2239,23 +2240,39 @@ public class LogInController {
 		// getReserves();
 
 		// System.out.println(getReserves());
-		SharedData.getInstance().setCurrentUser(null);
+		
+		JSONObject json = new JSONObject(), ret = new JSONObject();
 
-		Scene currentScene = signOutButton.getScene();
-		Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
 		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
 
+			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
+			json.put("cmd", "SignOut");
+			ret = request(json, "Login");
+			
+			if(ret.getBoolean("result")){
+				SharedData.getInstance().setCurrentUser(null);
+
+				Scene currentScene = signOutButton.getScene();
+				Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("MainView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+
+					e.printStackTrace();
+				}
+
+				Scene scene = new Scene(mainLayout);
+				Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+				
+
+			}
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-		Scene scene = new Scene(mainLayout);
-		Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
-
+		
 	}
 
 	/*
