@@ -113,7 +113,11 @@ public class GuestController {
 		stage.setScene(scene);
 
 	}
-
+	
+	/**
+	 * sending request to the server to make parking reservation as a guest 
+	 * @param event
+	 */
 	@FXML
 	void reserveParking(ActionEvent event) {
 
@@ -260,6 +264,11 @@ public class GuestController {
 		}
 	}
 
+	
+	/**
+	 * sending request to the server to exit from the parking lot  
+	 * @param event
+	 */
 	@FXML
 	void GuestExit(ActionEvent event) {
 

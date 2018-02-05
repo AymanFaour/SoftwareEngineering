@@ -128,7 +128,11 @@ public class CustomerServiceController {
     private ObservableList<String> myComboBoxMinutesData = FXCollections.observableArrayList();
     private ObservableList<String> myComboBoxParkingLotData = FXCollections.observableArrayList();
     private Stage popupwindow;
-
+	
+    /**
+	 * sign out from system
+	 * @param event
+	 */
     @FXML
     void signOut(ActionEvent event) {
 		SharedData.getInstance().setCurrentSystemUser(null);
@@ -152,6 +156,10 @@ public class CustomerServiceController {
 
 
 
+    /**
+     * 
+     * @param event
+     */
     @FXML
     void CustomerServiceParkingReservation(ActionEvent event) {
 
@@ -354,6 +362,11 @@ public class CustomerServiceController {
 
 
 
+	
+	/**
+	 * view Parking Reservation Page
+	 * @param event
+	 */
 	@FXML
     void loadParkingReservation(ActionEvent event) {
     	HandlingComplaintsCustomerServiceBorderPane.setVisible(false);
@@ -398,6 +411,13 @@ public class CustomerServiceController {
     }
 	
 
+	/**
+	 * Handling the complaints that have received from the clients 
+	 * @param event
+	 * @param complaintsJO
+	 * @throws IOException
+	 * @throws JSONException
+	 */
     void HandlingComplaintsPopUp(ActionEvent event, JSONObject complaintsJO) throws IOException, JSONException 
     {
     		popupwindow=new Stage();
@@ -469,7 +489,14 @@ public class CustomerServiceController {
     		      
     		popupwindow.showAndWait();
     }
-    
+
+    /**
+     * this method send a mail to the client that contains his complaint's response 
+     * @param vb
+     * @param complaintJO
+     * @throws IOException
+     * @throws JSONException
+     */
     void sendTheComplaintResponse(VBox vb, JSONObject complaintJO) throws IOException, JSONException  {
     	int checkRefund=0;
     	String refundTF=((TextField)(((HBox)vb.getChildren().get(4)).getChildren().get(1))).getText();	
@@ -549,6 +576,11 @@ public class CustomerServiceController {
     
 
 
+    
+    /**
+     * view Handling Complaints Page
+     * @param event
+     */
     @FXML
     void loadHandlingComplaints(ActionEvent event) {
 
