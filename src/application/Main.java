@@ -96,7 +96,7 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 
-		
+		/*
 		ParkingLot temp = new ParkingLot("carmel", 3, 3, 3);
 		
 		Calendar start = Calendar.getInstance();
@@ -122,8 +122,7 @@ public class Main extends Application {
 		ArrayList<ParkingSlot> re = temp.rePark();
 		
 		System.out.println(re.get(0).getLeave().getTime().toString() + "\n" + re.get(1).getLeave().getTime().toString() + "\n" + re.get(2).getLeave().getTime().toString());
-		
-		/*
+		*/
 		String parent = System.getProperty("user.dir");
 		try {
 
@@ -192,7 +191,7 @@ public class Main extends Application {
 		MainController.initialize(SharedData.getInstance().getIP(), SharedData.getInstance().getPORT());
 		launch(args);
 		
-		*/
+
 	}
 	
 	/**
