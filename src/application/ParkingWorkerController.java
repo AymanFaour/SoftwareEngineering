@@ -4,7 +4,13 @@
 
 package application;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -177,22 +183,33 @@ public class ParkingWorkerController {
    	 */
     @FXML
     void signOut(ActionEvent event) {
-		SharedData.getInstance().setCurrentSystemUser(null);
-
-		Scene currentScene = signOutButton.getScene();
-		Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
+    	JSONObject json = new JSONObject(), ret = new JSONObject();
 		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
-
+			json.put("systemUsername", SharedData.getInstance().getCurrentSystemUser().get_username());
+			json.put("cmd", "SignOut");
+			ret = request(json, "Login");
+			
+			if(ret.getBoolean("result")){
+				SharedData.getInstance().setCurrentSystemUser(null);
+		
+				Scene currentScene = signOutButton.getScene();
+				Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("MainView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+		
+					e.printStackTrace();
+				}
+		
+				Scene scene = new Scene(mainLayout);
+				Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+			}
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-		Scene scene = new Scene(mainLayout);
-		Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
 
     }
     
@@ -944,5 +961,64 @@ public class ParkingWorkerController {
 	public void setTopOfParkingWorker(String _username) {
 		textInTopOfLogIn.setText(_username);
 	}
+	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
+    
+    JSONObject request(JSONObject json, String servletName){
+    	HttpURLConnection connection = null;
+		try {
+		    //Create connection
+		    URL url = new URL("http://" + SharedData.getInstance().getIP() + ":" + SharedData.getInstance().getPORT() + "/server/" + servletName);
+		    connection = (HttpURLConnection) url.openConnection();
+		    connection.setRequestMethod("POST");
+		    connection.setDoOutput(true);
+
+		    //Send request
+		    DataOutputStream sentData = new DataOutputStream (connection.getOutputStream());
+		   
+		    sentData.writeBytes(json.toString());
+		    
+		    sentData.close();
+		    JSONObject ret;
+
+		    //Get Response  
+		    InputStream is = connection.getInputStream();
+		    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		    StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+		    String line;
+		    while ((line = rd.readLine()) != null) {
+		      response.append(line);
+		      //response.append('\r');
+		    }
+		    
+		    rd.close();
+//		    System.out.println(response.toString() + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		    ret = new JSONObject(response.toString());
+		    
+		    return ret;
+		    
+		  } catch (Exception e) {
+		    e.printStackTrace();
+		    
+		  } finally {
+		    if (connection != null) {
+		      connection.disconnect();
+		    }
+		    
+		  }
+		
+		return null;
+		
+
+    }
+
 
 }

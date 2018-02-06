@@ -110,7 +110,11 @@ public class MainController {
     private Button TrackReservationButton; // Value injected by FXMLLoader
 
     public static int TrakCheck=0;
-    
+  
+    /**
+     * function that load the view of the continue as a guest, we show the user the option to do a occasional park.
+     * @param event
+     */
     @FXML
     void continueasAGuest(ActionEvent event) {
 
@@ -178,7 +182,14 @@ public class MainController {
         gu.setMyComboBoxHoursData(setted);
         gu.setMyComboBoxMinutesData(setted2);
     }
-    
+   
+    /**
+     * this callback function get the user data from the GUI.
+     * check if the username already exist or not,
+     * if its Ok, it create a new user and update the,
+     * a message will shown to the user for the results 
+     * @param event
+     */
     @FXML
     void registeration(ActionEvent event) { 
 //    	System.out.println("HELLOOOOO FROM Registeration");
@@ -240,6 +251,9 @@ public class MainController {
     	
     }
     
+    /**
+     * a callback function called when the registration failed
+     */
     void registerationFailed(){
     	informationAlert.setTitle("Sign up ");
     	informationAlert.setHeaderText(null);
@@ -247,9 +261,20 @@ public class MainController {
     	informationAlert.showAndWait();
     }
     
+    /**
+     * a success callback registration function
+     */
     void registerationSucceded(){	
     }
     
+    /**
+     * function that get the username and password, and the system user id if exist
+     * check if the user already signed in
+     * allow user to sign in if the username and password is available and the user is not signed in from another
+     * else block the login flow 
+     * @param event
+     * @throws JSONException
+     */
     @FXML
     void signInButton(ActionEvent event) throws JSONException {
 //    	client.request();
@@ -390,6 +415,10 @@ public class MainController {
 //    	System.out.println(_password);
 //    	
     }
+    
+    /**
+     * Signing out from the system
+     */
      
     void SignInCallBack(){
 		if(systemWorkerCheckBox.isSelected() == false)
@@ -529,6 +558,10 @@ public class MainController {
     	informationAlert.showAndWait();
     }
     
+    /**
+     * callback function once clicking on the business check box once registration
+     * @param event
+     */
     @FXML
     void BusinessCheckBoxEventHandler(ActionEvent event) {
     	CheckBox cb = (CheckBox) event.getSource();
@@ -541,6 +574,12 @@ public class MainController {
     		businessNameTf.setVisible(false);
     	}
     }
+    
+    /**
+     * show the user the track reservation window to click 
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void TrackReservation(ActionEvent event) throws IOException 
     {
@@ -589,7 +628,12 @@ public class MainController {
     		popupwindow.showAndWait();
     }
     
-    
+    /**
+     * track popup to insert a car number to track
+     * @param vb
+     * @param carNumber
+     * @throws IOException
+     */
     void trackbutton(VBox vb, String carNumber) throws IOException 
     {
     	if(TrakCheck==0) {
@@ -601,7 +645,12 @@ public class MainController {
     		trakTA.setEditable(false);
     	}
     }
-    	 
+    	
+    /**
+     * callback function once clicking the worker id box to show the worker id text field
+     * 
+     * @param event
+     */
     @FXML
     void WorkerIDCheckBoxEventHandler(ActionEvent event) {
     	CheckBox cb = (CheckBox) event.getSource();

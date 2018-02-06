@@ -144,22 +144,33 @@ public class ParkingLotDirectorController {
 	 */
     @FXML
     void signOut(ActionEvent event) {
-		SharedData.getInstance().setCurrentSystemUser(null);
-
-		Scene currentScene = signOutButton.getScene();
-		Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		JSONObject json = new JSONObject(), ret = new JSONObject();
 		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
-
+			json.put("systemUsername", SharedData.getInstance().getCurrentSystemUser().get_username());
+			json.put("cmd", "SignOut");
+			ret = request(json, "Login");
+			
+			if(ret.getBoolean("result")){
+				SharedData.getInstance().setCurrentSystemUser(null);
+		
+				Scene currentScene = signOutButton.getScene();
+				Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("MainView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+		
+					e.printStackTrace();
+				}
+		
+				Scene scene = new Scene(mainLayout);
+				Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+			}
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-		Scene scene = new Scene(mainLayout);
-		Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
 
     }
 

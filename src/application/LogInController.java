@@ -2042,7 +2042,6 @@ public class LogInController {
 		try {
 			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
 			json.put("company", SharedData.getInstance().getCurrentUser().getCompnay());
-			json.put("lotName", SharedData.getInstance().getCurrentParkingLot().get_name());
 
 			boolean flag1 = true;
 			boolean flag2 = true;
