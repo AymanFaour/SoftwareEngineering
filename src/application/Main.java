@@ -16,12 +16,17 @@ import org.json.JSONObject;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.BarChartSample;
 import model.ParkingLot;
 import model.SharedData;
 //import model.ParkingLot;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 public class Main extends Application {
 	private Parent mainLayout;
@@ -36,6 +41,31 @@ public class Main extends Application {
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("CPS Project");
 			showMainView();
+			/*
+			BarChartSample bcs = new BarChartSample("hello");
+
+			BarChartSample bcs2 = new BarChartSample("hello");
+
+			BarChartSample bcs3 = new BarChartSample("hello");
+			
+			Stage popupwindow=new Stage();
+			popupwindow.initModality(Modality.APPLICATION_MODAL);
+			popupwindow.setTitle("total");
+
+			BarChart<String,Number> bc = bcs.getBc();
+			BarChart<String,Number> bc2 = bcs2.getBc();
+			BarChart<String,Number> bc3 = bcs3.getBc();
+			
+			VBox vB = new VBox();
+
+	        vB.getChildren().add(bc);
+	        vB.getChildren().add(bc2);
+	        vB.getChildren().add(bc3);
+	        //vB.getChildren().add(bc);
+	        Scene scene  = new Scene(vB,800,600);
+	        popupwindow.setScene(scene);    
+			popupwindow.showAndWait();
+			 */
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -175,9 +175,9 @@ public class ParkingLotDirectorController {
     	
     	if (report == null) {
 
-			informationAlert.setTitle("Report warning");
+			informationAlert.setTitle("Report Warning");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please choose report type to complete the report");
+			informationAlert.setContentText("Please choose a duration");
 			informationAlert.showAndWait();
 			return;
 
@@ -187,21 +187,37 @@ public class ParkingLotDirectorController {
 			JSONObject json = new JSONObject();
 			try {
 				//TODO: synchronize with server
-	
-				json.put("report", report);
+		    	int quarter = -1;
+		    	
+				if(report.equals("January - March")){
+					quarter = 1;
+				}else if(report.equals("April - June")){
+					quarter = 2;
+				}else if(report.equals("July - September")){
+					quarter = 3;
+				}else{
+					quarter = 4;
+				}
+				json.put("quarter", quarter);
 				json.put("lotName", lotName);
-				json.put("cmd", "report");
+				json.put("cmd", "QuarterReady");
 	
 				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
-	//			if (ret.getBoolean("result")) {
-	//				System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-	//				
-	////				updateBalance((-1) * cost);
-	////				System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-	//			}
+				JSONObject ret = request(json, "ReportsGenerator");
+	
+				if (ret.getBoolean("result")) {
+		    		informationAlert.setTitle("Report Was Sent Successfuly");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("your quarter report was sent");
+					informationAlert.showAndWait();
+				}
+				else{
+		    		informationAlert.setTitle("Report Already Sent");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("your quarter report was already sent");
+					informationAlert.showAndWait();
+				}
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -304,12 +320,10 @@ public class ParkingLotDirectorController {
     	administratorRequestsButton.getStyleClass().add("loginView-buttons");
     	
     	ArrayList<String> Reports = new ArrayList<String>();
-    	Reports.add("Reservations");
-    	Reports.add("Complaints");
-    	Reports.add("Disabled Parking Spots");
-    	Reports.add("Regular Routinely Subscriptions");
-    	Reports.add("Business Routinely Subscriptions");
-    	Reports.add("Full Subscriptions");
+    	Reports.add("January - March");
+    	Reports.add("April - June");
+    	Reports.add("July - September");
+    	Reports.add("October - December");
     	
     	myComboBoxParLotDirecReport.clear();     
     	for(int i = 0; i < Reports.size(); i++){

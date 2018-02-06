@@ -51,13 +51,25 @@ public class BarChartSample {
         
         bc.getData().addAll(series1);
         vB.getChildren().add(lb);
-        Scene scene  = new Scene(bc,800,600);
+
+        vB.getChildren().add(bc);
+        //vB.getChildren().add(bc);
+        Scene scene  = new Scene(vB,800,600);
         popupwindow.setScene(scene);    
 		popupwindow.showAndWait();
     }
+    
+    
 
     
-    public String getMedian(){
+    public BarChart<String, Number> getBc() {
+		return bc;
+	}
+
+
+
+
+	public String getMedian(){
     	return null;
     }
 }
