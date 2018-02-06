@@ -119,7 +119,7 @@ public class GuestController {
 	}
 	
 	/**
-	 * sending request to the server to make parking reservation as a guest 
+	 * sending request to the server to make parking reservation as a guest and after that enter the car to the parking lot
 	 * @param event
 	 */
 	@FXML
@@ -270,7 +270,7 @@ public class GuestController {
 
 	
 	/**
-	 * sending request to the server to exit from the parking lot  
+	 * exiting the guest car from the parking lot  
 	 * @param event
 	 */
 	@FXML
