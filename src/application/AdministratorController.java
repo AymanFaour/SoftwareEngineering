@@ -123,7 +123,7 @@ public class AdministratorController {
 
     }
     /**
-     * aprove to update costs that Suggested by Parking Lot Director 
+     * approve to update costs that Suggested by Parking Lot Director 
      * @param e
      * @param reqID
      */
@@ -199,7 +199,7 @@ public class AdministratorController {
 
     /**
      * this method sends request to parking lot director and asks him  to send the lot's Current Situation.
-     * The administrator will get a main that contains  pdf of parking lot current Situation.
+     * The administrator will get a main that contains  PDF of parking lot current Situation.
      * @param event
      */
     @FXML
@@ -466,6 +466,15 @@ public class AdministratorController {
 	}
 	
 	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
 	
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;

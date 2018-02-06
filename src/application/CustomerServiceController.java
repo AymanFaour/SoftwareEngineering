@@ -306,6 +306,16 @@ public class CustomerServiceController {
 
     }
     
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
+    
     JSONObject request(JSONObject json, String servletName){
     	HttpURLConnection connection = null;
 		try {
@@ -353,6 +363,13 @@ public class CustomerServiceController {
 		
 
     }
+    
+    /**
+     * Casting from date object to Calendar object
+     * 
+     * @param date
+     * @return
+     */
 
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
@@ -492,6 +509,7 @@ public class CustomerServiceController {
 
     /**
      * this method send a mail to the client that contains his complaint's response 
+     * 
      * @param vb
      * @param complaintJO
      * @throws IOException
@@ -672,7 +690,7 @@ public class CustomerServiceController {
 		}
     }
 
-
+    
 
 	private void complainHandlerCallBack(ActionEvent e, JSONObject obj) {
 		// TODO Auto-generated method stub

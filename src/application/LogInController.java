@@ -567,6 +567,8 @@ public class LogInController {
     
     /**
      * 
+     * return the business reservation in JSONObject
+     * 
      * @return JSON Object
       */
     private JSONObject getBusinessReserves() {
@@ -594,7 +596,7 @@ public class LogInController {
 	}
 
     /**
-     * adding Worker Account by a Business Manger
+     * adding Worker Account by a Business Manager
      * @param event
      */
 	@FXML
@@ -625,7 +627,7 @@ public class LogInController {
 
 
     /**
-     * removing Worker Account by Business Manger
+     * removing Worker Account by Business Manager
      * @param event
      */
 	@FXML
@@ -938,6 +940,8 @@ public class LogInController {
 	}
 
 	/**
+	 * 
+	 * 
 	 * 
 	 * @param e
 	 * @param carId
@@ -1602,11 +1606,6 @@ public class LogInController {
 	 * @param event 
 	 */
 
-	
-	/**
-	 * 
-	 * @param event
-	 */
 	@FXML
 	void reserveParking(ActionEvent event) {
 		String _carNumber = parkResCarNumberTF.getText();

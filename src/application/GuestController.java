@@ -92,7 +92,7 @@ public class GuestController {
 
 	@FXML // fx:id="GuestExitButton"
 	private Button GuestExitButton; // Value injected by FXMLLoader
-
+	
 	@FXML
 	void signOut(ActionEvent event) {
 		SharedData.getInstance().setCurrentUser(null);
@@ -377,7 +377,7 @@ public class GuestController {
 		}
 
 	}
-
+	
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -401,7 +401,17 @@ public class GuestController {
 		this.myComboBoxMinutesData = myComboBoxMinutesData;
 		this.GuestLeavingMinuteComboBox.setItems(this.myComboBoxMinutesData);
 	}
-
+	
+	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
 		try {
