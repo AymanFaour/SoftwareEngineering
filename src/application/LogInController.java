@@ -961,7 +961,11 @@ public class LogInController {
 		if(isFull){
 			informationAlert.setTitle("Parking Error");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Unfortunatly dude, as we notified you once purchasing the subscription, no place in the parking lot for now.\nPlease choose another parking lot.!");
+			String otherLots = "";
+			for(int i = 0; i < SharedData.getInstance().getParkingLotsAL().size(); i++){
+				otherLots.concat(SharedData.getInstance().getParkingLotsAL().get(i).get_name() + ".\n");
+			}
+			informationAlert.setContentText("Unfortunatly dude, as we notified you once purchasing the subscription, no place in the parking lot for now.\nPlease choose another parking lot.\nThere are places at the following lots:\n" + otherLots);
 			informationAlert.showAndWait();
 			return ;
 		}
@@ -1109,7 +1113,11 @@ public class LogInController {
 			if(isFull){
 				informationAlert.setTitle("Parking Error");
 				informationAlert.setHeaderText(null);
-				informationAlert.setContentText("Unfortunatly dude, as we notified you once purchasing the subscription, no place in the parking lot for now.\nPlease choose another parking lot.!");
+				String otherLots = "";
+				for(int i = 0; i < SharedData.getInstance().getParkingLotsAL().size(); i++){
+					otherLots.concat(SharedData.getInstance().getParkingLotsAL().get(i).get_name() + ".\n");
+				}
+				informationAlert.setContentText("Unfortunatly dude, as we notified you once purchasing the subscription, no place in the parking lot for now.\nPlease choose another parking lot.!\nPlease choose another parking lot.\nThere are places at the following lots:\n" + otherLots);
 				informationAlert.showAndWait();
 				return ;
 			}
@@ -1405,7 +1413,11 @@ public class LogInController {
 
 						informationAlert.setTitle("Parking Error");
 						informationAlert.setHeaderText(null);
-						informationAlert.setContentText("Failed park the car!");
+						String otherLots = "";
+						for(int i = 0; i < SharedData.getInstance().getParkingLotsAL().size(); i++){
+							otherLots.concat(SharedData.getInstance().getParkingLotsAL().get(i).get_name() + ".\n");
+						}
+						informationAlert.setContentText("Failed park the car because there are no places to park!\nPlease choose another parking lot.\nThere are places at the following lots:\n" + otherLots);
 						informationAlert.showAndWait();
 
 					}

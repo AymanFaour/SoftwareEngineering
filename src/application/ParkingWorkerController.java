@@ -37,6 +37,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.*;
+import sun.security.provider.SHA;
 
 public class ParkingWorkerController {
 
@@ -404,6 +405,7 @@ public class ParkingWorkerController {
 					try {
 						
 						//TODO: synchronize with server
+						//TODO: is really needed !!
 		
 						json.put("carNumber", _carNumber);
 						json.put("lotName", _lotName);
@@ -696,7 +698,6 @@ public class ParkingWorkerController {
     }
     
     private void unReservationCallBack(ActionEvent e, int height, int width, int depth) {
-		// TODO Auto-generated method stub
     	SharedData.getInstance().getCurrentParkingLot().unReserveSlot(height, width, depth);
     	loadParkingReservation(null);
     	return;
@@ -889,6 +890,10 @@ public class ParkingWorkerController {
 			informationAlert.setHeaderText(null);
 			informationAlert.setContentText("You have initialized the parking lot successfully");
 			informationAlert.showAndWait();
+			
+			// TODO: check if its neccassary to update the reserves
+			
+			loadDisabledParkingSpot(null);
 		}
 
     }
@@ -901,5 +906,30 @@ public class ParkingWorkerController {
 	public void setTopOfParkingWorker(String _username) {
 		textInTopOfLogIn.setText(_username);
 	}
-
+	
+	@FXML
+	void BlockParkingLot(ActionEvent event){
+		
+		System.out.println("In the system worker block function");
+		
+		if(SharedData.getInstance().getCurrentParkingLot().CanIBlock()){
+			if(SharedData.getInstance().getCurrentParkingLot().Block()){
+				informationAlert.setTitle("Blocking parking lot Succeeded");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Parking lot blocked successfully");
+				informationAlert.showAndWait();
+			}else{
+				informationAlert.setTitle("Disabling slot Error");
+				informationAlert.setHeaderText(null);
+				informationAlert.setContentText("Something went wrong!!.");
+				informationAlert.showAndWait();
+			}
+		}else{
+			informationAlert.setTitle("Initialization Worning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("Sorry for now, you can't block the parking lot, some cars already parking.");
+			informationAlert.showAndWait();
+		}
+		
+	}
 }
