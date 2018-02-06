@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,11 +30,15 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -87,6 +92,15 @@ public class AdministratorController {
     @FXML // fx:id="changePricesRequestVbox"
     private VBox changePricesRequestVbox; // Value injected by FXMLLoader
 
+    @FXML // fx:id="quarterReportsListVbox"
+    private VBox quarterReportsListVbox; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="quarterReportsButton"
+    private Button quarterReportsButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="quarterReportsBorderPane"
+    private BorderPane quarterReportsBorderPane; // Value injected by FXMLLoader
+
     
     private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
     private ObservableList<String> myComboxReport = FXCollections.observableArrayList();
@@ -97,27 +111,47 @@ public class AdministratorController {
 	Alert errorAlert = new Alert(AlertType.ERROR);
 	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
     
+	/**
+	 * sign out from system
+	 * @param event
+	 */
     @FXML
     void signOut(ActionEvent event) {
-    	
-		SharedData.getInstance().setCurrentSystemUser(null);
-
-		Scene currentScene = signOutButton.getScene();
-		Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		JSONObject json = new JSONObject(), ret = new JSONObject();
 		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
-
+			json.put("systemUsername", SharedData.getInstance().getCurrentSystemUser().get_username());
+			json.put("cmd", "SignOut");
+			ret = request(json, "Login");
+			
+			if(ret.getBoolean("result")){
+				SharedData.getInstance().setCurrentSystemUser(null);
+		
+				Scene currentScene = signOutButton.getScene();
+				Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("MainView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+		
+					e.printStackTrace();
+				}
+		
+				Scene scene = new Scene(mainLayout);
+				Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+			}
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		Scene scene = new Scene(mainLayout);
-		Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
-
     }
+    
+    /**
+     * approve to update costs that Suggested by Parking Lot Director 
+     * @param e
+     * @param reqID
+     */
     
     void aproveUpdateCost(ActionEvent e, int reqID){
     	
@@ -150,7 +184,12 @@ public class AdministratorController {
 		}
     	
     }
-    
+   
+    /**
+     * decline to update costs that Suggested by Parking Lot Director 
+     * @param e
+     * @param reqID
+     */
     void declineUpdtae(ActionEvent e, int reqID){
     
     	JSONObject json = new JSONObject();
@@ -183,6 +222,11 @@ public class AdministratorController {
     	
     }
 
+    /**
+     * this method sends request to parking lot director and asks him  to send the lot's Current Situation.
+     * The administrator will get a main that contains  PDF of parking lot current Situation.
+     * @param event
+     */
     @FXML
     void getCurrentSituation(ActionEvent event) {
     	
@@ -241,11 +285,505 @@ public class AdministratorController {
     }
 
     @FXML
+    void loadQuarterReporsBorderPane(ActionEvent event) {
+    	reportsBorderPane.setVisible(false);
+    	changePricesRequestsBorderPane.setVisible(false); 
+    	quarterReportsBorderPane.setVisible(true);
+
+    	quarterReportsButton.getStyleClass().removeAll("loginView-buttons", "focus");
+    	quarterReportsButton.getStyleClass().add("pressedButton");
+    	reportsButton.getStyleClass().removeAll("pressedButton", "focus");
+    	reportsButton.getStyleClass().add("loginView-buttons");
+    	changePricesRequestsButton.getStyleClass().removeAll("pressedButton", "focus");
+    	changePricesRequestsButton.getStyleClass().add("loginView-buttons");
+    
+    	int length = quarterReportsListVbox.getChildren().size();
+		quarterReportsListVbox.getChildren().remove(0, length);
+		
+		JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		try {
+			json.put("cmd", "getQuarterReady");
+			ret = request(json, "ReportsGenerator");
+			System.out.println(ret.toString());
+			if(ret.getBoolean("result")){
+				System.out.println(ret.toString());
+				JSONArray ja = ret.getJSONArray("info");
+				for(int i = 0; i < ja.length(); i++){
+					if(((JSONObject) ja.get(i)).getBoolean("jan")){
+		        	    Label quarterName = new Label("Januray - March");
+		        	    quarterName.setStyle("-fx-pref-width: 120; -fx-padding: 3.5 0 0 0");
+		        	    Label lotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
+		        		lotName.setStyle("-fx-pref-width: 120; -fx-padding: 3.5 0 0 0");
+		        		
+						HBox hb = new HBox();
+						hb.getChildren().add(quarterName);
+						hb.getChildren().add(lotName);
+						hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+								+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+					
+						Button resrvationReportButton = new Button("Reservation Report");
+						String css = getClass().getResource("application.css").toExternalForm();
+						resrvationReportButton.getStylesheets().clear();
+						resrvationReportButton.getStylesheets().add(css);
+						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText()));
+						resrvationReportButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(resrvationReportButton);
+						
+						HBox tempo1 = new HBox();
+						tempo1.setStyle("-fx-pref-width: 10;");
+						hb.getChildren().add(tempo1);
+						
+						Button complaintsReportButton = new Button("Complaints Report");
+						complaintsReportButton.getStylesheets().clear();
+						complaintsReportButton.getStylesheets().add(css);
+						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText()));
+						complaintsReportButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(complaintsReportButton);
+						
+						HBox tempo2 = new HBox();
+						tempo2.setStyle("-fx-pref-width: 10;");
+						hb.getChildren().add(tempo2);
+						
+						Button disabledSpotsReporttButton = new Button("Disabled Spots Report");
+						disabledSpotsReporttButton.getStylesheets().clear();
+						disabledSpotsReporttButton.getStylesheets().add(css);
+						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText()));
+						disabledSpotsReporttButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(disabledSpotsReporttButton);
+						quarterReportsListVbox.getChildren().add(hb);
+					}
+					if(((JSONObject) ja.get(i)).getBoolean("apr")){
+		        	    Label quarterName = new Label("April - June");
+		        	    quarterName.setStyle("-fx-pref-width: 120; -fx-padding: 3.5 0 0 0");
+		        	    Label lotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
+		        		lotName.setStyle("-fx-pref-width: 120; -fx-padding: 3.5 0 0 0");
+		        		
+						HBox hb = new HBox();
+						hb.getChildren().add(quarterName);
+						hb.getChildren().add(lotName);
+						hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+								+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+					
+						Button resrvationReportButton = new Button("Reservation Report");
+						String css = getClass().getResource("application.css").toExternalForm();
+						resrvationReportButton.getStylesheets().clear();
+						resrvationReportButton.getStylesheets().add(css);
+						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText()));
+						resrvationReportButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(resrvationReportButton);
+						
+						HBox tempo1 = new HBox();
+						tempo1.setStyle("-fx-pref-width: 10;");
+						hb.getChildren().add(tempo1);
+						
+						Button complaintsReportButton = new Button("Complaints Report");
+						complaintsReportButton.getStylesheets().clear();
+						complaintsReportButton.getStylesheets().add(css);
+						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText()));
+						complaintsReportButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(complaintsReportButton);
+						
+						HBox tempo2 = new HBox();
+						tempo2.setStyle("-fx-pref-width: 10;");
+						hb.getChildren().add(tempo2);
+						
+						Button disabledSpotsReporttButton = new Button("Disabled Spots Report");
+						disabledSpotsReporttButton.getStylesheets().clear();
+						disabledSpotsReporttButton.getStylesheets().add(css);
+						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText()));
+						disabledSpotsReporttButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(disabledSpotsReporttButton);
+						quarterReportsListVbox.getChildren().add(hb);
+					}
+					if(((JSONObject) ja.get(i)).getBoolean("oct")){
+		        	    Label quarterName = new Label("October - December");
+		        	    quarterName.setStyle("-fx-pref-width: 120; -fx-padding: 3.5 0 0 0");
+		        	    Label lotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
+		        		lotName.setStyle("-fx-pref-width: 120; -fx-padding: 3.5 0 0 0");
+		        		
+						HBox hb = new HBox();
+						hb.getChildren().add(quarterName);
+						hb.getChildren().add(lotName);
+						hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+								+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+					
+						Button resrvationReportButton = new Button("Reservation Report");
+						String css = getClass().getResource("application.css").toExternalForm();
+						resrvationReportButton.getStylesheets().clear();
+						resrvationReportButton.getStylesheets().add(css);
+						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText()));
+						resrvationReportButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(resrvationReportButton);
+						
+						HBox tempo1 = new HBox();
+						tempo1.setStyle("-fx-pref-width: 10;");
+						hb.getChildren().add(tempo1);
+						
+						Button complaintsReportButton = new Button("Complaints Report");
+						complaintsReportButton.getStylesheets().clear();
+						complaintsReportButton.getStylesheets().add(css);
+						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText()));
+						complaintsReportButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(complaintsReportButton);
+						
+						HBox tempo2 = new HBox();
+						tempo2.setStyle("-fx-pref-width: 10;");
+						hb.getChildren().add(tempo2);
+						
+						Button disabledSpotsReporttButton = new Button("Disabled Spots Report");
+						disabledSpotsReporttButton.getStylesheets().clear();
+						disabledSpotsReporttButton.getStylesheets().add(css);
+						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText()));
+						disabledSpotsReporttButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(disabledSpotsReporttButton);
+						quarterReportsListVbox.getChildren().add(hb);
+					}
+					if(((JSONObject) ja.get(i)).getBoolean("jul")){
+		        	    Label quarterName = new Label("July - September");
+		        	    quarterName.setStyle("-fx-pref-width: 120; -fx-padding: 3.5 0 0 0");
+		        	    Label lotName = new Label(((JSONObject) ja.get(i)).getString("lotName"));
+		        		lotName.setStyle("-fx-pref-width: 120; -fx-padding: 3.5 0 0 0");
+		        		
+						HBox hb = new HBox();
+						hb.getChildren().add(quarterName);
+						hb.getChildren().add(lotName);
+						hb.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+								+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;");
+					
+						Button resrvationReportButton = new Button("Reservation Report");
+						String css = getClass().getResource("application.css").toExternalForm();
+						resrvationReportButton.getStylesheets().clear();
+						resrvationReportButton.getStylesheets().add(css);
+						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText()));
+						resrvationReportButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(resrvationReportButton);
+						
+						HBox tempo1 = new HBox();
+						tempo1.setStyle("-fx-pref-width: 10;");
+						hb.getChildren().add(tempo1);
+						
+						Button complaintsReportButton = new Button("Complaints Report");
+						complaintsReportButton.getStylesheets().clear();
+						complaintsReportButton.getStylesheets().add(css);
+						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText()));
+						complaintsReportButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(complaintsReportButton);
+						
+						HBox tempo2 = new HBox();
+						tempo2.setStyle("-fx-pref-width: 10;");
+						hb.getChildren().add(tempo2);
+						
+						Button disabledSpotsReporttButton = new Button("Disabled Spots Report");
+						disabledSpotsReporttButton.getStylesheets().clear();
+						disabledSpotsReporttButton.getStylesheets().add(css);
+						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText()));
+						disabledSpotsReporttButton.getStyleClass().add("loginView-buttons");
+						hb.getChildren().add(disabledSpotsReporttButton);
+						quarterReportsListVbox.getChildren().add(hb);
+					}			
+					
+	    		} 
+			}
+			
+			
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+    }
+
+   
+   private Object complaintsReportCallBack(ActionEvent e, String lotName) {
+		// TODO Auto-generated method stub
+		JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		try {
+			json.put("cmd", "FiscalQuarter");
+			json.put("lotName", lotName);
+			ret = request(json, "ReportsGenerator");
+			if(ret.getBoolean("result")){
+				Stage popupwindow=new Stage();
+				popupwindow.initModality(Modality.APPLICATION_MODAL);
+				popupwindow.setTitle("total");
+				
+				HBox header = new HBox();
+				header.setAlignment(Pos.CENTER);
+				header.setStyle("-fx-pref-width:800;-fx-pref-height:50;-fx-background-color:#0a304e;"
+						+ "-fx-padding:10;");
+				
+				VBox vB = new VBox();
+				String s = "Total Complaints: ";
+				s += Integer.toString(ret.getJSONObject("report").getJSONArray("complaints").length());
+				
+				/** Complaint Section **/
+				
+				Label totalComplaints = new Label(s);
+				totalComplaints.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				totalComplaints.setTextFill(Color.WHITE);
+				header.getChildren().add(totalComplaints);
+				HBox complaints = new HBox();
+				
+				
+				complaints.setStyle("-fx-pref-width:790;-fx-pref-height:20;-fx-padding:5;"
+						+ "-fx-background-color:#7499b5");
+				String complaintsHeader = "Complaints";
+				Label complaintsHeaderLabel = new Label(complaintsHeader);
+				complaintsHeaderLabel.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				complaintsHeaderLabel.setTextFill(Color.WHITE);
+				complaints.getChildren().add(complaintsHeaderLabel);
+				
+				
+
+				VBox everythingInReservation = new VBox();
+				everythingInReservation.getChildren().add(complaints);
+				
+				int complaintsArraylength = ret.getJSONObject("report").getJSONArray("complaints").length();
+		        for(int i = 0; i < complaintsArraylength; i++){
+		        	
+					HBox complaintsHbox = new HBox();
+					complaintsHbox.setStyle("-fx-pref-width:790;-fx-pref-height:30;-fx-padding:5;"
+							+ "-fx-border-style: solid inside;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; ");
+					String comId = "Complaint Id: " + Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("complaints").get(i)).getInt("complaintID"));
+					String start = "Date: " +((JSONObject) ret.getJSONObject("report").getJSONArray("complaints").get(i)).getString("date");
+					String carNumber = "Car Number: " +((JSONObject) ret.getJSONObject("report").getJSONArray("complaints").get(i)).getString("carNumber");
+					String refund = "Refund: " + Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("complaints").get(i)).getInt("refund"));
+					String handled = "";
+					if(((JSONObject) ret.getJSONObject("report").getJSONArray("complaints").get(i)).getBoolean("handled")){
+						handled = "Status: Handled";
+					}else{
+						handled = "Status: Not Handled";
+					}
+					String content = comId + "        " + start +"        " + carNumber +"        " + handled+"        " + refund;
+					complaintsHbox.getChildren().add(new Label(content));
+					everythingInReservation.getChildren().add(complaintsHbox);
+		        }
+
+				
+				vB.getChildren().add(header);
+		        ScrollPane sp = new ScrollPane();
+				sp.setStyle("-fx-pref-width:800; -fx-pref-height:550;");
+				sp.setContent(everythingInReservation);
+		        vB.getChildren().add(sp);
+
+		        Scene scene  = new Scene(vB,800,600);
+		        popupwindow.setScene(scene);
+				popupwindow.showAndWait();
+
+				
+			}
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+	}
+
+private Object resrvationReportCallBack(ActionEvent e, String lotName) {
+		// TODO Auto-generated method stub
+		System.out.println(lotName);
+		JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		try {			
+			json.put("cmd", "FiscalQuarter");
+			json.put("lotName", lotName);
+			ret = request(json, "ReportsGenerator");
+			if(ret.getBoolean("result")){
+				
+				
+				Stage popupwindow=new Stage();
+				popupwindow.initModality(Modality.APPLICATION_MODAL);
+				popupwindow.setTitle("total");
+				
+				HBox header = new HBox();
+				header.setAlignment(Pos.CENTER);
+				header.setStyle("-fx-pref-width:800;-fx-pref-height:50;-fx-background-color:#0a304e;"
+						+ "-fx-padding:10;");
+				
+				VBox vB = new VBox();
+				String s = "Total Parking Reservation: ";
+				s += Integer.toString(ret.getJSONObject("report").getJSONArray("reservations").length());
+				s += "\t\t";
+				s += "Total Routinely Subscription: ";
+				s += Integer.toString(ret.getJSONObject("report").getJSONArray("routineSubscriptions").length());
+				s += "\t\t";
+				s += "Total Full Subscription: ";
+				s += Integer.toString(ret.getJSONObject("report").getJSONArray("fullSubscriptions").length());
+				
+				/** Parking Reservation Section **/
+				
+				Label totalReservation = new Label(s);
+				totalReservation.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				totalReservation.setTextFill(Color.WHITE);
+				header.getChildren().add(totalReservation);
+				HBox parkingReservations = new HBox();
+				
+				
+				parkingReservations.setStyle("-fx-pref-width:780;-fx-pref-height:20;-fx-padding:5;"
+						+ "-fx-background-color:#7499b5");
+				String parkingReservationsHeader = "Parking Reservations";
+				Label parkingReservationsHeaderLabel = new Label(parkingReservationsHeader);
+				parkingReservationsHeaderLabel.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				parkingReservationsHeaderLabel.setTextFill(Color.WHITE);
+				parkingReservations.getChildren().add(parkingReservationsHeaderLabel);
+				
+				
+				
+				VBox everythingInReservation = new VBox();
+				everythingInReservation.getChildren().add(parkingReservations);
+				int reservationArraylength = ret.getJSONObject("report").getJSONArray("reservations").length();
+		        for(int i = 0; i < reservationArraylength; i++){
+		        	
+					HBox parkingReservationsHbox = new HBox();
+					parkingReservationsHbox.setStyle("-fx-pref-width:700;-fx-pref-height:30;-fx-padding:5;"
+							+ "-fx-border-style: solid inside;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; ");
+					String resId = "Red Id: " + Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getInt("rid"));
+					String start = "Start: " +((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getString("start");
+					String end = "End: " +((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getString("end");
+					String carNumber = "Car Number: " +((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getString("carNumber");
+					String cost = "Cost: " +Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getInt("cost"));
+					String content = resId +"        " + start +"        " + end +"        " + carNumber +"        " + cost;
+					parkingReservationsHbox.getChildren().add(new Label(content));
+					everythingInReservation.getChildren().add(parkingReservationsHbox);
+		        }
+		        
+		        /** Parking Reservation Section **/
+
+		        /** Routinely Section **/
+
+				HBox routinelies = new HBox();
+				
+				
+				routinelies.setStyle("-fx-pref-width:780;-fx-pref-height:20;-fx-padding:5;"
+						+ "-fx-background-color:#7499b5");
+				String routinelySubscriptionsHeader = "Routinely Subscriptions";
+				Label routinelySubscriptionsHeaderLabel = new Label(routinelySubscriptionsHeader);
+				routinelySubscriptionsHeaderLabel.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				routinelySubscriptionsHeaderLabel.setTextFill(Color.WHITE);
+				routinelies.getChildren().add(routinelySubscriptionsHeaderLabel);
+				
+				everythingInReservation.getChildren().add(routinelies);
+				int routineArraylength = ret.getJSONObject("report").getJSONArray("routineSubscriptions").length();
+		        for(int i = 0; i < routineArraylength; i++){
+		        	
+					HBox routineSubscriptionsHbox = new HBox();
+					routineSubscriptionsHbox.setStyle("-fx-pref-width:700;-fx-pref-height:30;-fx-padding:5;"
+							+ "-fx-border-style: solid inside;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; ");
+					String resId = "Sub Id: " + Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("routineSubscriptions").get(i)).getInt("rsid"));
+					String start = "Start: " +((JSONObject) ret.getJSONObject("report").getJSONArray("routineSubscriptions").get(i)).getString("start");
+					String end = "End: " +((JSONObject) ret.getJSONObject("report").getJSONArray("routineSubscriptions").get(i)).getString("end");
+					String leaveHour = "Leaving Hour: " +((JSONObject) ret.getJSONObject("report").getJSONArray("routineSubscriptions").get(i)).getString("leaveHour");
+					String carNumber = "Car Number: " +((JSONObject) ret.getJSONObject("report").getJSONArray("routineSubscriptions").get(i)).getString("carNumber");
+					String type = "";
+					if(((JSONObject) ret.getJSONObject("report").getJSONArray("routineSubscriptions").get(i)).getBoolean("business")){
+						type = "Type: Business";
+					}else{
+						type = "Type: Regular";
+					}
+						
+					String content = resId +"        " + start +"        " + end + "        " + leaveHour + "        " + carNumber +"        " + type;
+					routineSubscriptionsHbox.getChildren().add(new Label(content));
+					everythingInReservation.getChildren().add(routineSubscriptionsHbox);
+		        }
+		        
+		        /** Routinely Section **/
+
+
+		        /** Full Section **/
+
+				HBox fullies = new HBox();
+				
+				
+				fullies.setStyle("-fx-pref-width:780;-fx-pref-height:20;-fx-padding:5;"
+						+ "-fx-background-color:#7499b5");
+				String fullSubscriptionsHeader = "Full Subscriptions";
+				Label fullSubscriptionsHeaderLabel = new Label(fullSubscriptionsHeader);
+				fullSubscriptionsHeaderLabel.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				fullSubscriptionsHeaderLabel.setTextFill(Color.WHITE);
+				fullies.getChildren().add(fullSubscriptionsHeaderLabel);
+				
+				everythingInReservation.getChildren().add(fullies);
+				int fullArraylength = ret.getJSONObject("report").getJSONArray("fullSubscriptions").length();
+		        for(int i = 0; i < fullArraylength; i++){
+		        	
+					HBox fullSubscriptionsHbox = new HBox();
+					fullSubscriptionsHbox.setStyle("-fx-pref-width:700;-fx-pref-height:30;-fx-padding:5;"
+							+ "-fx-border-style: solid inside;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; ");
+					String resId = "Sub Id: " + Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("fullSubscriptions").get(i)).getInt("fsid"));
+					String start = "Start: " +((JSONObject) ret.getJSONObject("report").getJSONArray("fullSubscriptions").get(i)).getString("start");
+					String end = "End: " +((JSONObject) ret.getJSONObject("report").getJSONArray("fullSubscriptions").get(i)).getString("end");
+					String carNumber = "Car Number: " +((JSONObject) ret.getJSONObject("report").getJSONArray("fullSubscriptions").get(i)).getString("carNumber");
+						
+					String content = resId +"        " + start +"        " + end + "        " + carNumber;
+					fullSubscriptionsHbox.getChildren().add(new Label(content));
+					everythingInReservation.getChildren().add(fullSubscriptionsHbox);
+		        }
+		        
+		        /** Routinely Section **/
+
+		        
+		        vB.getChildren().add(header);
+		        ScrollPane sp = new ScrollPane();
+				sp.setStyle("-fx-pref-width:800; -fx-pref-height:550;");
+				sp.setContent(everythingInReservation);
+		        vB.getChildren().add(sp);
+				Scene scene  = new Scene(vB,800,600);
+		        popupwindow.setScene(scene);
+				popupwindow.showAndWait();
+				
+			}
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+	}
+
+private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName) {
+		// TODO Auto-generated method stub
+		JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		try {
+			json.put("cmd", "FiscalQuarter");
+			json.put("lotName", lotName);
+			ret = request(json, "ReportsGenerator");
+			if(ret.getBoolean("result")){
+				Stage popupwindow=new Stage();
+				popupwindow.initModality(Modality.APPLICATION_MODAL);
+				popupwindow.setTitle("total");
+				
+				VBox vB = new VBox();
+				
+
+		        Scene scene  = new Scene(vB,800,600);
+		        popupwindow.setScene(scene);    
+				popupwindow.showAndWait();
+				
+			}
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return null;
+	}
+
+/**
+    * view Reports page  
+    * @param event
+    */
+    @FXML
     void loadReporsBorderPane(ActionEvent event) {
     	reportsBorderPane.setVisible(true);
     	changePricesRequestsBorderPane.setVisible(false); 
- 
+    	quarterReportsBorderPane.setVisible(false);
 
+    	quarterReportsButton.getStyleClass().removeAll("pressedButton", "focus");
+    	quarterReportsButton.getStyleClass().add("loginView-buttons");
     	reportsButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	reportsButton.getStyleClass().add("pressedButton");
     	changePricesRequestsButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -275,12 +813,18 @@ public class AdministratorController {
     	
     }
 
+    /**
+     * view Change PricesREquests page  
+     * @param event
+     */  
     @FXML
     void loadChangePricesRequestsBorderPane(ActionEvent event) {
     	reportsBorderPane.setVisible(false);
     	changePricesRequestsBorderPane.setVisible(true); 
- 
+    	quarterReportsBorderPane.setVisible(false);
 
+    	quarterReportsButton.getStyleClass().removeAll("pressedButton", "focus");
+    	quarterReportsButton.getStyleClass().add("loginView-buttons");
     	changePricesRequestsButton.getStyleClass().removeAll("loginView-buttons", "focus");
     	changePricesRequestsButton.getStyleClass().add("pressedButton");
     	reportsButton.getStyleClass().removeAll("pressedButton", "focus");
@@ -437,6 +981,27 @@ public class AdministratorController {
 		textInTopOfLogIn.setText(_fullname);
 	}
 	
+	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
+	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
+
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
 		try {

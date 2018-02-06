@@ -138,28 +138,47 @@ public class ParkingLotDirectorController {
 
     private ObservableList<String> myComboBoxParLotDirecReport= FXCollections.observableArrayList();
     
-
+    /**
+	 * sign out from system
+	 * @param event
+	 */
     @FXML
     void signOut(ActionEvent event) {
-		SharedData.getInstance().setCurrentSystemUser(null);
-
-		Scene currentScene = signOutButton.getScene();
-		Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
+		JSONObject json = new JSONObject(), ret = new JSONObject();
 		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
-
+			json.put("systemUsername", SharedData.getInstance().getCurrentSystemUser().get_username());
+			json.put("cmd", "SignOut");
+			ret = request(json, "Login");
+			
+			if(ret.getBoolean("result")){
+				SharedData.getInstance().setCurrentSystemUser(null);
+		
+				Scene currentScene = signOutButton.getScene();
+				Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("MainView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+		
+					e.printStackTrace();
+				}
+		
+				Scene scene = new Scene(mainLayout);
+				Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+			}
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		Scene scene = new Scene(mainLayout);
-		Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
-
     }
 
+    /**
+     *sending  mail to Administrator that contain a specific report 
+     * @param event
+     */
+    
     @FXML
     void sendReportToAdministrator(ActionEvent event) {
     	
@@ -167,9 +186,9 @@ public class ParkingLotDirectorController {
     	
     	if (report == null) {
 
-			informationAlert.setTitle("Report warning");
+			informationAlert.setTitle("Report Warning");
 			informationAlert.setHeaderText(null);
-			informationAlert.setContentText("Please choose report type to complete the report");
+			informationAlert.setContentText("Please choose a duration");
 			informationAlert.showAndWait();
 			return;
 
@@ -179,21 +198,37 @@ public class ParkingLotDirectorController {
 			JSONObject json = new JSONObject();
 			try {
 				//TODO: synchronize with server
-	
-				json.put("report", report);
+		    	int quarter = -1;
+		    	
+				if(report.equals("January - March")){
+					quarter = 1;
+				}else if(report.equals("April - June")){
+					quarter = 2;
+				}else if(report.equals("July - September")){
+					quarter = 3;
+				}else{
+					quarter = 4;
+				}
+				json.put("quarter", quarter);
 				json.put("lotName", lotName);
-				json.put("cmd", "report");
+				json.put("cmd", "QuarterReady");
 	
 				// send to reservation servlet
-	//			JSONObject ret = request(json, "CustomerServiceReservationController");
-	//
-	////			System.out.println(ret.getBoolean("result"));
-	//			if (ret.getBoolean("result")) {
-	//				System.out.println("Old balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-	//				
-	////				updateBalance((-1) * cost);
-	////				System.out.println("New balance is: " + SharedData.getInstance().getCurrentUser().getBalance());
-	//			}
+				JSONObject ret = request(json, "ReportsGenerator");
+	
+				if (ret.getBoolean("result")) {
+		    		informationAlert.setTitle("Report Was Sent Successfuly");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("your quarter report was sent");
+					informationAlert.showAndWait();
+				}
+				else{
+		    		informationAlert.setTitle("Report Already Sent");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("your quarter report was already sent");
+					informationAlert.showAndWait();
+				}
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -201,7 +236,10 @@ public class ParkingLotDirectorController {
     }
     
   
-
+    /**
+     * sending a new price suggestion to the Administrator
+     * @param event
+     */
     @FXML
     void occasionalChange(ActionEvent event) {
     	String costOccasional = occasionalReservationPriceTF.getText();
@@ -275,7 +313,10 @@ public class ParkingLotDirectorController {
 		}
     }
 
-
+    /**
+     * view Reports Page
+     * @param event
+     */
     @FXML
     void loadReports(ActionEvent event) {
     	ReportsParkingLotDirectorBorderPane.setVisible(true);
@@ -290,12 +331,10 @@ public class ParkingLotDirectorController {
     	administratorRequestsButton.getStyleClass().add("loginView-buttons");
     	
     	ArrayList<String> Reports = new ArrayList<String>();
-    	Reports.add("Reservations");
-    	Reports.add("Complaints");
-    	Reports.add("Disabled Parking Spots");
-    	Reports.add("Regular Routinely Subscriptions");
-    	Reports.add("Business Routinely Subscriptions");
-    	Reports.add("Full Subscriptions");
+    	Reports.add("January - March");
+    	Reports.add("April - June");
+    	Reports.add("July - September");
+    	Reports.add("October - December");
     	
     	myComboBoxParLotDirecReport.clear();     
     	for(int i = 0; i < Reports.size(); i++){
@@ -306,6 +345,11 @@ public class ParkingLotDirectorController {
     	
     	
     }
+
+    /**
+     * View Change Prices Page
+     * @param event
+     */
 
     @FXML
     void loadChangePrices(ActionEvent event) {
@@ -331,6 +375,11 @@ public class ParkingLotDirectorController {
 
     }
     
+
+    /**
+     * View Administrator Requests
+     * @param event
+     */
 
     @FXML
     void loadAdministratorRequests(ActionEvent event) {
@@ -398,7 +447,11 @@ public class ParkingLotDirectorController {
     }
 
 	
-    
+    /**
+     * sending a mail to administrator that contain's pdf Current Situation 
+     * @param e
+     * @param ret2
+     */
     private void sendCurrentSituationToAdminCallBack(ActionEvent e, JSONObject ret2) {
 		// TODO Auto-generated method stub
     	JSONObject json = new JSONObject();
@@ -460,7 +513,16 @@ public class ParkingLotDirectorController {
 		return null;
 	}
 	
-    
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
+
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
 		try {

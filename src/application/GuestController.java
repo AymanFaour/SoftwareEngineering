@@ -93,6 +93,10 @@ public class GuestController {
 	@FXML // fx:id="GuestExitButton"
 	private Button GuestExitButton; // Value injected by FXMLLoader
 
+	/**
+	 * sign out from system
+	 * @param event
+	 */
 	@FXML
 	void signOut(ActionEvent event) {
 		SharedData.getInstance().setCurrentUser(null);
@@ -113,7 +117,11 @@ public class GuestController {
 		stage.setScene(scene);
 
 	}
-
+	
+	/**
+	 * sending request to the server to make parking reservation as a guest and after that enter the car to the parking lot
+	 * @param event
+	 */
 	@FXML
 	void reserveParking(ActionEvent event) {
 
@@ -260,6 +268,11 @@ public class GuestController {
 		}
 	}
 
+	
+	/**
+	 * exiting the guest car from the parking lot  
+	 * @param event
+	 */
 	@FXML
 	void GuestExit(ActionEvent event) {
 
@@ -369,6 +382,11 @@ public class GuestController {
 
 	}
 
+	/**
+	 * casting from object date to object calendar
+	 * @param date
+	 * @return
+	 */
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -392,7 +410,17 @@ public class GuestController {
 		this.myComboBoxMinutesData = myComboBoxMinutesData;
 		this.GuestLeavingMinuteComboBox.setItems(this.myComboBoxMinutesData);
 	}
-
+	
+	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
 		try {
