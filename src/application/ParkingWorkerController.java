@@ -589,6 +589,11 @@ public class ParkingWorkerController {
 		}
     }
 
+    /**
+     * casting form object date to object calendar
+     * @param date
+     * @return
+     */
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);

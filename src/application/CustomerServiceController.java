@@ -306,6 +306,7 @@ public class CustomerServiceController {
 
     }
     
+    
     JSONObject request(JSONObject json, String servletName){
     	HttpURLConnection connection = null;
 		try {
@@ -414,7 +415,7 @@ public class CustomerServiceController {
 	/**
 	 * Handling the complaints that have received from the clients 
 	 * @param event
-	 * @param complaintsJO
+	 * @param complaintsJO -JSONO Object that contains a client complaint
 	 * @throws IOException
 	 * @throws JSONException
 	 */
@@ -492,8 +493,8 @@ public class CustomerServiceController {
 
     /**
      * this method send a mail to the client that contains his complaint's response 
-     * @param vb
-     * @param complaintJO
+     * @param vb - a vertical box that we used to to add Customer service response and refund 
+     * @param complaintJO- JSON Object that contains a client complaint  
      * @throws IOException
      * @throws JSONException
      */
@@ -674,6 +675,7 @@ public class CustomerServiceController {
 
 
 
+    
 	private void complainHandlerCallBack(ActionEvent e, JSONObject obj) {
 		// TODO Auto-generated method stub
 		try {

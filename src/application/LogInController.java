@@ -1349,11 +1349,11 @@ public class LogInController {
     	
     }
 
-		/**
-		 * casting from object date to object calendar
-		 * @param date
-		 * @return calendar 
-		 */
+	/**
+	 * casting from object date to object calendar
+	 * @param date
+	 * @return calendar 
+	 */
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -1364,7 +1364,7 @@ public class LogInController {
 	/**
 	 * cancel reservation 
 	 * @param e
-	 * @param id
+	 * @param id - reservation id
 	 */
 	private void cancel(ActionEvent e, String id) {
 
@@ -1493,6 +1493,7 @@ public class LogInController {
 
 	}
 
+	
 	private void deActivateParking(ActionEvent e, String rid, String carNumber) {
 
 		try {
@@ -1591,6 +1592,8 @@ public class LogInController {
 
 	}
 	
+
+	
 	/**
 	 * Sending to the server request to make parking reservation with all the data
 	 * that the user has filled.
@@ -1600,12 +1603,6 @@ public class LogInController {
 	 * lotName
 	 * .... 
 	 * @param event 
-	 */
-
-	
-	/**
-	 * 
-	 * @param event
 	 */
 	@FXML
 	void reserveParking(ActionEvent event) {
@@ -2291,12 +2288,13 @@ public class LogInController {
 		}
 	}
 	
+	
+	
 	/**
 	 * Signing out from the system and update it in the server.
 	 * 
 	 * @param event
 	 */
-
 	@FXML
 	void signOut(ActionEvent event) {
 
