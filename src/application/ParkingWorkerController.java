@@ -171,7 +171,10 @@ public class ParkingWorkerController {
     private ObservableList<String> myComboBoxHeight = FXCollections.observableArrayList();
     //private ObservableList<String> myComboBoxComplaintParkingData = FXCollections.observableArrayList();
     
-    
+    /**
+   	 * sign out from system
+   	 * @param event
+   	 */
     @FXML
     void signOut(ActionEvent event) {
 		SharedData.getInstance().setCurrentSystemUser(null);
@@ -193,6 +196,10 @@ public class ParkingWorkerController {
 
     }
     
+    /**
+     * sending Request to the server to disabled a specific Parking Spot
+     * @param event
+     */
     @FXML
     void disabledParkingSpot(ActionEvent event) {
     	
@@ -298,7 +305,10 @@ public class ParkingWorkerController {
 		}
     }
     
-    
+    /**
+     * sending Request to the server to activate a Parking Spot that have been disabled 
+     * @param event
+     */
     void activateParkingSpot(ActionEvent event, int height, int width, int depth) {
     	
 
@@ -386,6 +396,7 @@ public class ParkingWorkerController {
 			loadDisabledParkingSpot(null);
     }
 
+    ////// ask hussam 
     @FXML
     void ReferenceToAlternativeParking(ActionEvent event) {
 		String _carNumber = AlternativeParkingCarNumberTF.getText();
@@ -428,6 +439,14 @@ public class ParkingWorkerController {
     	
     }
 
+    /**
+     * send request to the server to make a parking reservation 
+     * @param event
+     */
+    /**
+     * casting from object date to object calendar
+     * @param event
+     */
     @FXML
     void parkingWorkerReserveParking(ActionEvent event) {
 		String _carNumber = ParkingReservationCarNumberTF.getText();
@@ -570,12 +589,21 @@ public class ParkingWorkerController {
 		}
     }
 
+    /**
+     * casting form object date to object calendar
+     * @param date
+     * @return
+     */
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		return cal;
 	}
-
+	
+	/**
+	 * View Reference To Alternative Parking Page
+	 * @param event
+	 */
 	@FXML
     void loadReferenceToAlternativeParking(ActionEvent event) {
     	AlternativeParkingParkingLotWorkerBorderPane.setVisible(true);
@@ -622,7 +650,10 @@ public class ParkingWorkerController {
     	disabledParkingSpotButton.getStyleClass().add("loginView-buttons");
 
     }
-
+    /**
+	 * View Parking Reservation Page
+	 * @param event
+	 */
     @FXML
     void loadParkingReservation(ActionEvent event) {
     	AlternativeParkingParkingLotWorkerBorderPane.setVisible(false);
@@ -702,6 +733,10 @@ public class ParkingWorkerController {
     	return;
 	}
 
+    /**
+     * reserve a specific parking spot by parking lot worker  
+     * @param event
+     */
 	@FXML
     void reserveParkingByWorker(ActionEvent event) {
     	if((reserveHeightComboBox.getValue() == null) || (reserveWidthComboBox.getValue() == null) 
@@ -804,6 +839,10 @@ public class ParkingWorkerController {
 		}
     }
 
+	/**
+	 * View Disabled Parking Spot Page
+	 * @param event
+	 */
     @FXML
     void loadDisabledParkingSpot(ActionEvent event) {
     	AlternativeParkingParkingLotWorkerBorderPane.setVisible(false);
@@ -876,6 +915,10 @@ public class ParkingWorkerController {
     	
     }
     
+    /**
+     * clearing all the parking spots (Initialize Parking Lot)
+     * @param event
+     */
     @FXML
     void InitializeParkingLot(ActionEvent event) {
     	informationAlert.setTitle("Confirmation Dialog");

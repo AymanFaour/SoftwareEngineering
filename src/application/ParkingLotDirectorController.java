@@ -138,7 +138,10 @@ public class ParkingLotDirectorController {
 
     private ObservableList<String> myComboBoxParLotDirecReport= FXCollections.observableArrayList();
     
-
+    /**
+	 * sign out from system
+	 * @param event
+	 */
     @FXML
     void signOut(ActionEvent event) {
 		SharedData.getInstance().setCurrentSystemUser(null);
@@ -160,6 +163,11 @@ public class ParkingLotDirectorController {
 
     }
 
+    /**
+     *sending  mail to Administrator that contain a specific report 
+     * @param event
+     */
+    
     @FXML
     void sendReportToAdministrator(ActionEvent event) {
     	
@@ -201,7 +209,10 @@ public class ParkingLotDirectorController {
     }
     
   
-
+    /**
+     * sending a new price suggestion to the Administrator
+     * @param event
+     */
     @FXML
     void occasionalChange(ActionEvent event) {
     	String costOccasional = occasionalReservationPriceTF.getText();
@@ -275,7 +286,10 @@ public class ParkingLotDirectorController {
 		}
     }
 
-
+    /**
+     * view Reports Page
+     * @param event
+     */
     @FXML
     void loadReports(ActionEvent event) {
     	ReportsParkingLotDirectorBorderPane.setVisible(true);
@@ -307,6 +321,11 @@ public class ParkingLotDirectorController {
     	
     }
 
+    /**
+     * View Change Prices Page
+     * @param event
+     */
+
     @FXML
     void loadChangePrices(ActionEvent event) {
     	ReportsParkingLotDirectorBorderPane.setVisible(false);
@@ -331,6 +350,11 @@ public class ParkingLotDirectorController {
 
     }
     
+
+    /**
+     * View Administrator Requests
+     * @param event
+     */
 
     @FXML
     void loadAdministratorRequests(ActionEvent event) {
@@ -398,7 +422,11 @@ public class ParkingLotDirectorController {
     }
 
 	
-    
+    /**
+     * sending a mail to administrator that contain's pdf Current Situation 
+     * @param e
+     * @param ret2
+     */
     private void sendCurrentSituationToAdminCallBack(ActionEvent e, JSONObject ret2) {
 		// TODO Auto-generated method stub
     	JSONObject json = new JSONObject();
@@ -460,7 +488,16 @@ public class ParkingLotDirectorController {
 		return null;
 	}
 	
-    
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
+
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
 		try {

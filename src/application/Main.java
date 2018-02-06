@@ -130,6 +130,16 @@ public class Main extends Application {
 		MainController.initialize(SharedData.getInstance().getIP(), SharedData.getInstance().getPORT());
 		launch(args);
 	}
+	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
 
 	static JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;

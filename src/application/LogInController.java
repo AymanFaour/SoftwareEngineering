@@ -299,6 +299,10 @@ public class LogInController {
 			logInButtonListVbox.getChildren().add(4, b);
 	}
 
+	/**
+	 * View Parking Reservation page
+	 * @param event
+	 */
 	@FXML
 	void loadParkingReservation(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -366,7 +370,10 @@ public class LogInController {
     	parkingReservationCostText.setText(reservationCost.toString() + "\u20AA per hour");
     }
     
-
+	/**
+	 * View Regular Routinely Subscription page
+	 * @param event
+	 */
     @FXML
     void loadRegularRoutinelySubscription(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -435,6 +442,10 @@ public class LogInController {
     	regularRoutineSubscriptionCostText.setText(subscriptionCost.toString() + "\u20AA per subscription");
     }
     
+    /**
+     *View Business Routinely Subscription page 
+     * @param event
+     */
     @FXML
     void loadBusinessRoutinelySubscription(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(true);
@@ -554,7 +565,12 @@ public class LogInController {
     	
     }
     
-    
+    /**
+     * 
+     * return the business reservation in JSONObject
+     * 
+     * @return JSON Object
+      */
     private JSONObject getBusinessReserves() {
 		// TODO Auto-generated method stub
     	JSONObject json = new JSONObject();
@@ -579,7 +595,10 @@ public class LogInController {
 
 	}
 
-
+    /**
+     * adding Worker Account by a Business Manager
+     * @param event
+     */
 	@FXML
     void addWorkerToBusinessAcocunt(ActionEvent event) {
 		HBox hb = new HBox();
@@ -606,6 +625,11 @@ public class LogInController {
 	}
     
 
+
+    /**
+     * removing Worker Account by Business Manager
+     * @param event
+     */
 	@FXML
 	void remWorkerFromBusinessAcocunt(ActionEvent event) {
 
@@ -617,6 +641,10 @@ public class LogInController {
 		System.out.println("this is the counter from remove:" + this.getBusinessAccountWorkersCounter());
 	}
 
+	/**
+	 * view Full Subscription Page
+	 * @param event
+	 */
 	 @FXML
 	    void loadFullSubscription(ActionEvent event) {
 	    	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -654,6 +682,10 @@ public class LogInController {
 	    }
 
 
+	 /**
+	  * view all user's reservations in user Profile Page 
+	  * @param event
+	  */
 	@FXML
 	void loadViewReservation(ActionEvent event) {
 		businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -907,6 +939,14 @@ public class LogInController {
 
 	}
 
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param e
+	 * @param carId
+	 * @param resId
+	 */
 	private void deActivateParkingFullSub(ActionEvent e, String carId, String resId) {
 		System.out.println("In the deActivateFullSub function");
 		
@@ -948,7 +988,13 @@ public class LogInController {
 		}
 		
 	}
-
+	
+	/**
+	 * 
+	 * @param e
+	 * @param carId
+	 * @param resId
+	 */
 	private void activateParkingFullSub(ActionEvent e, String carId, String resId) {
 		System.out.println("In the activateFullSub function");
 		
@@ -1001,7 +1047,14 @@ public class LogInController {
 	}
 
 	
-	
+	/**
+	 * 
+	 * @param e
+	 * @param carId
+	 * @param subId
+	 * @param leavingHour
+	 * @param lotName
+	 */
 	private void deActivateParkingSub(ActionEvent e, String carId, String subId, String leavingHour, String lotName) {
 		System.out.println("this is the subId " + subId);
 		
@@ -1085,6 +1138,14 @@ public class LogInController {
 		
 	}
 
+	/**
+	 * 
+	 * @param e
+	 * @param carId
+	 * @param subId
+	 * @param lotName
+	 * @param leavingHour
+	 */
 	private void activateParkingSub(ActionEvent e, String carId, String subId, String lotName, String leavingHour) {
 		System.out.println(subId + " " + lotName);
 		
@@ -1292,13 +1353,23 @@ public class LogInController {
     	
     }
 
-		
+	/**
+	 * casting from object date to object calendar
+	 * @param date
+	 * @return calendar 
+	 */
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		return cal;
 	}
 
+	
+	/**
+	 * cancel reservation 
+	 * @param e
+	 * @param id - reservation id
+	 */
 	private void cancel(ActionEvent e, String id) {
 
 		// Button b = (Button) e.getSource();
@@ -1426,6 +1497,7 @@ public class LogInController {
 
 	}
 
+	
 	private void deActivateParking(ActionEvent e, String rid, String carNumber) {
 
 		try {
@@ -1523,6 +1595,19 @@ public class LogInController {
 		}
 
 	}
+	
+
+	
+	/**
+	 * Sending to the server request to make parking reservation with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * carNumber
+	 * lotName
+	 * .... 
+	 * @param event 
+	 */
 
 	@FXML
 	void reserveParking(ActionEvent event) {
@@ -1616,7 +1701,7 @@ public class LogInController {
 				informationAlert.showAndWait();
 			} else {
 				String _name = SharedData.getInstance().getCurrentUser().getUsername();
-
+				String _email = SharedData.getInstance().getCurrentUser().getEmail();
 				confirmAlert.setTitle("Confirmation Dialog");
 				confirmAlert.setContentText("Would you like to reserve this parking for " + cost + "\u20AA ?");
 	
@@ -1640,6 +1725,7 @@ public class LogInController {
 							json.put("username", _name);
 							json.put("start", _start);
 							json.put("end", _end);
+							json.put("email", _email);
 							json.put("cost", cost);
 							json.put("type", "r");
 							json.put("activated", 0);
@@ -1690,6 +1776,15 @@ public class LogInController {
 		}
 
 	}
+	
+	/**
+	 * Sending to the server request to activate a business subscription by sending the activation code 
+	 * and the car number
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * 
+	 * @param event
+	 */
 
 	@FXML
 	void activateBusinessSubscriptionByCodeAndCar(ActionEvent event) {
@@ -1736,6 +1831,19 @@ public class LogInController {
 		}
 	}
 
+	
+	/**
+	 * 
+	 * Sending to the server request to make a regular routine subscription with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * carNumber
+	 * lotName
+	 * .... 
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buyRegularRoutineSubscription(ActionEvent event) {
 		System.out.println("IN the routine subscription function.");
@@ -1868,6 +1976,19 @@ public class LogInController {
 		}
 	}
 
+	
+	/**
+	 * 
+	 * Sending to the server request to make a business subscription with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * This method activated only in business user and he will have the ability to add multiple cars 
+	 * to the account and every car will take an activation code from the system .
+	 * The cars will have the permission to enter to the system by entering the activation code.
+	 *  
+	 * @param event
+	 */
 	@FXML
 	void buyBusinessSubscription(ActionEvent event) {
 
@@ -2027,6 +2148,17 @@ public class LogInController {
 
 	}
 
+	/**
+	 * Sending to the server request to make a full subscription with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * carNumber
+	 * lotName
+	 * .... 
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buyfulSubFullSubscription(ActionEvent event) {
 
@@ -2160,35 +2292,66 @@ public class LogInController {
 
 		}
 	}
-
+	
+	
+	
+	/**
+	 * Signing out from the system and update it in the server.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void signOut(ActionEvent event) {
 
 		// getReserves();
 
 		// System.out.println(getReserves());
-		SharedData.getInstance().setCurrentUser(null);
+		
+		JSONObject json = new JSONObject(), ret = new JSONObject();
 
-		Scene currentScene = signOutButton.getScene();
-		Parent mainLayout = null;
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("MainView.fxml"));
 		try {
-			mainLayout = loader.load();
-		} catch (IOException | NullPointerException e) {
 
+			json.put("username", SharedData.getInstance().getCurrentUser().getUsername());
+			json.put("cmd", "SignOut");
+			ret = request(json, "Login");
+			
+			if(ret.getBoolean("result")){
+				SharedData.getInstance().setCurrentUser(null);
+
+				Scene currentScene = signOutButton.getScene();
+				Parent mainLayout = null;
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(Main.class.getResource("MainView.fxml"));
+				try {
+					mainLayout = loader.load();
+				} catch (IOException | NullPointerException e) {
+
+					e.printStackTrace();
+				}
+
+				Scene scene = new Scene(mainLayout);
+				Stage stage = (Stage) currentScene.getWindow();
+				stage.setScene(scene);
+				
+
+			}
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-
-		Scene scene = new Scene(mainLayout);
-		Stage stage = (Stage) currentScene.getWindow();
-		stage.setScene(scene);
-
+		
 	}
 
-	/*
-	 * function that get as parameter a change of the balance, change the
-	 * balance of the current user in the DB
+
+	/**
+	 * Updating the user's balance after every reservation.
+	 * The method gets cost argument that contains the new balance and updating it
+	 * in the data base.
+	 * This function returns a boolean argument, True if the method has succeeded
+	 * else it returns False.
+	 * 
+	 * @param cost the new client balance
+	 * @return  True if the method has succeeded, else it returns False. 
+	 * 
 	 */
 	Boolean updateBalance(double cost) {
 
@@ -2217,9 +2380,11 @@ public class LogInController {
 
 	}
 
-	/*
-	 * function that return a JSONArray for all the reserves of a specific user
-	 * name
+	
+	/**
+	 * Return a JSONArray for all the reserves of a specific user.
+	 * 
+	 * @return
 	 */
 	JSONObject getReserves() {
 
@@ -2243,6 +2408,11 @@ public class LogInController {
 		return null;
 
 	}
+	
+	/**
+	 * charging the user's balance by inserting the desired amount and the credit card.
+	 * @param event
+	 */
 
 	@FXML
 	void makeDeposit(ActionEvent event) {
@@ -2278,6 +2448,17 @@ public class LogInController {
 		}
 
 	}
+	
+	/**
+	 * Sending to the server request to make an occasional parking with all the data
+	 * that the user has filled.
+	 * This method checks all the inputs validity and acting accordingly.
+	 * 
+	 * carNumber
+	 * lotName
+	 * 
+	 * @param event
+	 */
 
 	@FXML
 	void reserveActualParking(ActionEvent event) {
@@ -2437,6 +2618,12 @@ public class LogInController {
 		}
 
 	}
+	
+	
+	/**
+	 * Sending to the customer service a complaint and waiting to get a response in the mail.
+	 * @param event
+	 */
 
 	@FXML // make complaint but AL OS decided to name it makeSend for mysterious
 			// reasons
@@ -2493,6 +2680,16 @@ public class LogInController {
 		}
 
 	}
+	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
 
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
