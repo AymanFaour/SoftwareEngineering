@@ -122,6 +122,7 @@ public class AdministratorController {
 		stage.setScene(scene);
 
     }
+    
     /**
      * approve to update costs that Suggested by Parking Lot Director 
      * @param e
@@ -476,6 +477,16 @@ public class AdministratorController {
 	 * @return
 	 */
 	
+	/**
+	 * a method that talks with the server in servlet mechanism.
+	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * and the servlet name.
+	 * 
+	 * @param json 
+	 * @param servletName 
+	 * @return
+	 */
+
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
 		try {

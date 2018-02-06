@@ -92,7 +92,11 @@ public class GuestController {
 
 	@FXML // fx:id="GuestExitButton"
 	private Button GuestExitButton; // Value injected by FXMLLoader
-	
+
+	/**
+	 * sign out from system
+	 * @param event
+	 */
 	@FXML
 	void signOut(ActionEvent event) {
 		SharedData.getInstance().setCurrentUser(null);
@@ -377,7 +381,12 @@ public class GuestController {
 		}
 
 	}
-	
+
+	/**
+	 * casting from object date to object calendar
+	 * @param date
+	 * @return
+	 */
 	public Calendar toCalendar(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
