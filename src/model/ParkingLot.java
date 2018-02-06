@@ -374,6 +374,7 @@ public class ParkingLot {
 		_usedSlots=0;
 		_reservedSlots = 0;
 		_disabledSlots = 0;
+		
 		_emptySlots=_capacity;
 		
 		
@@ -687,6 +688,10 @@ public class ParkingLot {
 				}
 			}	
 		}
+		_usedSlots = 0;
+		_reservedSlots = 0;
+		_emptySlots = 0;
+	
 		return true;
 	}
     

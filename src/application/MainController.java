@@ -354,7 +354,14 @@ public class MainController {
 	        			
 	        			SignInCallBack();
 	        		}else{
-	        			SignInFailed();
+	        			if(ret.getString("info").equals("User already signed in")){
+	        				informationAlert.setTitle("Sign in warrning");
+		    	    		informationAlert.setHeaderText(null);
+		    	    		informationAlert.setContentText("User already signed in.");
+		    	    		informationAlert.showAndWait();
+	        			}else{
+	        				SignInFailed();
+	        			}
 	        		}
 	    		}else{
 	    	    	String _workerID = workerIdTextField.getText();
@@ -393,7 +400,14 @@ public class MainController {
 			        			
 			        			SignInCallBack();
 			        		}else{
-			        			SignInFailed();
+			        			if(ret.getString("info").equals("User already signed in")){
+			        				informationAlert.setTitle("Sign in warrning");
+				    	    		informationAlert.setHeaderText(null);
+				    	    		informationAlert.setContentText("User already signed in.");
+				    	    		informationAlert.showAndWait();
+			        			}else{
+			        				SignInFailed();
+			        			}
 			        		}
 	    	    		}catch( NumberFormatException e){
 		    	    		informationAlert.setTitle("Sign in warrning");
