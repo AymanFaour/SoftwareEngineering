@@ -179,6 +179,10 @@ public class MainController {
         gu.setMyComboBoxMinutesData(setted2);
     }
     
+    /**
+     * sending a request to the server to add new register to the system
+     * @param event
+     */
     @FXML
     void registeration(ActionEvent event) { 
 //    	System.out.println("HELLOOOOO FROM Registeration");
@@ -249,6 +253,8 @@ public class MainController {
     
     void registerationSucceded(){	
     }
+    
+    
     
     @FXML
     void signInButton(ActionEvent event) throws JSONException {
@@ -390,6 +396,10 @@ public class MainController {
 //    	System.out.println(_password);
 //    	
     }
+    
+    /**
+     * Signing out from the system
+     */
      
     void SignInCallBack(){
 		if(systemWorkerCheckBox.isSelected() == false)
@@ -541,6 +551,7 @@ public class MainController {
     		businessNameTf.setVisible(false);
     	}
     }
+    
     @FXML
     void TrackReservation(ActionEvent event) throws IOException 
     {
@@ -601,6 +612,7 @@ public class MainController {
     		trakTA.setEditable(false);
     	}
     }
+    
     	 
     @FXML
     void WorkerIDCheckBoxEventHandler(ActionEvent event) {
