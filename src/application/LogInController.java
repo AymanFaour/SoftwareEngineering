@@ -1425,7 +1425,7 @@ public class LogInController {
 	}
 
 	/**
-	 * 
+	 * parking
 	 * activate reserved order
 	 * 
 	 * @param e
@@ -1468,21 +1468,6 @@ public class LogInController {
 
 				} else {
 
-					Calendar now = Calendar.getInstance();
-					if(now.getTimeInMillis() - arrivingCal.getTimeInMillis() > 5 * 60 * 1000){
-//						System.out.println( 1.2 * SharedData.getInstance().getReservationCost()*((leavingCal.getTimeInMillis() - arrivingCal.getTimeInMillis())/(60 *60 * 1000)) + "**********");
-						long deff = TimeUnit.MILLISECONDS
-								.toMinutes(Math.abs(leavingCal.getTimeInMillis() - arrivingCal.getTimeInMillis()));
-						
-						long extraCost = (long) ((Math.ceil(deff / 60.0) * SharedData.getInstance().getReservationCost()));
-						System.out.println("%%%%%%%%%%%%%%%%%%%%%%%" + extraCost + "   " + 0.2 * extraCost);
-						updateBalance( -1 * 0.2 * extraCost );
-						informationAlert.setTitle("You Have lated more than 5 MIN.");
-						informationAlert.setHeaderText(null);
-						informationAlert.setContentText(
-								"Sorry, you have lated more than 5 minitus, you have been fied 20% from your reserve");
-						informationAlert.showAndWait();
-					}
 					boolean res = SharedData.getInstance().getCurrentParkingLot().InsertCar(carId, arrivingCal,
 							leavingCal);
 
@@ -1535,6 +1520,18 @@ public class LogInController {
 
 	}
 
+	
+	/**
+	 * parking
+	 * extracting car that has been parked 
+	 * 
+	 * @param e
+	 * @param resId
+	 * @param carId
+	 * @param arriving
+	 * @param leaving
+	 * @param parkingLotName
+	 */
 	
 	private void deActivateParking(ActionEvent e, String rid, String carNumber) {
 

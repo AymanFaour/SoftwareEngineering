@@ -341,7 +341,7 @@ public class AdministratorController {
     			ret = request(json, "ReportsGenerator");
     			if(ret.getBoolean("result")){
     				System.out.println(ret.toString());
-    			}
+    			
     			int startDay = ret.getJSONObject("info").getJSONObject("content").getInt("startDay");
     			JSONObject parkingLotJSON = ret.getJSONObject("info").getJSONObject("content").getJSONObject(_lotName);
     			System.out.println(parkingLotJSON.toString());
@@ -416,7 +416,13 @@ public class AdministratorController {
 		        popupwindow.setScene(scene);
 				popupwindow.showAndWait();
 
-    			
+    		}else {
+        		informationAlert.setTitle("Report Not Found");
+    			informationAlert.setHeaderText(null);
+    			informationAlert.setContentText("Activity report for this date is not found");
+    			informationAlert.showAndWait();
+    			return;
+    		}
     		}catch(JSONException e) {
     			e.printStackTrace();
     		}
