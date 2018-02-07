@@ -43,7 +43,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.*;
-import sun.security.provider.SHA;
 
 public class ParkingWorkerController {
 
@@ -414,7 +413,7 @@ public class ParkingWorkerController {
 			loadDisabledParkingSpot(null);
     }
 
-    ////// ask hussam 
+    // in each try to enter the parking lot we checked if it is full, so we didn't implement it.
     @FXML
     void ReferenceToAlternativeParking(ActionEvent event) {
 		String _carNumber = AlternativeParkingCarNumberTF.getText();
@@ -623,7 +622,7 @@ public class ParkingWorkerController {
 	 * View Reference To Alternative Parking Page
 	 * @param event
 	 */
-	@FXML
+	/*@FXML
     void loadReferenceToAlternativeParking(ActionEvent event) {
     	AlternativeParkingParkingLotWorkerBorderPane.setVisible(true);
     	IntitializationParkingLotWorkerBorderPane.setVisible(false);
@@ -649,7 +648,7 @@ public class ParkingWorkerController {
     	
     	alternativeComboBox.setItems(myComboBoxParkResComboBox);
 
-    }
+    }*/
 
     @FXML
     void loadIntitialization(ActionEvent event) {
@@ -967,6 +966,10 @@ public class ParkingWorkerController {
 		textInTopOfLogIn.setText(_username);
 	}
 	
+	/**
+	 * this function block the parking lot, we change all the entries to disabled.
+	 * @param event
+	 */
 	@FXML
 	void BlockParkingLot(ActionEvent event){
 		
@@ -974,10 +977,13 @@ public class ParkingWorkerController {
 		
 		if(SharedData.getInstance().getCurrentParkingLot().CanIBlock()){
 			if(SharedData.getInstance().getCurrentParkingLot().Block()){
+				
 				informationAlert.setTitle("Blocking parking lot Succeeded");
 				informationAlert.setHeaderText(null);
 				informationAlert.setContentText("Parking lot blocked successfully");
 				informationAlert.showAndWait();
+				
+				loadDisabledParkingSpot(null);
 			}else{
 				informationAlert.setTitle("Disabling slot Error");
 				informationAlert.setHeaderText(null);

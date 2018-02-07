@@ -286,12 +286,12 @@
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="IntitializationButton" mnemonicParsing="false" onAction="#InitializeParkingLot" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Initialize Parking Lot" />
+            <Button fx:id="IntitializationButton" mnemonicParsing="false" onAction="#InitializeParkingLot" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Initialize Parking Lot">
             	<VBox.margin>
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="alternativeParkButton" mnemonicParsing="false" onAction="#BlockParkingLot" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Block Parking Lot">
+            <Button fx:id="alternativeParkButton" mnemonicParsing="false" onAction="#BlockParkingLot" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Block Parking Lot"/>
          </children>
          <BorderPane.margin>
             <Insets />

@@ -204,12 +204,12 @@
    <left>
       <VBox prefHeight="600.0" prefWidth="203.0" style="-fx-background-color: #2d6ea3;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="parkingReservationButton" mnemonicParsing="false" onAction="#loadParkingReservation" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Parking Reservation ">
+            <Button fx:id="HandlingComplaintsButton" mnemonicParsing="false" onAction="#loadHandlingComplaints" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Handling Complaints">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="HandlingComplaintsButton" mnemonicParsing="false" onAction="#loadHandlingComplaints" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Handling Complaints">
+            <Button fx:id="parkingReservationButton" mnemonicParsing="false" onAction="#loadParkingReservation" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Parking Reservation " visible="false">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
