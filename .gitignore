@@ -10,3 +10,5 @@ bin/application/Main\.class
 *.class
 
 test\.pdf
+
+bin/application/AdministratorView\.fxml
