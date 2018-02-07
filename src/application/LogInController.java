@@ -1470,8 +1470,14 @@ public class LogInController {
 
 					Calendar now = Calendar.getInstance();
 					if(now.getTimeInMillis() - arrivingCal.getTimeInMillis() > 5 * 60 * 1000){
-						updateBalance( 1.2 * SharedData.getInstance().getReservationCost()*((leavingCal.getTimeInMillis() - arrivingCal.getTimeInMillis())/(60 *60 * 1000)) );
-						informationAlert.setTitle("You Have lated for more than 5 MIN.");
+//						System.out.println( 1.2 * SharedData.getInstance().getReservationCost()*((leavingCal.getTimeInMillis() - arrivingCal.getTimeInMillis())/(60 *60 * 1000)) + "**********");
+						long deff = TimeUnit.MILLISECONDS
+								.toMinutes(Math.abs(leavingCal.getTimeInMillis() - arrivingCal.getTimeInMillis()));
+						
+						long extraCost = (long) ((Math.ceil(deff / 60.0) * SharedData.getInstance().getReservationCost()));
+						System.out.println("%%%%%%%%%%%%%%%%%%%%%%%" + extraCost + "   " + 0.2 * extraCost);
+						updateBalance( -1 * 0.2 * extraCost );
+						informationAlert.setTitle("You Have lated more than 5 MIN.");
 						informationAlert.setHeaderText(null);
 						informationAlert.setContentText(
 								"Sorry, you have lated more than 5 minitus, you have been fied 20% from your reserve");
