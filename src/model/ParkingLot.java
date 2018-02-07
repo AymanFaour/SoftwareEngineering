@@ -239,7 +239,8 @@ public class ParkingLot {
 		return null;
 	}
 
-	public ArrayList<ParkingSlot> rePark(){
+	public void rePark(){
+		
 		ArrayList<ParkingSlot> temp = new ArrayList<ParkingSlot>();
 		ArrayList<Long> time = new ArrayList<Long>();
 		
@@ -249,32 +250,75 @@ public class ParkingLot {
 				for (int k = 0; k < this._height; k++) {
 					// System.out.println(_lot[k][j][i] + " "+ i + j + k);
 					if (_lot[k][j][i].getStatus() == SpotStatus.Busy) {
-						System.out.println(_lot[k][j][i].getCarNumber() + " in " + k + " " + j + " " 
-								+ i + " with: " + _lot[k][j][i].getLeave().getTime().toString());
-						temp.add(_lot[k][j][i]);
-						time.add(_lot[k][j][i].getLeave().getTimeInMillis());
+//						System.out.println(_lot[k][j][i].getCarNumber() + " in " + k + " " + j + " " 
+//								+ i + " with: " + _lot[k][j][i].getLeave().getTime().toString());
+//						System.out.println(_lot[k][j][i].getCarNumber());
+						
+						ParkingSlot n = new ParkingSlot();
+						n.setCarNumber(_lot[k][j][i].getCarNumber());
+						n.setStatus(_lot[k][j][i].getStatus());
+						n.setArrive(_lot[k][j][i].getArrive());
+						n.setLeave(_lot[k][j][i].getLeave());
+						
+						temp.add(n);
+						time.add(n.getLeave().getTimeInMillis());
+//						System.out.println(time.size());
+						_lot[k][j][i].setCarNumber("");
+						_lot[k][j][i].setStatus(SpotStatus.Available);
+						_lot[k][j][i].setArrive(null);
+						_lot[k][j][i].setLeave(null);
+						
+						_usedSlots--;
+						_emptySlots++;
+						
 					}
 				}
 			}
 		}
 		
 		ArrayList<ParkingSlot> ret = new ArrayList<ParkingSlot>();
-		System.out.println(time.get(0) + "!!");
-		System.out.println(time.get(1) + "!!");
-		System.out.println("the size is: " + time.size());
+		
 		while(time.size() > 0){
-			long max = Collections.min(time);
-			System.out.println(max);
-			int index = time.indexOf(max);
-			System.out.println("$:>" + temp.get(index).getCarNumber());
-			ret.add(temp.get(index));
+			long min = Collections.min(time);
+			int index = time.indexOf(min);
+			
+			ParkingSlot n = new ParkingSlot();
+			n.setCarNumber(temp.get(index).getCarNumber());
+			n.setStatus(temp.get(index).getStatus());
+			n.setArrive(temp.get(index).getArrive());
+			n.setLeave(temp.get(index).getLeave());
+			ret.add(n);
+			
 			temp.remove(index);
 			time.remove(index);
 		}
 		
-		for(int i = 0; i < ret.size(); i++)
-			System.out.println(ret.get(i).getCarNumber());
-		return ret;
+		ParkingPosition pos;
+		for(int i = 0; i < ret.size(); i++){
+//			InsertCar(ret.get(i).getCarNumber(), ret.get(i).getArrive(), ret.get(i).getLeave());
+			pos = getEmptyParkingPosition();
+			int x = pos.x;
+			int y = pos.y;
+			int z = pos.z;
+
+			_lot[x][y][z].setCarNumber(ret.get(i).getCarNumber());
+
+			if (_lot[x][y][z].getStatus() == SpotStatus.Reserved) {
+				_reservedSlots--;
+			} else if (_lot[x][y][z].getStatus() == SpotStatus.Available) {
+				_emptySlots--;
+			}
+			_lot[x][y][z].setStatus(SpotStatus.Busy);
+
+			_lot[x][y][z].setArrive(ret.get(i).getArrive());
+			_lot[x][y][z].setLeave(ret.get(i).getLeave());
+
+			_usedSlots++;
+			
+
+			_hash.put(ret.get(i).getCarNumber(), new ParkingPosition(x, y, z));
+		}
+					
 	}
 	
 	/**
@@ -310,9 +354,12 @@ public class ParkingLot {
 				_lot[x][y][z].setLeave(leave);
 
 				_usedSlots++;
+				
 
 				_hash.put(carNumber, new ParkingPosition(x, y, z));
 
+				rePark();
+				
 				return true;
 			}
 		} else {
@@ -347,6 +394,7 @@ public class ParkingLot {
 
 			_hash.remove(carNumber);
 
+			rePark();
 			return true;
 		} else {
 			return false;
