@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +22,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.BarChartSample;
 import model.ParkingLot;
+import model.ParkingSlot;
 import model.SharedData;
+import sun.awt.RepaintArea;
 //import model.ParkingLot;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -92,6 +96,33 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 
+		/*
+		ParkingLot temp = new ParkingLot("carmel", 3, 3, 3);
+		
+		Calendar start = Calendar.getInstance();
+		Calendar end = Calendar.getInstance();
+		start.set(2000, 10, 10, 10, 10, 10);
+		end.set(2028, 10, 10, 10, 10, 10);
+
+		temp.InsertCar("11", start, end);
+		System.out.println("11, " + end.getTime().toString());
+		System.out.println("the time in the lot(0,0,0) is: " + temp.get_lot()[0][0][0].getLeave().getTime().toString());
+		
+		Calendar end1 = Calendar.getInstance();
+		end1.set(2030, 10, 10, 10, 10, 10);
+		temp.InsertCar("22", start, end1);
+		System.out.println("22, " + end1.getTime().toString());
+		System.out.println("the time in the lot(1,0,0) is: " + temp.get_lot()[1][0][0].getLeave().getTime().toString());
+
+		
+		Calendar end2 = Calendar.getInstance();
+		end2.set(2001, 10, 10, 10, 10, 10);
+		temp.InsertCar("33", start, end2);
+		
+		ArrayList<ParkingSlot> re = temp.rePark();
+		
+		System.out.println(re.get(0).getLeave().getTime().toString() + "\n" + re.get(1).getLeave().getTime().toString() + "\n" + re.get(2).getLeave().getTime().toString());
+		*/
 		String parent = System.getProperty("user.dir");
 		try {
 
@@ -159,6 +190,8 @@ public class Main extends Application {
 
 		MainController.initialize(SharedData.getInstance().getIP(), SharedData.getInstance().getPORT());
 		launch(args);
+		
+
 	}
 	
 	/**

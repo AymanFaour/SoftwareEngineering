@@ -150,7 +150,7 @@ public class AdministratorController {
     /**
      * approve to update costs that Suggested by Parking Lot Director 
      * @param e
-     * @param reqID
+     * @param reqID 
      */
     
     void aproveUpdateCost(ActionEvent e, int reqID){
@@ -224,7 +224,7 @@ public class AdministratorController {
 
     /**
      * this method sends request to parking lot director and asks him  to send the lot's Current Situation.
-     * The administrator will get a main that contains  PDF of parking lot current Situation.
+     * The administrator will get a mail that contains  PDF of parking lot current Situation.
      * @param event
      */
     @FXML
@@ -994,7 +994,7 @@ private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName) {
 	
 	/**
 	 * a method that talks with the server in servlet mechanism.
-	 * Sending a request to the server by sending a json object that contains the data we want to send to the server,
+	 * Sending a request to the server by sending a json object that contains the data that we want to send to the server,
 	 * and the servlet name.
 	 * 
 	 * @param json 

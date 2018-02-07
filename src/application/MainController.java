@@ -54,7 +54,11 @@ public class MainController {
 	Alert errorAlert = new Alert(AlertType.ERROR);
 	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
 	
-	
+	/**
+	 * saved the ip and the port of the server in shared data object 
+	 * @param h
+	 * @param p
+	 */
 	static void initialize(String h, String p){
 		System.out.println("in the initializeer");
 		//client = new Client(h, p);
@@ -354,7 +358,14 @@ public class MainController {
 	        			
 	        			SignInCallBack();
 	        		}else{
-	        			SignInFailed();
+	        			if(ret.getString("info").equals("User already signed in")){
+	        				informationAlert.setTitle("Sign in warrning");
+		    	    		informationAlert.setHeaderText(null);
+		    	    		informationAlert.setContentText("User already signed in.");
+		    	    		informationAlert.showAndWait();
+	        			}else{
+	        				SignInFailed();
+	        			}
 	        		}
 	    		}else{
 	    	    	String _workerID = workerIdTextField.getText();
@@ -393,7 +404,14 @@ public class MainController {
 			        			
 			        			SignInCallBack();
 			        		}else{
-			        			SignInFailed();
+			        			if(ret.getString("info").equals("User already signed in")){
+			        				informationAlert.setTitle("Sign in warrning");
+				    	    		informationAlert.setHeaderText(null);
+				    	    		informationAlert.setContentText("User already signed in.");
+				    	    		informationAlert.showAndWait();
+			        			}else{
+			        				SignInFailed();
+			        			}
 			        		}
 	    	    		}catch( NumberFormatException e){
 		    	    		informationAlert.setTitle("Sign in warrning");

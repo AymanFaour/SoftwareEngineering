@@ -276,12 +276,7 @@
    <left>
       <VBox prefHeight="600.0" prefWidth="203.0" style="-fx-background-color: #2d6ea3;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="alternativeParkButton" mnemonicParsing="false" onAction="#loadReferenceToAlternativeParking" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Reference to Alternative Parking">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="parkingReservationButton" mnemonicParsing="false" onAction="#loadParkingReservation" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Parking Reservation ">
+            <Button fx:id="parkingReservationButton" mnemonicParsing="false" onAction="#loadParkingReservation" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Parking Reservation">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -291,7 +286,12 @@
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="IntitializationButton" mnemonicParsing="false" onAction="#InitializeParkingLot" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Initialize Parking Lot" />
+            <Button fx:id="IntitializationButton" mnemonicParsing="false" onAction="#InitializeParkingLot" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Initialize Parking Lot">
+            	<VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="alternativeParkButton" mnemonicParsing="false" onAction="#BlockParkingLot" prefHeight="40.0" prefWidth="200.0" styleClass="loginView-buttons" stylesheets="@application.css" text="Block Parking Lot"/>
          </children>
          <BorderPane.margin>
             <Insets />

@@ -170,10 +170,7 @@ public class CustomerServiceController {
 
 
 
-    /**
-     * 
-     * @param event
-     */
+    
     @FXML
     void CustomerServiceParkingReservation(ActionEvent event) {
 
@@ -442,8 +439,8 @@ public class CustomerServiceController {
     }
 	
 
-	/**
-	 * Handling the complaints that have received from the clients 
+	/** 
+	 * Handling the complaints that have received from the clients  
 	 * @param event
 	 * @param complaintsJO -JSONO Object that contains a client complaint
 	 * @throws IOException
@@ -703,8 +700,12 @@ public class CustomerServiceController {
 		}
     }
 
-    
-
+	    
+	/**
+	 * call back function that call the HandlingComplaintsPopUp function
+	 * @param e
+	 * @param obj
+	 */
 	private void complainHandlerCallBack(ActionEvent e, JSONObject obj) {
 		// TODO Auto-generated method stub
 		try {
