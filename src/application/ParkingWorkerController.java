@@ -413,7 +413,7 @@ public class ParkingWorkerController {
 			loadDisabledParkingSpot(null);
     }
 
-    ////// ask hussam 
+    // in each try to enter the parking lot we checked if it is full, so we didn't implement it.
     @FXML
     void ReferenceToAlternativeParking(ActionEvent event) {
 		String _carNumber = AlternativeParkingCarNumberTF.getText();
@@ -966,6 +966,10 @@ public class ParkingWorkerController {
 		textInTopOfLogIn.setText(_username);
 	}
 	
+	/**
+	 * this function block the parking lot, we change all the entries to disabled.
+	 * @param event
+	 */
 	@FXML
 	void BlockParkingLot(ActionEvent event){
 		

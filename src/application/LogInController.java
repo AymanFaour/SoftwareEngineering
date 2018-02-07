@@ -567,7 +567,7 @@ public class LogInController {
     
     /**
      * 
-     * return the business reservation in JSONObject
+     * return the business reservation in JSON Object
      * 
      * @return JSON Object
       */
@@ -596,7 +596,7 @@ public class LogInController {
 	}
 
     /**
-     * adding Worker Account by a Business Manager
+     * adding Worker Account by a Business Account 
      * @param event
      */
 	@FXML
@@ -627,7 +627,7 @@ public class LogInController {
 
 
     /**
-     * removing Worker Account by Business Manager
+     * removing Worker Account by Business Account
      * @param event
      */
 	@FXML
@@ -942,7 +942,7 @@ public class LogInController {
 	/**
 	 * 
 	 * 
-	 * 
+	 * extracting the car that has parked by full subscription
 	 * @param e
 	 * @param carId
 	 * @param resId
@@ -991,6 +991,8 @@ public class LogInController {
 	
 	/**
 	 * 
+	 * 
+	 *  parking the car by full subscription
 	 * @param e
 	 * @param carId
 	 * @param resId
@@ -1052,7 +1054,8 @@ public class LogInController {
 
 	
 	/**
-	 * 
+	 *
+	 * extracting the car that has parked by regular subscription
 	 * @param e
 	 * @param carId
 	 * @param subId
@@ -1144,6 +1147,7 @@ public class LogInController {
 
 	/**
 	 * 
+	 * parking the car by regular subscription
 	 * @param e
 	 * @param carId
 	 * @param subId
@@ -1224,7 +1228,10 @@ public class LogInController {
 	
 	
 
-	
+	/**
+	 * View Complaint Page
+	 * @param event
+	 */
 	@FXML
     void loadComplaint(ActionEvent event) {
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -1301,7 +1308,11 @@ public class LogInController {
     
     }
     
-
+		
+	/**
+	 * view Occasional Page
+	 * @param event
+	 */
     @FXML
     void loadActualParking(ActionEvent event) { /** THIS IS THE OCCASIONAL PARKING 2ere be osama **/
     	businessRoutineSubscriptionBorderPane.setVisible(false);
@@ -1374,7 +1385,7 @@ public class LogInController {
 
 	
 	/**
-	 * cancel reservation 
+	 * cancel reservation by reservation id 
 	 * @param e
 	 * @param id - reservation id
 	 */

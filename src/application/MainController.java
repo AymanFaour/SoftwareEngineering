@@ -54,7 +54,11 @@ public class MainController {
 	Alert errorAlert = new Alert(AlertType.ERROR);
 	Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
 	
-	
+	/**
+	 * saved the ip and the port of the server in shared data object 
+	 * @param h
+	 * @param p
+	 */
 	static void initialize(String h, String p){
 		System.out.println("in the initializeer");
 		//client = new Client(h, p);
