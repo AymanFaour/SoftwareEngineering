@@ -25,10 +25,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class Matrix extends JPanel {
 
         /**
+         * construct the PDF current situation  
          * @param parkingLot 
 		 * 
 		 */
-	public void makeMatrix(ParkingLot parkingLot){
+		public void makeMatrix(ParkingLot parkingLot){
 
 		   ParkingSlot[][][] _parkingSlot = parkingLot.get_lot();
 		   JFrame frame = new JFrame("Testing");
@@ -133,7 +134,14 @@ public class Matrix extends JPanel {
            
     }
 		private static final long serialVersionUID = 1L;
-
+	
+		/**
+		 * construct matrix from cellPane object  
+		 * @param height
+		 * @param width
+		 * @param depth
+		 * @param parkingSlot
+		 */
 		public Matrix(int height, int width, int depth, ParkingSlot[][][] parkingSlot) {
             setLayout(new GridBagLayout());
 
@@ -164,6 +172,13 @@ public class Matrix extends JPanel {
             }
         }
 		
+		/**
+		 * 
+		 * 
+		 * @param height
+		 * @param width
+		 * @param e
+		 */
 		public Matrix(int height, int width, SpotStatus e) {
             setLayout(new GridBagLayout());
 

@@ -568,7 +568,7 @@ public class ParkingLot {
 	}
 	
 	/**
-	 * funtion that reserve a given slot as reserved
+	 * function that reserve a given slot as reserved
 	 * 
 	 * @param hight
 	 * @param width
