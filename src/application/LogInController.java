@@ -2352,6 +2352,7 @@ public class LogInController {
 	 * @return  True if the method has succeeded, else it returns False. 
 	 * 
 	 */
+	
 	Boolean updateBalance(double cost) {
 
 		JSONObject json = new JSONObject(), ret = new JSONObject();
