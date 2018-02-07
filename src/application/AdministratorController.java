@@ -7,8 +7,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Optional;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,21 +23,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -42,9 +42,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.CpsMailBox;
+import model.BarChartSample;
 import model.ParkingLot;
-import model.ParkingSituation;
 import model.SharedData;
 
 
@@ -63,10 +62,16 @@ public class AdministratorController {
     private ComboBox<String> parkLotNameComboBox;
 
     @FXML
+    private ComboBox<String> parkLotNameComboBox1;
+
+    @FXML
     private DatePicker toDateDP;
 
     @FXML
     private Button getReportButton;
+
+    @FXML
+    private Button getPerformanceReportButton;
 
     @FXML
     private Button signOutButton;
@@ -75,16 +80,13 @@ public class AdministratorController {
     private BorderPane reportsBorderPane;
 
     @FXML
-    private DatePicker fromDateDP;
+    private DatePicker startDateWeekly;
 
     @FXML
     private Button reportsButton;
 
     @FXML
     private Text textInTopOfLogIn;
-
-    @FXML
-    private ComboBox<String> ReportComboBox;
 
     @FXML
     private Button changePricesRequestsButton;
@@ -103,8 +105,6 @@ public class AdministratorController {
 
     
     private ObservableList<String> myComboBoxData = FXCollections.observableArrayList();
-    private ObservableList<String> myComboxReport = FXCollections.observableArrayList();
-    private Stage popupwindow;
 
 
 	Alert informationAlert = new Alert(AlertType.INFORMATION);
@@ -140,6 +140,8 @@ public class AdministratorController {
 				Scene scene = new Scene(mainLayout);
 				Stage stage = (Stage) currentScene.getWindow();
 				stage.setScene(scene);
+			}else{
+				
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -277,11 +279,149 @@ public class AdministratorController {
  
     
   
-  
+    @FXML
+    void getPerformanceReport(ActionEvent event){
+    	JSONObject json = new JSONObject();
+		JSONObject ret = new JSONObject();
+		try {
+			json.put("cmd", "exclusiveInfo");
+			ret = request(json, "ReportsGenerator");
+			if(ret.getBoolean("result")){
+				BarChartSample subscriptionsBarChart = new BarChartSample("Performance Report", ret.getJSONObject("info").getInt("business")
+						,ret.getJSONObject("info").getInt("allSubscriptions"));
+				VBox vB = new VBox();
+    			vB.getChildren().add(subscriptionsBarChart.getBc());
+    			Stage popupwindow=new Stage();
+    			popupwindow.initModality(Modality.APPLICATION_MODAL);
+    			popupwindow.setTitle("Performance Report");
+    			
+		        Scene scene  = new Scene(vB,300,400);
+		        popupwindow.setScene(scene);
+				popupwindow.showAndWait();
+
+				System.out.println(ret.toString());
+				
+			}
+		}catch(JSONException e) {
+    			e.printStackTrace();
+    		}
+
+    }
     
     @FXML
     void getReport(ActionEvent event) {
+    	String _lotName = parkLotNameComboBox1.getValue();
+    	if(_lotName == null){
+    		informationAlert.setTitle("Warning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("You must choose a parking lot");
+			informationAlert.showAndWait();
+			return;
+    	}
+    	
+    	LocalDate ld = startDateWeekly.getValue();
+		Calendar cal = Calendar.getInstance();
+    	if(ld == null){
+    		informationAlert.setTitle("Warning");
+			informationAlert.setHeaderText(null);
+			informationAlert.setContentText("You must choose a date");
+			informationAlert.showAndWait();
+			return;
+    	}else{
+			Instant instant = Instant.from(ld.atStartOfDay(ZoneId.systemDefault()));
+			Date date = Date.from(instant);
+			cal = toCalendar(date);
+    	}
+    		long dateLong = cal.getTime().getTime();
+    		JSONObject json = new JSONObject();
+    		JSONObject ret = new JSONObject();
+    		try {
+    			json.put("cmd", "getWeeklyReport");
+    			json.put("date", dateLong);
+    			ret = request(json, "ReportsGenerator");
+    			if(ret.getBoolean("result")){
+    				System.out.println(ret.toString());
+    			}
+    			int startDay = ret.getJSONObject("info").getJSONObject("content").getInt("startDay");
+    			JSONObject parkingLotJSON = ret.getJSONObject("info").getJSONObject("content").getJSONObject(_lotName);
+    			System.out.println(parkingLotJSON.toString());
+    			BarChartSample activatedParkingReservationBC = new BarChartSample("Activated Parking Reservation",
+    					parkingLotJSON, startDay);
+    			BarChartSample canceledReservationsBC = new BarChartSample("Canceled Parking Reservation",
+    					parkingLotJSON, startDay);
+    			BarChartSample lateParkingBC = new BarChartSample("Late",
+    					parkingLotJSON, startDay);
+    			
+    			VBox vB = new VBox();
+    			ScrollPane sp = new ScrollPane();
+    			
 
+				HBox hb1 = new HBox();
+				hb1.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;-fx-pref-width: 780;");
+
+				HBox hb2 = new HBox();
+				hb2.setStyle("-fx-border-style: solid inside;-fx-pref-height: 30;-fx-border-width: 0 0 2 0;"
+						+ "-fx-border-color: #d0e6f8; -fx-padding: 1.5 0 0 5;-fx-pref-width: 780;");
+				
+				HBox hb3 = new HBox();
+				hb3.setStyle("-fx-padding: 10 0 0 40");
+				HBox hb4 = new HBox();
+				hb4.setStyle("-fx-padding: 10 0 0 40");
+				HBox hb5 = new HBox();
+				hb5.setStyle("-fx-padding: 10 0 0 40");
+				
+				Label activMedian = new Label("Median: " + 
+						Integer.toString(parkingLotJSON.getInt("actualizedWeeklyMedian")) +"\t\tMean: ");
+				Label activeMean = new Label(Double.toString(parkingLotJSON.getDouble("actualizedWeeklyMean")));
+				activMedian.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				activMedian.setTextFill(Color.BLACK);
+				activeMean.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				activeMean.setTextFill(Color.BLACK);
+				hb3.getChildren().addAll(activMedian, activeMean);
+				
+				Label cancelMedian = new Label("Median: " +
+						Integer.toString(parkingLotJSON.getInt("canceledWeeklyMedian"))+"\t\tMean: ");
+				Label cancelMean = new Label(Double.toString(parkingLotJSON.getDouble("canceledWeeklyMean")));
+				cancelMedian.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				cancelMedian.setTextFill(Color.BLACK);
+				cancelMean.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				cancelMean.setTextFill(Color.BLACK);
+				hb4.getChildren().addAll(cancelMedian, cancelMean);
+				
+				Label lateMedian = new Label("Median: " +
+						Integer.toString(parkingLotJSON.getInt("lateWeeklyMedian"))+"\t\tMean: ");
+				Label lateMean = new Label(Double.toString(parkingLotJSON.getDouble("lateWeeklyMean")));
+				lateMedian.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				lateMedian.setTextFill(Color.BLACK);
+				lateMean.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+				lateMean.setTextFill(Color.BLACK);
+				hb5.getChildren().addAll(lateMedian, lateMean);
+				
+    			vB.getChildren().add(activatedParkingReservationBC.getBc());
+    			vB.getChildren().add(hb3);
+    			vB.getChildren().add(hb1);
+    			vB.getChildren().add(canceledReservationsBC.getBc());
+    			vB.getChildren().add(hb4);
+    			vB.getChildren().add(hb2);
+    			vB.getChildren().add(lateParkingBC.getBc());
+    			vB.getChildren().add(hb5);
+    			sp.setStyle("-fx-pref-width:800;-fx-pref-height:600;");
+    			sp.setContent(vB);
+    			Stage popupwindow=new Stage();
+    			popupwindow.initModality(Modality.APPLICATION_MODAL);
+    			popupwindow.setTitle("Weekly Activities Report");
+    			
+		        Scene scene  = new Scene(sp,800,600);
+		        popupwindow.setScene(scene);
+				popupwindow.showAndWait();
+
+    			
+    		}catch(JSONException e) {
+    			e.printStackTrace();
+    		}
+    	
+    	
     }
 
     @FXML
@@ -592,7 +732,7 @@ private Object resrvationReportCallBack(ActionEvent e, String lotName) {
 			ret = request(json, "ReportsGenerator");
 			if(ret.getBoolean("result")){
 				
-				
+				System.out.println(ret.toString());
 				Stage popupwindow=new Stage();
 				popupwindow.initModality(Modality.APPLICATION_MODAL);
 				popupwindow.setTitle("total");
@@ -644,8 +784,7 @@ private Object resrvationReportCallBack(ActionEvent e, String lotName) {
 					String start = "Start: " +((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getString("start");
 					String end = "End: " +((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getString("end");
 					String carNumber = "Car Number: " +((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getString("carNumber");
-					String cost = "Cost: " +Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("reservations").get(i)).getInt("cost"));
-					String content = resId +"        " + start +"        " + end +"        " + carNumber +"        " + cost;
+					String content = resId +"        " + start +"        " + end +"        " + carNumber;
 					parkingReservationsHbox.getChildren().add(new Label(content));
 					everythingInReservation.getChildren().add(parkingReservationsHbox);
 		        }
@@ -746,30 +885,84 @@ private Object resrvationReportCallBack(ActionEvent e, String lotName) {
 
 private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName) {
 		// TODO Auto-generated method stub
-		JSONObject json = new JSONObject();
-		JSONObject ret = new JSONObject();
-		try {
-			json.put("cmd", "FiscalQuarter");
-			json.put("lotName", lotName);
-			ret = request(json, "ReportsGenerator");
-			if(ret.getBoolean("result")){
-				Stage popupwindow=new Stage();
-				popupwindow.initModality(Modality.APPLICATION_MODAL);
-				popupwindow.setTitle("total");
-				
-				VBox vB = new VBox();
-				
+			JSONObject json = new JSONObject();
+			JSONObject ret = new JSONObject();
+			try {
+				json.put("cmd", "FiscalQuarter");
+				json.put("lotName", lotName);
+				ret = request(json, "ReportsGenerator");
+				if(ret.getBoolean("result")){
+					Stage popupwindow=new Stage();
+					popupwindow.initModality(Modality.APPLICATION_MODAL);
+					popupwindow.setTitle("Disabled Spots Reports");
+					
+					HBox header = new HBox();
+					header.setAlignment(Pos.CENTER);
+					header.setStyle("-fx-pref-width:800;-fx-pref-height:50;-fx-background-color:#0a304e;"
+							+ "-fx-padding:10;");
+					
+					VBox vB = new VBox();
+					String s = "Total Disabled Spots: ";
+					s += Integer.toString(ret.getJSONObject("report").getJSONArray("disabledSpots").length());
+					
+					/** Complaint Section **/
+					
+					Label totalDisableds = new Label(s);
+					totalDisableds.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+					totalDisableds.setTextFill(Color.WHITE);
+					header.getChildren().add(totalDisableds);
+					HBox disableds = new HBox();
+					
+					
+					disableds.setStyle("-fx-pref-width:790;-fx-pref-height:20;-fx-padding:5;"
+							+ "-fx-background-color:#7499b5");
+					String disabledsHeader = "Disabled Spots";
+					Label disabledsHeaderLabel = new Label(disabledsHeader);
+					disabledsHeaderLabel.setFont(Font.font("Verdana",FontWeight.BOLD,10));
+					disabledsHeaderLabel.setTextFill(Color.WHITE);
+					disableds.getChildren().add(disabledsHeaderLabel);
+					
+					
 
-		        Scene scene  = new Scene(vB,800,600);
-		        popupwindow.setScene(scene);    
-				popupwindow.showAndWait();
-				
+					VBox everythingInReservation = new VBox();
+					everythingInReservation.getChildren().add(disableds);
+					
+					int disbaledsArraylength = ret.getJSONObject("report").getJSONArray("disabledSpots").length();
+			        for(int i = 0; i < disbaledsArraylength; i++){
+			        	
+						HBox disabledsHbox = new HBox();
+						disabledsHbox.setStyle("-fx-pref-width:790;-fx-pref-height:30;-fx-padding:5;"
+								+ "-fx-border-style: solid inside;-fx-border-width: 0 0 2 0;"
+							+ "-fx-border-color: #d0e6f8; ");
+						String start = "Date: " +((JSONObject) ret.getJSONObject("report").getJSONArray("disabledSpots").get(i)).getString("issued");
+						String position = "Position: <" + Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("disabledSpots").get(i)).getInt("x"))
+						+ ", " + Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("disabledSpots").get(i)).getInt("y"))
+						+ ", " + Integer.toString(((JSONObject) ret.getJSONObject("report").getJSONArray("disabledSpots").get(i)).getInt("z")) +">";
+		
+						String content = start +"        " + position;
+						disabledsHbox.getChildren().add(new Label(content));
+						everythingInReservation.getChildren().add(disabledsHbox);
+			        }
+
+					
+					vB.getChildren().add(header);
+			        ScrollPane sp = new ScrollPane();
+					sp.setStyle("-fx-pref-width:800; -fx-pref-height:550;");
+					sp.setContent(everythingInReservation);
+			        vB.getChildren().add(sp);
+
+			        Scene scene  = new Scene(vB,800,600);
+			        popupwindow.setScene(scene);
+					popupwindow.showAndWait();
+
+					
+				}
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return null;
+			return null;
+
 	}
 
 /**
@@ -797,19 +990,8 @@ private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName) {
     	}
     	
     	parkLotNameComboBox.setItems(myComboBoxData);
-    	ArrayList<String> Reports = new ArrayList<String>();
-    	Reports.add("Reservations");
-    	Reports.add("Complaints");
-    	Reports.add("Disabled Parking Spots");
-    	Reports.add("Regular Routinely Subscriptions");
-    	Reports.add("Business Routinely Subscriptions");
-    	Reports.add("Full Subscriptions");
-    	myComboxReport.clear();     
-    	for(int i = 0; i < Reports.size(); i++){
-    		myComboxReport.add(Reports.get(i));
-    	}
-    	
-    	ReportComboBox.setItems(myComboxReport);
+    	parkLotNameComboBox1.setItems(myComboBoxData);
+
     	
     }
 
@@ -1054,5 +1236,12 @@ private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName) {
 		return null;
 
 	}
+	
+	public Calendar toCalendar(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
+
 
 }
