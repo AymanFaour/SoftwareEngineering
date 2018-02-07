@@ -1457,6 +1457,15 @@ public class LogInController {
 
 				} else {
 
+					Calendar now = Calendar.getInstance();
+					if(now.getTimeInMillis() - arrivingCal.getTimeInMillis() > 5 * 60 * 1000){
+						updateBalance( 1.2 * SharedData.getInstance().getReservationCost()*((leavingCal.getTimeInMillis() - arrivingCal.getTimeInMillis())/(60 *60 * 1000)) );
+						informationAlert.setTitle("You Have lated for more than 5 MIN.");
+						informationAlert.setHeaderText(null);
+						informationAlert.setContentText(
+								"Sorry, you have lated more than 5 minitus, you have been fied 20% from your reserve");
+						informationAlert.showAndWait();
+					}
 					boolean res = SharedData.getInstance().getCurrentParkingLot().InsertCar(carId, arrivingCal,
 							leavingCal);
 
