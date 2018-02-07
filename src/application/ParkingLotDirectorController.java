@@ -492,6 +492,10 @@ public class ParkingLotDirectorController {
     	return;
 	}
 
+    /**
+     * gets the administrator requests. 
+     * @return
+     */
 	private JSONObject getAdminRequest() {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();

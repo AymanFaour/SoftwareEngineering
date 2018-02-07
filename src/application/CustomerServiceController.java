@@ -173,6 +173,7 @@ public class CustomerServiceController {
     
     @FXML
     void CustomerServiceParkingReservation(ActionEvent event) {
+    	/*
 
 		String _carNumber = CusSerParkingReservationCarNumberTF.getText();
 		String _CrediCardId = CusSerParkingReservationCreditCardIdTF.getText();
@@ -282,8 +283,6 @@ public class CustomerServiceController {
 					} else {
 						JSONObject json = new JSONObject();
 						try {
-							
-							//TODO: synchronize with server
 	
 							json.put("carNumber", _carNumber);
 							json.put("lotName", _lotName);
@@ -312,10 +311,8 @@ public class CustomerServiceController {
 				}
 			}
 		}
-
-	
-
-    }
+    */
+     }
     
 	/**
 	 * a method that talks with the server in servlet mechanism.

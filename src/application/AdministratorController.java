@@ -278,7 +278,12 @@ public class AdministratorController {
     }
  
     
-  
+    /**
+     * method that gives a report about the performance of all the parking lots, it counts the number 
+     * of business subscriptions (multiple cars) and the number of the regular routine 
+     * and full subscriptions(single car) 
+     * @param event
+     */
     @FXML
     void getPerformanceReport(ActionEvent event){
     	JSONObject json = new JSONObject();
@@ -307,6 +312,12 @@ public class AdministratorController {
     		}
 
     }
+    
+    /**
+     * method that makes a report which calculates the mean and the median and the deviation of: 
+     * activated parking reservations, canceled parking reservations, late customers.
+     * @param event
+     */
     
     @FXML
     void getReport(ActionEvent event) {
@@ -341,7 +352,7 @@ public class AdministratorController {
     			ret = request(json, "ReportsGenerator");
     			if(ret.getBoolean("result")){
     				System.out.println(ret.toString());
-    			}
+    			
     			int startDay = ret.getJSONObject("info").getJSONObject("content").getInt("startDay");
     			JSONObject parkingLotJSON = ret.getJSONObject("info").getJSONObject("content").getJSONObject(_lotName);
     			System.out.println(parkingLotJSON.toString());
@@ -416,13 +427,25 @@ public class AdministratorController {
 		        popupwindow.setScene(scene);
 				popupwindow.showAndWait();
 
-    			
+    		}else {
+        		informationAlert.setTitle("Report Not Found");
+    			informationAlert.setHeaderText(null);
+    			informationAlert.setContentText("Activity report for this date is not found");
+    			informationAlert.showAndWait();
+    			return;
+    		}
     		}catch(JSONException e) {
     			e.printStackTrace();
     		}
     	
     	
     }
+    
+    /**
+     * method that receives all the quarter reports that the parking lot director prepared, 3 types of reports:
+     * reservations, complaints, disabled spots.
+     * @param event
+     */
 
     @FXML
     void loadQuarterReporsBorderPane(ActionEvent event) {
@@ -633,8 +656,13 @@ public class AdministratorController {
 		}
     	
     }
-
-   
+    
+    /**
+     * get complaint quarter report by the relevant lot name. 
+     * @param e
+     * @param lotName
+     * @return
+     */
    private Object complaintsReportCallBack(ActionEvent e, String lotName) {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
@@ -721,6 +749,12 @@ public class AdministratorController {
 		return null;
 	}
 
+   /**
+    * get reservations quarter report by the relevant lot name. 
+    * @param e
+    * @param lotName
+    * @return
+    */
 private Object resrvationReportCallBack(ActionEvent e, String lotName) {
 		// TODO Auto-generated method stub
 		System.out.println(lotName);
@@ -882,6 +916,13 @@ private Object resrvationReportCallBack(ActionEvent e, String lotName) {
 		}
 		return null;
 	}
+
+/**
+ * get disabled spots quarter report by the relevant lot name. 
+ * @param e
+ * @param lotName
+ * @return
+ */
 
 private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName) {
 		// TODO Auto-generated method stub
@@ -1173,16 +1214,7 @@ private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName) {
 	 * @param servletName 
 	 * @return
 	 */
-	
-	/**
-	 * a method that talks with the server in servlet mechanism.
-	 * Sending a request to the server by sending a json object that contains the data that we want to send to the server,
-	 * and the servlet name.
-	 * 
-	 * @param json 
-	 * @param servletName 
-	 * @return
-	 */
+
 
 	JSONObject request(JSONObject json, String servletName) {
 		HttpURLConnection connection = null;
