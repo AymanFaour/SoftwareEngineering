@@ -489,7 +489,7 @@ public class AdministratorController {
 						String css = getClass().getResource("application.css").toExternalForm();
 						resrvationReportButton.getStylesheets().clear();
 						resrvationReportButton.getStylesheets().add(css);
-						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText()));
+						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText(), 1));
 						resrvationReportButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(resrvationReportButton);
 						
@@ -500,7 +500,7 @@ public class AdministratorController {
 						Button complaintsReportButton = new Button("Complaints Report");
 						complaintsReportButton.getStylesheets().clear();
 						complaintsReportButton.getStylesheets().add(css);
-						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText()));
+						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText(),1));
 						complaintsReportButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(complaintsReportButton);
 						
@@ -511,7 +511,7 @@ public class AdministratorController {
 						Button disabledSpotsReporttButton = new Button("Disabled Spots Report");
 						disabledSpotsReporttButton.getStylesheets().clear();
 						disabledSpotsReporttButton.getStylesheets().add(css);
-						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText()));
+						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText(),1));
 						disabledSpotsReporttButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(disabledSpotsReporttButton);
 						quarterReportsListVbox.getChildren().add(hb);
@@ -532,7 +532,7 @@ public class AdministratorController {
 						String css = getClass().getResource("application.css").toExternalForm();
 						resrvationReportButton.getStylesheets().clear();
 						resrvationReportButton.getStylesheets().add(css);
-						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText()));
+						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText(),2));
 						resrvationReportButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(resrvationReportButton);
 						
@@ -543,7 +543,7 @@ public class AdministratorController {
 						Button complaintsReportButton = new Button("Complaints Report");
 						complaintsReportButton.getStylesheets().clear();
 						complaintsReportButton.getStylesheets().add(css);
-						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText()));
+						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText(),2));
 						complaintsReportButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(complaintsReportButton);
 						
@@ -554,7 +554,7 @@ public class AdministratorController {
 						Button disabledSpotsReporttButton = new Button("Disabled Spots Report");
 						disabledSpotsReporttButton.getStylesheets().clear();
 						disabledSpotsReporttButton.getStylesheets().add(css);
-						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText()));
+						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText(),2));
 						disabledSpotsReporttButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(disabledSpotsReporttButton);
 						quarterReportsListVbox.getChildren().add(hb);
@@ -575,7 +575,7 @@ public class AdministratorController {
 						String css = getClass().getResource("application.css").toExternalForm();
 						resrvationReportButton.getStylesheets().clear();
 						resrvationReportButton.getStylesheets().add(css);
-						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText()));
+						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText(),4));
 						resrvationReportButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(resrvationReportButton);
 						
@@ -586,7 +586,7 @@ public class AdministratorController {
 						Button complaintsReportButton = new Button("Complaints Report");
 						complaintsReportButton.getStylesheets().clear();
 						complaintsReportButton.getStylesheets().add(css);
-						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText()));
+						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText(),4));
 						complaintsReportButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(complaintsReportButton);
 						
@@ -597,7 +597,7 @@ public class AdministratorController {
 						Button disabledSpotsReporttButton = new Button("Disabled Spots Report");
 						disabledSpotsReporttButton.getStylesheets().clear();
 						disabledSpotsReporttButton.getStylesheets().add(css);
-						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText()));
+						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText(),4));
 						disabledSpotsReporttButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(disabledSpotsReporttButton);
 						quarterReportsListVbox.getChildren().add(hb);
@@ -618,7 +618,7 @@ public class AdministratorController {
 						String css = getClass().getResource("application.css").toExternalForm();
 						resrvationReportButton.getStylesheets().clear();
 						resrvationReportButton.getStylesheets().add(css);
-						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText()));
+						resrvationReportButton.setOnAction(e -> resrvationReportCallBack(e, lotName.getText(),3));
 						resrvationReportButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(resrvationReportButton);
 						
@@ -629,7 +629,7 @@ public class AdministratorController {
 						Button complaintsReportButton = new Button("Complaints Report");
 						complaintsReportButton.getStylesheets().clear();
 						complaintsReportButton.getStylesheets().add(css);
-						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText()));
+						complaintsReportButton.setOnAction(e -> complaintsReportCallBack(e, lotName.getText(),3));
 						complaintsReportButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(complaintsReportButton);
 						
@@ -640,7 +640,7 @@ public class AdministratorController {
 						Button disabledSpotsReporttButton = new Button("Disabled Spots Report");
 						disabledSpotsReporttButton.getStylesheets().clear();
 						disabledSpotsReporttButton.getStylesheets().add(css);
-						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText()));
+						disabledSpotsReporttButton.setOnAction(e -> disabledSpotsReportsCallBack(e, lotName.getText(),3));
 						disabledSpotsReporttButton.getStyleClass().add("loginView-buttons");
 						hb.getChildren().add(disabledSpotsReporttButton);
 						quarterReportsListVbox.getChildren().add(hb);
@@ -661,15 +661,17 @@ public class AdministratorController {
      * get complaint quarter report by the relevant lot name. 
      * @param e
      * @param lotName
+     * @param j 
      * @return
      */
-   private Object complaintsReportCallBack(ActionEvent e, String lotName) {
+   private Object complaintsReportCallBack(ActionEvent e, String lotName, int j) {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
 		JSONObject ret = new JSONObject();
 		try {
 			json.put("cmd", "FiscalQuarter");
 			json.put("lotName", lotName);
+			json.put("quarter", j);
 			ret = request(json, "ReportsGenerator");
 			if(ret.getBoolean("result")){
 				Stage popupwindow=new Stage();
@@ -753,9 +755,10 @@ public class AdministratorController {
     * get reservations quarter report by the relevant lot name. 
     * @param e
     * @param lotName
+    * @param j 
     * @return
     */
-private Object resrvationReportCallBack(ActionEvent e, String lotName) {
+private Object resrvationReportCallBack(ActionEvent e, String lotName, int j) {
 		// TODO Auto-generated method stub
 		System.out.println(lotName);
 		JSONObject json = new JSONObject();
@@ -763,6 +766,7 @@ private Object resrvationReportCallBack(ActionEvent e, String lotName) {
 		try {			
 			json.put("cmd", "FiscalQuarter");
 			json.put("lotName", lotName);
+			json.put("quarter", j);
 			ret = request(json, "ReportsGenerator");
 			if(ret.getBoolean("result")){
 				
@@ -921,16 +925,18 @@ private Object resrvationReportCallBack(ActionEvent e, String lotName) {
  * get disabled spots quarter report by the relevant lot name. 
  * @param e
  * @param lotName
+ * @param j 
  * @return
  */
 
-private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName) {
+private Object disabledSpotsReportsCallBack(ActionEvent e, String lotName, int j) {
 		// TODO Auto-generated method stub
 			JSONObject json = new JSONObject();
 			JSONObject ret = new JSONObject();
 			try {
 				json.put("cmd", "FiscalQuarter");
 				json.put("lotName", lotName);
+				json.put("quarter", j);
 				ret = request(json, "ReportsGenerator");
 				if(ret.getBoolean("result")){
 					Stage popupwindow=new Stage();
