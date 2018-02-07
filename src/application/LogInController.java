@@ -1526,11 +1526,8 @@ public class LogInController {
 	 * extracting car that has been parked 
 	 * 
 	 * @param e
-	 * @param resId
-	 * @param carId
-	 * @param arriving
-	 * @param leaving
-	 * @param parkingLotName
+	 * @param rid
+	 * @param carNumber
 	 */
 	
 	private void deActivateParking(ActionEvent e, String rid, String carNumber) {

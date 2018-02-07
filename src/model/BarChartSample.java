@@ -68,12 +68,12 @@ public class BarChartSample {
         bc.setLegendVisible(false);
     }
     
-    /**
-     * performance Constructor  
-     * @param title
-     * @param parkingJO
-     * @param startDay
-     */
+	/**
+	 * performance Constructor 
+	 * @param title
+	 * @param businessSub
+	 * @param restSub
+	 */
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	public BarChartSample(String title, int businessSub, int restSub){
         xAxis = new CategoryAxis();

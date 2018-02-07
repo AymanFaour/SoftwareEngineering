@@ -136,7 +136,7 @@ public class Matrix extends JPanel {
 		private static final long serialVersionUID = 1L;
 	
 		/**
-		 * construct matrix from cellPane object  
+		 * construct matrix from cellPane objects
 		 * @param height
 		 * @param width
 		 * @param depth
@@ -172,13 +172,7 @@ public class Matrix extends JPanel {
             }
         }
 		
-		/**
-		 * 
-		 * 
-		 * @param height
-		 * @param width
-		 * @param e
-		 */
+
 		public Matrix(int height, int width, SpotStatus e) {
             setLayout(new GridBagLayout());
 

@@ -24,7 +24,5 @@ public class ParkingSituation {
 			Matrix mat = new Matrix(parkingLot.getHeight(), parkingLot.getWidth(), 1, parkingLot.get_lot());
 			mat.makeMatrix(parkingLot);
 	   }
-            
-
         
     }

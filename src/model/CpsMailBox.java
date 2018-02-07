@@ -26,6 +26,7 @@ public class CpsMailBox {
 	Properties props;
 	Session session;
 	
+	
 	public CpsMailBox(String un, String ps, String to){
 		this.username = un;
 		this.password = ps;
@@ -45,6 +46,17 @@ public class CpsMailBox {
 		  });
 	}
 	
+	/**
+	 * 
+	 * sending a response mail to the client on his complaint
+	 * 
+	 * @param response 
+	 * @param refund
+	 * @param theUser
+	 * @param theComplaint
+	 * @param theLotName
+	 */
+	
 	public void sendMailToClientComplaint(String response, String refund, String theUser, String theComplaint, String theLotName){
 		try {
 	
@@ -63,6 +75,12 @@ public class CpsMailBox {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	/**
+	 * 
+	 * sending a mail to the administrator that contains a PDF for the current situation 
+	 * 
+	 */
 	
 	public void sendMailToAdministrator(){
 		try {
