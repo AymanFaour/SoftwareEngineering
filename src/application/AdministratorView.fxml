@@ -61,27 +61,34 @@
                               </HBox>
                               <Button fx:id="currentSituationButton" mnemonicParsing="false" onAction="#getCurrentSituation" styleClass="go-button" stylesheets="@application.css" text="Current Situation" />
                               <HBox prefHeight="50.0" prefWidth="600.0">
-                                 <children>
-                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Weekly Reports:" />
-                                    <ComboBox fx:id="ReportComboBox" prefWidth="150.0" promptText="select report " stylesheets="@application.css" />
-                                 </children>
                                  <VBox.margin>
-                                    <Insets top="30.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox prefHeight="50.0" prefWidth="600.0">
-                                 <VBox.margin>
-                                    <Insets />
+                                    <Insets top="10.0" />
                                  </VBox.margin>
                                  <children>
                                     <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Start Date:" />
-                                    <DatePicker fx:id="fromDateDP" prefWidth="130.0" />
+                                    <DatePicker fx:id="startDateWeekly" prefWidth="130.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="40.0" prefWidth="580.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Parking Lot Name:" />
+                                    <ComboBox fx:id="parkLotNameComboBox1" prefWidth="150.0" promptText="select parking name" stylesheets="@application.css" />
                                  </children>
                               </HBox>
                               <HBox layoutX="30.0" layoutY="77.0" prefHeight="50.0" prefWidth="600.0">
                                  <children>
-                                    <Button fx:id="getReportButton" mnemonicParsing="false" onAction="#getReport" styleClass="go-button" stylesheets="@application.css" text="Get Report " />
+                                    <Button fx:id="getReportButton" mnemonicParsing="false" onAction="#getReport" styleClass="go-button" stylesheets="@application.css" text="Get Weekly Activities " />
                                  </children></HBox>
+                              <HBox layoutX="30.0" layoutY="184.0" prefHeight="40.0" prefWidth="580.0">
+                                 <children>
+                                    <Label prefWidth="110.0" styleClass="label-first" stylesheets="@application.css" text="Performances:" />
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="30.0" layoutY="224.0" prefHeight="50.0" prefWidth="600.0">
+                                 <children>
+                                    <Button fx:id="getPerformanceReportButton" mnemonicParsing="false" onAction="#getPerformanceReport" styleClass="go-button" stylesheets="@application.css" text="Get Subscription Performances" />
+                                 </children>
+                              </HBox>
                            </children>
                            <padding>
                               <Insets left="20.0" top="10.0" />
@@ -156,7 +163,7 @@
                         </VBox>
                      </center>
                   </BorderPane>
-                  <BorderPane fx:id="quarterReportsBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+                  <BorderPane fx:id="quarterReportsBorderPane" prefHeight="520.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" visible="false">
                      <center>
                         <VBox fx:id="allQuaretRequestVbox" prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                            <children>
