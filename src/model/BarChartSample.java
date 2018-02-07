@@ -13,7 +13,12 @@ public class BarChartSample {
     final CategoryAxis xAxis;
     final NumberAxis yAxis;
     final BarChart<String,Number> bc;
-    
+    /**
+     * weekly activity Constructor  
+     * @param title
+     * @param parkingJO
+     * @param startDay
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	public BarChartSample(String title, JSONObject parkingJO, int startDay){
         xAxis = new CategoryAxis();
@@ -63,6 +68,12 @@ public class BarChartSample {
         bc.setLegendVisible(false);
     }
     
+    /**
+     * performance Constructor  
+     * @param title
+     * @param parkingJO
+     * @param startDay
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	public BarChartSample(String title, int businessSub, int restSub){
         xAxis = new CategoryAxis();
