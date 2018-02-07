@@ -10,3 +10,9 @@ bin/application/Main\.class
 *.class
 
 test\.pdf
+
+<<<<<<< HEAD
+bin/application/AdministratorView\.fxml
+=======
+src/application/LogInController\.java
+>>>>>>> master

@@ -11,7 +11,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -197,6 +200,15 @@ public class ParkingLotDirectorController {
 			
 			JSONObject json = new JSONObject();
 			try {
+				Date date = new Date();
+				LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				int month = localDate.getMonthValue();
+				int val = -1;
+				if(month == 1 || month == 2 || month == 3) val = 1;
+				else if(month == 4 || month == 5 || month == 6) val = 2;
+				else if(month == 7 || month == 8 || month == 9) val = 3;
+				else val = 4;
+				
 				//TODO: synchronize with server
 		    	int quarter = -1;
 		    	
@@ -208,6 +220,14 @@ public class ParkingLotDirectorController {
 					quarter = 3;
 				}else{
 					quarter = 4;
+				}
+				System.out.println("$$$$$$$$$$$$$$$$$$$" + quarter + "%%%%%" + val);
+				if(quarter > val){
+		    		informationAlert.setTitle("Invalid Date");
+					informationAlert.setHeaderText(null);
+					informationAlert.setContentText("You're not allowed to get quarter report for this date");
+					informationAlert.showAndWait();
+					return;
 				}
 				json.put("quarter", quarter);
 				json.put("lotName", lotName);
@@ -492,6 +512,10 @@ public class ParkingLotDirectorController {
     	return;
 	}
 
+    /**
+     * gets the administrator requests. 
+     * @return
+     */
 	private JSONObject getAdminRequest() {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
