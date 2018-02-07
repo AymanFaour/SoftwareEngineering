@@ -14,6 +14,13 @@ public class CellPane extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * CellPane constructor, constructing the cellPane and give it its appropriated color
+	 * @param height
+	 * @param width
+	 * @param depth
+	 * @param parkingSlot
+	 */
     public CellPane(int height, int width, int depth, ParkingSlot[][][] parkingSlot) {
     	if(parkingSlot[height][width][depth].getStatus().equals(SpotStatus.Busy)){
     		setBackground(Color.BLUE);
